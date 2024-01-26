@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Java学习过程</title>
+    <url>/2024/01/20/Java%E5%AD%A6%E4%B9%A0%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="java学习"><a href="#java学习" class="headerlink" title="java学习"></a>java学习</h1><h3 id="一、java简介"><a href="#一、java简介" class="headerlink" title="一、java简介"></a>一、java简介</h3><p>java是一门面向对象的编程语言。</p>
+<p>java SE、EE和ME分别对应标准版，企业版，微型版</p>
+<p>先执行javac对源文件进行编译，编译成class字节码文件，然后使用java命令对字节码文件的类进行解释，解释的过程放在java虚拟机上，所以可以跨平台运行。</p>
+<h3 id="二、java基本语法"><a href="#二、java基本语法" class="headerlink" title="二、java基本语法"></a>二、java基本语法</h3><p>一整个java程序是一系列互相调用的对象的集合。</p>
+<p><strong>类</strong>：类是一个模版，具有一系列的状态和行为。</p>
+<p><strong>对象</strong>：对象是类的一个实例，具有确定的特征和确定的行为</p>
+<p><strong>方法</strong>：方法就是对象的行为，一个类可以用很多方法。</p>
+<p><strong>实例变量</strong>：实例变量就是对象的状态。</p>
+<p>一个源文件只能有一个<code>public</code>类，可以有多个非<code>public</code>类。</p>
+<p>import要放在package之前，package要放在整个程序之前，可以包含类和接口。</p>
+<p>所有的java程序都会执行类的方法<code>main</code>。</p>
+<p>类名首字母及往后每个单词的首字母大写 ，方法名第一个单词首字母小写，往后每个单词首字母大写。</p>
+<p>java的注释和c以及c艹一样 ，可以单行也可以多行注释。</p>
+<p>通过已有的类定义新的类叫做继承，新定义的类叫做子类，被继承的类叫做超类。</p>
+<h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><p><em><strong>成员变量</strong></em>（也叫做实例变量）被定义在类中，方法体之外，类成员可以拥有被实例化的成员变量，成员变量可以被方法访问，在对象被创建时创建，在对象被销毁时销毁。</p>
+<p><em><strong>局部变量</strong></em>被定义在类的方法中，在方法中被初始化，方法结束后就自动销毁，局部变量使用之前必须初始化，和c的局部变量一样。</p>
+<p><em><strong>静态变量</strong></em>（static）定义在类中，方法体之外的，静态变量的值在程序运行期间只有一个副本，这个变量是该类的属性，不管是哪个实例对象都具有这个静态变量的值。在加载类（定义类时）需要给定义，不定义会报错。还有一种<strong>常量</strong>需要用<strong>final</strong>关键字定义，常量的值不能改变，静态变量的值可以改变。静态变量可以被修饰（常用public）</p>
+<p>变量可以连续声明，定义变量后可以赋值。</p>
+<p>变量强制转换顺序</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">byte,short,char—&gt; int —&gt; long—&gt; float —&gt; double </span><br></pre></td></tr></table></figure></div>
+
+
+
+<h4 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h4><p>每个类都应该有一个构造的方法，构造的方法必须与类的名字相同，创建类的对象时需要用到构造方法。</p>
+<h4 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h4><p>有类和类的构造方法，就可以用<code>new</code>来创建对象。</p>
+<p>创建对象的格式为<code>类名</code> <code>对象名</code> &#x3D; new <code>构造方法</code></p>
+<h4 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h4><p><em><strong>public</strong></em>对所有类可见。</p>
+<p><em><strong>protected</strong></em>对同一个包内的类和子类可见。</p>
+<p><em><strong>default</strong></em>同一包内可见。</p>
+<p><em><strong>private</strong></em>同一类可见，类和接口不能用。</p>
+<p><em><strong>static</strong></em>静态变量，也可以用来声明独立于对象的静态方法，静态方法不能使用类的非静态变量，静态方法和静态变量类似，可以独立于实例存在，但是要依赖于构造类来调用。</p>
+<p><em><strong>final</strong></em>不能被更改的变量，常和<code>static</code>一起用创建类的常量。</p>
+<h3 id="三、特殊类"><a href="#三、特殊类" class="headerlink" title="三、特殊类"></a>三、特殊类</h3><h4 id="NUMBER类"><a href="#NUMBER类" class="headerlink" title="NUMBER类"></a>NUMBER类</h4><p>将一个数字类型作为一个类使用。</p>
+<h4 id="MATH类"><a href="#MATH类" class="headerlink" title="MATH类"></a>MATH类</h4><p>math类可以直接在主函数中调用，包含了一些常用的数学运算的方法，number类也可以使用。</p>
+<h4 id="CHARACTER类"><a href="#CHARACTER类" class="headerlink" title="CHARACTER类"></a>CHARACTER类</h4><p>作为一个字符类，代替内置对象字符</p>
+<h4 id="STRING类"><a href="#STRING类" class="headerlink" title="STRING类"></a>STRING类</h4><p>用STRING 类型new的类不能被更改，可以使用<strong>StringBuffer</strong>和<strong>StringBuilder</strong>类。</p>
+<h3 id="四、细枝末节"><a href="#四、细枝末节" class="headerlink" title="四、细枝末节"></a>四、细枝末节</h3><h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><p>子类需要用到父类的一部分定义，就可以用继承</p>
+<p><code>class SonName extends FatherName</code></p>
+<p>父类也可以叫做基类和超类，子类也可以叫做派生类。</p>
+<p>这样创建出来的子类具有父类中所有不被<code>protected</code>的变量和方法。</p>
+<p><strong>1）成员变量重名</strong> 直接访问子类的变量时，如果是同名变量，则优先使用子类本身的，或者向上找到最近的父类的该变量。</p>
+<p>间接通过方法访问变量时，方法定义在哪就优先使用该类的变量，如果没有就逐层向上找。</p>
+<p><strong>2）成员方法重名</strong> 同名方法优先访问离自己最近的，如果自己没有这个方法就向上找。</p>
+<p>在类中要访问自己的成员变量和方法时，可以使用关键词<em><strong>this</strong></em>，要访问父类的成员变量和方法时，可以使	用<em><strong>super</strong></em></p>
+<p><strong>3）方法覆盖重写</strong> 用<code>@Override</code>可以表示覆盖重写，写一个和父类中方法同名的方法且参数列表相同的，就可以使用覆盖重写。子类方法的返回值范围必须小于等于父类方法的返回值范围。子类方法的权限必须大于等于父类方法的权限修饰符。方法覆盖重写只针对实例方法，对静态方法覆盖没有意义。</p>
+<p><strong>4）方法重载</strong> 重写一个无参的方法将他变成有有参的方法，或者改变这个方法的参数列表。</p>
+<p><strong>5）构造方法</strong> 子类中有一个默认的隐藏的<code>super()</code>调用父类的无参构造方法，构造子类对象时一定会先执行父类的<strong>无参构造方法</strong>。可以使用<strong>super（）</strong>关键字来调用父类构造方法，并将其重载。**super()**的父类构造调用必须是子类构造方法的第一句，即如果父类的构造方法有参，则必须使用带有一个参数的<code>super()</code>。</p>
+<p><strong>6）this调用构造方法</strong>  在同一个类中可以有多个构造方法，多个构造方法可以有不同的参数（无参或者多个参数），在构造方法内可以通过 <code>this（...）</code> 直接调用另一个构造方法，调用本类的构造方法必须是第一句并且唯一，但是自带一个隐式的<code>super()</code>，不能够显式的重写调用 <code>super</code> 。构造方法多次调用时，来自父类的构造方法 <code>super()</code> 只会执行一次。</p>
+<p><strong>7）抽象abstract</strong> 抽象方法必须在抽象类中，在定义类和方法之前加上abstract就是抽象类和抽象方法。必须要有一个子类来继承抽象父类，必须要有方法覆盖重写父类中的所有抽象方法<strong>（实现）</strong>。抽象父类不能直接创建对象。</p>
+<p><em><strong>Final是终结符，不能产生子类。private 修饰的成员变量可以被继承，不能被子类访问</strong></em></p>
+<h4 id="接口和包"><a href="#接口和包" class="headerlink" title="接口和包"></a>接口和包</h4><p><strong>包</strong>：也叫类库，也就是一组类的集合。必须作为源文件的第一句来声明包的名字。源文件必须放在包同名目录下，然后使用<code>javac -d .</code>就可以在当前目录下生成对应包名字的目录，并且把生成的<code>.class</code>文件直接放在同名目录下。</p>
+<p>不同包中相同的类不会发生冲突，相同功能的类一般放在同一个包里，同一个包中的类可以相互访问，不同包里的类一般不能相互访问。</p>
+<p><code>package</code>语句后可以跟<code>import</code>语句来导入其他包中的类，包中的类需要有<code>public</code>属性才可以被调用。</p>
+<p><strong>接口</strong>： 接口是一种具有常量成员变量和抽象方法的抽象类，接口是一种引用数据类型。用关键词<strong>interface</strong>定义接口。</p>
+<p>被定义的接口不能直接创建实例对象，必须用非抽象类通过非抽象的<strong>implement</strong>实现，implement是对接口的实现不是继承（和继承类似），非抽象类实现接口必须实现接口中的所有抽象方法。接口可以被继承，继承的特性和类继承类似。接口的继承可以多继承，即继承两个父接口。<em><strong>接口中的常量可以直接通过接口名称访问。</strong></em></p>
+<p>定义接口的抽象方法时，要使用<code>public abstract</code>（可以选择性省略）。</p>
+<p>接口中的默认方法，使用<code>default</code>创建默认方法，默认方法不需要实现类覆盖重写，可以直接被调用，也可以被覆盖重写。</p>
+<p>接口中的静态方法，使用<code>static</code>创建方法，</p>
+]]></content>
+      <categories>
+        <category>语言学习</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从零开始的Stm32学习</title>
+    <url>/2024/01/20/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Stm32%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<p><em><strong>写在前面</strong></em>  <em>原本是跟着江协科技的课入门了stm32f103，但是对stm32的开发还停留在一个比较浅的认知，以及实操水平有限只会使用库函数，所以想通过stm32f401re的学习从头到尾搞明白整个流程，也为将来自己画板子、写启动文件、汇编语言打好基础。</em></p>
+<h3 id="一、使用keil进行stm32开发"><a href="#一、使用keil进行stm32开发" class="headerlink" title="一、使用keil进行stm32开发"></a>一、使用keil进行stm32开发</h3><p>刚开始的入门软件是keil，所以这次也打算从keil入手，将keil学明白之后再尝试使用其他的软件和环境进行开发，同时也是使用库函数的方式进行开发。</p>
+<p>使用keil中的<strong>pack installer</strong>安装自己要开发的板子的对应版本，然后在意法半导体官网去找相对应的软件包并解压。在官网的导航找到<strong>软件-》微控制器软件-》STM32微控制器软件-》标准外设软件库</strong>，然后选择适合自己的开发板的就可以。</p>
+<p>这里我用的是stm32f401re开发板，所以要找stm32f4的软件包，软件包中有对应的启动文件以及库函数，库函数直接对底层硬件进行操作，所以可以提高开发的效率，但是也同样会占用更多的资源（库函数之于直接操作寄存器就好像是高级语言之于低级语言）。在keil中新建工程，并且在对应的文件夹下建立<strong>Libraries</strong>（存放库函数）、<strong>User</strong>（存放自己写的main函数）、<strong>Start</strong>（存放各种启动文件）。</p>
+<p><strong>启动文件详解</strong>：1. CMSIS标准中定义了内核函数层，和设备外设访问层，</p>
+<h3 id="二、片上外设详解"><a href="#二、片上外设详解" class="headerlink" title="二、片上外设详解"></a>二、片上外设详解</h3><h4 id="1、GPIO（通用输入输出）"><a href="#1、GPIO（通用输入输出）" class="headerlink" title="1、GPIO（通用输入输出）"></a>1、GPIO（通用输入输出）<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231016155952611.png"
+                      alt="image-20231016155952611"
+                ></h4><p>从IO引脚进入有两个保护二极管，用来防止电压过高或者电压过低。从IO口进入首先是驱动器，然后是寄存器。</p>
+<p>上半部分的驱动器对应输入模式，信号输入首先会有一个上拉和下拉电阻，这里有三种模式可选分别是上拉和下拉和浮空。当输入端没有信号输入时，进入寄存器的高低电平就由此处控制。上拉默认为高电平的输入模式，下拉默认为低电平的输入模式。再向内有一个<strong>肖特基（施密特）触发器</strong>，是一个对输入信号进行整形的装置，当输入的信号高于一个上限时就向内输入高电平，低于下限则输入低电平，用这种方法可以减少数据的抖动。在施密特触发器前后分别接到了模拟输入和复用功能输入上，对应额外的功能。</p>
+<p>下半部分的驱动器对应输入模式。可以用数据寄存器进行数据的输出，位设置清除寄存器可以单独操作输出寄存器的某一位但是不影响其他位，一整个数据寄存器控制所有的端口，所以不能直接对某一位进行操作，要使用按位与和按位或的操作，或者直接用位设置清除寄存器。也可以接到复用功能也就是其他片上外设上来获取额外的功能。两个mos管<strong>P_MOS，N_MOS</strong>可以配置推挽（push_pull）和开漏（open_drain）或者关闭。</p>
+<h6 id="GPIO的八种工作模式"><a href="#GPIO的八种工作模式" class="headerlink" title="GPIO的八种工作模式"></a>GPIO的八种工作模式</h6><p><strong>1）模拟输入 GPIO_Mode_AIN</strong> 输入模式直接接入模拟输入</p>
+<p><strong>2）浮空输入 GPIO_Mode_IN_FLOATING</strong> 上下拉电阻选择浮空输入模式，容易被干扰</p>
+<p><strong>3）下拉输入 GPIO_Mode_IPD</strong> 上下拉电阻选择下拉输入模式，默认电平为低，可以用于检测由低到高的电平变化</p>
+<p><strong>4）上拉输入 GPIO_Mode_IPU</strong> 上下拉电阻选择上拉输入模式，默认电平为高，可以用于检测由低到高的电平变化</p>
+<p><strong>5）开漏输出 GPIO_Mode_OUT_OD ** 上P_MOS不工作，只有下面的N_MOS在工作，可以输出低电平，不能直接输出高电平，要靠外面的上拉电阻。适合用作通讯协议的模式，不会强行输出高电平。</strong><em>可以同时输入输出。</em>**</p>
+<p><strong>6）推挽输出 GPIO_Mode_OUT_PP</strong> P_MOS和N_MOS都在工作，可以直接输出高低电平，是一种强推输出模式。<em><strong>可以同时输入输出</strong></em></p>
+<p><strong>7）复用开漏输出 GPIO_Mode_AF_OD</strong> GPIO此时连接到片上外设受片上外设控制</p>
+<p><strong>8）复用推挽输出 GPIO_Mode_AF_PP</strong> GPIO此时连接到片上外设受片上外设控制</p>
+<h6 id="GPIO"><a href="#GPIO" class="headerlink" title="GPIO"></a>GPIO</h6><h4 id="2、NVIC（嵌套向量中断控制器）"><a href="#2、NVIC（嵌套向量中断控制器）" class="headerlink" title="2、NVIC（嵌套向量中断控制器）"></a>2、NVIC（嵌套向量中断控制器）</h4><p>NVIC是一个内核外设，也就是在芯片内部，但是不同厂家也会对NVIC的功能进行裁切，但是多数情况下的NVIC是差不多的，关于NVIC的定义一般放在<strong>misc.c</strong>和<strong>misc.h</strong>里面。NVIC是用来控制系统异常和外部中断的。</p>
+<h6 id="使用NVIC"><a href="#使用NVIC" class="headerlink" title="使用NVIC"></a>使用NVIC</h6><p>首先使能外设某个中断，这个具体由每个外设的相关中断使能位控制。然后要使能NVIC的中断，配置NVIC中断优先级，设置优先级分配组，一共有四位作为优先级，可以将四位分别分配给响应优先级和抢占优先级，使得两种优先级都有一定的范围，接下来使用NVIC的初始化结构体为开启的外设中断通道分配响应优先级和抢占优先级，<em>（响应优先级是中断同时发生时响应优先级高的可以产生中断，抢占优先级是在进行一个中断时另一个抢占优先级高的能够中断抢占优先级低的事件）</em>，然后使用初始化函数初始化NVIC。配置好NVIC和外设的中断之后，接下来要编写中断函数，当外设的中断事件触发时，就可以跳转到自己写的中断函数中。</p>
+<h4 id="3、USART"><a href="#3、USART" class="headerlink" title="3、USART"></a>3、USART</h4><h4 id="4、I2C"><a href="#4、I2C" class="headerlink" title="4、I2C"></a>4、I2C</h4><h4 id="5、TIM定时器"><a href="#5、TIM定时器" class="headerlink" title="5、TIM定时器"></a>5、TIM定时器</h4><p>定时器有三种，分别是基本定时器，通用定时器，高级定时器。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113132948740.png"
+                      alt="image-20231113132948740"
+                ></p>
+<p><strong>基本定时器</strong>的基本单元就是时基单元，由<strong>预分频器、计数器和自动重装寄存器</strong>构成，预分频器负责将内部时钟进行分频，自动重装寄存器中存着需要计时的次数，计数器会向上计数，到达自动重装寄存器的数值时重新装填，并且触发触发NVIC的中断，或者跳转到更新事件。可以开启主模式触发DAC，在主模式下计数器触发不会触发中断，会直接触发映射到<strong>TRGO</strong>然后直接输出DAC。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113133125832.png"
+                      alt="image-20231113133125832"
+                ></p>
+<p><strong>通用定时器</strong>的核心还是时基单元，和基本定时器是一样的。通用定时器和高级定时器支持向下计数和中央对齐模式。通用定时器支持外部时钟驱动，从外部时钟进入的信号经过极性选择、边缘检测和预分频器还有滤波，可以直接作为时基单元的时钟，这一路叫做<strong>外部时钟模式2</strong>。另外的<strong>TRGI</strong>触发输入当做外部时钟，叫做<strong>外部时钟模式1</strong>。外部时钟可以直接接入TRGI；其他的定时器的TRGO输出也可以接入作为定时器的<strong>级联</strong>；也可以从CH1引脚的边沿，CH1引脚，CH2引脚作为输入。</p>
+<p>下半部分是输入捕获和输出比较的电路，这两个功能共用一套寄存器，所以同时只能使用其中一种功能。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113194330817.png"
+                      alt="image-20231113194330817"
+                ></p>
+<p><strong>高级定时器</strong>的计数器后面还有一个重复次数计数器，计数器满多少个周期后产生输出，也就是一个<em>输出分频器</em>。相比于通用定时器，在下面的输出比较模块多了<strong>DTG</strong>功能，输出多了一个口可以生成PWM的互补波形，用来驱动三相无刷电机。下面还有一个刹车输入，外部引脚产生刹车信号或者外部时钟失效是，就会产生刹车信号自动切断电机的信号。</p>
+<p><strong>预分频控制寄存器</strong>不会直接控制分频系数，预分频控制寄存器有一个<strong>缓冲寄存器</strong>，这才是真正起作用的寄存器。改变预分频控制寄存器后，在下一个周期时才会更改缓冲寄存器的值来改变分频系数。自动重装寄存器也有缓冲寄存器，效果是一样的。影子寄存器的作用就是保证数据的更改在同一个周期后更新，防止发生错误。</p>
+<p>计数器的<strong>计数频率</strong>就是输入的<strong>时钟频率&#x2F;（分频系数+1）</strong>,计数器溢出的频率<strong>（中断更新频率）</strong>就是<strong>计数频率&#x2F;（自动重装寄存器+1）</strong></p>
+<p>定时器的输出可以进入中断输出控制。</p>
+<p><strong>预分频控制寄存器</strong>不会直接控制分频系数，预分频控制寄存器有一个<strong>缓冲寄存器</strong>，这才是真正起作用的寄存器。改变预分频控制寄存器后，在下一个周期时才会更改缓冲寄存器的值来改变分频系数。</p>
+<p><em><strong>（1）使用TIM定时器</strong></em></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113220608188.png"
+                      alt="image-20231113220608188"
+                ></p>
+<p>要使用定时器就要打通从左到右的全流程。首先时钟的输入源，RCC内部时钟或者ITR其他定时器或者TI的输入捕获通道，通过外部时钟可以选择两个外部时钟模式，ETR引脚的配置需要额外配置一下。配置好输入源之后，可以开始配置时基单元的两个寄存器，然后要配置中断输出控制和NVIC两个东西。最后还要手动启动一下运行控制。</p>
+<p><em><strong>（2）输出比较功能Outp Compare</strong></em></p>
+<p>输出比较功能可以用来输出PWM信号。使用输入捕获和输出比较寄存器，将<strong>CNT计数器</strong>里面的数字和<strong>CCR捕获比较寄存器</strong>进行对比，然后如果大于或者小于就翻转输出的电平。</p>
+<p>调整时基单元的输入，预分频器PSC，ARR自动重装器，可以调整PWM的周期和频率，然后CCR的值和ARR值的比值就是占空比。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231114175347871.png"
+                      alt="image-20231114175347871"
+                ></p>
+<p>输出模式控制器有八种模式。</p>
+<ul>
+<li>冻结， REF保持原状态</li>
+<li>匹配时置有效电平，CNT&#x3D;CCR时，REF置有效电平（高电平）</li>
+<li>匹配值置无效电平，CNT&#x3D;CCR时，REF置无效电平（低电平）</li>
+<li>匹配时电平翻转，CNT&#x3D;CCR时，REF电平翻转，输出的波形占空比始终为50%</li>
+<li>强制有效电平，CNT和CCR无效，REF强制为高电平</li>
+<li>强制无效电平，CNT和CCR无效，REF强制为低电平</li>
+<li>PWM模式1，向上计数：CNT&lt;CCR时置REF为有效电平，CNT&gt;&#x3D;CCR时置REF为无效电平，向下计数同理。</li>
+<li>PWM模式2，向上计数：CNT&lt;CCR时置REF为无效电平，CNT&gt;&#x3D;CCR时置REF为有效电平，向下计数同理。</li>
+</ul>
+<p>在输出信号后再经过CC1P，这里还可以进行一次极性翻转。最后信号会通向GPIO口。</p>
+<p>对于高级定时器，有两个互补的PWM输出端口，用来驱动外面的推挽电路。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/IMG_1117.png"
+                      alt="IMG_1117"
+                ></p>
+<p>这两个互补的端口会分别导通正极和负极，在外面产生一个PWM波形，最高电压就是推挽电路的正极电压。在这两个端口前面还有一个死区生成器，在两个端口切换电平是提供一段时间的死区防止上两个端口接通时间比较接近导致的短路。</p>
+<p>要使用PWM首先需要配置TIM定时器，然后配置PWM这一块所有的寄存器，就可以使用PWM了。</p>
+<h4 id="6、RCC时钟树"><a href="#6、RCC时钟树" class="headerlink" title="6、RCC时钟树"></a>6、RCC时钟树</h4><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113201719527.png"
+                      alt="image-20231113201719527"
+                ></p>
+<p>时钟源有四个，分别是内部外部高速低速。外部的是石英震荡器，内部的是RC振荡器，外部时钟更稳定，更常用。 </p>
+<ul>
+<li><p>HSI高速内部时钟 8MHz</p>
+</li>
+<li><p>HSE高速外部时钟 4-16MHz</p>
+</li>
+<li><p>LSE低速外部时钟 32.768kHZ</p>
+</li>
+<li><p>LSI低速内部时钟 40kHz</p>
+</li>
+<li><p><strong>PLLMUL</strong>是锁相环，外部高速时钟会经过锁相环倍频，然后进入预分频器。</p>
+</li>
+<li><p><strong>CSS</strong>用来检测外部时钟是否正常，如果出了问题会自动切换到内部时钟</p>
+</li>
+<li><p>进入预分频器后，旁路可能会有倍频器来输出72MHz到TIM定时器。</p>
+<p>使用外设时钟控制，就可以将外设时钟使能与进时钟输出，也就是启动时钟。</p>
+</li>
+</ul>
+<h3 id="三、通信协议"><a href="#三、通信协议" class="headerlink" title="三、通信协议"></a>三、通信协议</h3><h4 id="1、I2C协议"><a href="#1、I2C协议" class="headerlink" title="1、I2C协议"></a>1、I2C协议</h4><p>同步半双工，带数据应答，支持总线挂载多设备，两条总线：<strong>SCL（时序总线）</strong>，<strong>SDA（数据总线）</strong></p>
+<p><strong>硬件I2C</strong>：STM32如果有I2C硬件模块可以直接使用，查手册找一下I2C挂载在何处，然后初始化I2C的各种属性。直接往数据寄存器中写入值发送然后直接从数据寄存器中读取数据。</p>
+<p><strong>软件I2C</strong>：可以使用软件函数的方式模拟I2C协议，初始化GPIO口，将一个口的输出作为SCL另一个作为SDA，然后根据I2C的时序特点在不同的时序阶段将数据放在SDA总线上，定时上拉和上拉SCL。</p>
+<p><em><strong>时序特点</strong></em>：</p>
+<p><strong>1)基本时序单元</strong></p>
+<p>​	<strong>产生起始条件：</strong>SCL高电平期间，SDA从高电平切换到低电平</p>
+<p>​	<strong>产生终止条件：</strong>SCL高电平期间，SDA从低电平切换到高电平</p>
+<p>​	<em>产生起始条件和终止条件都是由主机决定的。</em></p>
+<p>​	<strong>主机发送数据：</strong>SCL低电平期间将一位数据放到SDA上后，主机将SCL提到高电平，此时SDA不允许有变化，从而让从机接收数据，高位先行。</p>
+<p>​	<strong>主机接收数据：</strong>主机释放SDA将控制权交给从机，主机控制SCL，在低电平期间从机发送数据，在高电平期间主机接收数据</p>
+<p>​	<strong>发送应答：</strong>在主机接收完一个字节后，在下一个时钟发送一位数据，数据0表示应答</p>
+<p>​	<strong>接收应答：</strong>在主机发送给从机一个字节后，在下一个时钟发送一位数据给主机，主机此时要接受这个数据，数据0表示应答，数据1表示非应答</p>
+<p><strong>2)通信时序</strong></p>
+<p>​	<strong>指定地址写：</strong>对于指定设备的指定寄存器写入数据。</p>
+<p>​	第一个数据帧，七位地址<strong>＋</strong>一位读写位（0写1读），紧跟着就是应答位，从机此时应该给主机接受应答。第二个数据帧，可以是设备的内部寄存器地址，紧跟着应答位。</p>
+<p>​	再往后主机可以产生终止条件。</p>
+<p>​	<strong>指定地址读：</strong>对指定设备的指定寄存器写入数据。</p>
+<p>​	第一个数据帧，七位地址**+<strong>一位读写位（此时写入），然后从机数据应答，第二个数据帧，指定设备的内部寄存器地址，然后从机应答，</strong><em>此时重新产生起始条件</em><strong>，第三个数据帧指定七位地址</strong>+**一个读写位（此时读入），	第四个数据帧就是从机返回给主机的数据。</p>
+<p>​	最后主机产生终止条件。</p>
+<ol start="3">
+<li></li>
+</ol>
+<h4 id="2、USART协议"><a href="#2、USART协议" class="headerlink" title="2、USART协议"></a>2、USART协议</h4><p>异步全双工，点对点通信，两个引脚<strong>TX和RX</strong>，分别用来发送数据和接收数据，点对点发送数据也就是TX接RX，RX接TX。</p>
+<p>波特率是串口通信的速率。</p>
+<p><em><strong>时序特点：</strong></em></p>
+<p>空闲状态是高电平，每个时序单元的<strong>起始位</strong>是低电平来表示开始传输一个数据帧，<strong>停止位</strong>是一个高电平，也就是重新回到空闲状态。数据帧低位先行。在停止位之前，数据帧之后，可以选择性的添加一个校验位。</p>
+<p><em><strong>轮询模式：</strong></em></p>
+<h4 id="3、PWM输出信号"><a href="#3、PWM输出信号" class="headerlink" title="3、PWM输出信号"></a>3、PWM输出信号</h4><p>PWM是一种模拟信号，在具有惯性的系统中，对PWM进行调制，就可以等效的获得的模拟量。<strong>PWM频率&#x3D;1&#x2F;T</strong>,<strong>占空比&#x3D;Ton&#x2F;T</strong>也就是每个周期中高电平的时间比上周期的时间，占空比决定模拟输出的电压。<strong>分辨率占空比变化步距</strong>，就是占空比的变化程度。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>STM32</tag>
+        <tag>嵌入式开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git简单学习和实操</title>
+    <url>/2024/01/20/Git%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0%E5%92%8C%E5%AE%9E%E6%93%8D/</url>
+    <content><![CDATA[<h3 id="一、Git安装"><a href="#一、Git安装" class="headerlink" title="一、Git安装"></a>一、Git安装</h3><h3 id="二、Git基本操作"><a href="#二、Git基本操作" class="headerlink" title="二、Git基本操作"></a>二、Git基本操作</h3><p><strong>1）</strong>安装好Git后就可以对Git进行配置，使用命令<code>Git config</code>命令进行配置。初始配置一般会加上<code>--global</code>，即全局设置，在此台电脑上的所有工作区都适用的配置。刚开始需要配置邮箱账号和密码，为配置命令加上<code>user.name&quot; &quot;</code>和<code>user.email&quot; &quot;</code>的参数，就可以指定用户和邮箱。</p>
+<p><strong>2）</strong>要想在一个本地工作区（也就是文件）中使用Git需要在对应的文件夹路径下使用<code>Git init</code>命令，之后就会在这个路径下自动生成一个默认隐藏的**.git**文件夹。</p>
+<p>使用命令<code>git status</code>可以看到整个文件夹中所有文件（夹）的状态，即修改后有没有被添加进暂存区</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python学习过程</title>
+    <url>/2024/01/20/Python%E5%AD%A6%E4%B9%A0%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<h3 id="一、py理解"><a href="#一、py理解" class="headerlink" title="一、py理解"></a>一、py理解</h3><p>py是一种解释型语言，也就是说不需要编译就可以直接运行，类似于PHP和Perl语言</p>
+<p>py是交互式语言，可以在命令行中<code>&gt;&gt;&gt;</code>后面直接执行代码</p>
+<p>py是面向对象语言，即将程序分为多个对象进行编程，每个对象执行一定的功能，各对象之间联系性低，可维护性高</p>
+<p><em><strong>py使用缩进来表示代码块，而不是 <code>&#123;&#125;</code>。</strong></em></p>
+<p><em><strong>py使用<code>\</code>来连接多行语句，默认不能换行。</strong></em></p>
+<p><em><strong>空行可以用来分隔函数和类，便于代码的维护和重构。</strong></em></p>
+<p><em><strong>同一行显示多条语句可以使用分号 <code>;</code> 进行分隔。</strong></em></p>
+<p><em><strong>py中不需要像c一样声明变量，只要直接写出变量并给出初始值就行。</strong></em></p>
+<h3 id="二、py注释（写注释是一个好习惯）"><a href="#二、py注释（写注释是一个好习惯）" class="headerlink" title="二、py注释（写注释是一个好习惯）"></a>二、py注释（写注释是一个好习惯）</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#这是注释</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">这是注释</span></span><br><span class="line"><span class="string"># &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">这是注释</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;hello world!&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>python有这三种常用的注释。</p>
+<h3 id="三、标准数据类型"><a href="#三、标准数据类型" class="headerlink" title="三、标准数据类型"></a>三、标准数据类型</h3><h6 id="（1-Numbers数字"><a href="#（1-Numbers数字" class="headerlink" title="（1 Numbers数字"></a>（1 Numbers数字</h6><p>数字中有<strong>整型</strong>、__浮点型__、<strong>布尔型</strong>、<strong>复数型</strong></p>
+<h6 id="（2-String字符串"><a href="#（2-String字符串" class="headerlink" title="（2 String字符串"></a>（2 String字符串</h6><p>字符串用单引号<code>&#39;str&#39;</code>和双引号<code>&quot;str&quot;</code>表示 ，然后可以用三引号表示多行字符串。转义符和c语言中的转义符是一样的都是反斜杠<code>\</code>。</p>
+<p>怎么让转义符不生效？在整个字符串前面加上<code>r</code>。连续的字符串可以被自动连接起来，也可以用<code>+</code>表示两个字符串的相连，用乘号<code>*</code>加上次数表示重复。</p>
+<p>字符串的最后一个字符不能是反斜杠</p>
+<h6 id="（3-List列表"><a href="#（3-List列表" class="headerlink" title="（3 List列表"></a>（3 List列表</h6><h6 id="（4-Tuple元组"><a href="#（4-Tuple元组" class="headerlink" title="（4 Tuple元组"></a>（4 Tuple元组</h6><h6 id="（5-Dictionary字典"><a href="#（5-Dictionary字典" class="headerlink" title="（5 Dictionary字典"></a>（5 Dictionary字典</h6><h3 id="四、字符串"><a href="#四、字符串" class="headerlink" title="四、字符串"></a>四、字符串</h3>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WPF学习</title>
+    <url>/2024/01/20/WPF%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>算法与数据结构</title>
+    <url>/2024/01/20/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<h3 id="一、排序算法"><a href="#一、排序算法" class="headerlink" title="一、排序算法"></a>一、排序算法</h3><ul>
+<li><em>排序算法中经常会用到交换两个数的值的操作，这个操作可以用位运算实现</em></li>
+</ul>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line">a = a ^ b;</span><br><span class="line">b = a ^ b;</span><br><span class="line">a = a ^ b;</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h4 id="1、选择排序"><a href="#1、选择排序" class="headerlink" title="1、选择排序"></a>1、选择排序</h4><ul>
+<li><strong>代码思路：</strong>首先选择最左侧的一个数字，将他与剩下的N-1个数字一一对比寻找N个数字中最大（或者最小值），每次对比时将大的（小的）与最左侧的数字交换，然后逐一对比后就能最终找到最值并将其放在最左侧。接下来选择左侧的第二个数字，按照同样的方法与剩下的N-2个数字进行对比，就找到了N-1个数字里的最值。这样对N-1个数字后，所有的数字就全部排列好了。</li>
+</ul>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">SelectSort</span><span class="params">(<span class="type">int</span> *arr, <span class="type">int</span> size)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; size - <span class="number">1</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = i + <span class="number">1</span>; j &lt; size; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(arr[i] &gt; arr[j]) &#123;</span><br><span class="line">                arr[i] = arr[i] ^ arr[j];</span><br><span class="line">                arr[j] = arr[i] ^ arr[j];</span><br><span class="line">                arr[i] = arr[i] ^ arr[j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>时间复杂度</strong> N的平方</li>
+</ul>
+<p>+++</p>
+<h4 id="2、冒泡排序"><a href="#2、冒泡排序" class="headerlink" title="2、冒泡排序"></a>2、冒泡排序</h4><ul>
+<li><strong>代码思路：</strong>每次都从最左边两个数字开始，每次两个数字进行对比，将比较大的值向右移，一轮过后就将所有数字中的最大值找到并移到最右边了。然后用同样的方法在剩下的N - 1个数字中找到最大的，将它移到右起第二位数字上。</li>
+</ul>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">BubbleSort</span><span class="params">(<span class="type">int</span> *arr, <span class="type">int</span> size)</span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = size; i &gt; <span class="number">0</span>; i--)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt; i; j++)&#123;</span><br><span class="line">             <span class="keyword">if</span>(arr[j] &gt; arr[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                arr[j] = arr[j] ^ arr[j + <span class="number">1</span>];</span><br><span class="line">                arr[j] = arr[j] ^ arr[j + <span class="number">1</span>];</span><br><span class="line">                arr[j] = arr[j] ^ arr[j + <span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="3、插入排序"><a href="#3、插入排序" class="headerlink" title="3、插入排序"></a>3、插入排序</h4><ul>
+<li><strong>代码思路：</strong>从前往后划分区间，先将1到2区间上排好序，然后将3移进，使得1到3区间有序，重复下去一直到1到N区间上有序。</li>
+</ul>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">InsertSort</span><span class="params">(<span class="type">int</span> *arr, <span class="type">int</span> size)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt; size; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = i - <span class="number">1</span>; j &gt;= <span class="number">0</span> &amp;&amp; arr[j] &gt; arr[j + <span class="number">1</span>]; j--)&#123;</span><br><span class="line">            arr[j] = arr[j + <span class="number">1</span>] ^ arr[j];</span><br><span class="line">            arr[j + <span class="number">1</span>] = arr[j + <span class="number">1</span>] ^ arr[j];</span><br><span class="line">            arr[j] = arr[j + <span class="number">1</span>] ^ arr[j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="4、归并排序"><a href="#4、归并排序" class="headerlink" title="4、归并排序"></a>4、归并排序</h4><ul>
+<li><strong>代码思路：</strong>先分治，利用二分法将所有的数字分成两部分，然后将两部分分别进行排序后，进行两部分的合并，合并过程中再次进行排序，利用递归排序然后不断合并。合并时将两个数组排序到一个临时数组中，从两个数组第一个开始取数，小的数拿到临时数组中，直到一个数组到头，就将另外一个数组全部放入临时数组，最后将临时数组赋给这一段的原数组。</li>
+</ul>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//合并函数</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">Merge</span><span class="params">(<span class="type">int</span> *arr, <span class="type">int</span> L, <span class="type">int</span> Mid, <span class="type">int</span> R)</span>&#123;</span><br><span class="line">    <span class="type">int</span>* index = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * (R - L + <span class="number">1</span>));</span><br><span class="line">    <span class="type">int</span> p1 = L;</span><br><span class="line">    <span class="type">int</span> p2 = Mid + <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(p1 &lt;= Mid &amp;&amp; p2 &lt;= R)&#123;</span><br><span class="line">        index[i++] = arr[p1] &lt;= arr[p2] ? arr[p1++] : arr[p2++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(p1 &lt;= Mid)&#123;</span><br><span class="line">        index[i++] = arr[p1++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(p2 &lt;= R)&#123;</span><br><span class="line">        index[i++] = arr[p2++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i = i - <span class="number">1</span> ;i &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">        index[i] = arr[L + i]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//递归分治函数</span></span><br><span class="line"><span class="type">void</span> process(<span class="type">int</span> *arr, <span class="type">int</span> L, <span class="type">int</span> R)&#123;</span><br><span class="line">    <span class="keyword">if</span>(R == L) <span class="keyword">return</span>;</span><br><span class="line">    <span class="type">int</span> Mid = L + (R - L)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    process(*arr, L, Mid);</span><br><span class="line">    process(*arr, Mid, R);</span><br><span class="line">    merge(arr, L, Mid, R);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>小和问题：</strong>一个数组里每个数左侧比自己小的数加起来的和等于多少。其实也就是一个数右侧比自己大的数有几个，就要自身加几次。那么使用归并排序，在合并的时候可以计算右侧比自己大的数有几个，并且合并时优先将右侧的数字放进临时数组。</li>
+</ul>
+<p>时间复杂度N logN</p>
+<h4 id="5、快速排序"><a href="#5、快速排序" class="headerlink" title="5、快速排序"></a>5、快速排序</h4><ul>
+<li><p><strong>荷兰国旗问题：</strong>选定一个数字作为依据划分一个数组，在数组中左边都是小于这个数字的，中间都是等于这个数字的，右边都是大于这个数字的。从头遍历数组，先从头开辟一块 <em>小于块</em> ，再从后面开辟一块 <em>大于块</em> ，遍历数组时对每个数字进行对比，如果小于就和 <em>小于块</em> 的下一位数字交换并扩大 <em>小于块</em> 的范围，如果大于就和 <em>大于块</em> 的前一位数字进行交换并扩大 <em>大于块</em> 的范围，如此反复遍历直到便利指针指到 <em>大于块</em> 的前一位。</p>
+</li>
+<li><p><strong>代码思路：</strong>在一个数组中 <em>随机</em> 选定一个数字，将这个数字和数组末尾交换，然后根据这个数字进行 <em>荷兰国旗划分</em> ，划分后就得到了前中后三块，中间的数字固定，分别对前后两块进行同样的递归划分。如此递归下去知道每一个最小分块都是一种数字并且和前后的块具有顺序。</p>
+</li>
+</ul>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">swap</span><span class="params">(<span class="type">int</span> *arr, <span class="type">int</span> a, <span class="type">int</span> b)</span>&#123;</span><br><span class="line">    arr[a] = arr[a] ^ arr[b];</span><br><span class="line">    arr[b] = arr[a] ^ arr[b];</span><br><span class="line">    arr[a] = arr[a] ^ arr[b];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//交换两个数，不允许下标相同</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">QuickSort</span><span class="params">(<span class="type">int</span> *arr, <span class="type">int</span> L, <span class="type">int</span> R)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(L &gt;= R) <span class="keyword">return</span>;</span><br><span class="line">    <span class="type">int</span> temp = rand() % (R - L + <span class="number">1</span>) + L; <span class="comment">//生成0到size - 1的随机数</span></span><br><span class="line">    <span class="type">int</span> p1 = L - <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> p2 = R;</span><br><span class="line">    <span class="type">int</span> i = L;</span><br><span class="line">    <span class="keyword">if</span> (temp != R) swap(arr, temp, R);</span><br><span class="line">    <span class="keyword">while</span>(i &lt; p2)&#123;</span><br><span class="line">        <span class="keyword">if</span>(arr[i] &gt; arr[R])&#123;</span><br><span class="line">            p2--;</span><br><span class="line">            <span class="keyword">if</span>(i != p2) swap(arr, i, p2);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(arr[i] &lt; arr[R])&#123;</span><br><span class="line">            p1++;</span><br><span class="line">            <span class="keyword">if</span>(i != p1) swap(arr, i, p1);</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//注意处理边界问题</span></span><br><span class="line">    swap(arr, p2, R);</span><br><span class="line">    QuickSort(arr, L, p1);</span><br><span class="line">    QuickSort(arr, p2 + <span class="number">1</span>, R);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>注意：在边界指针和遍历指针移动时，要注意指针重合的问题，指针重合时不要进行两个数字的交换，并且此时已经达到跳出循环的边界。</li>
+</ul>
+<p>快速排序选择划分数字时使用的是随机数，也就是说等概率的取到接近中间值的数，等概率的取到最好情况，时间复杂度为 N*log N，使用递归会开辟额外空间，空间复杂度是log N。</p>
+<h4 id="6、桶排序"><a href="#6、桶排序" class="headerlink" title="6、桶排序"></a>6、桶排序</h4><h4 id="7、堆（Heap）排序"><a href="#7、堆（Heap）排序" class="headerlink" title="7、堆（Heap）排序"></a>7、堆（Heap）排序</h4><p>堆结构就是用数组实现的完全二叉树结构，在完全二叉树中如果每棵子树的最大值都是在顶部就是 <em>大根堆</em> 反之就是 <em>小根堆</em>。</p>
+<p><em>完全二叉树：</em>总是先有左子树后有右子树，如果有右子树则必有左子树。</p>
+<p>左孩子：left &#x3D; index * 2 + 1, 父节点：(left - 1) &#x2F; 2</p>
+<ul>
+<li><strong>大根堆插入：</strong>将一个数据放到当前的最后一个位置，然后与自己的父节点对比，如果大于自己的父节点，那么和自己的父节点进行交换。</li>
+</ul>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">HeapInsert</span><span class="params">(<span class="type">int</span> *arr, <span class="type">int</span> index)</span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(arr[index] &gt; arr[(index - <span class="number">1</span>) / <span class="number">2</span>])&#123;</span><br><span class="line">		swap(arr, index, (index - <span class="number">1</span>) / <span class="number">2</span>);</span><br><span class="line">    	index = (index - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>堆化：</strong>将一个数据放到任意一个位置，并且将整个堆变成大根堆的形式。 时间复杂度 log N。</li>
+</ul>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Heapify</span><span class="params">(<span class="type">int</span> *arr, <span class="type">int</span> index, <span class="type">int</span> Heapsize)</span>&#123;</span><br><span class="line">    <span class="type">int</span> left = index * <span class="number">2</span> + <span class="number">1</span>; </span><br><span class="line">	<span class="keyword">while</span>(left &lt; Heapsize)&#123;</span><br><span class="line">        <span class="type">int</span> largest = index;</span><br><span class="line">        <span class="keyword">if</span>(left + <span class="number">1</span> &lt; Heapsize) &#123;</span><br><span class="line">            largest = arr[largest] &lt; arr[left + <span class="number">1</span>] ? left + <span class="number">1</span> : largest;</span><br><span class="line">        &#125;</span><br><span class="line">        largest = arr[largest] &lt; arr[left] ? left : largest;</span><br><span class="line">        <span class="keyword">if</span>(largest == index) <span class="keyword">break</span>;</span><br><span class="line">        swap(arr, largest, index);</span><br><span class="line">        left = largest * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">        index = largest;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>代码思路：</strong>使用<em>HeapInsert</em>将数组输入到一个大根堆中，将堆的第一个值（最大值）和最后一个值进行交换，然后Heapsize减小一个，即最大值在最后位置并且脱离堆，然后对刚才交换到根节点的值进行<em>Heapify</em>使得整个堆重新成为大根堆。</li>
+</ul>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">HeapSort</span><span class="params">(<span class="type">int</span> *arr, <span class="type">int</span> size)</span>&#123;</span><br><span class="line">    <span class="type">int</span> Heapsize = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(Heapsize &lt; size)&#123;</span><br><span class="line">        HeapInsert(arr, Heapsize);</span><br><span class="line">        Heapsize++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(Heapsize &gt; <span class="number">2</span>)&#123;</span><br><span class="line">        swap(arr, <span class="number">0</span>, --Heapsize);</span><br><span class="line">        Heapify(arr, <span class="number">0</span>, Heapsize);</span><br><span class="line">    &#125;</span><br><span class="line">    swap(arr, <span class="number">0</span>, --Heapsize);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>时间复杂度 N log N，空间复杂度1，不占用额外空间。</p>
+<h3 id="二、数据结构"><a href="#二、数据结构" class="headerlink" title="二、数据结构"></a>二、数据结构</h3>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+</search>

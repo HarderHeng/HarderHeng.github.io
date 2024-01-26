@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="HarderHeng">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/20/从零开始的stm32学习/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="写在前面  原本是跟着江协科技的课入门了stm32f103，但是对stm32的开发还停留在一个比较浅的认知，以及实操水平有限只会使用库函数，所以想通过stm32f401re的学习从头到尾搞明白整个流程，也为将来自己画板子、写启动文件、汇编语言打好基础。 一、使用keil进行stm32开发刚开始的入门软件是keil，所以这次也打算从keil入手，将keil学明白之后再尝试使用其他的软件和环境进行开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从零开始的Stm32学习">
+<meta property="og:url" content="http://example.com/2024/01/20/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Stm32%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="写在前面  原本是跟着江协科技的课入门了stm32f103，但是对stm32的开发还停留在一个比较浅的认知，以及实操水平有限只会使用库函数，所以想通过stm32f401re的学习从头到尾搞明白整个流程，也为将来自己画板子、写启动文件、汇编语言打好基础。 一、使用keil进行stm32开发刚开始的入门软件是keil，所以这次也打算从keil入手，将keil学明白之后再尝试使用其他的软件和环境进行开发">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231016155952611.png">
+<meta property="og:image" content="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113132948740.png">
+<meta property="og:image" content="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113133125832.png">
+<meta property="og:image" content="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113194330817.png">
+<meta property="og:image" content="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113220608188.png">
+<meta property="og:image" content="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231114175347871.png">
+<meta property="og:image" content="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/IMG_1117.png">
+<meta property="og:image" content="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113201719527.png">
+<meta property="article:published_time" content="2024-01-20T10:16:19.000Z">
+<meta property="article:modified_time" content="2024-01-20T10:19:21.630Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="STM32">
+<meta property="article:tag" content="嵌入式开发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231016155952611.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            从零开始的Stm32学习 -
+        
+        Heng&#39;s Blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Heng&#39;s Blog
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"simple","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":6,"number":true,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/50c479bb3650f0114d57f327a16842daaacf4e2c.jpg","dark":"/images/50c479bb3650f0114d57f327a16842daaacf4e2c.jpg"},"title":"Welcome to my Blog","subtitle":{"text":["Welcome","Love"],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn"},"typing_speed":150,"backing_speed":0,"starting_delay":1000,"backing_delay":1500,"loop":false,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"4.0rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"主页":{"path":"/","icon":"fa-regular fa-house"},"归档":{"path":"/archives","icon":"fa-regular fa-archive"},"标签":{"path":"/tags/","icon":"fa-regular fa-tags"},"分类":{"path":"/categories","icon":"fa-regular fa-tags"},"相册":{"path":"/masonry/","icon":"fa-regular fa-image"},"关于":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Github":"https://github.com/HarderHeng","碎碎念":"/odds"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"cloud"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"info","announcement":"欢迎来到我的个人博客,我在这里记录我的生活和学习,正如我的域名后缀一样","links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/10/1 00:00:00"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":true};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Heng&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    主页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    归档
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/tags/"
+                                        >
+                                    <i class="fa-regular fa-tags fa-fw"></i>
+                                    标签
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories"
+                                        >
+                                    <i class="fa-regular fa-tags fa-fw"></i>
+                                    分类
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/masonry/"
+                                        >
+                                    <i class="fa-regular fa-image fa-fw"></i>
+                                    相册
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    关于
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/about">
+                                                    ME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/HarderHeng">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/odds">
+                                                    碎碎念
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                主页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                归档
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/tags/"
+                        >
+                            <span>
+                                标签
+                            </span>
+                            
+                                <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories"
+                        >
+                            <span>
+                                分类
+                            </span>
+                            
+                                <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/masonry/"
+                        >
+                            <span>
+                                相册
+                            </span>
+                            
+                                <i class="fa-regular fa-image fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-关于"
+                        >
+                            <span>
+                                关于
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-关于">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/about">ME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/HarderHeng">GITHUB</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/odds">碎碎念</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/0df431adcbef7609e0ba65422edda3cc7dd99ebe.webp" alt="从零开始的Stm32学习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">从零开始的Stm32学习</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/IMG_0295.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">HarderHeng</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv1</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-20 18:16:19</span>
+        <span class="mobile">2024-01-20 18:16:19</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-20 18:19:21</span>
+            <span class="mobile">2024-01-20 18:19:21</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/STM32/">STM32</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p><em><strong>写在前面</strong></em>  <em>原本是跟着江协科技的课入门了stm32f103，但是对stm32的开发还停留在一个比较浅的认知，以及实操水平有限只会使用库函数，所以想通过stm32f401re的学习从头到尾搞明白整个流程，也为将来自己画板子、写启动文件、汇编语言打好基础。</em></p>
+<h3 id="一、使用keil进行stm32开发"><a href="#一、使用keil进行stm32开发" class="headerlink" title="一、使用keil进行stm32开发"></a>一、使用keil进行stm32开发</h3><p>刚开始的入门软件是keil，所以这次也打算从keil入手，将keil学明白之后再尝试使用其他的软件和环境进行开发，同时也是使用库函数的方式进行开发。</p>
+<p>使用keil中的<strong>pack installer</strong>安装自己要开发的板子的对应版本，然后在意法半导体官网去找相对应的软件包并解压。在官网的导航找到<strong>软件-》微控制器软件-》STM32微控制器软件-》标准外设软件库</strong>，然后选择适合自己的开发板的就可以。</p>
+<p>这里我用的是stm32f401re开发板，所以要找stm32f4的软件包，软件包中有对应的启动文件以及库函数，库函数直接对底层硬件进行操作，所以可以提高开发的效率，但是也同样会占用更多的资源（库函数之于直接操作寄存器就好像是高级语言之于低级语言）。在keil中新建工程，并且在对应的文件夹下建立<strong>Libraries</strong>（存放库函数）、<strong>User</strong>（存放自己写的main函数）、<strong>Start</strong>（存放各种启动文件）。</p>
+<p><strong>启动文件详解</strong>：1. CMSIS标准中定义了内核函数层，和设备外设访问层，</p>
+<h3 id="二、片上外设详解"><a href="#二、片上外设详解" class="headerlink" title="二、片上外设详解"></a>二、片上外设详解</h3><h4 id="1、GPIO（通用输入输出）"><a href="#1、GPIO（通用输入输出）" class="headerlink" title="1、GPIO（通用输入输出）"></a>1、GPIO（通用输入输出）<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231016155952611.png"
+                      alt="image-20231016155952611"
+                ></h4><p>从IO引脚进入有两个保护二极管，用来防止电压过高或者电压过低。从IO口进入首先是驱动器，然后是寄存器。</p>
+<p>上半部分的驱动器对应输入模式，信号输入首先会有一个上拉和下拉电阻，这里有三种模式可选分别是上拉和下拉和浮空。当输入端没有信号输入时，进入寄存器的高低电平就由此处控制。上拉默认为高电平的输入模式，下拉默认为低电平的输入模式。再向内有一个<strong>肖特基（施密特）触发器</strong>，是一个对输入信号进行整形的装置，当输入的信号高于一个上限时就向内输入高电平，低于下限则输入低电平，用这种方法可以减少数据的抖动。在施密特触发器前后分别接到了模拟输入和复用功能输入上，对应额外的功能。</p>
+<p>下半部分的驱动器对应输入模式。可以用数据寄存器进行数据的输出，位设置清除寄存器可以单独操作输出寄存器的某一位但是不影响其他位，一整个数据寄存器控制所有的端口，所以不能直接对某一位进行操作，要使用按位与和按位或的操作，或者直接用位设置清除寄存器。也可以接到复用功能也就是其他片上外设上来获取额外的功能。两个mos管<strong>P_MOS，N_MOS</strong>可以配置推挽（push_pull）和开漏（open_drain）或者关闭。</p>
+<h6 id="GPIO的八种工作模式"><a href="#GPIO的八种工作模式" class="headerlink" title="GPIO的八种工作模式"></a>GPIO的八种工作模式</h6><p><strong>1）模拟输入 GPIO_Mode_AIN</strong> 输入模式直接接入模拟输入</p>
+<p><strong>2）浮空输入 GPIO_Mode_IN_FLOATING</strong> 上下拉电阻选择浮空输入模式，容易被干扰</p>
+<p><strong>3）下拉输入 GPIO_Mode_IPD</strong> 上下拉电阻选择下拉输入模式，默认电平为低，可以用于检测由低到高的电平变化</p>
+<p><strong>4）上拉输入 GPIO_Mode_IPU</strong> 上下拉电阻选择上拉输入模式，默认电平为高，可以用于检测由低到高的电平变化</p>
+<p><strong>5）开漏输出 GPIO_Mode_OUT_OD ** 上P_MOS不工作，只有下面的N_MOS在工作，可以输出低电平，不能直接输出高电平，要靠外面的上拉电阻。适合用作通讯协议的模式，不会强行输出高电平。</strong><em>可以同时输入输出。</em>**</p>
+<p><strong>6）推挽输出 GPIO_Mode_OUT_PP</strong> P_MOS和N_MOS都在工作，可以直接输出高低电平，是一种强推输出模式。<em><strong>可以同时输入输出</strong></em></p>
+<p><strong>7）复用开漏输出 GPIO_Mode_AF_OD</strong> GPIO此时连接到片上外设受片上外设控制</p>
+<p><strong>8）复用推挽输出 GPIO_Mode_AF_PP</strong> GPIO此时连接到片上外设受片上外设控制</p>
+<h6 id="GPIO"><a href="#GPIO" class="headerlink" title="GPIO"></a>GPIO</h6><h4 id="2、NVIC（嵌套向量中断控制器）"><a href="#2、NVIC（嵌套向量中断控制器）" class="headerlink" title="2、NVIC（嵌套向量中断控制器）"></a>2、NVIC（嵌套向量中断控制器）</h4><p>NVIC是一个内核外设，也就是在芯片内部，但是不同厂家也会对NVIC的功能进行裁切，但是多数情况下的NVIC是差不多的，关于NVIC的定义一般放在<strong>misc.c</strong>和<strong>misc.h</strong>里面。NVIC是用来控制系统异常和外部中断的。</p>
+<h6 id="使用NVIC"><a href="#使用NVIC" class="headerlink" title="使用NVIC"></a>使用NVIC</h6><p>首先使能外设某个中断，这个具体由每个外设的相关中断使能位控制。然后要使能NVIC的中断，配置NVIC中断优先级，设置优先级分配组，一共有四位作为优先级，可以将四位分别分配给响应优先级和抢占优先级，使得两种优先级都有一定的范围，接下来使用NVIC的初始化结构体为开启的外设中断通道分配响应优先级和抢占优先级，<em>（响应优先级是中断同时发生时响应优先级高的可以产生中断，抢占优先级是在进行一个中断时另一个抢占优先级高的能够中断抢占优先级低的事件）</em>，然后使用初始化函数初始化NVIC。配置好NVIC和外设的中断之后，接下来要编写中断函数，当外设的中断事件触发时，就可以跳转到自己写的中断函数中。</p>
+<h4 id="3、USART"><a href="#3、USART" class="headerlink" title="3、USART"></a>3、USART</h4><h4 id="4、I2C"><a href="#4、I2C" class="headerlink" title="4、I2C"></a>4、I2C</h4><h4 id="5、TIM定时器"><a href="#5、TIM定时器" class="headerlink" title="5、TIM定时器"></a>5、TIM定时器</h4><p>定时器有三种，分别是基本定时器，通用定时器，高级定时器。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113132948740.png"
+                      alt="image-20231113132948740"
+                ></p>
+<p><strong>基本定时器</strong>的基本单元就是时基单元，由<strong>预分频器、计数器和自动重装寄存器</strong>构成，预分频器负责将内部时钟进行分频，自动重装寄存器中存着需要计时的次数，计数器会向上计数，到达自动重装寄存器的数值时重新装填，并且触发触发NVIC的中断，或者跳转到更新事件。可以开启主模式触发DAC，在主模式下计数器触发不会触发中断，会直接触发映射到<strong>TRGO</strong>然后直接输出DAC。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113133125832.png"
+                      alt="image-20231113133125832"
+                ></p>
+<p><strong>通用定时器</strong>的核心还是时基单元，和基本定时器是一样的。通用定时器和高级定时器支持向下计数和中央对齐模式。通用定时器支持外部时钟驱动，从外部时钟进入的信号经过极性选择、边缘检测和预分频器还有滤波，可以直接作为时基单元的时钟，这一路叫做<strong>外部时钟模式2</strong>。另外的<strong>TRGI</strong>触发输入当做外部时钟，叫做<strong>外部时钟模式1</strong>。外部时钟可以直接接入TRGI；其他的定时器的TRGO输出也可以接入作为定时器的<strong>级联</strong>；也可以从CH1引脚的边沿，CH1引脚，CH2引脚作为输入。</p>
+<p>下半部分是输入捕获和输出比较的电路，这两个功能共用一套寄存器，所以同时只能使用其中一种功能。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113194330817.png"
+                      alt="image-20231113194330817"
+                ></p>
+<p><strong>高级定时器</strong>的计数器后面还有一个重复次数计数器，计数器满多少个周期后产生输出，也就是一个<em>输出分频器</em>。相比于通用定时器，在下面的输出比较模块多了<strong>DTG</strong>功能，输出多了一个口可以生成PWM的互补波形，用来驱动三相无刷电机。下面还有一个刹车输入，外部引脚产生刹车信号或者外部时钟失效是，就会产生刹车信号自动切断电机的信号。</p>
+<p><strong>预分频控制寄存器</strong>不会直接控制分频系数，预分频控制寄存器有一个<strong>缓冲寄存器</strong>，这才是真正起作用的寄存器。改变预分频控制寄存器后，在下一个周期时才会更改缓冲寄存器的值来改变分频系数。自动重装寄存器也有缓冲寄存器，效果是一样的。影子寄存器的作用就是保证数据的更改在同一个周期后更新，防止发生错误。</p>
+<p>计数器的<strong>计数频率</strong>就是输入的<strong>时钟频率&#x2F;（分频系数+1）</strong>,计数器溢出的频率<strong>（中断更新频率）</strong>就是<strong>计数频率&#x2F;（自动重装寄存器+1）</strong></p>
+<p>定时器的输出可以进入中断输出控制。</p>
+<p><strong>预分频控制寄存器</strong>不会直接控制分频系数，预分频控制寄存器有一个<strong>缓冲寄存器</strong>，这才是真正起作用的寄存器。改变预分频控制寄存器后，在下一个周期时才会更改缓冲寄存器的值来改变分频系数。</p>
+<p><em><strong>（1）使用TIM定时器</strong></em></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113220608188.png"
+                      alt="image-20231113220608188"
+                ></p>
+<p>要使用定时器就要打通从左到右的全流程。首先时钟的输入源，RCC内部时钟或者ITR其他定时器或者TI的输入捕获通道，通过外部时钟可以选择两个外部时钟模式，ETR引脚的配置需要额外配置一下。配置好输入源之后，可以开始配置时基单元的两个寄存器，然后要配置中断输出控制和NVIC两个东西。最后还要手动启动一下运行控制。</p>
+<p><em><strong>（2）输出比较功能Outp Compare</strong></em></p>
+<p>输出比较功能可以用来输出PWM信号。使用输入捕获和输出比较寄存器，将<strong>CNT计数器</strong>里面的数字和<strong>CCR捕获比较寄存器</strong>进行对比，然后如果大于或者小于就翻转输出的电平。</p>
+<p>调整时基单元的输入，预分频器PSC，ARR自动重装器，可以调整PWM的周期和频率，然后CCR的值和ARR值的比值就是占空比。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231114175347871.png"
+                      alt="image-20231114175347871"
+                ></p>
+<p>输出模式控制器有八种模式。</p>
+<ul>
+<li>冻结， REF保持原状态</li>
+<li>匹配时置有效电平，CNT&#x3D;CCR时，REF置有效电平（高电平）</li>
+<li>匹配值置无效电平，CNT&#x3D;CCR时，REF置无效电平（低电平）</li>
+<li>匹配时电平翻转，CNT&#x3D;CCR时，REF电平翻转，输出的波形占空比始终为50%</li>
+<li>强制有效电平，CNT和CCR无效，REF强制为高电平</li>
+<li>强制无效电平，CNT和CCR无效，REF强制为低电平</li>
+<li>PWM模式1，向上计数：CNT&lt;CCR时置REF为有效电平，CNT&gt;&#x3D;CCR时置REF为无效电平，向下计数同理。</li>
+<li>PWM模式2，向上计数：CNT&lt;CCR时置REF为无效电平，CNT&gt;&#x3D;CCR时置REF为有效电平，向下计数同理。</li>
+</ul>
+<p>在输出信号后再经过CC1P，这里还可以进行一次极性翻转。最后信号会通向GPIO口。</p>
+<p>对于高级定时器，有两个互补的PWM输出端口，用来驱动外面的推挽电路。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/IMG_1117.png"
+                      alt="IMG_1117"
+                ></p>
+<p>这两个互补的端口会分别导通正极和负极，在外面产生一个PWM波形，最高电压就是推挽电路的正极电压。在这两个端口前面还有一个死区生成器，在两个端口切换电平是提供一段时间的死区防止上两个端口接通时间比较接近导致的短路。</p>
+<p>要使用PWM首先需要配置TIM定时器，然后配置PWM这一块所有的寄存器，就可以使用PWM了。</p>
+<h4 id="6、RCC时钟树"><a href="#6、RCC时钟树" class="headerlink" title="6、RCC时钟树"></a>6、RCC时钟树</h4><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113201719527.png"
+                      alt="image-20231113201719527"
+                ></p>
+<p>时钟源有四个，分别是内部外部高速低速。外部的是石英震荡器，内部的是RC振荡器，外部时钟更稳定，更常用。 </p>
+<ul>
+<li><p>HSI高速内部时钟 8MHz</p>
+</li>
+<li><p>HSE高速外部时钟 4-16MHz</p>
+</li>
+<li><p>LSE低速外部时钟 32.768kHZ</p>
+</li>
+<li><p>LSI低速内部时钟 40kHz</p>
+</li>
+<li><p><strong>PLLMUL</strong>是锁相环，外部高速时钟会经过锁相环倍频，然后进入预分频器。</p>
+</li>
+<li><p><strong>CSS</strong>用来检测外部时钟是否正常，如果出了问题会自动切换到内部时钟</p>
+</li>
+<li><p>进入预分频器后，旁路可能会有倍频器来输出72MHz到TIM定时器。</p>
+<p>使用外设时钟控制，就可以将外设时钟使能与进时钟输出，也就是启动时钟。</p>
+</li>
+</ul>
+<h3 id="三、通信协议"><a href="#三、通信协议" class="headerlink" title="三、通信协议"></a>三、通信协议</h3><h4 id="1、I2C协议"><a href="#1、I2C协议" class="headerlink" title="1、I2C协议"></a>1、I2C协议</h4><p>同步半双工，带数据应答，支持总线挂载多设备，两条总线：<strong>SCL（时序总线）</strong>，<strong>SDA（数据总线）</strong></p>
+<p><strong>硬件I2C</strong>：STM32如果有I2C硬件模块可以直接使用，查手册找一下I2C挂载在何处，然后初始化I2C的各种属性。直接往数据寄存器中写入值发送然后直接从数据寄存器中读取数据。</p>
+<p><strong>软件I2C</strong>：可以使用软件函数的方式模拟I2C协议，初始化GPIO口，将一个口的输出作为SCL另一个作为SDA，然后根据I2C的时序特点在不同的时序阶段将数据放在SDA总线上，定时上拉和上拉SCL。</p>
+<p><em><strong>时序特点</strong></em>：</p>
+<p><strong>1)基本时序单元</strong></p>
+<p>​	<strong>产生起始条件：</strong>SCL高电平期间，SDA从高电平切换到低电平</p>
+<p>​	<strong>产生终止条件：</strong>SCL高电平期间，SDA从低电平切换到高电平</p>
+<p>​	<em>产生起始条件和终止条件都是由主机决定的。</em></p>
+<p>​	<strong>主机发送数据：</strong>SCL低电平期间将一位数据放到SDA上后，主机将SCL提到高电平，此时SDA不允许有变化，从而让从机接收数据，高位先行。</p>
+<p>​	<strong>主机接收数据：</strong>主机释放SDA将控制权交给从机，主机控制SCL，在低电平期间从机发送数据，在高电平期间主机接收数据</p>
+<p>​	<strong>发送应答：</strong>在主机接收完一个字节后，在下一个时钟发送一位数据，数据0表示应答</p>
+<p>​	<strong>接收应答：</strong>在主机发送给从机一个字节后，在下一个时钟发送一位数据给主机，主机此时要接受这个数据，数据0表示应答，数据1表示非应答</p>
+<p><strong>2)通信时序</strong></p>
+<p>​	<strong>指定地址写：</strong>对于指定设备的指定寄存器写入数据。</p>
+<p>​	第一个数据帧，七位地址<strong>＋</strong>一位读写位（0写1读），紧跟着就是应答位，从机此时应该给主机接受应答。第二个数据帧，可以是设备的内部寄存器地址，紧跟着应答位。</p>
+<p>​	再往后主机可以产生终止条件。</p>
+<p>​	<strong>指定地址读：</strong>对指定设备的指定寄存器写入数据。</p>
+<p>​	第一个数据帧，七位地址**+<strong>一位读写位（此时写入），然后从机数据应答，第二个数据帧，指定设备的内部寄存器地址，然后从机应答，</strong><em>此时重新产生起始条件</em><strong>，第三个数据帧指定七位地址</strong>+**一个读写位（此时读入），	第四个数据帧就是从机返回给主机的数据。</p>
+<p>​	最后主机产生终止条件。</p>
+<ol start="3">
+<li></li>
+</ol>
+<h4 id="2、USART协议"><a href="#2、USART协议" class="headerlink" title="2、USART协议"></a>2、USART协议</h4><p>异步全双工，点对点通信，两个引脚<strong>TX和RX</strong>，分别用来发送数据和接收数据，点对点发送数据也就是TX接RX，RX接TX。</p>
+<p>波特率是串口通信的速率。</p>
+<p><em><strong>时序特点：</strong></em></p>
+<p>空闲状态是高电平，每个时序单元的<strong>起始位</strong>是低电平来表示开始传输一个数据帧，<strong>停止位</strong>是一个高电平，也就是重新回到空闲状态。数据帧低位先行。在停止位之前，数据帧之后，可以选择性的添加一个校验位。</p>
+<p><em><strong>轮询模式：</strong></em></p>
+<h4 id="3、PWM输出信号"><a href="#3、PWM输出信号" class="headerlink" title="3、PWM输出信号"></a>3、PWM输出信号</h4><p>PWM是一种模拟信号，在具有惯性的系统中，对PWM进行调制，就可以等效的获得的模拟量。<strong>PWM频率&#x3D;1&#x2F;T</strong>,<strong>占空比&#x3D;Ton&#x2F;T</strong>也就是每个周期中高电平的时间比上周期的时间，占空比决定模拟输出的电压。<strong>分辨率占空比变化步距</strong>，就是占空比的变化程度。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 从零开始的Stm32学习</li>
+        <li><strong>Author:</strong> HarderHeng</li>
+        <li><strong>Created at
+                :</strong> 2024-01-20 18:16:19</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-01-20 18:19:21
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://harderheng.life/2024/01/20/从零开始的Stm32学习/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/STM32/">#STM32</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">#嵌入式开发</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/20/Git%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0%E5%92%8C%E5%AE%9E%E6%93%8D/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Git简单学习和实操</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/20/Java%E5%AD%A6%E4%B9%A0%E8%BF%87%E7%A8%8B/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Java学习过程</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div class="twikoo-container">
+        <script data-swup-reload-script
+                src='https://cdn.staticfile.org/twikoo/1.6.22/twikoo.all.min.js'
+        ></script>
+        <div id="twikoo-comment"></div>
+        <script data-swup-reload-script>
+            function loadTwikoo() {
+                twikoo.init({
+                    el: '#twikoo-comment',
+                    envId: 'https://harderheng.netlify.app/.netlify/functions/twikoo',
+                });
+            }
+
+            if ('true') {
+                const loadTwikooTimeout = setTimeout(() => {
+                    loadTwikoo();
+                    clearTimeout(loadTwikooTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadTwikoo);
+            }
+        </script>
+    </div>
+
+
+        
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">从零开始的Stm32学习</div>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BD%BF%E7%94%A8keil%E8%BF%9B%E8%A1%8Cstm32%E5%BC%80%E5%8F%91"><span class="nav-number">1.</span> <span class="nav-text">一、使用keil进行stm32开发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%89%87%E4%B8%8A%E5%A4%96%E8%AE%BE%E8%AF%A6%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">二、片上外设详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81GPIO%EF%BC%88%E9%80%9A%E7%94%A8%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">1、GPIO（通用输入输出）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#GPIO%E7%9A%84%E5%85%AB%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.0.1.</span> <span class="nav-text">GPIO的八种工作模式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#GPIO"><span class="nav-number">2.1.0.2.</span> <span class="nav-text">GPIO</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81NVIC%EF%BC%88%E5%B5%8C%E5%A5%97%E5%90%91%E9%87%8F%E4%B8%AD%E6%96%AD%E6%8E%A7%E5%88%B6%E5%99%A8%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">2、NVIC（嵌套向量中断控制器）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8NVIC"><span class="nav-number">2.2.0.1.</span> <span class="nav-text">使用NVIC</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81USART"><span class="nav-number">2.3.</span> <span class="nav-text">3、USART</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81I2C"><span class="nav-number">2.4.</span> <span class="nav-text">4、I2C</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%E3%80%81TIM%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="nav-number">2.5.</span> <span class="nav-text">5、TIM定时器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6%E3%80%81RCC%E6%97%B6%E9%92%9F%E6%A0%91"><span class="nav-number">2.6.</span> <span class="nav-text">6、RCC时钟树</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.</span> <span class="nav-text">三、通信协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81I2C%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.1.</span> <span class="nav-text">1、I2C协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81USART%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.2.</span> <span class="nav-text">2、USART协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81PWM%E8%BE%93%E5%87%BA%E4%BF%A1%E5%8F%B7"><span class="nav-number">3.3.</span> <span class="nav-text">3、PWM输出信号</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+    
+<script src="/js/libs/minimasonry.min.js"></script>
+
+    
+<script src="/js/plugins/masonry.js" type="module"></script>
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>
