@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Git简单学习和实操</title>
+    <url>/2024/01/20/Git%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0%E5%92%8C%E5%AE%9E%E6%93%8D/</url>
+    <content><![CDATA[<h3 id="一、Git安装"><a href="#一、Git安装" class="headerlink" title="一、Git安装"></a>一、Git安装</h3><h3 id="二、Git基本操作"><a href="#二、Git基本操作" class="headerlink" title="二、Git基本操作"></a>二、Git基本操作</h3><p><strong>1）</strong>安装好Git后就可以对Git进行配置，使用命令<code>Git config</code>命令进行配置。初始配置一般会加上<code>--global</code>，即全局设置，在此台电脑上的所有工作区都适用的配置。刚开始需要配置邮箱账号和密码，为配置命令加上<code>user.name&quot; &quot;</code>和<code>user.email&quot; &quot;</code>的参数，就可以指定用户和邮箱。</p>
+<p><strong>2）</strong>要想在一个本地工作区（也就是文件）中使用Git需要在对应的文件夹路径下使用<code>Git init</code>命令，之后就会在这个路径下自动生成一个默认隐藏的**.git**文件夹。</p>
+<p>使用命令<code>git status</code>可以看到整个文件夹中所有文件（夹）的状态，即修改后有没有被添加进暂存区</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java学习过程</title>
     <url>/2024/01/20/Java%E5%AD%A6%E4%B9%A0%E8%BF%87%E7%A8%8B/</url>
     <content><![CDATA[<h1 id="java学习"><a href="#java学习" class="headerlink" title="java学习"></a>java学习</h1><h3 id="一、java简介"><a href="#一、java简介" class="headerlink" title="一、java简介"></a>一、java简介</h3><p>java是一门面向对象的编程语言。</p>
@@ -67,6 +81,32 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python学习过程</title>
+    <url>/2024/01/20/Python%E5%AD%A6%E4%B9%A0%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<h3 id="一、py理解"><a href="#一、py理解" class="headerlink" title="一、py理解"></a>一、py理解</h3><p>py是一种解释型语言，也就是说不需要编译就可以直接运行，类似于PHP和Perl语言</p>
+<p>py是交互式语言，可以在命令行中<code>&gt;&gt;&gt;</code>后面直接执行代码</p>
+<p>py是面向对象语言，即将程序分为多个对象进行编程，每个对象执行一定的功能，各对象之间联系性低，可维护性高</p>
+<p><em><strong>py使用缩进来表示代码块，而不是 <code>&#123;&#125;</code>。</strong></em></p>
+<p><em><strong>py使用<code>\</code>来连接多行语句，默认不能换行。</strong></em></p>
+<p><em><strong>空行可以用来分隔函数和类，便于代码的维护和重构。</strong></em></p>
+<p><em><strong>同一行显示多条语句可以使用分号 <code>;</code> 进行分隔。</strong></em></p>
+<p><em><strong>py中不需要像c一样声明变量，只要直接写出变量并给出初始值就行。</strong></em></p>
+<h3 id="二、py注释（写注释是一个好习惯）"><a href="#二、py注释（写注释是一个好习惯）" class="headerlink" title="二、py注释（写注释是一个好习惯）"></a>二、py注释（写注释是一个好习惯）</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#这是注释</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">这是注释</span></span><br><span class="line"><span class="string"># &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">这是注释</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;hello world!&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>python有这三种常用的注释。</p>
+<h3 id="三、标准数据类型"><a href="#三、标准数据类型" class="headerlink" title="三、标准数据类型"></a>三、标准数据类型</h3><h6 id="（1-Numbers数字"><a href="#（1-Numbers数字" class="headerlink" title="（1 Numbers数字"></a>（1 Numbers数字</h6><p>数字中有<strong>整型</strong>、__浮点型__、<strong>布尔型</strong>、<strong>复数型</strong></p>
+<h6 id="（2-String字符串"><a href="#（2-String字符串" class="headerlink" title="（2 String字符串"></a>（2 String字符串</h6><p>字符串用单引号<code>&#39;str&#39;</code>和双引号<code>&quot;str&quot;</code>表示 ，然后可以用三引号表示多行字符串。转义符和c语言中的转义符是一样的都是反斜杠<code>\</code>。</p>
+<p>怎么让转义符不生效？在整个字符串前面加上<code>r</code>。连续的字符串可以被自动连接起来，也可以用<code>+</code>表示两个字符串的相连，用乘号<code>*</code>加上次数表示重复。</p>
+<p>字符串的最后一个字符不能是反斜杠</p>
+<h6 id="（3-List列表"><a href="#（3-List列表" class="headerlink" title="（3 List列表"></a>（3 List列表</h6><h6 id="（4-Tuple元组"><a href="#（4-Tuple元组" class="headerlink" title="（4 Tuple元组"></a>（4 Tuple元组</h6><h6 id="（5-Dictionary字典"><a href="#（5-Dictionary字典" class="headerlink" title="（5 Dictionary字典"></a>（5 Dictionary字典</h6><h3 id="四、字符串"><a href="#四、字符串" class="headerlink" title="四、字符串"></a>四、字符串</h3>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -219,46 +259,6 @@
       <tags>
         <tag>STM32</tag>
         <tag>嵌入式开发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git简单学习和实操</title>
-    <url>/2024/01/20/Git%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0%E5%92%8C%E5%AE%9E%E6%93%8D/</url>
-    <content><![CDATA[<h3 id="一、Git安装"><a href="#一、Git安装" class="headerlink" title="一、Git安装"></a>一、Git安装</h3><h3 id="二、Git基本操作"><a href="#二、Git基本操作" class="headerlink" title="二、Git基本操作"></a>二、Git基本操作</h3><p><strong>1）</strong>安装好Git后就可以对Git进行配置，使用命令<code>Git config</code>命令进行配置。初始配置一般会加上<code>--global</code>，即全局设置，在此台电脑上的所有工作区都适用的配置。刚开始需要配置邮箱账号和密码，为配置命令加上<code>user.name&quot; &quot;</code>和<code>user.email&quot; &quot;</code>的参数，就可以指定用户和邮箱。</p>
-<p><strong>2）</strong>要想在一个本地工作区（也就是文件）中使用Git需要在对应的文件夹路径下使用<code>Git init</code>命令，之后就会在这个路径下自动生成一个默认隐藏的**.git**文件夹。</p>
-<p>使用命令<code>git status</code>可以看到整个文件夹中所有文件（夹）的状态，即修改后有没有被添加进暂存区</p>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python学习过程</title>
-    <url>/2024/01/20/Python%E5%AD%A6%E4%B9%A0%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<h3 id="一、py理解"><a href="#一、py理解" class="headerlink" title="一、py理解"></a>一、py理解</h3><p>py是一种解释型语言，也就是说不需要编译就可以直接运行，类似于PHP和Perl语言</p>
-<p>py是交互式语言，可以在命令行中<code>&gt;&gt;&gt;</code>后面直接执行代码</p>
-<p>py是面向对象语言，即将程序分为多个对象进行编程，每个对象执行一定的功能，各对象之间联系性低，可维护性高</p>
-<p><em><strong>py使用缩进来表示代码块，而不是 <code>&#123;&#125;</code>。</strong></em></p>
-<p><em><strong>py使用<code>\</code>来连接多行语句，默认不能换行。</strong></em></p>
-<p><em><strong>空行可以用来分隔函数和类，便于代码的维护和重构。</strong></em></p>
-<p><em><strong>同一行显示多条语句可以使用分号 <code>;</code> 进行分隔。</strong></em></p>
-<p><em><strong>py中不需要像c一样声明变量，只要直接写出变量并给出初始值就行。</strong></em></p>
-<h3 id="二、py注释（写注释是一个好习惯）"><a href="#二、py注释（写注释是一个好习惯）" class="headerlink" title="二、py注释（写注释是一个好习惯）"></a>二、py注释（写注释是一个好习惯）</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#这是注释</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">这是注释</span></span><br><span class="line"><span class="string"># &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">这是注释</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;hello world!&quot;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>python有这三种常用的注释。</p>
-<h3 id="三、标准数据类型"><a href="#三、标准数据类型" class="headerlink" title="三、标准数据类型"></a>三、标准数据类型</h3><h6 id="（1-Numbers数字"><a href="#（1-Numbers数字" class="headerlink" title="（1 Numbers数字"></a>（1 Numbers数字</h6><p>数字中有<strong>整型</strong>、__浮点型__、<strong>布尔型</strong>、<strong>复数型</strong></p>
-<h6 id="（2-String字符串"><a href="#（2-String字符串" class="headerlink" title="（2 String字符串"></a>（2 String字符串</h6><p>字符串用单引号<code>&#39;str&#39;</code>和双引号<code>&quot;str&quot;</code>表示 ，然后可以用三引号表示多行字符串。转义符和c语言中的转义符是一样的都是反斜杠<code>\</code>。</p>
-<p>怎么让转义符不生效？在整个字符串前面加上<code>r</code>。连续的字符串可以被自动连接起来，也可以用<code>+</code>表示两个字符串的相连，用乘号<code>*</code>加上次数表示重复。</p>
-<p>字符串的最后一个字符不能是反斜杠</p>
-<h6 id="（3-List列表"><a href="#（3-List列表" class="headerlink" title="（3 List列表"></a>（3 List列表</h6><h6 id="（4-Tuple元组"><a href="#（4-Tuple元组" class="headerlink" title="（4 Tuple元组"></a>（4 Tuple元组</h6><h6 id="（5-Dictionary字典"><a href="#（5-Dictionary字典" class="headerlink" title="（5 Dictionary字典"></a>（5 Dictionary字典</h6><h3 id="四、字符串"><a href="#四、字符串" class="headerlink" title="四、字符串"></a>四、字符串</h3>]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
