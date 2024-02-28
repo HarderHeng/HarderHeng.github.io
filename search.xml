@@ -274,8 +274,19 @@
 </ul>
 <div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line">a = a ^ b;</span><br><span class="line">b = a ^ b;</span><br><span class="line">a = a ^ b;</span><br></pre></td></tr></table></figure></div>
 
+<ul>
+<li>二分法：怎么分？<em>middle</em> 在哪不重要，关键在于对比后赋值，小于<em>middle</em>则直接赋值<em>middle - 1</em>，大于<em>middle</em>则直接赋值<em>middle + 1</em>。</li>
+</ul>
+<p>以下是二分查找的代码</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">search</span><span class="params">(<span class="type">int</span>* nums, <span class="type">int</span> numsSize, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">    <span class="type">int</span> left = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> right = numsSize - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (right &gt;= left) &#123;</span><br><span class="line">        <span class="type">int</span> middle = left + (right - left) / <span class="number">2</span>; <span class="comment">//防止溢出</span></span><br><span class="line">        <span class="keyword">if</span> (nums[middle] &gt; target) &#123;</span><br><span class="line">            right = middle - <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[middle] &lt; target) &#123;</span><br><span class="line">            left = middle + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> middle;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     while(left &lt;= right)&#123;</span></span><br><span class="line"><span class="comment">        int middle = left + (right - left) / 2;</span></span><br><span class="line"><span class="comment">        if(nums[middle] &lt; target)&#123;</span></span><br><span class="line"><span class="comment">            left = middle + 1;</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">        else&#123;</span></span><br><span class="line"><span class="comment">            right = middle - 1;</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">    return left;</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="comment">//循环到结束一定会得到left = right，而且middle也等于left，此时的target就在left左、右，或者就是left。</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
-
+<ul>
+<li>排序算法的稳定性：<em>如果一个排序算法不改变相同数据之间的相对位置，那么这个排序算法具有稳定性。稳定性对于基本数字类型来说是没有用的，但是对于自己创建的数据类型来说是有用的，在不同维度的排序下不会改变每一条数据的相对位置。</em>跨越数据进行交换的排序不具有稳定性，相邻的进行交换时具有稳定性，非交换的排序不具有稳定性。</li>
+</ul>
+<p><strong>冒泡、插入、归并</strong>三种排序具有稳定性，要让归并排序具有稳定性需要优先将左侧的数组放进临时数组中。</p>
+<ul>
+<li>排序算法的选择：对于归并排序和快排来说，两者都使用了分治和递归的思想，而在递归的过程中需要将大问题拆分成小问题，在数据规模较大时直接使用这两种排序比较快，但是在递归到小问题时往往使用其他的排序能减少实际运行时间。<em><strong>排序算法的优化</strong></em></li>
+</ul>
 <h4 id="1、选择排序"><a href="#1、选择排序" class="headerlink" title="1、选择排序"></a>1、选择排序</h4><ul>
 <li><strong>代码思路：</strong>首先选择最左侧的一个数字，将他与剩下的N-1个数字一一对比寻找N个数字中最大（或者最小值），每次对比时将大的（小的）与最左侧的数字交换，然后逐一对比后就能最终找到最值并将其放在最左侧。接下来选择左侧的第二个数字，按照同样的方法与剩下的N-2个数字进行对比，就找到了N-1个数字里的最值。这样对N-1个数字后，所有的数字就全部排列好了。</li>
 </ul>
@@ -303,7 +314,7 @@
 <ul>
 <li><strong>小和问题：</strong>一个数组里每个数左侧比自己小的数加起来的和等于多少。其实也就是一个数右侧比自己大的数有几个，就要自身加几次。那么使用归并排序，在合并的时候可以计算右侧比自己大的数有几个，并且合并时优先将右侧的数字放进临时数组。</li>
 </ul>
-<p>时间复杂度N logN</p>
+<p>时间复杂度N logN，额外空间复杂度为N，可以通过代码实现空间复杂度为1。</p>
 <h4 id="5、快速排序"><a href="#5、快速排序" class="headerlink" title="5、快速排序"></a>5、快速排序</h4><ul>
 <li><p><strong>荷兰国旗问题：</strong>选定一个数字作为依据划分一个数组，在数组中左边都是小于这个数字的，中间都是等于这个数字的，右边都是大于这个数字的。从头遍历数组，先从头开辟一块 <em>小于块</em> ，再从后面开辟一块 <em>大于块</em> ，遍历数组时对每个数字进行对比，如果小于就和 <em>小于块</em> 的下一位数字交换并扩大 <em>小于块</em> 的范围，如果大于就和 <em>大于块</em> 的前一位数字进行交换并扩大 <em>大于块</em> 的范围，如此反复遍历直到便利指针指到 <em>大于块</em> 的前一位。</p>
 </li>
@@ -316,7 +327,15 @@
 <li>注意：在边界指针和遍历指针移动时，要注意指针重合的问题，指针重合时不要进行两个数字的交换，并且此时已经达到跳出循环的边界。</li>
 </ul>
 <p>快速排序选择划分数字时使用的是随机数，也就是说等概率的取到接近中间值的数，等概率的取到最好情况，时间复杂度为 N*log N，使用递归会开辟额外空间，空间复杂度是log N。</p>
-<h4 id="6、桶排序"><a href="#6、桶排序" class="headerlink" title="6、桶排序"></a>6、桶排序</h4><h4 id="7、堆（Heap）排序"><a href="#7、堆（Heap）排序" class="headerlink" title="7、堆（Heap）排序"></a>7、堆（Heap）排序</h4><p>堆结构就是用数组实现的完全二叉树结构，在完全二叉树中如果每棵子树的最大值都是在顶部就是 <em>大根堆</em> 反之就是 <em>小根堆</em>。</p>
+<h4 id="6、基数排序"><a href="#6、基数排序" class="headerlink" title="6、基数排序"></a>6、基数排序</h4><ul>
+<li><strong>代码思路：</strong>先取出所有数字的个位根据各位放进对应的桶中，然后按照进桶的顺序出桶，然后以十位做相同的操作，以此类推直到完成最大数字的最高位的进桶出桶。</li>
+<li><strong>进出桶：</strong>使用一个 <em>count</em>数组表示这个桶里面有几个数字，从前向后遍历每一个数的特定位，然后将数字符合的进入桶，也就是 <em>count</em> 数组加一，全部遍历完成后进行前缀和操作，将 <em>count</em> 数组每一位变成前面所有数的和。然后进行出桶时从后向前遍历，每一个数的特定位的对应的 <em>count</em> 数减去1就是这个数在这轮排序后的位置。</li>
+</ul>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">RedixSort</span><span class="params">(<span class="type">int</span> *arr, <span class="type">int</span> size)</span>&#123;</span><br><span class="line">    <span class="type">int</span> radix = MaxBits(Max(arr, size));</span><br><span class="line">    <span class="type">int</span> count[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="type">int</span>* help = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>) * size);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> d = <span class="number">1</span>; d &lt;= radix; d++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; i++)&#123;</span><br><span class="line">            count[getDigit(arr[i],d)]++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//入桶</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt; <span class="number">10</span>; i++)&#123;</span><br><span class="line">            count[i] = count[i] + count[i - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//前缀和</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = size - <span class="number">1</span>; i  &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">            help[count[getDigit(arr[i], d)] - <span class="number">1</span>] = arr[i];</span><br><span class="line">            count[getDigit(arr[i], d)]--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//出桶</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; i++)&#123;</span><br><span class="line">            arr[i] = help[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//从辅助数组中拿出来放回原数组进行下一次排序</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//其中用到的函数有Max()最大值函数</span></span><br><span class="line"><span class="comment">//Maxbits()传入一个值找到这个值的有多少位</span></span><br><span class="line"><span class="comment">//getDigit()找到一个数的特定位是多少</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+<h4 id="7、堆（Heap）排序"><a href="#7、堆（Heap）排序" class="headerlink" title="7、堆（Heap）排序"></a>7、堆（Heap）排序</h4><p>堆结构就是用数组实现的完全二叉树结构，在完全二叉树中如果每棵子树的最大值都是在顶部就是 <em>大根堆</em> 反之就是 <em>小根堆</em>。</p>
 <p><em>完全二叉树：</em>总是先有左子树后有右子树，如果有右子树则必有左子树。</p>
 <p>左孩子：left &#x3D; index * 2 + 1, 父节点：(left - 1) &#x2F; 2</p>
 <ul>
@@ -335,13 +354,206 @@
 <div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">HeapSort</span><span class="params">(<span class="type">int</span> *arr, <span class="type">int</span> size)</span>&#123;</span><br><span class="line">    <span class="type">int</span> Heapsize = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(Heapsize &lt; size)&#123;</span><br><span class="line">        HeapInsert(arr, Heapsize);</span><br><span class="line">        Heapsize++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(Heapsize &gt; <span class="number">2</span>)&#123;</span><br><span class="line">        swap(arr, <span class="number">0</span>, --Heapsize);</span><br><span class="line">        Heapify(arr, <span class="number">0</span>, Heapsize);</span><br><span class="line">    &#125;</span><br><span class="line">    swap(arr, <span class="number">0</span>, --Heapsize);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
 <p>时间复杂度 N log N，空间复杂度1，不占用额外空间。</p>
-<h3 id="二、数据结构"><a href="#二、数据结构" class="headerlink" title="二、数据结构"></a>二、数据结构</h3>]]></content>
+<ul>
+<li><strong>距离为k的数组排序：</strong>确定一个规模为k的堆，这个堆内的排序会很简单，然后将第k + 1个数拿进堆继续排序。</li>
+</ul>
+<h3 id="二、数据结构"><a href="#二、数据结构" class="headerlink" title="二、数据结构"></a>二、数据结构</h3><h4 id="1、数组和链表"><a href="#1、数组和链表" class="headerlink" title="1、数组和链表"></a>1、数组和链表</h4><p><strong>数组</strong>空间效率高，支持时间复杂度为1的访问元素，但是缺点也很明显，插入与删除效率很低，而且长度不可变，如果开的数组比较大还会额外浪费空间。</p>
+<ul>
+<li>数组是存放在连续内存空间上的相同数据类型的集合，内存空间的地址是连续的。二维数组的内存地址也是连续的。</li>
+</ul>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a[<span class="number">10</span>];</span><br><span class="line"><span class="built_in">memset</span>(a, <span class="number">0</span>, <span class="number">10</span>);</span><br><span class="line"><span class="comment">//初始化数组为0</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>数组插入元素时，需要将对应位置后面的所有元素向后移，时间复杂度是O(n)。</li>
+</ul>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Insert</span><span class="params">(<span class="type">int</span> *a, <span class="type">int</span> size, <span class="type">int</span> pos, <span class="type">int</span> val)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = size - <span class="number">2</span>; i &gt;= pos; i++)&#123;</span><br><span class="line">        a[i + <span class="number">1</span>] = a[i];</span><br><span class="line">    &#125;	</span><br><span class="line">    a[pos] = val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>数组删除元素时，和插入类似，将删除位置之后的所有元素向前移，时间复杂度相同。</li>
+</ul>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Dlete</span><span class="params">(<span class="type">int</span> *a, <span class="type">int</span> size, <span class="type">int</span> pos)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = pos; i &lt; size - <span class="number">1</span>; i++)&#123;</span><br><span class="line">        a[i] = a[i + <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//其实相当于对应位置的元素被覆盖掉</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>链表</strong>也是一种顺序表，能够利用离散的内存空间，每个元素节点之间通过指针引用的方式相互连接。</p>
+<p><strong>单向链表</strong>可用于实现<em>栈、队列、哈希表、图</em>等数据结构。在链表的同一端进行插入和删除时，表现为栈；在链表的两端进行插入和删除操作时，表现为队列。链式结构可用于解决哈希冲突。图中的每一个顶点代表着一个链表，链表中的元素是与这个顶点相连的所有的点。</p>
+<p><strong>双向链表</strong>用于快速查找前后的元素。</p>
+<p><strong>环形链表</strong>用于需要周期性操作的场景。</p>
+<p>链表起始位置有一个头指针HeadNode，HeadNode没有数据，只有一个指向下一个节点的指针。</p>
+<p>在头指针后面可以有一个头结点，头结点也是没有数据，为了方便某些操作所以引入头结点。接下来的代码中都是没有头结点的。</p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> Elemtype; <span class="comment">//元素的类型，可以把int改成所需要的数据类型</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> Status; <span class="comment">//状态指示，作为函数的返回值</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>创建链表节点的结构体，结构体中有该节点的数据和指向下一个节点的指针，构造函数给数据赋值，使指针为空。</li>
+</ul>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">ListNode</span>&#123;</span><br><span class="line">	Elemtype data;</span><br><span class="line">    ListNode *next;</span><br><span class="line">    <span class="built_in">ListNode</span>(Elemtype x) : <span class="built_in">data</span>(x), <span class="built_in">next</span>(<span class="literal">nullptr</span>)&#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>要<strong>创造一个链表</strong>其实就是创建一个头指针来代表一整个链表，使用函数创造一个数据为任意值的节点作为头指针。</li>
+</ul>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">CreatList</span><span class="params">()</span></span>&#123;</span><br><span class="line">    ListNode *HeadNode = <span class="keyword">new</span> <span class="built_in">ListNode</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> HeadNode;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>链表的插入</strong>分为头插法、尾插法和指定位置插入。</li>
+</ul>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//头插法</span></span><br><span class="line"><span class="function">Status <span class="title">InsertByHead</span><span class="params">(ListNode *HeadNode, Elemtype Data)</span></span>&#123;</span><br><span class="line">    ListNode *NewNode = <span class="keyword">new</span> <span class="built_in">ListNode</span>(Data);</span><br><span class="line">    NewNode-&gt;next = HeadNode-&gt;next;</span><br><span class="line">    HeadNode-&gt;next = NewNode;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//头插法将自己指向下一个节点，然后将头指针指向自己</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//尾插法</span></span><br><span class="line"><span class="function">Status <span class="title">InsertByTail</span><span class="params">(ListNode *HeadNode, Elemtype Data)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!HeadNode) <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">//如果头指针指向空意味着链表中没有元素</span></span><br><span class="line">    </span><br><span class="line">    ListNode *NewNode = <span class="keyword">new</span> <span class="built_in">ListNode</span>(Data);</span><br><span class="line">    ListNode *p = HeadNode;</span><br><span class="line">    <span class="keyword">while</span>(p-&gt;next != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    p-&gt;next = NewNode;</span><br><span class="line">    NewNode-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//创建一个遍历指针，从头指针开始遍历，如果下一个节点为空，那么此时遍历到的节点就是整个链表的最后一个节点</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//指定位置插入</span></span><br><span class="line"><span class="function">Status <span class="title">InsertByPosition</span><span class="params">(ListNode *HeadNode， Elemtype Data, <span class="type">int</span> pos)</span></span>&#123;</span><br><span class="line"></span><br><span class="line"> 	<span class="keyword">if</span>(!HeadNode) <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">//如果头指针指向空意味着链表中没有元素</span></span><br><span class="line">    <span class="keyword">if</span>(pos &lt; <span class="number">1</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    </span><br><span class="line">    ListNode *NewNode = <span class="keyword">new</span> <span class="built_in">ListNode</span>(Data);</span><br><span class="line">    ListNode *p = HeadNode;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(p &amp;&amp; i &lt; pos - <span class="number">1</span>)&#123;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(p == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">//在链表的范围内没有这个位置，返回-1错误</span></span><br><span class="line">    NewNode-&gt;next = p-&gt;next;</span><br><span class="line">    p-&gt;next = NewNode;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//进行指定位置插入是，需要找到插入位置的前一位，所以循环的条件是pos - 1</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>链表的删除</strong>，这里只介绍指定位置删除，其他任何删除条件都和指定位置删除类似，只是寻找指定位置的条件不同。</li>
+</ul>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//指定位置删除</span></span><br><span class="line"><span class="function">Status <span class="title">Delete</span><span class="params">(ListNode *HeadNode, <span class="type">int</span> pos)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!HeadNode) <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">//如果链表为空，则直接返回</span></span><br><span class="line">    </span><br><span class="line">    ListNode *p = HeadNode; <span class="comment">//指向被删除位置的前一个节点</span></span><br><span class="line">    ListNode *q = HeadNode-&gt;next; <span class="comment">//指向被删除的位置</span></span><br><span class="line">    <span class="type">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(q &amp;&amp; i &lt; pos <span class="number">-1</span>)&#123;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">        q = q-&gt;next;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!q) <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">//如果寻找到的被删除位置为空则直接返回</span></span><br><span class="line">    p-&gt;next = q-&gt;next; <span class="comment">//链接被删除位置的前后</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//删除节点关键是使用双指针遍历，用两个指针保存节点的关系才能保证被删除节点的前后关系</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p><strong>链表的遍历（查找）</strong>类似于指定位置的操作，指定位置的条件变为查找的条件即可。</p>
+</li>
+<li><p>双向链表，结构体中有两个指针，一个指向前一个元素另一个指向后一个元素，可以进行两个方向的遍历，使得寻找元素更加快速，但是占用了更多的空间。</p>
+</li>
+<li><p>环形链表，最后一个元素节点指向第一个元素节点，使用环形链表时，要使得链表中至少有一个元素，头指针就指向这个元素。</p>
+</li>
+</ul>
+<h4 id="2、列表"><a href="#2、列表" class="headerlink" title="2、列表"></a>2、列表</h4><p>列表是一个抽象数据结构，具有无限大的容量，可以基于数组（一般不）和链表实现。</p>
+<p>列表其实就是动态数组，在不同的编程语言中都有基于动态数组的列表，Python中<code>list</code></p>
+<p>Java中<code>ArrayList</code>，C++中的<code>Vector</code>和c#中的<code>List</code>。</p>
+<p>关于动态数组的一些操作，可以观看<strong>《C++中Vector的应用》</strong>那篇博客。</p>
+<h4 id="3、"><a href="#3、" class="headerlink" title="3、"></a>3、</h4><h4 id="1、哈希表（Hash）"><a href="#1、哈希表（Hash）" class="headerlink" title="1、哈希表（Hash）"></a>1、哈希表（Hash）</h4><p>哈希表是一种顺序表，可以用来迅速判断一个元素是否在表中。</p>
+<p>哈希表建立索引<em>key</em>和值<em>value</em>之间的关系构成一张表，可以通过任给一个key快速地找到value。在哈希表中进行增删改查的时间复杂度都是常数级别，用空间换时间。</p>
+<p>哈希函数通过将<em>key</em>映射到存储桶中，以实现在桶中的快速搜索。往往使用大量的空间，使得一个<em>key</em>只对应一条数据。</p>
+<ul>
+<li><strong>C++实现哈希表</strong></li>
+</ul>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="code"><pre><span class="line">unordered_map&lt;<span class="type">int</span>, string&gt; map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 添加操作 */</span></span><br><span class="line"><span class="comment">// 在哈希表中添加键值对 (key, value)</span></span><br><span class="line">map[<span class="number">12836</span>] = <span class="string">&quot;小哈&quot;</span>;</span><br><span class="line">map[<span class="number">15937</span>] = <span class="string">&quot;小啰&quot;</span>;</span><br><span class="line">map[<span class="number">16750</span>] = <span class="string">&quot;小算&quot;</span>;</span><br><span class="line">map[<span class="number">13276</span>] = <span class="string">&quot;小法&quot;</span>;</span><br><span class="line">map[<span class="number">10583</span>] = <span class="string">&quot;小鸭&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 查询操作 */</span></span><br><span class="line"><span class="comment">// 向哈希表中输入键 key ，得到值 value</span></span><br><span class="line">string name = map[<span class="number">15937</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 删除操作 */</span></span><br><span class="line"><span class="comment">// 在哈希表中删除键值对 (key, value)</span></span><br><span class="line">map.<span class="built_in">erase</span>(<span class="number">10583</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 遍历哈希表 */</span></span><br><span class="line"><span class="comment">// 遍历键值对 key-&gt;value</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> kv: map) &#123;</span><br><span class="line">    cout &lt;&lt; kv.first &lt;&lt; <span class="string">&quot; -&gt; &quot;</span> &lt;&lt; kv.second &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 使用迭代器遍历 key-&gt;value</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> iter = map.<span class="built_in">begin</span>(); iter != map.<span class="built_in">end</span>(); iter++) &#123;</span><br><span class="line">    cout &lt;&lt; iter-&gt;first &lt;&lt; <span class="string">&quot;-&gt;&quot;</span> &lt;&lt; iter-&gt;second &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>Java实现哈希表</strong></li>
+</ul>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p>如果不能够一一对应，就会出现哈希冲突，解决哈希冲突的方法</p>
+<h3 id="三、动态规划"><a href="#三、动态规划" class="headerlink" title="三、动态规划"></a>三、动态规划</h3><p>动态规划（Dynamic Programming）是一种编程的思路，将一个大型的问题分解为若干个更小的子问题，并且在这些子问题中寻找最优的子结构，子问题最终就汇成了大问题的答案。</p>
+<p>找到重叠子问题，使用记忆化搜索将计算过的子问题的结果存储起来，需要计算时就看这个结果是否被计算过直接拿来使用。单纯的记忆化搜索或者回溯是一个自顶向下的问题，动态规划则是一个自下而上的问题，从子问题开始使用备忘录进行记录，一直到最大问题。</p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> mem[<span class="number">10</span>]; <span class="comment">//创建备忘录数组</span></span><br><span class="line"><span class="built_in">memset</span>(mem, <span class="number">-1</span>, <span class="built_in">sizeof</span>(mem)); <span class="comment">//将数组初始化为不可能为结果的数字，表示这个值没有被计算过</span></span><br><span class="line"><span class="keyword">if</span>(mem[i] &gt; <span class="number">0</span>) dp[i] = mem[i]; <span class="comment">//如果调用dp[i]时已经存在过备忘录中，也就是值不为负一，直接调用mem[i]</span></span><br><span class="line"><span class="keyword">else</span> dp[i] = <span class="built_in">fdp</span>(i); <span class="comment">//如果不存在就进行递归的计算，计算后还要将结果存入到备忘录中</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>动态规划问题的特征：</strong>先观察是否符合回溯的<em>决策树模型</em>，也就是在每一个决策点产生一种状态。</p>
+<p>其次包含最大、最优之类的问题；每一种状态都可以用有限的矩阵和列表表示出来。</p>
+<h4 id="1、0-1背包问题"><a href="#1、0-1背包问题" class="headerlink" title="1、0-1背包问题"></a>1、0-1背包问题</h4><p>现在有<strong>n</strong>件物品，背包的容量为<strong>m</strong>，每一件物品都有自己的价值**v[i]<strong>和重量</strong>w[i]**，尽可能的将物品放进背包内从而使得所携带的物品总价值最高。</p>
+<ul>
+<li><strong>代码思路：</strong>利用一个二维的dp数组，表示在背包容量为<strong>x</strong>时挑选前<strong>y</strong>件物品时最大的价值，对于每一件物品都有两个选择，一个是拿另一个是不拿。</li>
+</ul>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+
+
+]]></content>
       <categories>
         <category>学习笔记</category>
       </categories>
       <tags>
         <tag>算法</tag>
         <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CPP中vector的用法</title>
+    <url>/2024/02/10/C-%E4%B8%ADvector%E7%9A%84%E7%94%A8%E6%B3%95/</url>
+    <content><![CDATA[<h3 id="一、vector理解"><a href="#一、vector理解" class="headerlink" title="一、vector理解"></a>一、vector理解</h3><p>vector是用来声明动态数组的，头文件为<vector>。</p>
+<p>vector是线性的，和数组一样可以通过下标进行快速访问</p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;Num;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;Num(<span class="number">2</span>); <span class="comment">//只有一个参数时，代表声明的数组长度</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;Num(<span class="number">2</span>,<span class="number">3</span>);<span class="comment">//有两个参数时，代表声明的数组长度以及初始化</span></span><br></pre></td></tr></table></figure></div>
+
+<p>上述代码创建了一个<em>int</em>类型的可变数组<em>Num</em>，这个数组可以像普通数组一样访问和修改数值。</p>
+<p>vector和数组名之间可以加一个空格。数组名后面可以跟括号，括号中可以跟参数。</p>
+<h3 id="二、vector常用函数"><a href="#二、vector常用函数" class="headerlink" title="二、vector常用函数"></a>二、vector常用函数</h3><p>创建vector后，默认vector中没有元素。</p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt;Num;</span><br><span class="line">Num.<span class="built_in">push_back</span>(<span class="number">1</span>); <span class="comment">//在数组的末尾添加一个元素1</span></span><br><span class="line">Num.<span class="built_in">pop_back</span>(); <span class="comment">//在数组的末尾删除一个元素</span></span><br><span class="line">cout&lt;&lt;Num.<span class="built_in">size</span>()&lt;&lt;endl; <span class="comment">//数组的大小</span></span><br><span class="line">Num.<span class="built_in">clear</span>(); <span class="comment">//清除所有的元素</span></span><br></pre></td></tr></table></figure></div>
+
+<p>vector除了通过数组下标进行遍历之外，还可以通过迭代器进行遍历。</p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt;::iterator it; <span class="comment">//声明一个迭代器</span></span><br><span class="line"><span class="keyword">for</span>(it = Num.<span class="built_in">begin</span>(); it &lt; Num.<span class="built_in">end</span>(); it++)&#123;</span><br><span class="line">	cout&lt;&lt;*it&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//begin()用来访问数组的起始位置，end()用来访问数组的结束位置</span></span><br><span class="line"><span class="comment">//it作为一个数组指针</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="三、二维数组"><a href="#三、二维数组" class="headerlink" title="三、二维数组"></a>三、二维数组</h3><p>创建二维数组时和常规数组类似，总是从低维度操作，高维度存储着低维度的起始位置。</p>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> N=<span class="number">5</span>, M=<span class="number">6</span>; </span><br><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt; &gt; <span class="built_in">obj</span>(N); <span class="comment">//定义二维动态数组大小5行 </span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">0</span>; i&lt; obj.<span class="built_in">size</span>(); i++)<span class="comment">//动态二维数组为5行6列，值全为0 </span></span><br><span class="line">&#123; </span><br><span class="line">        obj[i].<span class="built_in">resize</span>(M); </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">vector&lt;vector&lt;int&gt; &gt; obj(N, vector&lt;int&gt;(M)); //定义二维动态数组5行6列 </span><br></pre></td></tr></table></figure></div>
+
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>vector</tag>
+        <tag>动态数组</tag>
+        <tag>列表</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Qt入门</title>
+    <url>/2024/02/26/Qt%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>DataBase</title>
+    <url>/2024/02/27/DataBase/</url>
+    <content><![CDATA[<h3 id="一、数据库理解"><a href="#一、数据库理解" class="headerlink" title="一、数据库理解"></a>一、数据库理解</h3><h4 id="1、什么是数据库"><a href="#1、什么是数据库" class="headerlink" title="1、什么是数据库"></a>1、什么是数据库</h4><p>数据库是一种依照特定数据模型，组织、存储和管理数据的文件集合。组织与存储系统数据，为系统软件从中存取从中存取数据提供支持。</p>
+<h4 id="2、什么是数据模型"><a href="#2、什么是数据模型" class="headerlink" title="2、什么是数据模型"></a>2、什么是数据模型</h4><p>数据模型是用于描述和组织数据的概念和结构的一种方式。它定义了数据的组织方式、数据之间的关系以及对数据进行操作的规则和约束。数据模型提供了一种抽象层，更好的理解和管理数据。</p>
+<ul>
+<li><strong>数据结构</strong> <em>数据组织的方式</em></li>
+<li><strong>数据操作</strong> <em>对数据结构进行的操作</em></li>
+<li><strong>数据约束</strong> <em>用于描述数据之间的语意联系</em></li>
+</ul>
+<h4 id="3、"><a href="#3、" class="headerlink" title="3、"></a>3、</h4><h3 id="二、MySql安装"><a href="#二、MySql安装" class="headerlink" title="二、MySql安装"></a>二、MySql安装</h3><h4 id="1、下载"><a href="#1、下载" class="headerlink" title="1、下载"></a>1、下载</h4><p>（这里准摆在windows中安装）</p>
+<p>在MySql官网下载community版本的MySql。</p>
+<h4 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h4><ul>
+<li>直接执行安装程序。</li>
+<li>选择完整安装，完整安装后会出现配置程序。</li>
+<li>在配置程序中基本可以默认，后面需要自己配置一个root密码，记住这个root密码。</li>
+<li>在刚才的安装过程中有一个安装位置，找到安装位置中的bin文件夹，复制整个路径然后为这个路径创建环境变量。</li>
+<li>可以尝试在终端中输入<code>mysql -u root -p</code>然后输入root的密码，就能看到MySql成功安装了。</li>
+</ul>
+<h4 id="3、连接到MySql"><a href="#3、连接到MySql" class="headerlink" title="3、连接到MySql"></a>3、连接到MySql</h4><ul>
+<li>直接安装MySql Workbench可以进行可视化的连接。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+        <tag>SQL</tag>
+        <tag>PostgreSQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>EmbeddedSystem</title>
+    <url>/2024/02/27/EmbeddedSystem/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>嵌入式开发</tag>
+        <tag>操作系统</tag>
+        <tag>RTOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据结构和内存与缓存的关系</title>
+    <url>/2024/02/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E5%86%85%E5%AD%98%E4%B8%8E%E7%BC%93%E5%AD%98%E7%9A%84%E5%85%B3%E7%B3%BB/</url>
+    <content><![CDATA[<h3 id="一、常见的内存相关函数"><a href="#一、常见的内存相关函数" class="headerlink" title="一、常见的内存相关函数"></a>一、常见的内存相关函数</h3><p><em><strong>C语言库函数，来自stdlib</strong></em></p>
+<h4 id="1、malloc"><a href="#1、malloc" class="headerlink" title="1、malloc"></a>1、malloc</h4><div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *<span class="title function_">malloc</span><span class="params">(<span class="type">size_t</span> size)</span>;</span><br></pre></td></tr></table></figure></div>
+
+<p>分配指定大小的内存空间，并且返回一个指向该内存起点的指针。</p>
+<h4 id="2、calloc"><a href="#2、calloc" class="headerlink" title="2、calloc"></a>2、calloc</h4><div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *<span class="title function_">calloc</span><span class="params">(<span class="type">size_t</span> num, <span class="type">size_t</span> size)</span>;</span><br></pre></td></tr></table></figure></div>
+
+<p>分配指定内存大小的空间，前一个参数是内存的个数，后一个是每个单元的大小。<code>calloc</code>和<code>malloc</code>区别在于<code>calloc</code>会将所有的内存单元初始化为<strong>0</strong>。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+        <tag>堆</tag>
+        <tag>栈</tag>
+        <tag>内存和缓存</tag>
       </tags>
   </entry>
 </search>
