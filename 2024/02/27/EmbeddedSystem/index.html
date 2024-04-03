@@ -18,13 +18,15 @@
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta property="og:type" content="article">
+        <meta name="description" content="本学期的综设课程要求移植一个嵌入式操作系统到Stm32上，这里记录下整个嵌入式操作系统的实操学习过程，理论会放在另一篇文章中">
+<meta property="og:type" content="article">
 <meta property="og:title" content="EmbeddedSystem">
 <meta property="og:url" content="http://example.com/2024/02/27/EmbeddedSystem/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="本学期的综设课程要求移植一个嵌入式操作系统到Stm32上，这里记录下整个嵌入式操作系统的实操学习过程，理论会放在另一篇文章中">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-02-27T02:28:16.000Z">
-<meta property="article:modified_time" content="2024-02-27T02:29:01.213Z">
+<meta property="article:modified_time" content="2024-03-06T10:02:21.209Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="嵌入式开发">
 <meta property="article:tag" content="操作系统">
@@ -581,15 +583,15 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">19</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">21</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">11</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -643,8 +645,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-02-27 10:29:01</span>
-            <span class="mobile">2024-02-27 10:29:01</span>
+            <span class="desktop">2024-03-06 18:02:21</span>
+            <span class="mobile">2024-03-06 18:02:21</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -706,7 +708,19 @@
 
 
         <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-            
+            <h3 id="一、用Keil重构uc-OS系统"><a href="#一、用Keil重构uc-OS系统" class="headerlink" title="一、用Keil重构uc&#x2F;OS系统"></a>一、用Keil重构uc&#x2F;OS系统</h3><h4 id="1、uC-OS结构"><a href="#1、uC-OS结构" class="headerlink" title="1、uC&#x2F;OS结构"></a>1、uC&#x2F;OS结构</h4><ul>
+<li>处理器相关</li>
+</ul>
+<p>os_cfg.h</p>
+<p>os_cpu_a.asm</p>
+<p>os_cpu_c.c(<strong>cortex M4</strong>)</p>
+<ul>
+<li>处理器无关</li>
+<li>Configuration</li>
+</ul>
+<h4 id="2、Compile-Link"><a href="#2、Compile-Link" class="headerlink" title="2、Compile &amp; Link"></a>2、Compile &amp; Link</h4><p>单片机在编译阶段确定代码运行的地址，</p>
+<p>.c-&gt;预处理-&gt; .i-&gt;编译-&gt;.s-&gt;汇编-&gt;.o(<strong>可重定位目标文件</strong>)-&gt;链接-&gt;.exe</p>
+
         </div>
 
         
@@ -720,7 +734,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-02-27 10:29:01
+                    :</strong> 2024-03-06 18:02:21
             </li>
         
         <li>
@@ -764,6 +778,21 @@
 
         
             <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/03/25/Picgo%E5%9B%BE%E5%BA%8A%E6%90%AD%E9%85%8D%E9%98%BF%E9%87%8C%E4%BA%91OSS%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Picgo图床搭配阿里云OSS创建个人图床</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
@@ -836,7 +865,7 @@
     <div class="post-toc">
         <div class="toc-title">On this page</div>
         <div class="page-title">EmbeddedSystem</div>
-        
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%94%A8Keil%E9%87%8D%E6%9E%84uc-OS%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.</span> <span class="nav-text">一、用Keil重构uc&#x2F;OS系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81uC-OS%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">1、uC&#x2F;OS结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81Compile-Link"><span class="nav-number">1.2.</span> <span class="nav-text">2、Compile &amp; Link</span></a></li></ol></li></ol>
 
     </div>
 </div>

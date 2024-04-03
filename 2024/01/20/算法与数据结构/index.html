@@ -26,7 +26,7 @@
 <meta property="og:description" content="一、排序算法 排序算法中经常会用到交换两个数的值的操作，这个操作可以用位运算实现  123a &#x3D; a ^ b;b &#x3D; a ^ b;a &#x3D; a ^ b;   二分法：怎么分？middle 在哪不重要，关键在于对比后赋值，小于middle则直接赋值middle - 1，大于middle则直接赋值middle + 1。  以下是二分查找的代码 123456789101112131415161718192">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-01-20T10:26:04.000Z">
-<meta property="article:modified_time" content="2024-02-26T06:36:25.639Z">
+<meta property="article:modified_time" content="2024-04-03T06:34:05.999Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="算法">
 <meta property="article:tag" content="数据结构">
@@ -582,15 +582,15 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">19</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">21</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">11</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -644,8 +644,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-02-26 14:36:25</span>
-            <span class="mobile">2024-02-26 14:36:25</span>
+            <span class="desktop">2024-04-03 14:34:05</span>
+            <span class="mobile">2024-04-03 14:34:05</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -840,12 +840,15 @@
 <div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//指定位置删除</span></span><br><span class="line"><span class="function">Status <span class="title">Delete</span><span class="params">(ListNode *HeadNode, <span class="type">int</span> pos)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!HeadNode) <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">//如果链表为空，则直接返回</span></span><br><span class="line">    </span><br><span class="line">    ListNode *p = HeadNode; <span class="comment">//指向被删除位置的前一个节点</span></span><br><span class="line">    ListNode *q = HeadNode-&gt;next; <span class="comment">//指向被删除的位置</span></span><br><span class="line">    <span class="type">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(q &amp;&amp; i &lt; pos <span class="number">-1</span>)&#123;</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">        q = q-&gt;next;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!q) <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">//如果寻找到的被删除位置为空则直接返回</span></span><br><span class="line">    p-&gt;next = q-&gt;next; <span class="comment">//链接被删除位置的前后</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//删除节点关键是使用双指针遍历，用两个指针保存节点的关系才能保证被删除节点的前后关系</span></span><br></pre></td></tr></table></figure></div>
 
 <ul>
-<li><p><strong>链表的遍历（查找）</strong>类似于指定位置的操作，指定位置的条件变为查找的条件即可。</p>
-</li>
-<li><p>双向链表，结构体中有两个指针，一个指向前一个元素另一个指向后一个元素，可以进行两个方向的遍历，使得寻找元素更加快速，但是占用了更多的空间。</p>
-</li>
-<li><p>环形链表，最后一个元素节点指向第一个元素节点，使用环形链表时，要使得链表中至少有一个元素，头指针就指向这个元素。</p>
-</li>
+<li><strong>链表的遍历（查找）</strong>类似于指定位置的操作，指定位置的条件变为查找的条件即可。</li>
+</ul>
+<div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Status </span><br></pre></td></tr></table></figure></div>
+
+
+
+<ul>
+<li>双向链表，结构体中有两个指针，一个指向前一个元素另一个指向后一个元素，可以进行两个方向的遍历，使得寻找元素更加快速，但是占用了更多的空间。</li>
+<li>环形链表，最后一个元素节点指向第一个元素节点，使用环形链表时，要使得链表中至少有一个元素，头指针就指向这个元素。</li>
 </ul>
 <h4 id="2、列表"><a href="#2、列表" class="headerlink" title="2、列表"></a>2、列表</h4><p>列表是一个抽象数据结构，具有无限大的容量，可以基于数组（一般不）和链表实现。</p>
 <p>列表其实就是动态数组，在不同的编程语言中都有基于动态数组的列表，Python中<code>list</code></p>
@@ -871,6 +874,9 @@
 
 <p><strong>动态规划问题的特征：</strong>先观察是否符合回溯的<em>决策树模型</em>，也就是在每一个决策点产生一种状态。</p>
 <p>其次包含最大、最优之类的问题；每一种状态都可以用有限的矩阵和列表表示出来。</p>
+<ul>
+<li><strong>二维动态规划化成一维</strong>：在一个二维的动态规划中，如果推算一个状态时，他的上一列或者上一行状态已经被完全推算出来，并且这个状态只依赖于上一行或者上一列，（即推算不依赖于更前面的状态）那么可以将上一行或者上一列状态所用的一维数组的空间来存放这个状态。</li>
+</ul>
 <h4 id="1、0-1背包问题"><a href="#1、0-1背包问题" class="headerlink" title="1、0-1背包问题"></a>1、0-1背包问题</h4><p>现在有<strong>n</strong>件物品，背包的容量为<strong>m</strong>，每一件物品都有自己的价值**v[i]<strong>和重量</strong>w[i]**，尽可能的将物品放进背包内从而使得所携带的物品总价值最高。</p>
 <ul>
 <li><strong>代码思路：</strong>利用一个二维的dp数组，表示在背包容量为<strong>x</strong>时挑选前<strong>y</strong>件物品时最大的价值，对于每一件物品都有两个选择，一个是拿另一个是不拿。</li>
@@ -879,6 +885,7 @@
 
 
 
+<p><a href="/2024/02/10/C-%E4%B8%ADvector%E7%9A%84%E7%94%A8%E6%B3%95/">Cpp中容器的用法</a></p>
 
         </div>
 
@@ -893,7 +900,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-02-26 14:36:25
+                    :</strong> 2024-04-03 14:34:05
             </li>
         
         <li>
