@@ -6,6 +6,54 @@
     <content><![CDATA[<h3 id="一、Git安装"><a href="#一、Git安装" class="headerlink" title="一、Git安装"></a>一、Git安装</h3><h3 id="二、Git基本操作"><a href="#二、Git基本操作" class="headerlink" title="二、Git基本操作"></a>二、Git基本操作</h3><p><strong>1）</strong>安装好Git后就可以对Git进行配置，使用命令<code>Git config</code>命令进行配置。初始配置一般会加上<code>--global</code>，即全局设置，在此台电脑上的所有工作区都适用的配置。刚开始需要配置邮箱账号和密码，为配置命令加上<code>user.name&quot; &quot;</code>和<code>user.email&quot; &quot;</code>的参数，就可以指定用户和邮箱。</p>
 <p><strong>2）</strong>要想在一个本地工作区（也就是文件）中使用Git需要在对应的文件夹路径下使用<code>Git init</code>命令，之后就会在这个路径下自动生成一个默认隐藏的**.git**文件夹。</p>
 <p>使用命令<code>git status</code>可以看到整个文件夹中所有文件（夹）的状态，即修改后有没有被添加进暂存区</p>
+<p>Gitignore</p>
+<p>创建.gitignore文件在其中添加以下内容</p>
+<h4 id="Git工作模式理解"><a href="#Git工作模式理解" class="headerlink" title="Git工作模式理解"></a>Git工作模式理解</h4><p>Git在本地有两个仓库，分别是本地的本地仓库和本地的远程仓库。</p>
+<ul>
+<li>使用<code>git fetch</code>可以确保本地的远程仓库和实际的远程仓库保持一致，一般的<strong>查看远程仓库</strong>的信息也是查看的这个<strong>本地远程仓库</strong></li>
+<li>使用<code>git pull</code>将本地仓库和远程仓库都更新成实际的远程仓库。</li>
+</ul>
+<p>使用git时除了仓库的概念还有分支的概念，一个仓库的一个分支是一个项目的单位。</p>
+<p>本地会有一些分支，远程仓库也会有一些分支，当我们把远程仓库和本地仓库的分支进行链接后，就可以将本地的仓库push到远程仓库。</p>
+<h4 id="Git分支操作"><a href="#Git分支操作" class="headerlink" title="Git分支操作"></a>Git分支操作</h4><ul>
+<li><strong>查看分支</strong></li>
+</ul>
+<p><code>git branch</code>查看本地分支</p>
+<p><code>git branch -r</code>查看远程分支，<em>这里查看的远程分支其实是本地的远程仓库</em></p>
+<p><code>git branch -a</code>产看所有本地的和远程的分支</p>
+<p><code>git branch --merged</code>查看已经合并到当前分支的所有分支</p>
+<ul>
+<li><strong>创建和切换分支</strong></li>
+</ul>
+<p><code>git branch &lt;新分支名称&gt;</code>创建新的分支</p>
+<p><code>git checkout &lt;分支名称&gt;</code>切换分支</p>
+<h4 id="Git多人工作模式之FeatureBranching"><a href="#Git多人工作模式之FeatureBranching" class="headerlink" title="Git多人工作模式之FeatureBranching"></a>Git多人工作模式之FeatureBranching</h4><h5 id="分支管理策略"><a href="#分支管理策略" class="headerlink" title="分支管理策略"></a>分支管理策略</h5><p>每次进行<strong>新的Feature</strong>开发时需要从<strong>Branch拉取一条Feature分支</strong>出来，并且在完成Feature分支的开发后将Feature<strong>合并</strong>回主分支，在合并后进行<strong>清除</strong>掉Feature分支以保证仓库的整洁。</p>
+<ul>
+<li><strong>创建分支</strong> 可以选择在直接在远程仓库创建分支；也可以直接将本地的一个仓库推到远程（本不存在的）分支，分支会被自动创建</li>
+</ul>
+<p>直接在远程仓库创建分支后要每个人在本地进行一次git pull以获取到远程创建的分支。</p>
+<p><code>git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</code></p>
+<p>此时git pull的作用是将远程的一个分支<strong>拉取合并</strong>到本地指定的分支上，如果不补全后面的名，则默认将远程分支拉取到本地当前的分支上。</p>
+<ul>
+<li><strong>本地Feature分支</strong> 如果在远程创建了新的分支，则需要将本地的分支和远程分支建立联系。</li>
+</ul>
+<p>创建分支后需要将远程的分支和本地的分支进行连接，也就是建立连接关系。使用完整的<code>git pull</code>命令可以直接建立本不存在的连接关系，如果是直接使用git pull可以更新本地仓库，如果已经连接过则可以将代码一同更新。</p>
+<p><code>git branch &lt;新分支名&gt; </code>直接创建本地新分支</p>
+<p><code>git checkout -b &lt;新分支名&gt; orgin/&lt;远程分支名&gt;</code> 创建本地新分支同时切换到那个分支，同时建立远程分支的连接</p>
+<p><code>git push --set-upstream origin &lt;分支名&gt;</code>创建远程分支并将当前的分支推送到远程分支。</p>
+<ul>
+<li><strong>本地开发</strong></li>
+</ul>
+<p>每个人在自己的Feature分支上进行开发。</p>
+<p><em><strong>单分支和多分支</strong></em></p>
+<p>如果是单分支，所有人的代码最后都会被提交到同一个远程Feature分支上，需要经常解决冲突。</p>
+<p>如果是多分支，每个人的代码都是单独的一条Feature分支，最后统一合并的时候解决冲突。</p>
+<ul>
+<li><strong>合并和提交代码</strong></li>
+</ul>
+<p>一般来说有两种提交方式，一种是将自己的Feature分支推送到远程仓库，然后使用pull request，由管理人员进行Feature合并到master的过程，这个方法比较推荐比较符合开发的理念。</p>
+<p>如果是多分支开发，pull request时如果没有冲突就会自动合并分支，如果有冲突则需要先解决冲突。回到本地拉取最新的master，然后将master合并到Feature上，在这里解决冲突，冲突解决之后再将Feature推送到远程仓库，然后进行pull request的合并。</p>
+<p>另一种就是将本地的Feature直接和master合并然后进行将master推送到远程。在本地进行合并之前首先将master更新到最新，然后像上面多分支开发一样解决冲突后，将Feature合并到master上，最后再将本地的master推送到远程仓库</p>
 ]]></content>
       <categories>
         <category>学习笔记</category>
@@ -117,12 +165,13 @@
 <p>使用keil中的<strong>pack installer</strong>安装自己要开发的板子的对应版本，然后在意法半导体官网去找相对应的软件包并解压。在官网的导航找到<strong>软件-》微控制器软件-》STM32微控制器软件-》标准外设软件库</strong>，然后选择适合自己的开发板的就可以。</p>
 <p>这里我用的是stm32f401re开发板，所以要找stm32f4的软件包，软件包中有对应的启动文件以及库函数，库函数直接对底层硬件进行操作，所以可以提高开发的效率，但是也同样会占用更多的资源（库函数之于直接操作寄存器就好像是高级语言之于低级语言）。在keil中新建工程，并且在对应的文件夹下建立<strong>Libraries</strong>（存放库函数）、<strong>User</strong>（存放自己写的main函数）、<strong>Start</strong>（存放各种启动文件）。</p>
 <p><strong>启动文件详解</strong>：1. CMSIS标准中定义了内核函数层，和设备外设访问层，</p>
-<h3 id="二、片上外设详解"><a href="#二、片上外设详解" class="headerlink" title="二、片上外设详解"></a>二、片上外设详解</h3><h4 id="1、GPIO（通用输入输出）"><a href="#1、GPIO（通用输入输出）" class="headerlink" title="1、GPIO（通用输入输出）"></a>1、GPIO（通用输入输出）<img  
+<h3 id="二、片上外设详解"><a href="#二、片上外设详解" class="headerlink" title="二、片上外设详解"></a>二、片上外设详解</h3><h4 id="1、GPIO（通用输入输出）"><a href="#1、GPIO（通用输入输出）" class="headerlink" title="1、GPIO（通用输入输出）"></a>1、GPIO（通用输入输出）</h4><p> <img  
                      lazyload
                      src="/images/loading.svg"
                      data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231016155952611.png"
                       alt="image-20231016155952611"
-                ></h4><p>从IO引脚进入有两个保护二极管，用来防止电压过高或者电压过低。从IO口进入首先是驱动器，然后是寄存器。</p>
+                ></p>
+<p>从IO引脚进入有两个保护二极管，用来防止电压过高或者电压过低。从IO口进入首先是驱动器，然后是寄存器。</p>
 <p>上半部分的驱动器对应输入模式，信号输入首先会有一个上拉和下拉电阻，这里有三种模式可选分别是上拉和下拉和浮空。当输入端没有信号输入时，进入寄存器的高低电平就由此处控制。上拉默认为高电平的输入模式，下拉默认为低电平的输入模式。再向内有一个<strong>肖特基（施密特）触发器</strong>，是一个对输入信号进行整形的装置，当输入的信号高于一个上限时就向内输入高电平，低于下限则输入低电平，用这种方法可以减少数据的抖动。在施密特触发器前后分别接到了模拟输入和复用功能输入上，对应额外的功能。</p>
 <p>下半部分的驱动器对应输入模式。可以用数据寄存器进行数据的输出，位设置清除寄存器可以单独操作输出寄存器的某一位但是不影响其他位，一整个数据寄存器控制所有的端口，所以不能直接对某一位进行操作，要使用按位与和按位或的操作，或者直接用位设置清除寄存器。也可以接到复用功能也就是其他片上外设上来获取额外的功能。两个mos管<strong>P_MOS，N_MOS</strong>可以配置推挽（push_pull）和开漏（open_drain）或者关闭。</p>
 <h6 id="GPIO的八种工作模式"><a href="#GPIO的八种工作模式" class="headerlink" title="GPIO的八种工作模式"></a>GPIO的八种工作模式</h6><p><strong>1）模拟输入 GPIO_Mode_AIN</strong> 输入模式直接接入模拟输入</p>
@@ -224,6 +273,7 @@
 <p>使用外设时钟控制，就可以将外设时钟使能与进时钟输出，也就是启动时钟。</p>
 </li>
 </ul>
+<p>stm32上电后先进行Systeminit，先开启内部高速时钟HSI，然后初始化HSE开始使用HSE作为时钟，然后通过AHB预分频器进行分频</p>
 <h3 id="三、通信协议"><a href="#三、通信协议" class="headerlink" title="三、通信协议"></a>三、通信协议</h3><h4 id="1、I2C协议"><a href="#1、I2C协议" class="headerlink" title="1、I2C协议"></a>1、I2C协议</h4><p>同步半双工，带数据应答，支持总线挂载多设备，两条总线：<strong>SCL（时序总线）</strong>，<strong>SDA（数据总线）</strong></p>
 <p><strong>硬件I2C</strong>：STM32如果有I2C硬件模块可以直接使用，查手册找一下I2C挂载在何处，然后初始化I2C的各种属性。直接往数据寄存器中写入值发送然后直接从数据寄存器中读取数据。</p>
 <p><strong>软件I2C</strong>：可以使用软件函数的方式模拟I2C协议，初始化GPIO口，将一个口的输出作为SCL另一个作为SDA，然后根据I2C的时序特点在不同的时序阶段将数据放在SDA总线上，定时上拉和上拉SCL。</p>
@@ -357,7 +407,7 @@
 <ul>
 <li><strong>距离为k的数组排序：</strong>确定一个规模为k的堆，这个堆内的排序会很简单，然后将第k + 1个数拿进堆继续排序。</li>
 </ul>
-<h3 id="二、数据结构"><a href="#二、数据结构" class="headerlink" title="二、数据结构"></a>二、数据结构</h3><h4 id="1、数组和链表"><a href="#1、数组和链表" class="headerlink" title="1、数组和链表"></a>1、数组和链表</h4><p><strong>数组</strong>空间效率高，支持时间复杂度为1的访问元素，但是缺点也很明显，插入与删除效率很低，而且长度不可变，如果开的数组比较大还会额外浪费空间。</p>
+<h3 id="二、数据结构"><a href="#二、数据结构" class="headerlink" title="二、数据结构"></a>二、数据结构</h3><h4 id="1、数组-Array-和链表-LinkList"><a href="#1、数组-Array-和链表-LinkList" class="headerlink" title="1、数组(Array)和链表(LinkList)"></a>1、数组(Array)和链表(LinkList)</h4><p><strong>数组</strong>空间效率高，支持时间复杂度为1的访问元素，但是缺点也很明显，插入与删除效率很低，而且长度不可变，如果开的数组比较大还会额外浪费空间。</p>
 <ul>
 <li>数组是存放在连续内存空间上的相同数据类型的集合，内存空间的地址是连续的。二维数组的内存地址也是连续的。</li>
 </ul>
@@ -419,8 +469,8 @@
 <h4 id="2、列表"><a href="#2、列表" class="headerlink" title="2、列表"></a>2、列表</h4><p>列表是一个抽象数据结构，具有无限大的容量，可以基于数组（一般不）和链表实现。</p>
 <p>列表其实就是动态数组，在不同的编程语言中都有基于动态数组的列表，Python中<code>list</code></p>
 <p>Java中<code>ArrayList</code>，C++中的<code>Vector</code>和c#中的<code>List</code>。</p>
-<p>关于动态数组的一些操作，可以观看<strong>《C++中Vector的应用》</strong>那篇博客。</p>
-<h4 id="3、"><a href="#3、" class="headerlink" title="3、"></a>3、</h4><h4 id="1、哈希表（Hash）"><a href="#1、哈希表（Hash）" class="headerlink" title="1、哈希表（Hash）"></a>1、哈希表（Hash）</h4><p>哈希表是一种顺序表，可以用来迅速判断一个元素是否在表中。</p>
+<p>关于动态数组的一些操作，可以观看<a href="/2024/02/10/Cpp%E4%B8%ADvector%E7%9A%84%E7%94%A8%E6%B3%95/"><strong>《C++中Vector的应用》</strong></a>那篇博客。</p>
+<h4 id="3、哈希表（Hash）"><a href="#3、哈希表（Hash）" class="headerlink" title="3、哈希表（Hash）"></a>3、哈希表（Hash）</h4><p>哈希表是一种顺序表，可以用来迅速判断一个元素是否在表中。</p>
 <p>哈希表建立索引<em>key</em>和值<em>value</em>之间的关系构成一张表，可以通过任给一个key快速地找到value。在哈希表中进行增删改查的时间复杂度都是常数级别，用空间换时间。</p>
 <p>哈希函数通过将<em>key</em>映射到存储桶中，以实现在桶中的快速搜索。往往使用大量的空间，使得一个<em>key</em>只对应一条数据。</p>
 <ul>
@@ -434,6 +484,43 @@
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></div>
 
 <p>如果不能够一一对应，就会出现哈希冲突，解决哈希冲突的方法</p>
+<h4 id="4、二叉树-BinaryTree"><a href="#4、二叉树-BinaryTree" class="headerlink" title="4、二叉树(BinaryTree)"></a>4、二叉树(BinaryTree)</h4><p>二叉树是一种非线性的数据结构，每个节点可以包含自己的值，左节点和右节点。二叉树可以充分发挥分支的思想，分别从左右子树进行操作，能够减少一些操作的时间复杂度。当二叉树为完美二叉树时，能充分发挥二叉树的时间优势，在极端情况下二叉树可能成为链表，即每一个节点都只具有一个子节点。</p>
+<p><strong>完美二叉树</strong>又被称为<strong>满二叉树</strong>，树的每一层都是满的。</p>
+<p><strong>完全二叉树</strong>只有最底层的节点没有被填满，且最底层的节点从左向右填满。</p>
+<p><strong>完满二叉树</strong>除了叶节点之外，所有的节点都具有两个子节点。</p>
+<p>**二叉搜索树(BST)<strong>是一个有序树，若左子树不为空那么左子树上的所有值都小于根节点，右子树则反之，所有的值大于根节点。</strong>平衡搜索树(AVL)**是二叉搜索树的一种，左右子树的高度之差不超过1。</p>
+<p><em>如下图右边的树就不是平衡搜索树</em></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240408200431963.png"
+                      alt="image-20240408200431963"
+                ></p>
+<ul>
+<li><strong>数据结构定义</strong></li>
+</ul>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">TreeNode</span>&#123;</span><br><span class="line">    Elemtype data; <span class="comment">//数据</span></span><br><span class="line">    TreeNode *leftchild; <span class="comment">//左孩子</span></span><br><span class="line">    TreeNode *rightchild; <span class="comment">//右孩子</span></span><br><span class="line">    <span class="built_in">TreeNode</span>(Elemtype x): <span class="built_in">data</span>(x), <span class="built_in">leftchild</span>(<span class="literal">NULL</span>),<span class="built_in">rightchild</span>(<span class="literal">NULL</span>)&#123;&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>创建根节点</strong></li>
+</ul>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创建二叉树的根节点</span></span><br><span class="line"><span class="function">TreeNode *<span class="title">createBinaryTree</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">    TreeNode *RootNode = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(x);</span><br><span class="line">    <span class="keyword">return</span> RootNode;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>层序遍历</strong> 也就是**广度优先遍历(BFS)**，对树的每一层进行遍历，一层全部遍历完成后再进行下一层的遍历。</li>
+</ul>
+<p><em>进行广度优先遍历经常使用队列(queue)数据结构</em></p>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;Elemtype&gt; <span class="title">levelOrderTraversal</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">    vector&lt;Elemtype&gt; val;</span><br><span class="line">    queue&lt;TreeNode*&gt; queue;<span class="comment">//借助队列数据结构进行遍历</span></span><br><span class="line">    queue.<span class="built_in">push</span>(root); </span><br><span class="line">    <span class="keyword">while</span>(!queue.<span class="built_in">empty</span>())&#123;</span><br><span class="line">        TreeNode* node = queue.<span class="built_in">front</span>();<span class="comment">//从队列中取出第一个</span></span><br><span class="line">        val.<span class="built_in">push_back</span>(node-&gt;data); <span class="comment">//取出这个节点的数据</span></span><br><span class="line">        queue.<span class="built_in">pop</span>();<span class="comment">//出队列</span></span><br><span class="line">        <span class="keyword">if</span>(node-&gt;leftchild != <span class="literal">NULL</span>) queue.<span class="built_in">push</span>(node-&gt;leftchild);</span><br><span class="line">        <span class="keyword">if</span>(node-&gt;rightchild != <span class="literal">NULL</span>) queue.<span class="built_in">push</span>(node-&gt;rightchild);</span><br><span class="line">        <span class="comment">//先后入队左右孩子</span></span><br><span class="line">    &#125;<span class="comment">//直到队列为空</span></span><br><span class="line">    <span class="keyword">return</span> val;<span class="comment">//返回所有的取值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>深度优先遍历(DFS)</strong> 在树中有三种遍历次序，两种实现方法。可以进行先序遍历、中序遍历和后序遍历，只是遍历的顺序有所不同。也有两种实现方式分别是递归和迭代，递归就是自己编写递归函数自己调用自己，迭代是借用栈的数据结构。</li>
+</ul>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//递归法实现深度优先遍历</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">preOrderTraversal</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span>; <span class="comment">//空节点就直接返回，递归的归</span></span><br><span class="line">    <span class="comment">//root-&gt;data对root节点的数据进行访问</span></span><br><span class="line">    <span class="comment">//例如打印或者放入全局变量中或者添加一个参数传入数组</span></span><br><span class="line">    <span class="built_in">preOrderTraversal</span>(root-&gt;leftchild);</span><br><span class="line">    <span class="built_in">preOrderTraversal</span>(root-&gt;rightchild);</span><br><span class="line">    <span class="comment">//先序遍历中先访问根节点数据然后访问左右子树</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">inOrderTraversal</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span>; <span class="comment">//空节点就直接返回</span></span><br><span class="line">    <span class="built_in">inOrderTraversal</span>(root-&gt;leftchild);</span><br><span class="line">    <span class="comment">//root-&gt;data对root节点的数据进行访问</span></span><br><span class="line">    <span class="comment">//例如打印或者放入全局变量中或者添加一个参数传入数组</span></span><br><span class="line">    <span class="built_in">inOrderTraversal</span>(root-&gt;rightchild);</span><br><span class="line">    <span class="comment">//中序遍历中先访问左节点然后是根节点最后是右节点</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">postOrderTraversal</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span>; <span class="comment">//空节点就直接返回</span></span><br><span class="line">    <span class="built_in">postOrderTraversal</span>(root-&gt;leftchild);</span><br><span class="line">    <span class="built_in">postOrderTraversal</span>(root-&gt;rightchild);</span><br><span class="line">    <span class="comment">//root-&gt;data对root节点的数据进行访问</span></span><br><span class="line">    <span class="comment">//例如打印或者放入全局变量中或者添加一个参数传入数组</span></span><br><span class="line">    <span class="comment">//后序遍历在访问左右子树后再访问根节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//迭代法实现深度优先遍历</span></span><br><span class="line"><span class="function">vector&lt;Elemtype&gt; <span class="title">preOrderTraversal</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">    vector&lt;Elemtype&gt; val;</span><br><span class="line">    stack&lt;TreeNode*&gt; stack; <span class="comment">//借助栈结构进行遍历</span></span><br><span class="line">    stack.<span class="built_in">push</span>(root); <span class="comment">//将根节点压栈</span></span><br><span class="line">    <span class="keyword">while</span>(!stack.<span class="built_in">empty</span>())&#123;</span><br><span class="line">        TreeNode* node = stack.<span class="built_in">pop</span>(); <span class="comment">//直接弹出进行根节点的遍历</span></span><br><span class="line">        val.<span class="built_in">push_back</span>(node);</span><br><span class="line">        <span class="keyword">if</span>(!root-&gt;rightchild) stack.<span class="built_in">push</span>(root-&gt;rightchild);</span><br><span class="line">        <span class="keyword">if</span>(!root-&gt;leftchild) stack.<span class="built_in">push</span>(root-&gt;leftchild);</span><br><span class="line">        <span class="comment">//先压入右孩子才能保证左孩子先出栈</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+
+
 <h3 id="三、动态规划"><a href="#三、动态规划" class="headerlink" title="三、动态规划"></a>三、动态规划</h3><p>动态规划（Dynamic Programming）是一种编程的思路，将一个大型的问题分解为若干个更小的子问题，并且在这些子问题中寻找最优的子结构，子问题最终就汇成了大问题的答案。</p>
 <p>找到重叠子问题，使用记忆化搜索将计算过的子问题的结果存储起来，需要计算时就看这个结果是否被计算过直接拿来使用。单纯的记忆化搜索或者回溯是一个自顶向下的问题，动态规划则是一个自下而上的问题，从子问题开始使用备忘录进行记录，一直到最大问题。</p>
 <div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> mem[<span class="number">10</span>]; <span class="comment">//创建备忘录数组</span></span><br><span class="line"><span class="built_in">memset</span>(mem, <span class="number">-1</span>, <span class="built_in">sizeof</span>(mem)); <span class="comment">//将数组初始化为不可能为结果的数字，表示这个值没有被计算过</span></span><br><span class="line"><span class="keyword">if</span>(mem[i] &gt; <span class="number">0</span>) dp[i] = mem[i]; <span class="comment">//如果调用dp[i]时已经存在过备忘录中，也就是值不为负一，直接调用mem[i]</span></span><br><span class="line"><span class="keyword">else</span> dp[i] = <span class="built_in">fdp</span>(i); <span class="comment">//如果不存在就进行递归的计算，计算后还要将结果存入到备忘录中</span></span><br></pre></td></tr></table></figure></div>
@@ -448,10 +535,6 @@
 <li><strong>代码思路：</strong>利用一个二维的dp数组，表示在背包容量为<strong>x</strong>时挑选前<strong>y</strong>件物品时最大的价值，对于每一件物品都有两个选择，一个是拿另一个是不拿。</li>
 </ul>
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></div>
-
-
-
-<p><strong><a href="/2024/02/10/C-%E4%B8%ADvector%E7%9A%84%E7%94%A8%E6%B3%95/">Cpp中容器的用法</a></strong></p>
 ]]></content>
       <categories>
         <category>学习笔记</category>
@@ -526,16 +609,20 @@
 <li><p>切换数据库 <code>use &#123;Name&#125;</code></p>
 </li>
 </ul>
-<h4 id="2、DML"><a href="#2、DML" class="headerlink" title="2、DML"></a>2、DML</h4><ul>
-<li><p>从数据库表中获取数据<code>select</code></p>
-</li>
-<li><p>更新数据库表中的数据</p>
-</li>
-<li><p>从数据库表中删除数据</p>
-</li>
-<li><p>从数据库表中插入数据</p>
-</li>
+<p>+++</p>
+<p><strong><a href="/2024/04/03/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E5%AD%97%E6%AE%B5%E8%AF%A6%E8%A7%A3">约束和数据结构详解</a></strong></p>
+<ul>
+<li>查询当前数据库所有表 <code>show tables</code></li>
+<li>创建新表 <code>create table &#123;Name&#125; ( &#123;字段名&#125; &#123;字段类型&#125; [约束或参数] );</code></li>
+<li>删除表 <code>drop table &#123;Name&#125;</code></li>
 </ul>
+<h4 id="2、DML"><a href="#2、DML" class="headerlink" title="2、DML"></a>2、DML</h4><ul>
+<li>从数据库表中获取数据<code>select &#123;ColumnName&#125; from &#123;TableName&#125;</code> <em>如果要选择所有字段直接使用<code>*</code>作为字段名</em></li>
+<li>更新数据库表中的数据<code>update &#123;TableName&#125; set &#123;ColumnName&#125; = &#123;Value&#125;,···</code>也就是将表中的指定字段变成指定值</li>
+<li>从数据库表中删除数据<code>dlete &#123;TableName&#125;</code> </li>
+<li>从数据库表中插入数据<code>insert into &#123;TableName&#125; (column,column,···) values (value, value),(value,value),···</code></li>
+</ul>
+<p><em>在获取数据、更新数据和删除数据时，默认会对所有的数据条目进行操作，如果要指定一部分数据条目，请使用 where 语句</em></p>
 ]]></content>
       <categories>
         <category>学习笔记</category>
@@ -641,5 +728,534 @@
         <tag>动态数组</tag>
         <tag>列表</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Makefile详解</title>
+    <url>/2024/04/13/Makefile%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<h3 id="一、Makefile是什么"><a href="#一、Makefile是什么" class="headerlink" title="一、Makefile是什么"></a>一、Makefile是什么</h3><p>makefile定义了一些规则来制定项目如何进行编译。</p>
+<p>makefile中包含了一系列的**目标(Targets)<strong>和</strong>规则(Rules)**。</p>
+<p>目标通常是文件名，并且大概率是.o文件。紧跟着的生成这个文件的规则，通常是其源文件和编译的命令。<strong>编译的命令也可以是能够命令行执行的命令。</strong></p>
+<p>除了目标和规则，makefile也可以用来指定编译器的某些行为例如使用哪一个编译器或者编译器优化等级等等。</p>
+<h3 id="二、Makefile基础"><a href="#二、Makefile基础" class="headerlink" title="二、Makefile基础"></a>二、Makefile基础</h3><h4 id="1、目标"><a href="#1、目标" class="headerlink" title="1、目标"></a>1、目标</h4><ul>
+<li>makefile文件直接命名为<strong>makefile</strong>才能让make工具识别。</li>
+<li>makefile的编写规则为目标+编写规则，在目标名后面加上<code>：</code>就代表这是一个目标的条目</li>
+</ul>
+<div class="highlight-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">all:</span></span><br><span class="line">	@echo <span class="string">&quot;HelloWorld&quot;</span>\</span><br><span class="line"><span class="comment">#目标名为all,在构建目标时执行echo命令，加上@后在命令行里就不会打印多余的内容</span></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240409213927459.png"
+                      alt="image-20240409213927459"
+                ></p>
+<ul>
+<li><p>如果在同一个makefile中定义了多个目标，然后直接在命令行中执行<code>make</code>命令，就会执行makefile中的第一个目标。当然也可以自己指定要构建的目标。</p>
+<h4 id="2、依赖"><a href="#2、依赖" class="headerlink" title="2、依赖"></a>2、依赖</h4><p>依赖是包含在规则中的一部分，如果一个目标依赖于另一个目标，那么就要依次先构建依赖的关系目标，才能构建当前的目标。</p>
+<div class="highlight-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">all: test</span></span><br><span class="line">	@echo <span class="string">&quot;HelloWorld&quot;</span></span><br><span class="line"><span class="section">test:</span></span><br><span class="line">	@echo <span class="string">&quot;test&quot;</span></span><br><span class="line"><span class="comment">#在构建目标all时，会先构建其先决条件test目标</span></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240409214548703.png"
+                      alt="image-20240409214548703"
+                ></p>
+<h4 id="3、规则"><a href="#3、规则" class="headerlink" title="3、规则"></a>3、规则</h4><p>一条目标的条目其实也就是一个整个规则，由<strong>目标</strong>、<strong>依赖</strong>和<strong>命令</strong>组成。其中依赖必须在构建该目标之前就已经满足，这个依赖也可以是其他的目标，也就是会被先构建出来才会构建原本的目标。规则的命令需要能够生成出目标，才能被其他目标作为依赖。</p>
+</li>
+</ul>
+<h3 id="三、Makefile的特性"><a href="#三、Makefile的特性" class="headerlink" title="三、Makefile的特性"></a>三、Makefile的特性</h3><h4 id="1、不重复构建"><a href="#1、不重复构建" class="headerlink" title="1、不重复构建"></a>1、不重复构建</h4><p>如果在makefile中以文件作为构建的目标，在执行make的时候就会将对应的文件构建出来，这些文件会一直存在，如果在下一次的构建中这些文件的源文件没有被修改，那么就不会重复构建这些文件。</p>
+<div class="highlight-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="comment">#makefile</span></span><br><span class="line"><span class="section">all: main.o helloworld.o</span></span><br><span class="line">        gcc -o main main.o helloworld.o 	<span class="comment">#编译链接出main文件</span></span><br><span class="line">        @echo <span class="string">&quot;Make all&quot;</span></span><br><span class="line"><span class="section">main.o: main.c 						#依赖源文件main.c</span></span><br><span class="line">        gcc -c main.c 				<span class="comment">#编译出main.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make main.o&quot;</span></span><br><span class="line"><span class="section">helloworld.o: helloworld.c 			#依赖源文件helloworld.c</span></span><br><span class="line">        gcc -c helloworld.c 		<span class="comment">#编译出helloworld.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make helloworld.o&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//main.c</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">void</span> <span class="title function_">helloworld</span><span class="params">()</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">        helloworld();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//helloworld.c</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">helloworld</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;HelloWorld&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240409222123641.png"
+                      alt="image-20240409222123641"
+                ></p>
+<p>执行了两次make,可以看到后一次make并没有构建目标<code>main.o</code>和<code>helloworld.o</code>，因为前一次make已经生成了这两个文件，并且在后一次make时会自动识别<code>main.c</code>和<code>helloworld.c</code>是否发生了更新时间的变化，也就是是否进行了更改，如果<code>.c</code>源文件没有被更改，make就认为要构建的目标<code>main.o</code>和<code>helloworld.o</code>也是最新的不需要进行重新构建。</p>
+<p><em><strong>那为什么all会被重新构建呢？</strong></em></p>
+<p>因为构建目标是<strong>all</strong>而不是gcc的目标<strong>main</strong>，main文件已经存在了但是目标all并不存在，关键在于要构建的目标是否存在。</p>
+<h4 id="2、假目标"><a href="#2、假目标" class="headerlink" title="2、假目标"></a>2、假目标</h4><p>有时候我们构建出一个目标后，这个目标已经存在那么在进行重新构建时就不会执行任何该目标下的命令。但是有时我们需要该目标下除了<strong>构建这个目标的命令之外的命令</strong>，就需要想办法暂时屏蔽掉<strong>不重复构建的特性</strong>，这时候就可以用到假目标。</p>
+<p>​																		<em>不使用假目标的效果</em></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240409224219548.png"
+                      alt="image-20240409224219548"
+                ></p>
+<ul>
+<li>假目标就是为了避免所要构建的目标和已经存在的文件重名的情况。</li>
+</ul>
+<div class="highlight-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="comment">#makefile</span></span><br><span class="line"><span class="meta"><span class="keyword">.PHONY</span>: main.o</span></span><br><span class="line"><span class="section">all: main.o helloworld.o</span></span><br><span class="line">        gcc -o main main.o helloworld.o 	<span class="comment">#编译链接出main文件</span></span><br><span class="line">        @echo <span class="string">&quot;Make all&quot;</span></span><br><span class="line"><span class="section">main.o: main.c 						#依赖源文件main.c</span></span><br><span class="line">        gcc -c main.c 				<span class="comment">#编译出main.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make main.o&quot;</span></span><br><span class="line"><span class="section">helloworld.o: helloworld.c 			#依赖源文件helloworld.c</span></span><br><span class="line">        gcc -c helloworld.c 		<span class="comment">#编译出helloworld.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make helloworld.o&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>使用假目标后，可以进行同意目标的重复构建，此时<code>main.o</code>的构建被单纯的当成一个目标而并非是一个文件，并不会检查此时文件的存在性。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240409224235265.png"
+                      alt="image-20240409224235265"
+                ></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C语言</tag>
+        <tag>makefile</tag>
+        <tag>make</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>STM32存储架构详解</title>
+    <url>/2024/05/08/STM32%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>STM32及ARM中断详解</title>
+    <url>/2024/05/08/STM32%E5%8F%8AARM%E4%B8%AD%E6%96%AD%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<h4 id="ARM体系的中断和异常"><a href="#ARM体系的中断和异常" class="headerlink" title="ARM体系的中断和异常"></a>ARM体系的中断和异常</h4><p>当一个中断或者异常<strong>触发</strong>时，先看到这个中断源有没有被启动，以及它的优先级如何，然后进入<strong>中断向量表</strong>，如果允许进行中断或者异常的处理，就会根据中断向量表进入<strong>中断服务程序</strong>。</p>
+<p>在中断服务程序中进行<strong>关中断、保存现场、开中断、处理中断和异常、关中断、恢复现场、开中断</strong></p>
+<p>在ARM体系中和异常统一由中断向量表管理。</p>
+<h5 id="中断向量表"><a href="#中断向量表" class="headerlink" title="中断向量表"></a>中断向量表</h5><p>中断向量表有低端和高端向量表两种，低端向量表就是从0x00000000开始，高端向量表处在0xFFFF0000位置。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240508162736933.png"
+                      alt="image-20240508162736933"
+                ></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>SystemView简单移植</title>
+    <url>/2024/05/08/SystemView%E7%AE%80%E5%8D%95%E7%A7%BB%E6%A4%8D/</url>
+    <content><![CDATA[<h4 id="SystemView是什么"><a href="#SystemView是什么" class="headerlink" title="SystemView是什么"></a>SystemView是什么</h4><p>SystemView是由SEGGER公司开发的嵌入式系统可视化分析工具，可以用来可视化的监控嵌入式操作系统的运行，帮助我们更好的学习和开发嵌入式操作系统。</p>
+<p>SystemView支持uC&#x2F;OS-II、μC&#x2F;OS-III、FreeRTOS、embOS和无OS的裸机系统。</p>
+<p>SystemView可以使用串口、J-Link等连接方式和硬件进行连接。</p>
+<h4 id="SystemView工作模式介绍"><a href="#SystemView工作模式介绍" class="headerlink" title="SystemView工作模式介绍"></a>SystemView工作模式介绍</h4><p>持续记录模式：基于J-Link调试器和SEGGER实时传输技术（RTT），SystemView可以在目标程序运行时实时地记录目标执行情况，不使用J-Link RTT技术，也可以通过串口或者TCP&#x2F;IP实现。</p>
+<p>Single-Shot模式：当目标设备不支持RTT或没有使用J-Link时，SEGGER SystemView可以用于记录数据，直到其目标缓冲区被填充满时停止记录。</p>
+<p>Post-Mortem模式：类似Single-Shot模式，但会在缓冲区填满时覆盖旧的事件，所以，记录到的是最新的系统活动事件。这个模式可用于分析某些应用突然崩溃的问题，SystemView可以显示系统崩溃前发生的情况。</p>
+<h4 id="SystemView工作目录"><a href="#SystemView工作目录" class="headerlink" title="SystemView工作目录"></a>SystemView工作目录</h4><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240509103612862.png"
+                      alt="image-20240509103612862"
+                ></p>
+<p>我们创建了一个SystemView文件夹，里面是Config和Src文件。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240509103723892.png"
+                      alt="image-20240509103723892"
+                ></p>
+<p>在keil中是这样的文件夹目录，因为keil不支持多级目录。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240508215739039.png"
+                     
+                ></p>
+<p>在SEGGER提供给我们的SystemView的Src文件夹中有这些内容。</p>
+<p>其中</p>
+<p>Config文件夹中的是一些RTT实时传输和SystemView的配置。</p>
+<p>Sample文件夹中的是一些可用的操作系统的接口文件，需要我们找到需要的接口文件。</p>
+<p>SEGGER文件夹中的就是SystemView和RTT的源文件，不需要我们修改，直接放进工程目录中。</p>
+<h4 id="配置SYstemView和RTT以及开启系统追踪功能"><a href="#配置SYstemView和RTT以及开启系统追踪功能" class="headerlink" title="配置SYstemView和RTT以及开启系统追踪功能"></a>配置SYstemView和RTT以及开启系统追踪功能</h4><ul>
+<li><strong>os_cfg.h</strong></li>
+</ul>
+<p>在os_cfg.h中找到宏OS_TRACE_EN并将其值改为1，也就是打开系统追踪功能。</p>
+<p>OS_TRACE_API_ENTER_EN和OS_TRACE_API_EXIT_EN是系统API调用的监控。</p>
+<ul>
+<li><strong>os_trace.h</strong></li>
+</ul>
+<p>要启用系统追踪功能需要将这个头文件包含进去。</p>
+<p>在我们的项目中，可以看到这个头文件包含在ucos_ii.h中。</p>
+<ul>
+<li><strong>os_cfg_trace.h</strong></li>
+</ul>
+<p>配置宏OS_CFG_TRACE_MAX_TASK 和OS_CFG_TRACE_MAX_RESOURCES表示可以监控的任务和其他内核对象的最大数量。</p>
+<ul>
+<li><strong>SEGGER_RTT_Conf.h</strong></li>
+</ul>
+<p>BUFFER_SIZE_UP表示缓冲区最大值，给4096</p>
+<ul>
+<li><strong>SEGGER_SYSVIEW_Conf.h</strong></li>
+</ul>
+<p>在这里我没找到这个定义的宏，所就自己定义了一个。</p>
+<p><code>#define SEGGER_SYSVIEW_RTT_BUFFER_SIZE    4096u</code></p>
+<p>也是定义buffer缓冲区的大小。</p>
+<p>* </p>
+]]></content>
+  </entry>
+  <entry>
+    <title>uC/OS移植</title>
+    <url>/2024/04/24/uC-OS%E7%A7%BB%E6%A4%8D/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>动态规划背包问题</title>
+    <url>/2024/04/05/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h4 id="一、0-1背包问题"><a href="#一、0-1背包问题" class="headerlink" title="一、0-1背包问题"></a>一、0-1背包问题</h4><p>现在有一个背包容量为v，有一系列的物品分别有wgt[i]的重量和val[i]的价值。问怎么取物品装到背包里使得总价值最大。</p>
+<p>对于每一个物品都有选与不选两种决策，那么对每一个物品进行规划，如果选择了物品，那么可用容量减少但是价值增加。</p>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> dp[n + <span class="number">1</span>][v + <span class="number">1</span>];<span class="comment">//dp数组</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt;= v; j++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(i == <span class="number">0</span> || j == <span class="number">0</span>) &#123;</span><br><span class="line">            dp[i][j] = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(j &gt;= wgt[i]) dp[i][j] = <span class="built_in">max</span>(dp[i - <span class="number">1</span>][j - wgt[i]] + val[i], dp[i - <span class="number">1</span>][j]);</span><br><span class="line">        <span class="keyword">else</span> dp[i][j] = dp[i - <span class="number">1</span>][j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="二、0-1背包空间优化"><a href="#二、0-1背包空间优化" class="headerlink" title="二、0-1背包空间优化"></a>二、0-1背包空间优化</h4><p>在01背包中，新dp数值只和上一行相关，所以可以将整体的空间压缩为一行，计算出第一行所有数据之后，计算第二行时要从后往前进行计算。如果从前往后计算，就会提前清除上一行靠前的数据，那么后面的计算就无法使用</p>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> dp[v + <span class="number">1</span>]; <span class="comment">//dp数组</span></span><br><span class="line">dp[<span class="number">0</span>] = <span class="number">0</span>; <span class="comment">//对特定位置置零</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i ++)&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> j = v; j &gt;= <span class="number">1</span>; j--)&#123;</span><br><span class="line">		<span class="keyword">if</span>(i == <span class="number">0</span>) dp[j] = <span class="number">0</span>;</span><br><span class="line">		esle&#123;</span><br><span class="line">			<span class="keyword">if</span>(j &gt;= wgt[i]) dp[j] = <span class="built_in">max</span>(dp[j - wgt[i]] + val[i], dp[j]); <span class="comment">//如果能放入就由上一行的前面的数据计算得出结果</span></span><br><span class="line">			<span class="keyword">else</span> dp[j] = dp[j]; <span class="comment">//如果不能放入那么等于原值</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h4 id="三、完全背包问题"><a href="#三、完全背包问题" class="headerlink" title="三、完全背包问题"></a>三、完全背包问题</h4><p>完全背包和01背包不同之处在于，有无限件可选的物品，也就是说每次进行dp计算时，同一个物品选择后还可以再选一次。但其实整体的思路还是一样的。</p>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> dp[n + <span class="number">1</span>][v + <span class="number">1</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i++)&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt;= v; j++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(i == <span class="number">0</span> || j == <span class="number">0</span>) dp[i][j] = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(j &gt;= wgt[i])&#123;</span><br><span class="line">				dp[i][j] = <span class="built_in">max</span>(dp[i][j - wgt[i]] + val[i], dp[i - <span class="number">1</span>][j]);<span class="comment">//如果选择了放入物品，那么只有容量变化</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> dp[i][j] = dp[i - <span class="number">1</span>][j]; <span class="comment">//如果没有选择那么可选物品进行变化</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="四、完全背包空间优化"><a href="#四、完全背包空间优化" class="headerlink" title="四、完全背包空间优化"></a>四、完全背包空间优化</h4><p>完全背包也可以按照01背包类似的思路进行空间优化，但是完全背包的数据不完全来自于上一行数据，也来自于左侧的数据。所以这里采用正序遍历。</p>
+<p><em><strong>dp问题的空间优化关键在于新的数据是否能通过确定步数内的数据推导出</strong></em>**</p>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> dp[v + <span class="number">1</span>];</span><br><span class="line">dp[<span class="number">0</span>] = <span class="number">0</span>; <span class="comment">//对特定位置置零</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i++)&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j&lt;= v; j++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(i == <span class="number">0</span>) dp[j] = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(j &gt;= wgt[i]) dp[j] = <span class="built_in">max</span>(dp[j - wgt[i]] + val[i], dp[j]); <span class="comment">//如果选择放入物品，数据只和左侧数据有关</span></span><br><span class="line">			<span class="keyword">else</span> dp[j] = dp[j]; <span class="comment">//如果不选择放入物品，数据就和上一行相同</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="五、多重背包问题"><a href="#五、多重背包问题" class="headerlink" title="五、多重背包问题"></a>五、多重背包问题</h4><p>多重背包问题类似完全背包和01背包的思路，综合两者的思路即可解决。在选择一个物品时进行循环，直到物品被取完或者大于背包容量则停止这个物品的选择进入下一个物品的选择。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>动态规划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据库数据结构和字段详解</title>
+    <url>/2024/04/03/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E5%AD%97%E6%AE%B5%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<h3 id="一、在数据库中创建表"><a href="#一、在数据库中创建表" class="headerlink" title="一、在数据库中创建表"></a>一、在数据库中创建表</h3><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> table_test(</span><br><span class="line">    id <span class="type">int</span> comment <span class="string">&#x27;id&#x27;</span>,</span><br><span class="line">    name <span class="type">varchar</span>(<span class="number">10</span>)</span><br><span class="line">)comment <span class="string">&#x27;测试表&#x27;</span>;</span><br></pre></td></tr></table></figure></div>
+
+<p>上述代码创建了一个叫做<em>table_test</em>，并创建了<code>int</code>类型的键<em>id</em>，<code>varchar</code>类型长度为10的键<em>name</em>。</p>
+<h3 id="二、键的约束"><a href="#二、键的约束" class="headerlink" title="二、键的约束"></a>二、键的约束</h3><h4 id="1、主键约束（primary-key）"><a href="#1、主键约束（primary-key）" class="headerlink" title="1、主键约束（primary key）"></a>1、主键约束（primary key）</h4><p>主键用来唯一标识表中的每一行数据，主键字段不能包含<strong>NULL</strong>值，且每个表只能有一个主键。</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> table_test(</span><br><span class="line">    id <span class="type">int</span> comment <span class="string">&#x27;id&#x27;</span> <span class="keyword">primary</span> key, <span class="comment">--将id设为主键</span></span><br><span class="line">    name <span class="type">varchar</span>(<span class="number">10</span>)</span><br><span class="line">)comment <span class="string">&#x27;测试表&#x27;</span>;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="2、唯一约束（unique）"><a href="#2、唯一约束（unique）" class="headerlink" title="2、唯一约束（unique）"></a>2、唯一约束（unique）</h4><p>确保字段的值在整个表中是唯一的，可以为<strong>NULL</strong>，可以单独作为一个约束使用，也可以和主键约束一起使用。</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> table_test(</span><br><span class="line">    id <span class="type">int</span> comment <span class="string">&#x27;id&#x27;</span> <span class="keyword">primary</span> key, <span class="comment">--将id设为主键</span></span><br><span class="line">    name <span class="type">varchar</span>(<span class="number">10</span>) <span class="keyword">unique</span> <span class="comment">--使name字段的值唯一</span></span><br><span class="line">)comment <span class="string">&#x27;测试表&#x27;</span>;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="3、检查约束（check）"><a href="#3、检查约束（check）" class="headerlink" title="3、检查约束（check）"></a>3、检查约束（check）</h4><p>约定字段的值在一个规定的范围内。</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> table_test(</span><br><span class="line">    id <span class="type">int</span> <span class="keyword">check</span> (id <span class="operator">&gt;=</span> <span class="number">0</span>) comment <span class="string">&#x27;id&#x27;</span>, <span class="comment">--为字段添加了检查约束使得id必须大于零</span></span><br><span class="line">    name <span class="type">varchar</span>(<span class="number">10</span>)</span><br><span class="line">)comment <span class="string">&#x27;测试表&#x27;</span>;</span><br></pre></td></tr></table></figure></div>
+
+<p>也可以在表级别进行检查约束，在定义列之后可以加上<code>constraint id_check check (id &gt;= 0)</code>，这个约束名为id_check，并且作用于id字段。</p>
+<p>可以使用<strong>enum</strong>枚举类型代替检查约束。</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> table_test(</span><br><span class="line">    id <span class="type">int</span> comment <span class="string">&#x27;id&#x27;</span>,</span><br><span class="line">    name enum(&quot;小明&quot;,&quot;小红&quot;) <span class="comment">--限制name只能取值为两个枚举量</span></span><br><span class="line">)comment <span class="string">&#x27;测试表&#x27;</span>;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="4、默认约束（default）"><a href="#4、默认约束（default）" class="headerlink" title="4、默认约束（default）"></a>4、默认约束（default）</h4><p>指定一个字段的默认值。</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> table_test(</span><br><span class="line">    id <span class="type">int</span> <span class="keyword">default</span> <span class="number">0</span> comment <span class="string">&#x27;id&#x27;</span> ,<span class="comment">--id默认值为0</span></span><br><span class="line">    name <span class="type">varchar</span>(<span class="number">10</span>)</span><br><span class="line">)comment <span class="string">&#x27;测试表&#x27;</span>;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="5、非空约束（not-null）"><a href="#5、非空约束（not-null）" class="headerlink" title="5、非空约束（not null）"></a>5、非空约束（not null）</h4><p>约束一个字段的值不能为空。</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> table_test(</span><br><span class="line">    id <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span> comment <span class="string">&#x27;id&#x27;</span>, <span class="comment">--值不能为空</span></span><br><span class="line">    name <span class="type">varchar</span>(<span class="number">10</span>)</span><br><span class="line">)comment <span class="string">&#x27;测试表&#x27;</span>;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="6、外键约束（foreign-key"><a href="#6、外键约束（foreign-key" class="headerlink" title="6、外键约束（foreign key)"></a>6、外键约束（foreign key)</h4><p>外键约束使得一个字段的取值必须来自于另一个表的特定字段（通常是主键）。</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> cities (</span><br><span class="line">    id <span class="type">INT</span> <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">    name <span class="type">VARCHAR</span>(<span class="number">50</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> users (</span><br><span class="line">    id <span class="type">INT</span> <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">    name <span class="type">VARCHAR</span>(<span class="number">50</span>),</span><br><span class="line">    city_id <span class="type">INT</span>,</span><br><span class="line">    <span class="keyword">FOREIGN</span> KEY (city_id) <span class="keyword">REFERENCES</span> cities(id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
+
+<p>以上的代码对<strong>city_id</strong>添加了约束使得其值只能是<strong>city</strong>表中的<strong>id</strong>取值。</p>
+<h3 id="三、数据结构"><a href="#三、数据结构" class="headerlink" title="三、数据结构"></a>三、数据结构</h3><p>数据库有三种数据结构</p>
+<h4 id="1、数值类型"><a href="#1、数值类型" class="headerlink" title="1、数值类型"></a>1、数值类型</h4><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240403110650691.png"
+                     
+                ></p>
+<ul>
+<li>在数值类型后面加上<strong>unsigned</strong>表示无符号</li>
+<li>在浮点类型后面加上括号指定两个参数，一个是位数一个是小数位。</li>
+</ul>
+<h4 id="2、字符串类型"><a href="#2、字符串类型" class="headerlink" title="2、字符串类型"></a>2、字符串类型</h4><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240403111118041.png"
+                     
+                ></p>
+<ul>
+<li><p>在字符串后面加上括号指定字符长度</p>
+</li>
+<li><p><strong>char</strong>是定长字符串，性能好但是空间大，<strong>varchar</strong>是变长字符串，性能差但是空间小。</p>
+</li>
+<li><p><strong>blob</strong>是二进制文件，一般不用。<strong>text</strong>是二进制文本。</p>
+</li>
+</ul>
+<h4 id="3、时间日期类型"><a href="#3、时间日期类型" class="headerlink" title="3、时间日期类型"></a>3、时间日期类型</h4><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240403201151186.png"
+                      alt="image-20240403201151186"
+                ></p>
+<h3 id="四、字段额外属性"><a href="#四、字段额外属性" class="headerlink" title="四、字段额外属性"></a>四、字段额外属性</h3><ul>
+<li><strong>comment</strong>可以给某一个字段添加注释，也可以给表添加。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>汇编语言实验</title>
+    <url>/2024/04/18/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%AE%9E%E9%AA%8C/</url>
+    <content><![CDATA[<h3 id="一、Debug的使用"><a href="#一、Debug的使用" class="headerlink" title="一、Debug的使用"></a>一、Debug的使用</h3><ul>
+<li><p>-r查看寄存器</p>
+</li>
+<li><p>-r ax 改变ax寄存器的值</p>
+</li>
+<li><p>-d 加内存地址 查看内存</p>
+</li>
+<li><p>-d 连续查看内存地址</p>
+</li>
+<li><p>-e 加<strong>内存地址</strong>加 <strong>值</strong> 修改内存中的内容</p>
+</li>
+<li><p>-a 加<strong>地址</strong> 使指令指针寄存器指向指定的地址，并且在接下来的指令中可以将指令写入地址中</p>
+</li>
+<li><p>-t 单步执行</p>
+</li>
+<li><p>-u 加<strong>地址</strong>将内存地址中的机器码变成汇编语言</p>
+</li>
+</ul>
+<h3 id="二、"><a href="#二、" class="headerlink" title="二、"></a>二、</h3><p><strong>CS + IP</strong>构成了指令的地址</p>
+<p>通用寄存器可以分为高八位和低八位，如果计算结果越界，高位会被直接省略掉，如果是在高八位或者低八位中单独越界，<strong>低八位的进位也不会进到高八位中</strong></p>
+<h4 id="MUL乘法指令"><a href="#MUL乘法指令" class="headerlink" title="MUL乘法指令"></a>MUL乘法指令</h4><p>使用mul乘法指令时，可以使用两个8位的数相乘，也可以使用两个16位。</p>
+<p>如果是8位，第一个乘数默认放在al中，如果是16位第一个乘数默认放在ax中。</p>
+<p><strong>如果结果超过8位结果默认放在ax中，如果结果超过16位，高位结果放在dx中，低位结果放在ax中。</strong></p>
+<p><strong>mul指令一般不将立即数作为操作数（ARM和8086都是）</strong></p>
+<h4 id="DIV除法指令"><a href="#DIV除法指令" class="headerlink" title="DIV除法指令"></a>DIV除法指令</h4><p><strong>除数</strong>可以是8位也可以是16位，<strong>被除数</strong>是16位或者32位，根据被除数来确定。</p>
+<p>被除数如果是16位就存放在AX中，如果是32位就存放在DX和AX中。</p>
+<p>也就是说<strong>被除数</strong>到底是多少根据<strong>除数</strong>来决定</p>
+<h4 id="AND与运算指令"><a href="#AND与运算指令" class="headerlink" title="AND与运算指令"></a>AND与运算指令</h4><p>and 后面可以有两个操作数，结果就是两个数相与的结果</p>
+<h4 id="OR指令"><a href="#OR指令" class="headerlink" title="OR指令"></a>OR指令</h4><p>和and类似</p>
+<h3 id="三、汇编语言中segment"><a href="#三、汇编语言中segment" class="headerlink" title="三、汇编语言中segment"></a>三、汇编语言中segment</h3><h4 id="DATA数据段"><a href="#DATA数据段" class="headerlink" title="DATA数据段"></a>DATA数据段</h4><p>也就相当于c语言中所有的变量存储的段，不管是有没有初始值都可以存储在这里。</p>
+<p>声明变量时需要指定变量的长度。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">DATA SEGMENT</span><br><span class="line">···</span><br><span class="line">DATA ENDS</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="CODE代码段"><a href="#CODE代码段" class="headerlink" title="CODE代码段"></a>CODE代码段</h4><p>代码段中定义了真正要执行的代码，通常会有一个进入函数标签<strong>START</strong>或者**_START<strong>，在Windows系统中是</strong>main<strong>或者</strong>_main<strong>，这里是程序的入口，在整个汇编代码的最后，要写上</strong>end start**来表示start是程序入口。</p>
+<p>为了让汇编器知道我们代码中的程序段就是cs段寄存器，数据段就是ds段寄存器，需要使用一个伪指令<code>assume cd:code, ds:data</code>。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">CODE SEGMENT</span><br><span class="line">	START:</span><br><span class="line">		MOV AX, DATA ;将</span><br><span class="line">		MOV DS, AX</span><br><span class="line">	···</span><br><span class="line">	</span><br><span class="line">CODE ENDS</span><br><span class="line"></span><br><span class="line">END START ;表示程序入口</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="二、80x86"><a href="#二、80x86" class="headerlink" title="二、80x86"></a>二、80x86</h3><p>8086汇编代表了x86汇编语言，编写汇编语言时往往使用<strong>大写</strong>。</p>
+<p>8086是16位，基于8086系列有80386的32位，寄存器都是16位。<br><strong>通用寄存器</strong> </p>
+<ul>
+<li>AX 累加寄存器</li>
+<li>BX 基址寄存器</li>
+<li>CX 计数寄存器</li>
+<li>DX 数据寄存器</li>
+</ul>
+<p><strong>地址指针寄存器</strong> </p>
+<ul>
+<li>SP 堆栈寄存器</li>
+<li>BP 基址指针寄存器</li>
+</ul>
+<p><strong>变址寄存器</strong> </p>
+<ul>
+<li>SI 源变址寄存器</li>
+<li>DI 目标变址寄存器</li>
+</ul>
+<p><strong>段寄存器</strong></p>
+<ul>
+<li>CS 代码段</li>
+<li>DS 数据段</li>
+<li>ES 附加段</li>
+<li>SS 堆栈段</li>
+</ul>
+<h4 id="段寄存器的意义"><a href="#段寄存器的意义" class="headerlink" title="段寄存器的意义"></a>段寄存器的意义</h4><p><strong>段地址x16 + 偏移地址 &#x3D; 物理地址</strong></p>
+<p>段地址就是<strong>段寄存器中的值</strong>，偏移地址就<strong>是地址指针寄存器</strong>和<strong>变址寄存器</strong></p>
+<p>CS+IP &#x3D; 执行代码的位置</p>
+<p>SS+SP&#x3D;堆栈中的位置</p>
+<h4 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h4><ul>
+<li><code>shl ax, 6</code>左移几位</li>
+<li><code>shr ax, 6</code>右移几位</li>
+<li><code>rol ax, 2</code>循环左移</li>
+<li><code>ror ax, 2</code>循环右移</li>
+<li><code>inc ax</code> ax++</li>
+<li><code>dec ax</code> ax–</li>
+<li><code>nop</code> 空指令</li>
+<li><code>xchg ax,bx</code> 交换两个寄存器</li>
+<li><code>neg ax</code> 取负数</li>
+<li><code>word ptr[]</code> 强制转换字节和字，word可以换成byte</li>
+</ul>
+<h4 id="三、ARM汇编"><a href="#三、ARM汇编" class="headerlink" title="三、ARM汇编"></a>三、ARM汇编</h4><h4 id="伪指令"><a href="#伪指令" class="headerlink" title="伪指令"></a>伪指令</h4><p>伪指令并不是真正的arm指令。</p>
+<ul>
+<li><p><strong>.text</strong> 意味着接下来的段是代码段，作用和<code>area code</code>类似</p>
+</li>
+<li><p><strong>.global</strong> 全局定义一个标签</p>
+</li>
+<li><p><strong>.type</strong> 指定一个标签的类型，常用于指定一个标签是函数</p>
+</li>
+<li></li>
+<li><p><code>RSB R1, R0, #0</code> 将ro的值与0相减，并将值变成r1，也就是将值变成负数</p>
+</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>汇编语言（8086和arm）</title>
+    <url>/2024/04/08/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%EF%BC%888086%E5%92%8Carm%EF%BC%89/</url>
+    <content><![CDATA[<h3 id="一、ARM处理器体系"><a href="#一、ARM处理器体系" class="headerlink" title="一、ARM处理器体系"></a>一、ARM处理器体系</h3><h4 id="Thumb状态切换"><a href="#Thumb状态切换" class="headerlink" title="Thumb状态切换"></a>Thumb状态切换</h4><p>Thumb是16位指令的状态，可以使用16位指令，在进行切换时不会改变通用寄存器。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">;现在是ARM指令集</span><br><span class="line">MOV R0,#1 ;将1放进r0寄存器</span><br><span class="line">BX R0 ;跳转的最低位是1，ARM指令集下地址最低位都是0，也就是从ARM指令集跳到Thumb指令集</span><br><span class="line"></span><br><span class="line">;现在是Thumb指令集</span><br><span class="line">MOV R0,#0 ;将0放进r0寄存器</span><br><span class="line">BX R0 ;跳转的最低位是0，Thumb指令集下地址最低位都是1，也就是从Thumb指令集跳到ARM指令集</span><br></pre></td></tr></table></figure></div>
+
+<p>16位Thumb地址一般位于奇数地址，所以跳转到1就进入了Thumb状态。</p>
+<p>+++</p>
+<h4 id="ARM工作模式切换"><a href="#ARM工作模式切换" class="headerlink" title="ARM工作模式切换"></a>ARM工作模式切换</h4><ul>
+<li><strong>用户模式（Usr）</strong> 最普通的模式，资源和指令都受限</li>
+</ul>
+<p>接下来的都是<strong>特权模式</strong>，可以对<strong>CPSR</strong>寄存器所有的位<strong>直接</strong>进行读写，而用户模式只能进行<strong>间接访问</strong>，如使用<strong>MRS指令</strong>将CPSR寄存器读入另一个寄存器。</p>
+<ul>
+<li><p><strong>系统模式（Sys）</strong> 特权模式，和用户模式共用一套寄存器但是权限更高</p>
+</li>
+<li><p><strong>一般中断模式（IRQ）</strong> 通用的中断模式。<em>IRQ异常响应时进入该模式</em></p>
+</li>
+<li><p><strong>快速中断模式（FIQ）</strong> 用来处理优先级更高的中断 。<em>FIQ异常响应时进入该模式</em></p>
+</li>
+<li><p><strong>管理模式（SVC）</strong> CPU<strong>上电后默认</strong>的模式，用来做系统的初始化。<em>系统复位或开机、软中断时进入到该模式</em></p>
+</li>
+<li><p><strong>终止模式（ABT）</strong> 用户程序访问非法地址或者没有权限的地址时会进入。</p>
+</li>
+<li><p><strong>未定义模式（UND）</strong> CPU在译码阶段不能够识别指令时会进入未定义模式</p>
+</li>
+</ul>
+<p>除了系统模式之外的5种特权模式，都是<strong>异常模式</strong>，异常模式只有在对应的异常发生时才会进入对应的模式。</p>
+<p>在发生异常或者中断时，会有一个异常向量表或者中断向量表</p>
+<p>+++</p>
+<h4 id="ARM寄存器"><a href="#ARM寄存器" class="headerlink" title="ARM寄存器"></a>ARM寄存器</h4><p>ARM一共有37个用户可见寄存器。</p>
+<h5 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h5><ul>
+<li><strong>R0-R15</strong> 全模式下可用，其中<strong>R13</strong>是<strong>SP堆栈指针</strong>，<strong>R14</strong>是<strong>LR链接寄存器</strong>，<strong>R15</strong>是<strong>PC寄存器</strong>。</li>
+<li><strong>R13_SVC、R14_SVC</strong> 管理模式专用寄存器</li>
+<li><strong>R13_ABT、R14_ABT</strong> 终止模式专用寄存器</li>
+<li><strong>R13_UND、R14_UND</strong> 未定义模式专用寄存器</li>
+<li><strong>R13_IRQ、 R14_IRQ</strong> 中断模式专用寄存器</li>
+<li><strong>R8_FIQ~R14_FIQ</strong> 快速中断模式专用寄存器，<em>为了减少保护寄存器使用的时间而进行快速中断，直接多几个专用寄存器</em></li>
+</ul>
+<h5 id="状态寄存器"><a href="#状态寄存器" class="headerlink" title="状态寄存器"></a>状态寄存器</h5><ul>
+<li><strong>CPSR</strong>当前程序状态寄存器，具有四位<strong>条件标志位</strong>，两位<strong>中断屏蔽</strong>（包含快速中断），一位<strong>当前工作状态</strong>。</li>
+</ul>
+<p>最后五位是处理器工作模式。可以通过修改这五位进行工作模式的改变。</p>
+<ul>
+<li>CPSR的条件标志位：</li>
+</ul>
+<p><strong>N（Negative）</strong>是否为负数，N&#x3D;1就代表结果为负数。</p>
+<p><strong>Z（Zero）</strong> Z&#x3D;0表示运算的结果为零。</p>
+<p><strong>C（Carry）</strong> <strong>加法</strong>指令中结果产生了进位，则C&#x3D;1；<strong>减法</strong>指令中发生了<strong>借位</strong>则C&#x3D;0；<strong>移位</strong>操作中，C是最后被移出的位。</p>
+<p><strong>V（Overflow）</strong> 在有符号数的加减法指令中，发生了符号位溢出，则V&#x3D;1</p>
+<ul>
+<li><strong>SPSR</strong> 分别对应五种异常模式，五种异常模式发生时可以用来<strong>记录CPSR的值</strong>，然后跳转到对应的异常模式后再使用CPSR。</li>
+</ul>
+<p>在通用寄存器中<strong>R0-R12是完全的通用寄存器</strong>，不会被用来做特殊用途，所有的针对普通寄存器的指令都可以用于他们。</p>
+<h5 id="特殊寄存器的操作"><a href="#特殊寄存器的操作" class="headerlink" title="特殊寄存器的操作"></a>特殊寄存器的操作</h5><ul>
+<li><strong>R13（SP）</strong></li>
+</ul>
+<p>往后看，有堆栈寻址的详细解释。堆栈往往用来实现函数跳转等操作。</p>
+<ul>
+<li><strong>R14（LR）</strong></li>
+</ul>
+<p>执行<strong>BL、BLX</strong>指令时，会将<strong>PC-4</strong>（也就是要执行的下一条指令）的值<strong>自动</strong>记录到LR中，以便函数返回时将LR的值送回PC。但是在其他跳转时并不会自动记录，而是需要手动记录PC-4并存储。</p>
+<p>一般可以这样用，也就是进行多重嵌套时，将LR压栈才能进入下一层嵌套，回到上一层嵌套就将寄存器出栈。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">STMFD SP!, &#123;&lt;registers&gt;, LR&#125;</span><br><span class="line">LDMFD SP!, &#123;&lt;registers&gt;, PC&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>在处理异常时</strong>会将异常处理的返回地址放在<strong>对应模式下</strong>的LR寄存器中，但是这个<strong>返回地址</strong>应该是发生异常代码的下一条代码也就是<strong>PC+4</strong>，而在返回时应该去执行<strong>发生异常时正在执行的那条代码</strong>，因为那条代码并没有执行完，也就需要<strong>LR减去一个偏移量</strong>。<em><strong>在发生异常时，所有的跳转地址都是自动配置好的，不需要我们程序员来关心。</strong></em></p>
+<ul>
+<li><strong>R15（PC）</strong></li>
+</ul>
+<p>​	arm采用了三级流水线的结构，每一条指令的执行都会经过<strong>取指</strong>、<strong>译码</strong>、<strong>执行</strong>三个阶段，所以正在执行的代码往后两条指令是正在取指的代码，也就是说PC的值是<strong>当前正在执行</strong>的代码<strong>地址+8</strong>。</p>
+<p>+++</p>
+<h4 id="ARM存储器体系"><a href="#ARM存储器体系" class="headerlink" title="ARM存储器体系"></a>ARM存储器体系</h4><p>ARM的存储器支持大端模式和小端模式，默认是小端模式，也就是数据的低位存储在低地址内存单元中。</p>
+<p>ARM处理器的ROM一般是FLASH，所有程序都存储在FLASH中，分为片内和片外两种。</p>
+<p>ARM外设有统一的存储器映射编址，也就是访问对应的内存单元就可以访问特定外设的寄存器。这些内存地址不会被缓存。</p>
+<p><em><strong>STM32存储架构详解</strong></em></p>
+<p>+++</p>
+<h4 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h4><p>ARM汇编指令遵循着相对固定的格式，如**&lt; opcode &gt; {&lt; cond &gt;} {S}&lt; Rd &gt;，&lt; Rn &gt; {，&lt; OP2 &gt;}**。</p>
+<p>在其中</p>
+<ul>
+<li><strong>opcode</strong>就是指令的<strong>操作码</strong>的助记符，例如ADD、MOV。</li>
+<li><strong>cond</strong>是可选的<strong>条件执行</strong>，可以是EQ、NE等，满足条件则执行这条指令，条件就是一个CPSR的标志位。</li>
+<li><strong>S</strong>也是一个可选的指令，就是S，表示是否刷新CPSR中的条件标志位。如果不刷新就仍是原来的值。</li>
+<li><strong>Rd、Rn</strong>分别代表第一个操作数和第二个操作数。</li>
+<li><strong>OP2</strong>表示可选的第三操作数。</li>
+</ul>
+<h4 id="寻址"><a href="#寻址" class="headerlink" title="寻址"></a>寻址</h4><ul>
+<li><strong>立即数寻址</strong> <strong>arm汇编一般在立即数前面加上#，x86汇编不需要加</strong></li>
+<li><strong>寄存器寻址</strong> 寄存器中的值直接作为操作数</li>
+</ul>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">MOV r1, r2 ;将r2的值传到r1</span><br><span class="line">ADD r1, r2, r3 ;将r2的值加上r3的值并赋给r1</span><br><span class="line">MOV r2, r1, LSL #3 ;将r1&lt;&lt;3位并赋给r1</span><br><span class="line">ADD r3, r2, r1, LSL #3 ;将r1&lt;&lt;3 + r2赋给r3</span><br><span class="line">ADD r3, r2, r1, LSL r0 ;将r1&lt;&lt;r0 + r2赋给r3</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>寄存器间址</strong> 寄存器中的值作为内存地址，使用内存地址上的数据作为操作数。</li>
+</ul>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">LDR r1, [r2] ;以r2中的内存地址加载数据进r1</span><br><span class="line">STR r1, [r2] ;将r1中的值写入r2寄存器中的内存地址</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>基址寻址</strong> 使用寄存器中的地址生成新地址并且寻址，一般用于查表和数组访问。</li>
+</ul>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">LDR R1, [R0, #2]			;将R0中的值加2作为新地址</span><br><span class="line">LDR R1, [R0, #2]!			;从r0 + 2的位置加载完数据后，R0寄存器的值会增加2。</span><br><span class="line">LDR R1, [R0, R2]			;将R0+R2作为新地址</span><br><span class="line">LDR R1, [R0, R2, LSL #2]	;将R0+R2&lt;&lt;2作为新地址</span><br><span class="line">LDR R1, [R0], #2			;从r0的位置加载完数据后，R0寄存器的值会增加2。与上述第二条不同。</span><br><span class="line">STR R1, [R0, #-2]			;将R0中的值减2作为新地址。</span><br><span class="line">STR R1, [R0], #-2			;将R0中的值作为地址，将R1中的值写入该地址，然后R0寄存器值减2</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>多寄存器寻址</strong> STM&#x2F;LDM指令完成多个寄存器的寻址</li>
+<li><strong>堆栈寻址</strong> 一般使用<code>STMFD SP! &#123;R0-R3&#125;</code>这样的指令进行寻址，最后SP指向栈顶元素。</li>
+</ul>
+<h4 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h4><ul>
+<li>ADD 加法运算</li>
+<li>MOV 将一个值从一个<strong>寄存器</strong>传入另一个<strong>寄存器</strong></li>
+<li>LSL 逻辑左移，空位补零</li>
+<li>LSR 逻辑右移，空位补零</li>
+<li>ASL 算数左移，空位补零</li>
+<li>ASR 算数右移，<strong>空位根据符号来补0或1</strong></li>
+<li>ROR 循环右移，<strong>将最右侧的位移到最左侧</strong></li>
+<li>LDR 从<strong>内存</strong>中取得数据传入<strong>寄存器</strong></li>
+<li>STR 向<strong>内存</strong>中写入数据</li>
+<li>LDM 从<strong>内存</strong>中取得数据放到<strong>多个寄存器</strong>中</li>
+<li>STM 将<strong>多个寄存器</strong>的输入写入到<strong>内存</strong>中</li>
+</ul>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">LDMIA R0, &#123;R1-R5&#125; ;以ro为基址读取五个数据单元加载到r1-r5</span><br><span class="line">STMIA R6, &#123;R1-R5&#125; ;以r6为基址，将r1-r5的数据写入</span><br></pre></td></tr></table></figure></div>
+
+<p>多寄存器寻址和堆栈寻址时，需要加上不同的后缀，向不同的寻址。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">IA 操作后递增</span><br><span class="line">IB 操作前递增</span><br><span class="line">DA 操作后递减</span><br><span class="line">DB 操作前递减</span><br></pre></td></tr></table></figure></div>
+
+<p>堆栈寻址时，堆栈指针指向的是栈顶元素就是<strong>满栈</strong>，堆栈指针指向栈顶元素的下一个元素就是<strong>空栈</strong>。</p>
+<p>每入栈一个元素，<strong>栈指针SP</strong>都会往栈增长的方向移动一个存储单元。如果栈指针SP从高地址往低地址移动，那么这个栈就是递减栈；如果栈指针SP从低地址往高地址移动，那么这个栈就是递增栈，ARM处理器使用的一般都是<strong>满递减堆栈</strong>。</p>
+<p><em><strong>SP！代表着在操作之前递增SP指针。？</strong></em></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">FA 满递增堆栈</span><br><span class="line">FD 满递减堆栈</span><br><span class="line">EA 空递增堆栈</span><br><span class="line">ED 空递减堆栈</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>MRS 从<strong>特殊寄存器</strong>中取数据到一个<strong>普通寄存器</strong></p>
+</li>
+<li><p>MSR 从<strong>普通寄存器</strong>写入数据到一个<strong>特殊寄存器</strong>，这里的特殊寄存器也就是CPSR</p>
+</li>
+<li><p>BX，BLX，B，BL四种跳转指令，<strong>带L</strong>的会自动记录PC的值到LR中，<strong>带X</strong>的可以用于跳转Thumb模式。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>嵌入式开发</tag>
+        <tag>汇编语言</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计算机组成原理（补充知识版）</title>
+    <url>/2024/05/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E8%A1%A5%E5%85%85%E7%9F%A5%E8%AF%86%E7%89%88%EF%BC%89/</url>
+    <content><![CDATA[<h4 id="一、数据的二进制表示"><a href="#一、数据的二进制表示" class="headerlink" title="一、数据的二进制表示"></a>一、数据的二进制表示</h4><p>计算机中的所有数据都是由二进制数表示的，基本上都是使用<strong>二进制补码</strong>来表示。数据可以分为<strong>有符号数</strong>和<strong>无符号数</strong>，区分后进行运算会相对简单。</p>
+<p>对于<strong>原码</strong>，就是将十进制数转化成二进制数，如果是<strong>负数</strong>的话最高位为一。</p>
+<p>对于<strong>反码</strong>，如果是<strong>负数</strong>就将其绝对值的原码每个位都取反，<strong>正数</strong>的反码和原码相同。</p>
+<p>对于<strong>补码</strong>，现在计算机体系中主要使用的就是补码，补码将正负数统一的表示，并且使用同一套加法电路就可以完成加法和减法操作。<strong>负数</strong>的补码是其<strong>反码</strong>加一，正数的补码和原码相同。</p>
+<ul>
+<li><strong>补码的正负数转换：</strong>十进制的一个对正负数，表示为补码后，只要将其中一个的<strong>所有位取反然后加一</strong>就可以变为它的相反数。在进行减法运算的时候可以用到，因为进行减法运算使用的依然是<strong>加法器</strong>，将减法变成<strong>加上</strong>一个数的<strong>相反数</strong>就可以。</li>
+</ul>
+<h4 id="二、存储硬件"><a href="#二、存储硬件" class="headerlink" title="二、存储硬件"></a>二、存储硬件</h4><p>计算机体系结构中大致包括两部分存储，一部分是<strong>RandomAccessMemory</strong>也就是RAM，另一部分是<strong>ReadOnlyMemory</strong>也就是ROM。</p>
+<h5 id="RAM"><a href="#RAM" class="headerlink" title="RAM"></a>RAM</h5><p>RAM一般又分为两种，一种是<strong>SRAM（静态）</strong>另一种是<strong>DRAM（动态）</strong>，都是断电不能保存数据的。</p>
+<p>SRAM一般被用来作为CPU的缓存，只要一直通电就可以保持数据的稳定，访问速度快造价高容量小。</p>
+<p>DRAM一般作为计算的内存，需要通电进行刷新保持数据稳定，速度相对较低造价相对较第容量相对较大。</p>
+<p><strong>ROM</strong></p>
+<p>ROM最大的特点是断电可以保存数据，虽然是只读存储器，但是现在的ROM可以泛指外存，也就是可重复读写的存储器。</p>
+<p><strong>EEPROM</strong> <strong>E</strong>lectrically <strong>E</strong>rasable <strong>P</strong>rogrammable <strong>R</strong>ead <strong>O</strong>nly <strong>M</strong>emory，带电可擦可编程只读存储器。是可更改的只读存储器（ROM），其可通过高于普通电压的作用来擦除和重写。</p>
+<p><em>常用于存放硬件设置数据，如PC的BIOS。</em></p>
+<p><strong>OTP</strong> <strong>O</strong>ne <strong>T</strong>ime <strong>P</strong>rogrammable，一次性可编程存储器。数据写入后，将不可再次更改和清除。</p>
+<p><em>常用于写入产品和安全信息。</em></p>
+<p><strong>FLASH</strong>  <strong>Flash</strong>是一种<strong>块Block</strong>擦写型存储器。Flash不像RAM一样需要电源支持才能保存，但又像RAM一样可重写。在某个级别的低电压下，Flash的内部信息可读不可写，类似于ROM，而在较高的电压下，其内部信息可以更改和删除，又类似于RAM。现代的硬盘一般使用flash技术。</p>
+<p><em>现代的单片机一般使用Flash作为ROM存储</em></p>
+]]></content>
   </entry>
 </search>

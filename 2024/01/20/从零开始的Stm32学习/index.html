@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/IMG_1117.png">
 <meta property="og:image" content="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113201719527.png">
 <meta property="article:published_time" content="2024-01-20T10:16:19.000Z">
-<meta property="article:modified_time" content="2024-01-20T10:19:21.630Z">
+<meta property="article:modified_time" content="2024-04-20T08:44:03.058Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="STM32">
 <meta property="article:tag" content="嵌入式开发">
@@ -591,7 +591,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">21</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">26</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -599,7 +599,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">22</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -643,7 +643,7 @@
                     <div class="author flex items-center">
                         <span class="name text-default-text-color text-lg font-semibold">HarderHeng</span>
                         
-                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
                         
                     </div>
                     <div class="meta-info">
@@ -657,8 +657,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-01-20 18:19:21</span>
-            <span class="mobile">2024-01-20 18:19:21</span>
+            <span class="desktop">2024-04-20 16:44:03</span>
+            <span class="mobile">2024-04-20 16:44:03</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -721,12 +721,13 @@
 <p>使用keil中的<strong>pack installer</strong>安装自己要开发的板子的对应版本，然后在意法半导体官网去找相对应的软件包并解压。在官网的导航找到<strong>软件-》微控制器软件-》STM32微控制器软件-》标准外设软件库</strong>，然后选择适合自己的开发板的就可以。</p>
 <p>这里我用的是stm32f401re开发板，所以要找stm32f4的软件包，软件包中有对应的启动文件以及库函数，库函数直接对底层硬件进行操作，所以可以提高开发的效率，但是也同样会占用更多的资源（库函数之于直接操作寄存器就好像是高级语言之于低级语言）。在keil中新建工程，并且在对应的文件夹下建立<strong>Libraries</strong>（存放库函数）、<strong>User</strong>（存放自己写的main函数）、<strong>Start</strong>（存放各种启动文件）。</p>
 <p><strong>启动文件详解</strong>：1. CMSIS标准中定义了内核函数层，和设备外设访问层，</p>
-<h3 id="二、片上外设详解"><a href="#二、片上外设详解" class="headerlink" title="二、片上外设详解"></a>二、片上外设详解</h3><h4 id="1、GPIO（通用输入输出）"><a href="#1、GPIO（通用输入输出）" class="headerlink" title="1、GPIO（通用输入输出）"></a>1、GPIO（通用输入输出）<img  
+<h3 id="二、片上外设详解"><a href="#二、片上外设详解" class="headerlink" title="二、片上外设详解"></a>二、片上外设详解</h3><h4 id="1、GPIO（通用输入输出）"><a href="#1、GPIO（通用输入输出）" class="headerlink" title="1、GPIO（通用输入输出）"></a>1、GPIO（通用输入输出）</h4><p> <img  
                      lazyload
                      src="/images/loading.svg"
                      data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231016155952611.png"
                       alt="image-20231016155952611"
-                ></h4><p>从IO引脚进入有两个保护二极管，用来防止电压过高或者电压过低。从IO口进入首先是驱动器，然后是寄存器。</p>
+                ></p>
+<p>从IO引脚进入有两个保护二极管，用来防止电压过高或者电压过低。从IO口进入首先是驱动器，然后是寄存器。</p>
 <p>上半部分的驱动器对应输入模式，信号输入首先会有一个上拉和下拉电阻，这里有三种模式可选分别是上拉和下拉和浮空。当输入端没有信号输入时，进入寄存器的高低电平就由此处控制。上拉默认为高电平的输入模式，下拉默认为低电平的输入模式。再向内有一个<strong>肖特基（施密特）触发器</strong>，是一个对输入信号进行整形的装置，当输入的信号高于一个上限时就向内输入高电平，低于下限则输入低电平，用这种方法可以减少数据的抖动。在施密特触发器前后分别接到了模拟输入和复用功能输入上，对应额外的功能。</p>
 <p>下半部分的驱动器对应输入模式。可以用数据寄存器进行数据的输出，位设置清除寄存器可以单独操作输出寄存器的某一位但是不影响其他位，一整个数据寄存器控制所有的端口，所以不能直接对某一位进行操作，要使用按位与和按位或的操作，或者直接用位设置清除寄存器。也可以接到复用功能也就是其他片上外设上来获取额外的功能。两个mos管<strong>P_MOS，N_MOS</strong>可以配置推挽（push_pull）和开漏（open_drain）或者关闭。</p>
 <h6 id="GPIO的八种工作模式"><a href="#GPIO的八种工作模式" class="headerlink" title="GPIO的八种工作模式"></a>GPIO的八种工作模式</h6><p><strong>1）模拟输入 GPIO_Mode_AIN</strong> 输入模式直接接入模拟输入</p>
@@ -828,6 +829,7 @@
 <p>使用外设时钟控制，就可以将外设时钟使能与进时钟输出，也就是启动时钟。</p>
 </li>
 </ul>
+<p>stm32上电后先进行Systeminit，先开启内部高速时钟HSI，然后初始化HSE开始使用HSE作为时钟，然后通过AHB预分频器进行分频</p>
 <h3 id="三、通信协议"><a href="#三、通信协议" class="headerlink" title="三、通信协议"></a>三、通信协议</h3><h4 id="1、I2C协议"><a href="#1、I2C协议" class="headerlink" title="1、I2C协议"></a>1、I2C协议</h4><p>同步半双工，带数据应答，支持总线挂载多设备，两条总线：<strong>SCL（时序总线）</strong>，<strong>SDA（数据总线）</strong></p>
 <p><strong>硬件I2C</strong>：STM32如果有I2C硬件模块可以直接使用，查手册找一下I2C挂载在何处，然后初始化I2C的各种属性。直接往数据寄存器中写入值发送然后直接从数据寄存器中读取数据。</p>
 <p><strong>软件I2C</strong>：可以使用软件函数的方式模拟I2C协议，初始化GPIO口，将一个口的输出作为SCL另一个作为SDA，然后根据I2C的时序特点在不同的时序阶段将数据放在SDA总线上，定时上拉和上拉SCL。</p>
@@ -870,7 +872,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-01-20 18:19:21
+                    :</strong> 2024-04-20 16:44:03
             </li>
         
         <li>
