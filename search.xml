@@ -862,11 +862,11 @@
 <p>Config文件夹中的是一些RTT实时传输和SystemView的配置。</p>
 <p>Sample文件夹中的是一些可用的操作系统的接口文件，需要我们找到需要的接口文件。</p>
 <p>SEGGER文件夹中的就是SystemView和RTT的源文件，不需要我们修改，直接放进工程目录中。</p>
-<h4 id="配置SYstemView和RTT以及开启系统追踪功能"><a href="#配置SYstemView和RTT以及开启系统追踪功能" class="headerlink" title="配置SYstemView和RTT以及开启系统追踪功能"></a>配置SYstemView和RTT以及开启系统追踪功能</h4><ul>
+<h4 id="配置SystemView和RTT以及开启系统追踪功能"><a href="#配置SystemView和RTT以及开启系统追踪功能" class="headerlink" title="配置SystemView和RTT以及开启系统追踪功能"></a>配置SystemView和RTT以及开启系统追踪功能</h4><ul>
 <li><strong>os_cfg.h</strong></li>
 </ul>
-<p>在os_cfg.h中找到宏OS_TRACE_EN并将其值改为1，也就是打开系统追踪功能。</p>
-<p>OS_TRACE_API_ENTER_EN和OS_TRACE_API_EXIT_EN是系统API调用的监控。</p>
+<p>在os_cfg.h中找到宏<strong>OS_TRACE_EN</strong>并将其值改为1，也就是打开系统追踪功能。</p>
+<p><strong>OS_TRACE_API_ENTER_EN</strong>和<strong>OS_TRACE_API_EXIT_EN</strong>是系统API调用的监控。</p>
 <ul>
 <li><strong>os_trace.h</strong></li>
 </ul>
@@ -875,19 +875,30 @@
 <ul>
 <li><strong>os_cfg_trace.h</strong></li>
 </ul>
-<p>配置宏OS_CFG_TRACE_MAX_TASK 和OS_CFG_TRACE_MAX_RESOURCES表示可以监控的任务和其他内核对象的最大数量。</p>
+<p>配置宏<strong>OS_CFG_TRACE_MAX_TASK</strong> 和<strong>OS_CFG_TRACE_MAX_RESOURCES</strong>表示可以监控的任务和其他内核对象的最大数量。</p>
 <ul>
 <li><strong>SEGGER_RTT_Conf.h</strong></li>
 </ul>
-<p>BUFFER_SIZE_UP表示缓冲区最大值，给4096</p>
+<p><strong>BUFFER_SIZE_UP</strong>表示缓冲区最大值，给4096</p>
 <ul>
 <li><strong>SEGGER_SYSVIEW_Conf.h</strong></li>
 </ul>
-<p>在这里我没找到这个定义的宏，所就自己定义了一个。</p>
+<p>在这里我没找到<strong>SEGGER_SYSVIEW_RTT_BUFFER_SIZE</strong>这个定义的宏，所就自己定义了一个。</p>
 <p><code>#define SEGGER_SYSVIEW_RTT_BUFFER_SIZE    4096u</code></p>
 <p>也是定义buffer缓冲区的大小。</p>
-<p>* </p>
-]]></content>
+<ul>
+<li><strong>SEGGER_SYSVIEW_Config_uCOSII.c</strong></li>
+</ul>
+<p>在这里需要更改两个宏函数<strong>SYSVIEW_TIMESTAMP_FREQ</strong>和<strong>SYSVIEW_CPU_FREQ</strong>，这两个宏会被下面的函数<strong>SEGGER_SYSVIEW_Conf</strong>所调用，所以我们需要让这两个宏的值是SYSCLK的值。利用RCC库中的<strong>RCC_GetClocksFreq</strong>函数来获取时钟频率。</p>
+<p><strong>SYSVIEW_RAM_BASE</strong>宏定义表示着缓冲区的最低地址，应该不需要更改。 </p>
+<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">SYSCLK_FreqGet</span><span class="params">()</span>&#123;</span><br><span class="line">	RCC_ClocksTypeDef get_rcc_clock;</span><br><span class="line">	RCC_GetClocksFreq(&amp;get_rcc_clock);</span><br><span class="line">	<span class="keyword">return</span> get_rcc_clock.SYSCLK_Frequency;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SYSVIEW_TIMESTAMP_FREQ  (SYSCLK_FreqGet())</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SYSVIEW_CPU_FREQ        (SYSCLK_FreqGet())</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SYSVIEW_RAM_BASE        (0x20000000)</span></span><br></pre></td></tr></table></figure></div>
+
+<p>再往下是中断信息的输出函数，在这里进行输出的更改，在SystemView中想看到具体的中断名称而不仅仅是中断号，就可以在这里进行配置。</p>
+<p><strong>例</strong></p>
+<p><code>SEGGER_SYSVIEW_SendSysDesc(&quot;I#15=SysTick&quot;);</code></p>
+<p>+++</p>
+<p>到这里为止，我们就对SystemView进行了基本的配置和移植。</p>
+<h4 id="启用SystemView进行追踪"><a href="#启用SystemView进行追踪" class="headerlink" title="启用SystemView进行追踪"></a>启用SystemView进行追踪</h4>]]></content>
   </entry>
   <entry>
     <title>uC/OS移植</title>
