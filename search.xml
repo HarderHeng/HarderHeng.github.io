@@ -1181,7 +1181,7 @@
 <ul>
 <li><strong>opcode</strong>就是指令的<strong>操作码</strong>的助记符，例如ADD、MOV。</li>
 <li><strong>cond</strong>是可选的<strong>条件执行</strong>，可以是EQ、NE等，满足条件则执行这条指令，条件就是一个CPSR的标志位。</li>
-<li><strong>S</strong>也是一个可选的指令，就是S，表示是否刷新CPSR中的条件标志位。如果不刷新就仍是原来的值。</li>
+<li><strong>S</strong>也是一个可选的指令，就是S，表示是否刷新CPSR中的条件标志位。如果不使用就仍是原来的值。</li>
 <li><strong>Rd、Rn</strong>分别代表第一个操作数和第二个操作数。</li>
 <li><strong>OP2</strong>表示可选的第三操作数。</li>
 </ul>
@@ -1286,5 +1286,10 @@
         <tag>美术优秀</tag>
         <tag>音乐</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>LightRoom后期照片管理</title>
+    <url>/2024/05/12/LightRoom%E5%90%8E%E6%9C%9F%E7%85%A7%E7%89%87%E7%AE%A1%E7%90%86/</url>
+    <content><![CDATA[]]></content>
   </entry>
 </search>
