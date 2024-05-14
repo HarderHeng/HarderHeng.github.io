@@ -480,12 +480,18 @@
   <entry>
     <title>SystemView简单移植</title>
     <url>/2024/05/08/SystemView%E7%AE%80%E5%8D%95%E7%A7%BB%E6%A4%8D/</url>
-    <content><![CDATA[<h4 id="SystemView是什么"><a href="#SystemView是什么" class="headerlink" title="SystemView是什么"></a>SystemView是什么</h4><p>SystemView是由SEGGER公司开发的嵌入式系统可视化分析工具，可以用来可视化的监控嵌入式操作系统的运行，帮助我们更好的学习和开发嵌入式操作系统。</p>
+    <content><![CDATA[<h4 id="一、SystemView是什么"><a href="#一、SystemView是什么" class="headerlink" title="一、SystemView是什么"></a>一、SystemView是什么</h4><p>SystemView是由SEGGER公司开发的嵌入式系统可视化分析工具，可以用来可视化的监控嵌入式操作系统的运行，帮助我们更好的学习和开发嵌入式操作系统。</p>
 <p>SystemView支持uC&#x2F;OS-II、μC&#x2F;OS-III、FreeRTOS、embOS和无OS的裸机系统。</p>
 <p>SystemView可以使用串口、J-Link等连接方式和硬件进行连接。</p>
 <h4 id="SystemView工作模式介绍"><a href="#SystemView工作模式介绍" class="headerlink" title="SystemView工作模式介绍"></a>SystemView工作模式介绍</h4><p>持续记录模式：基于J-Link调试器和SEGGER实时传输技术（RTT），SystemView可以在目标程序运行时实时地记录目标执行情况，不使用J-Link RTT技术，也可以通过串口或者TCP&#x2F;IP实现。</p>
 <p>Single-Shot模式：当目标设备不支持RTT或没有使用J-Link时，SEGGER SystemView可以用于记录数据，直到其目标缓冲区被填充满时停止记录。</p>
 <p>Post-Mortem模式：类似Single-Shot模式，但会在缓冲区填满时覆盖旧的事件，所以，记录到的是最新的系统活动事件。这个模式可用于分析某些应用突然崩溃的问题，SystemView可以显示系统崩溃前发生的情况。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240514174143934.png"
+                      alt="image-20240514174143934"
+                ></p>
 <h4 id="SystemView工作目录"><a href="#SystemView工作目录" class="headerlink" title="SystemView工作目录"></a>SystemView工作目录</h4><p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -496,8 +502,8 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240509103723892.png"
-                      alt="image-20240509103723892"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240512181718276.png"
+                      alt="image-20240512181718276"
                 ></p>
 <p>在keil中是这样的文件夹目录，因为keil不支持多级目录。</p>
 <p><img  
@@ -545,9 +551,16 @@
 <p>再往下是中断信息的输出函数，在这里进行输出的更改，在SystemView中想看到具体的中断名称而不仅仅是中断号，就可以在这里进行配置。</p>
 <p><strong>例</strong></p>
 <p><code>SEGGER_SYSVIEW_SendSysDesc(&quot;I#15=SysTick&quot;);</code></p>
-<p>+++</p>
-<p>到这里为止，我们就对SystemView进行了基本的配置和移植。</p>
-<h4 id="启用SystemView进行追踪"><a href="#启用SystemView进行追踪" class="headerlink" title="启用SystemView进行追踪"></a>启用SystemView进行追踪</h4>]]></content>
+<p><em><strong>到这里为止，我们就对SystemView进行了基本的配置和移植。</strong></em></p>
+<p>参考文档：</p>
+<p><a class="link"   href="https://micrium.atlassian.net/wiki/spaces/osiidoc/pages/163904/SEGGER+SystemView" >Starting the Trace Recorder - µC&#x2F;OS-II Documentation <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h4 id="启用SystemView进行追踪"><a href="#启用SystemView进行追踪" class="headerlink" title="启用SystemView进行追踪"></a>启用SystemView进行追踪</h4><p>在主程序中调用OS_TRACE_INIT()函数进行初始化。</p>
+<p>*<em>注意，为了在SystemView的电脑软件中观察到具体的任务，请使用OSTaskNameSet为一个任务设定名称，否则在软件中只能看得到问号。</em></p>
+<p><strong>连接硬件配置</strong></p>
+<p>我们所使用的STM32F401RE-NUCLEO开发版有板载的ST-Link，SEGGER官方提供了一个<a class="link"   href="https://www.segger.com/products/debug-probes/j-link/models/other-j-links/st-link-on-board/" >ST-LINK Reflash <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>工具，可以用来把ST-Link变成J-Link来用。跟着其中的教程一步步走，先安装两种Link的驱动，再使用软件将ST-Link变成J-Link。这时候发现J-Link不能直接给板子供电，必须要外接一个供电设备比如另外一个ST-Link。</p>
+<p><strong>软件配置</strong></p>
+<p>打开SystemView软件，在Target中可以看到Record Configuration，在这里选择J-Link并且自己选择好设备类型，之后就可以开始记录了。</p>
+]]></content>
   </entry>
   <entry>
     <title>WPF学习</title>
@@ -947,6 +960,7 @@
 <li>ASL 算数左移，空位补零</li>
 <li>ASR 算数右移，<strong>空位根据符号来补0或1</strong></li>
 <li>ROR 循环右移，<strong>将最右侧的位移到最左侧</strong></li>
+<li>RRX 循环右移，</li>
 <li>LDR 从<strong>内存</strong>中取得数据传入<strong>寄存器</strong></li>
 <li>STR 向<strong>内存</strong>中写入数据</li>
 <li>LDM 从<strong>内存</strong>中取得数据放到<strong>多个寄存器</strong>中</li>
