@@ -1504,7 +1504,8 @@
 <p>作为默认终端</p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure></div>
 
-<h4 id="oh-my-zsh安装"><a href="#oh-my-zsh安装" class="headerlink" title="oh-my-zsh安装"></a>oh-my-zsh安装</h4><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://gitee.com/shmhlsy/oh-my-zsh-install.sh/raw/master/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure></div>
+<h4 id="oh-my-zsh安装"><a href="#oh-my-zsh安装" class="headerlink" title="oh-my-zsh安装"></a>oh-my-zsh安装</h4><p>oh-my-zsh是zsh的一个框架，内置了许多主题和插件。</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://gitee.com/shmhlsy/oh-my-zsh-install.sh/raw/master/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure></div>
 
 <p>常用插件安装</p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#自动补齐</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh&#125;</span>/plugins/zsh-autosuggestions</span><br><span class="line"></span><br><span class="line"><span class="comment">#语法高亮</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh&#125;</span>/plugins/zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line"><span class="comment">#自动跳转</span></span><br><span class="line">sudo apt-get install autojump</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
@@ -1516,9 +1517,17 @@
 <p>直接修改主题的设置</p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vim ~/.oh-my-zsh/themes/robbyrussell.zsh-theme</span><br></pre></td></tr></table></figure></div>
 
-<p>找到<code>%&#123;$fg[cyan]%&#125;%c%&#123;$reset_color%&#125;</code>，并将其中的**%c**改成<code>%d</code>。</p>
+<p>找到<code>%&#123;$fg[cyan]%&#125;%c%&#123;$reset_color%&#125;</code>，并将其中的<code>%c</code>改成<code>%d</code>。</p>
+</li>
+<li><p><strong>无法连接github</strong></p>
 </li>
 </ul>
+<p>出现报错信息如下</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">Failed to connect to github.com port 443: Timed out</span><br></pre></td></tr></table></figure></div>
+
+<p>这里不做过多的研究，一般认为是代理的问题。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global https.proxy #设置代理</span><br><span class="line">git config --global --unset https.proxy #取消设置代理</span><br></pre></td></tr></table></figure></div>
+
 ]]></content>
   </entry>
   <entry>
@@ -1580,6 +1589,58 @@
 <p>单位一般是pF。</p>
 <p><em>常用电容：贴片电容MLCC，瓷片电容，电解电容</em></p>
 <p>* </p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Git_SSH验证问题</title>
+    <url>/2024/09/03/Git-SSH%E9%AA%8C%E8%AF%81%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>重装系统后，尝试重新配置所有的环境，在使用Hexo博客进行部署时遇到了github无法连接的问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240903235724103.png"
+                      alt="image-20240903235724103"
+                ></p>
+<h4 id="一、寻找解决方案"><a href="#一、寻找解决方案" class="headerlink" title="一、寻找解决方案"></a>一、寻找解决方案</h4><ul>
+<li>在上述的报错后直接yes，理论上会在个人的<code>.ssh</code>文件夹中创建一个<code>known_hosts</code>文件，此时加上私钥和公钥一共会有三个文件。</li>
+</ul>
+<p>如果能够正常创建<code>known_hosts</code>文件，理论上此时问题就会被解决。</p>
+<p><strong>但是在这里我并没有解决问题，遂继续尝试其他方法</strong></p>
+<ul>
+<li>删除ssh文件，运行<code>ssh-keygen -t rsa -C &lt;邮箱&gt;</code>重新生成ssh秘钥，然后在github中上传新的公钥。理论上这里可以通过ssh验证连接，问题会被解决。</li>
+</ul>
+<p><strong>但是在这里我并没有解决问题，最终找到了问题所在</strong></p>
+<ul>
+<li>在前面不管怎么样都无法生成<code>known_hosts</code>文件，<strong>该文件内容未知</strong>，但是一定存在某种重要的作用，在github官方的帮助中可以找到解决方法。</li>
+</ul>
+<p><a class="link"   href="https://docs.github.com/zh/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints" >GitHub 的 SSH 密钥指纹 - GitHub 文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><em>这里并不深究SSH秘钥指纹的知识。</em></p>
+<p>直接在<code>.ssh</code>文件夹下创建新文件<code>known_hosts</code>并将官方给的秘钥条目添加进去，最终解决了问题。</p>
+<p>在成功后尝试验证ssh连接，<code>ssh -T git@github.com</code>，应当出现以下的信息，即完全解决了问题。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">You&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="二、后话"><a href="#二、后话" class="headerlink" title="二、后话"></a>二、后话</h4><p>重装系统后ssh秘钥失效，应该及时更换秘钥。</p>
+<p>对git进行设置只是设置了本地用户的用户名和邮箱，如果要连接到远程仓库还需要https验证或者ssh验证。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Git出现dubious_ownership错误</title>
+    <url>/2024/09/03/Git%E5%87%BA%E7%8E%B0dubious-ownership%E9%94%99%E8%AF%AF/</url>
+    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>我将电脑系统单独分了一个c盘，其他的软件资源都放在别的盘内，重装系统后只需要重新配置软件和注册表就可以和之前一样使用。</p>
+<p>本次重装系统后，重新使用<strong>Hexo博客</strong>，发现不能够上传博客页面，报错看上去是说当前用户不是仓库拥有者。此时我以为是Git没有配置用户，所以不能推送到远程仓库，于是正常的<code>git config</code>后，问题依然没有解决，而在使用别的仓库时也出现的同样的报错，进行任何的<strong>git</strong>命令操作都会出现<code>dubious ownership</code>错误，接下来尝试解决该错误。</p>
+<h4 id="一、为什么会出现这个错误"><a href="#一、为什么会出现这个错误" class="headerlink" title="一、为什么会出现这个错误"></a>一、为什么会出现这个错误</h4><p>出于安全考虑，Git会对仓库目录进行所有权的检查。如果你的仓库目录所有权和当前用户不匹配，Git就会给你抛出一个<code>fatal: detected dubious ownership in repository</code>的错误。</p>
+<h4 id="二、两个解决方案"><a href="#二、两个解决方案" class="headerlink" title="二、两个解决方案"></a>二、两个解决方案</h4><h5 id="方案一：对Windows进行更改目录所有权"><a href="#方案一：对Windows进行更改目录所有权" class="headerlink" title="方案一：对Windows进行更改目录所有权"></a>方案一：对Windows进行更改目录所有权</h5><p>这里没有使用该方案，也没有进行尝试。</p>
+<h5 id="方案二：将当前目录添加到安全目录例外"><a href="#方案二：将当前目录添加到安全目录例外" class="headerlink" title="方案二：将当前目录添加到安全目录例外"></a>方案二：将当前目录添加到安全目录例外</h5><p><code>git config --global --add safe.directory E:/project/UC-BMS</code></p>
+<p>后面的目录换成对应的位置。</p>
+<h4 id="三、解决问题后"><a href="#三、解决问题后" class="headerlink" title="三、解决问题后"></a>三、解决问题后</h4><p>使用方案二后，gitee网站可以进行仓库的连接。</p>
+<p>但是在我的环境下还出现了不能够验证github的问题。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240903235724103.png"
+                      alt="image-20240903235724103"
+                ></p>
+<p>在另一篇文章中将尝试解决这个问题。</p>
 ]]></content>
   </entry>
 </search>
