@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="HarderHeng">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/04/08/arm汇编语言/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="Thumb状态切换Thumb是16位指令的状态，可以使用16位指令，在进行切换时不会改变通用寄存器。 1234567;现在是ARM指令集MOV R0,#1 ;将1放进r0寄存器BX R0 ;跳转的最低位是1，ARM指令集下地址最低位都是0，也就是从ARM指令集跳到Thumb指令集;现在是Thumb指令集MOV R0,#0 ;将0放进r0寄存器BX R0 ;跳转的最低位是0，Thumb指令集下地址最">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ARM处理器汇编语言">
+<meta property="og:url" content="http://example.com/2024/04/08/ARM%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Thumb状态切换Thumb是16位指令的状态，可以使用16位指令，在进行切换时不会改变通用寄存器。 1234567;现在是ARM指令集MOV R0,#1 ;将1放进r0寄存器BX R0 ;跳转的最低位是1，ARM指令集下地址最低位都是0，也就是从ARM指令集跳到Thumb指令集;现在是Thumb指令集MOV R0,#0 ;将0放进r0寄存器BX R0 ;跳转的最低位是0，Thumb指令集下地址最">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-04-08T00:32:37.000Z">
+<meta property="article:modified_time" content="2024-06-05T14:33:37.988Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="嵌入式开发">
+<meta property="article:tag" content="汇编语言">
+<meta property="article:tag" content="ARM">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20240510162247.jpg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20240510162247.jpg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20240510162247.jpg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            ARM处理器汇编语言 -
+        
+        Heng&#39;s Blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Heng&#39;s Blog
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"simple","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":6,"number":true,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/50c479bb3650f0114d57f327a16842daaacf4e2c.jpg","dark":"/images/50c479bb3650f0114d57f327a16842daaacf4e2c.jpg"},"title":"Welcome to my Blog","subtitle":{"text":["Welcome","Love"],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn"},"typing_speed":150,"backing_speed":0,"starting_delay":1000,"backing_delay":1500,"loop":false,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"4.0rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"主页":{"path":"/","icon":"fa-regular fa-house"},"归档":{"path":"/archives","icon":"fa-regular fa-archive"},"标签":{"path":"/tags/","icon":"fa-regular fa-tags"},"分类":{"path":"/categories","icon":"fa-regular fa-tags"},"相册":{"path":"/masonry/","icon":"fa-regular fa-image"},"关于":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Github":"https://github.com/HarderHeng","碎碎念":"/odds"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"cloud"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"info","announcement":"欢迎来到我的个人博客,我在这里记录我的生活和学习,正如我的域名后缀一样","links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/10/1 00:00:00"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":true};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/heng.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                Heng&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    主页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    归档
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/tags/"
+                                        >
+                                    <i class="fa-regular fa-tags fa-fw"></i>
+                                    标签
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories"
+                                        >
+                                    <i class="fa-regular fa-tags fa-fw"></i>
+                                    分类
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/masonry/"
+                                        >
+                                    <i class="fa-regular fa-image fa-fw"></i>
+                                    相册
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    关于
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/about">
+                                                    ME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/HarderHeng">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/odds">
+                                                    碎碎念
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                主页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                归档
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/tags/"
+                        >
+                            <span>
+                                标签
+                            </span>
+                            
+                                <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories"
+                        >
+                            <span>
+                                分类
+                            </span>
+                            
+                                <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/masonry/"
+                        >
+                            <span>
+                                相册
+                            </span>
+                            
+                                <i class="fa-regular fa-image fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-关于"
+                        >
+                            <span>
+                                关于
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-关于">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/about">ME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/HarderHeng">GITHUB</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/odds">碎碎念</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">31</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">32</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">ARM处理器汇编语言</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/IMG_0295.JPG">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">HarderHeng</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-04-08 08:32:37</span>
+        <span class="mobile">2024-04-08 08:32:37</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-06-05 22:33:37</span>
+            <span class="mobile">2024-06-05 22:33:37</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">汇编语言</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/ARM/">ARM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h4 id="Thumb状态切换"><a href="#Thumb状态切换" class="headerlink" title="Thumb状态切换"></a>Thumb状态切换</h4><p>Thumb是16位指令的状态，可以使用16位指令，在进行切换时不会改变通用寄存器。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">;现在是ARM指令集</span><br><span class="line">MOV R0,#1 ;将1放进r0寄存器</span><br><span class="line">BX R0 ;跳转的最低位是1，ARM指令集下地址最低位都是0，也就是从ARM指令集跳到Thumb指令集</span><br><span class="line"></span><br><span class="line">;现在是Thumb指令集</span><br><span class="line">MOV R0,#0 ;将0放进r0寄存器</span><br><span class="line">BX R0 ;跳转的最低位是0，Thumb指令集下地址最低位都是1，也就是从Thumb指令集跳到ARM指令集</span><br></pre></td></tr></table></figure></div>
+
+<p>16位Thumb地址一般位于奇数地址，所以跳转到1就进入了Thumb状态。</p>
+<h4 id="ARM工作模式切换"><a href="#ARM工作模式切换" class="headerlink" title="ARM工作模式切换"></a>ARM工作模式切换</h4><ul>
+<li><strong>用户模式（Usr）</strong> 最普通的模式，资源和指令都受限</li>
+</ul>
+<p>接下来的都是<strong>特权模式</strong>，可以对<strong>CPSR</strong>寄存器所有的位<strong>直接</strong>进行读写，而用户模式只能进行<strong>间接访问</strong>，如使用<strong>MRS指令</strong>将CPSR寄存器读入另一个寄存器。</p>
+<ul>
+<li><p><strong>系统模式（Sys）</strong> 特权模式，和用户模式共用一套寄存器但是权限更高</p>
+</li>
+<li><p><strong>一般中断模式（IRQ）</strong> 通用的中断模式。<em>IRQ异常响应时进入该模式</em></p>
+</li>
+<li><p><strong>快速中断模式（FIQ）</strong> 用来处理优先级更高的中断 。<em>FIQ异常响应时进入该模式</em></p>
+</li>
+<li><p><strong>管理模式（SVC）</strong> CPU<strong>上电后默认</strong>的模式，用来做系统的初始化。<em>系统复位或开机、软中断时进入到该模式</em></p>
+</li>
+<li><p><strong>终止模式（ABT）</strong> 用户程序访问非法地址或者没有权限的地址时会进入。</p>
+</li>
+<li><p><strong>未定义模式（UND）</strong> CPU在译码阶段不能够识别指令时会进入未定义模式</p>
+</li>
+</ul>
+<p>除了系统模式之外的5种特权模式，都是<strong>异常模式</strong>，异常模式只有在对应的异常发生时才会进入对应的模式。</p>
+<p>在发生异常或者中断时，会有一个异常向量表或者中断向量表</p>
+<p>+++</p>
+<h4 id="ARM寄存器"><a href="#ARM寄存器" class="headerlink" title="ARM寄存器"></a>ARM寄存器</h4><p>ARM一共有37个用户可见寄存器。</p>
+<h5 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h5><ul>
+<li><strong>R0-R15</strong> 全模式下可用，其中<strong>R13</strong>是<strong>SP堆栈指针</strong>，<strong>R14</strong>是<strong>LR链接寄存器</strong>，<strong>R15</strong>是<strong>PC寄存器</strong>。</li>
+<li><strong>R13_SVC、R14_SVC</strong> 管理模式专用寄存器</li>
+<li><strong>R13_ABT、R14_ABT</strong> 终止模式专用寄存器</li>
+<li><strong>R13_UND、R14_UND</strong> 未定义模式专用寄存器</li>
+<li><strong>R13_IRQ、 R14_IRQ</strong> 中断模式专用寄存器</li>
+<li><strong>R8_FIQ~R14_FIQ</strong> 快速中断模式专用寄存器，<em>为了减少保护寄存器使用的时间而进行快速中断，直接多几个专用寄存器</em></li>
+</ul>
+<h5 id="状态寄存器"><a href="#状态寄存器" class="headerlink" title="状态寄存器"></a>状态寄存器</h5><ul>
+<li><strong>CPSR</strong>当前程序状态寄存器，具有四位<strong>条件标志位</strong>，两位<strong>中断屏蔽</strong>（包含快速中断），一位<strong>当前工作状态</strong>。</li>
+</ul>
+<p>最后五位是处理器工作模式。可以通过修改这五位进行工作模式的改变。</p>
+<ul>
+<li>CPSR的条件标志位：</li>
+</ul>
+<p><strong>N（Negative）</strong>是否为负数，N&#x3D;1就代表结果为负数。</p>
+<p><strong>Z（Zero）</strong> Z&#x3D;1表示运算的结果为零。</p>
+<p><strong>C（Carry）</strong> <strong>加法</strong>指令中结果产生了进位，则C&#x3D;1，反之则为0；<strong>减法</strong>指令中发生了<strong>借位</strong>则C&#x3D;0，没有借位则为1；<strong>移位</strong>操作中，C是最后被移出的位。</p>
+<p><strong>V（Overflow）</strong> 在有符号数的加减法指令中，发生了符号位溢出，则V&#x3D;1</p>
+<ul>
+<li><strong>SPSR</strong> 分别对应五种异常模式，五种异常模式发生时可以用来<strong>记录CPSR的值</strong>，然后跳转到对应的异常模式后再使用CPSR。</li>
+</ul>
+<p>在通用寄存器中<strong>R0-R12是完全的通用寄存器</strong>，不会被用来做特殊用途，所有的针对普通寄存器的指令都可以用于他们。</p>
+<h5 id="特殊寄存器的操作"><a href="#特殊寄存器的操作" class="headerlink" title="特殊寄存器的操作"></a>特殊寄存器的操作</h5><ul>
+<li><strong>R13（SP）</strong></li>
+</ul>
+<p>往后看，有堆栈寻址的详细解释。堆栈往往用来实现函数跳转等操作。</p>
+<ul>
+<li><strong>R14（LR）</strong></li>
+</ul>
+<p>执行<strong>BL、BLX</strong>指令时，会将<strong>PC-4</strong>（也就是要执行的下一条指令）的值<strong>自动</strong>记录到LR中，以便函数返回时将LR的值送回PC。但是在其他跳转时并不会自动记录，而是需要手动记录PC-4并存储。</p>
+<p>一般可以这样用，也就是进行多重嵌套时，将LR压栈才能进入下一层嵌套，回到上一层嵌套就将寄存器出栈。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">STMFD SP!, &#123;&lt;registers&gt;, LR&#125;</span><br><span class="line">LDMFD SP!, &#123;&lt;registers&gt;, PC&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>在处理异常时</strong>会将异常处理的返回地址放在<strong>对应模式下</strong>的LR寄存器中，但是这个<strong>返回地址</strong>应该是发生异常代码的下一条代码也就是<strong>PC+4</strong>，而在返回时应该去执行<strong>发生异常时正在执行的那条代码</strong>，因为那条代码并没有执行完，也就需要<strong>LR减去一个偏移量</strong>。<em><strong>在发生异常时，所有的跳转地址都是自动配置好的，不需要我们程序员来关心。</strong></em></p>
+<ul>
+<li><strong>R15（PC）</strong></li>
+</ul>
+<p>​	arm采用了三级流水线的结构，每一条指令的执行都会经过<strong>取指</strong>、<strong>译码</strong>、<strong>执行</strong>三个阶段，所以正在执行的代码往后两条指令是正在取指的代码，也就是说PC的值是<strong>当前正在执行</strong>的代码<strong>地址+8</strong>。</p>
+<p>+++</p>
+<h4 id="ARM存储器体系"><a href="#ARM存储器体系" class="headerlink" title="ARM存储器体系"></a>ARM存储器体系</h4><p>ARM的存储器支持大端模式和小端模式，默认是小端模式，也就是数据的低位存储在低地址内存单元中。</p>
+<p>ARM处理器的ROM一般是FLASH，所有程序都存储在FLASH中，分为片内和片外两种。</p>
+<p>ARM外设有统一的存储器映射编址，也就是访问对应的内存单元就可以访问特定外设的寄存器。这些内存地址不会被缓存。</p>
+<p><em><strong>STM32存储架构详解</strong></em></p>
+<p>+++</p>
+<h4 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h4><p>ARM汇编指令遵循着相对固定的格式，如**&lt; opcode &gt; {&lt; cond &gt;} {S}&lt; Rd &gt;，&lt; Rn &gt; {，&lt; OP2 &gt;}**。</p>
+<p>在其中</p>
+<ul>
+<li><strong>opcode</strong>就是指令的<strong>操作码</strong>的助记符，例如ADD、MOV。</li>
+<li><strong>cond</strong>是可选的<strong>条件执行</strong>，可以是EQ、NE等，满足条件则执行这条指令，条件就是一个CPSR的标志位。</li>
+<li><strong>S</strong>也是一个可选的指令，就是S，表示是否刷新CPSR中的条件标志位。如果不使用就仍是原来的值。</li>
+<li><strong>Rd、Rn</strong>分别代表第一个操作数和第二个操作数。</li>
+<li><strong>OP2</strong>表示可选的第三操作数。</li>
+</ul>
+<p><strong>条件执行的条件码和对应的条件</strong></p>
+<ul>
+<li>EQ    <strong>Z&#x3D;1</strong>    相等</li>
+<li>NE    <strong>Z&#x3D;0</strong>    不相等</li>
+<li>CS&#x2F;HS    <strong>C&#x3D;1</strong>    无符号数大于或者等于</li>
+<li>CC&#x2F;LO    <strong>C&#x3D;0</strong>    无符号数小于</li>
+<li>MI    <strong>N&#x3D;1</strong>    负数</li>
+<li>PL    <strong>N&#x3D;0</strong>    正数或者零</li>
+<li>VS    <strong>V&#x3D;1</strong>    溢出</li>
+<li>VC    <strong>V&#x3D;0</strong>    未溢出</li>
+<li>HI    <strong>C&#x3D;1且Z&#x3D;0</strong>    无符号数大于</li>
+<li>LS    <strong>C&#x3D;0或Z&#x3D;1</strong>    无符号数小于或等于</li>
+<li>GE    <strong>N&#x3D;V</strong>    带符号数大于或等于</li>
+<li>LT    <strong>N!&#x3D;V</strong>    带符号数小于</li>
+<li>GT    <strong>Z&#x3D;0且N&#x3D;V</strong>    带符号数大于</li>
+<li>LE    <strong>Z&#x3D;1或N!&#x3D;V</strong>    带符号数小于或等于</li>
+<li>AL    <strong>无条件执行</strong></li>
+<li>NV    <strong>（ARMV3之前）从不执行</strong></li>
+</ul>
+<h5 id="寻址"><a href="#寻址" class="headerlink" title="寻址"></a>寻址</h5><ul>
+<li><strong>立即数寻址</strong> <strong>arm汇编一般在立即数前面加上#，x86汇编不需要加</strong></li>
+<li><strong>寄存器寻址</strong> 寄存器中的值直接作为操作数</li>
+</ul>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MOV r1, r2 ;将r2的值传到r1</span><br><span class="line">ADD r1, r2, r3 ;将r2的值加上r3的值并赋给r1</span><br><span class="line">MOV r2, r1, LSL #3 ;将r1&lt;&lt;3位并赋给r1</span><br><span class="line">ADD r3, r2, r1, LSL #3 ;将r1&lt;&lt;3 + r2赋给r3</span><br><span class="line">ADD r3, r2, r1, LSL r0 ;将r1&lt;&lt;r0 + r2赋给r3</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>寄存器间址</strong> 寄存器中的值作为内存地址，使用内存地址上的数据作为操作数。</li>
+</ul>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LDR r1, [r2] ;以r2中的内存地址加载数据进r1</span><br><span class="line">STR r1, [r2] ;将r1中的值写入r2寄存器中的内存地址</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>基址寻址</strong> 使用寄存器中的地址生成新地址并且寻址，一般用于查表和数组访问。</li>
+</ul>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">LDR R1, [R0, #2]			;（前变址，不修改基址）将R0中的值加2作为新地址</span><br><span class="line">LDR R1, [R0, #2]!			;（自变址，修改基址）从r0 + 2的位置加载完数据后，R0寄存器的值会增加2。</span><br><span class="line">LDR R1, [R0, R2]			;（前变址，不修改基址）将R0+R2作为新地址</span><br><span class="line">LDR R1, [R0, R2, LSL #2]	;（前变址，不修改基址）将R0+R2&lt;&lt;2作为新地址</span><br><span class="line">LDR R1, [R0], #2			;（后变址，修改基址）从r0的位置加载完数据后，R0寄存器的值会增加2。与上述第二条不同。</span><br><span class="line">STR R1, [R0, #-2]			;（前变址，不修改基址）将R0中的值减2作为新地址。</span><br><span class="line">STR R1, [R0], #-2			;（后变址，修改基址）将R0中的值作为地址，将R1中的值写入该地址，然后R0寄存器值减2</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>多寄存器寻址</strong> STM&#x2F;LDM指令完成多个寄存器的寻址</li>
+<li><strong>堆栈寻址</strong> 一般使用<code>STMFD SP! &#123;R0-R3&#125;</code>这样的指令进行寻址，最后SP指向栈顶元素。</li>
+</ul>
+<h5 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h5><p><strong>基础指令</strong></p>
+<ul>
+<li>ADD 加法运算</li>
+<li>MOV 将一个值从一个<strong>寄存器</strong>传入另一个<strong>寄存器</strong>，或者将立即数传入一个寄存器</li>
+<li>SUB 减法运算</li>
+<li>RSB 反向减法运算</li>
+<li>ADC 带<strong>进位</strong>的加法运算，多用来进行大数的加法运算</li>
+<li>SBC 带<strong>借位</strong>的减法运算，减法会减去（1-C）进行借位操作，多用来进行大数的减法运算</li>
+<li>RSC <strong>反向</strong>的带<strong>借位</strong>减法运算</li>
+<li>CMP 两数相减<strong>不保存结果</strong>只更新<strong>条件标志位</strong></li>
+<li>CMN 两数相加<strong>不保存结果</strong>只更新<strong>条件标志位</strong>，常用于反向比较两个数，将其中一个数取负数进行比较</li>
+<li>MUL 将<strong>寄存器</strong>中的有符号数值相乘，并且只保留低32位到一个寄存器中</li>
+<li>MLA 和MUL类似但是将乘法的结果<strong>加上</strong>第三个寄存器的值</li>
+<li>UMULL <strong>高精度</strong>的<strong>无符号数乘法</strong>，将结果存储到两个寄存器中</li>
+<li>UMLAL <strong>高精度</strong>的<strong>无符号加和乘法</strong>，将结果加和到两个寄存器</li>
+<li>SMULL 高精度的<strong>有符号</strong>数乘法</li>
+<li>SMLAL 高精度的<strong>有符号</strong>加和乘法</li>
+</ul>
+<p><strong>位操作指令</strong></p>
+<ul>
+<li>LSL 逻辑左移，空位补零</li>
+<li>LSR 逻辑右移，空位补零</li>
+<li>ASL 算数左移，空位补零</li>
+<li>ASR 算数右移，<strong>空位根据符号来补0或1</strong></li>
+<li>ROR 循环右移，<strong>将最右侧的位移到最左侧</strong></li>
+<li>RRX 循环右移，将CPSR中<strong>进位标志位</strong>放在最高位并将最低位移进<strong>进位标志位</strong></li>
+<li>MVN 按位<strong>取反</strong>然后移入到通用寄存器</li>
+<li>AND 按位与</li>
+<li>ORR 按位或</li>
+<li>EOR 按位异或</li>
+<li>TST 按位与但是<strong>不保存结果</strong>只更新<strong>条件标志位</strong></li>
+<li>TEQ 按位异或但是<strong>不保存结果</strong>只更新<strong>条件标志位</strong></li>
+<li>BIC 按位清零</li>
+</ul>
+<p><strong>操作内存指令</strong></p>
+<p><em>当偏移地址为非字对齐时，会自动舍弃掉不满一个字的部分。半字同理</em></p>
+<ul>
+<li>LDR 从<strong>内存</strong>中取得数据传入<strong>寄存器</strong></li>
+<li>STR 向<strong>内存</strong>中写入数据</li>
+<li>LDRB 从内存中读取一个<strong>字节</strong>写入寄存器并且<strong>空位补零</strong></li>
+<li>STRB 向内存中写入一个<strong>字节</strong></li>
+<li>LDRSB 从内存中读取一个<strong>字节</strong>写入寄存器并且<strong>空位按符号扩展</strong></li>
+<li>LDRH 从内存中读取一个<strong>半字</strong>写入寄存器并且<strong>空位补零</strong></li>
+<li>STRH 向内存中写入一个<strong>半字</strong></li>
+<li>LDRSH 从内存中读取一个<strong>半字</strong>写入寄存器并且<strong>空位按符号扩展</strong></li>
+<li>LDM 从<strong>内存</strong>中取得数据放到<strong>多个寄存器</strong>中</li>
+<li>STM 将<strong>多个寄存器</strong>的输入写入到<strong>内存</strong>中</li>
+</ul>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LDMIA R0, &#123;R1-R5&#125; ;以ro为基址读取五个数据单元加载到r1-r5</span><br><span class="line">STMIA R6, &#123;R1-R5&#125; ;以r6为基址，将r1-r5的数据写入</span><br></pre></td></tr></table></figure></div>
+
+<p>多寄存器寻址和堆栈寻址时，需要加上不同的后缀，向不同的寻址。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">IA 操作后递增</span><br><span class="line">IB 操作前递增</span><br><span class="line">DA 操作后递减</span><br><span class="line">DB 操作前递减</span><br></pre></td></tr></table></figure></div>
+
+<p>堆栈寻址时，堆栈指针指向的是栈顶元素就是<strong>满栈</strong>，堆栈指针指向栈顶元素的下一个元素就是<strong>空栈</strong>。</p>
+<p>每入栈一个元素，<strong>栈指针SP</strong>都会往栈增长的方向移动一个存储单元。如果栈指针SP从高地址往低地址移动，那么这个栈就是递减栈；如果栈指针SP从低地址往高地址移动，那么这个栈就是递增栈，ARM处理器使用的一般都是<strong>满递减堆栈</strong>。</p>
+<p><em><strong>SP！代表着在操作之后递增SP指针。</strong></em></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FA 满递增堆栈</span><br><span class="line">FD 满递减堆栈</span><br><span class="line">EA 空递增堆栈</span><br><span class="line">ED 空递减堆栈</span><br><span class="line">STMFD SP! &#123;R0,R1,R2&#125; ;会自动将高位寄存器先入栈</span><br><span class="line">LDMFD SP！ &#123;R0,R1,R2&#125; ;按照相对应的顺序出栈</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>MRS 从<strong>特殊寄存器</strong>中取数据到一个<strong>普通寄存器</strong></p>
+</li>
+<li><p>MSR 从<strong>普通寄存器</strong>写入数据到一个<strong>特殊寄存器</strong>，这里的特殊寄存器也就是CPSR</p>
+</li>
+<li><p>BX，BLX，B，BL四种跳转指令，<strong>带L</strong>的会自动记录PC的值到LR中，<strong>带X</strong>的可以用于跳转Thumb模式。</p>
+</li>
+</ul>
+<h4 id="伪指令"><a href="#伪指令" class="headerlink" title="伪指令"></a>伪指令</h4><p><strong>声明全局变量</strong></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GBLA amount ;定义一个全局数字变量，默认值为0</span><br><span class="line">GBLL logic ;定义一个全局逻辑变量，默认值为0</span><br><span class="line">GBLS string ;定义一个全局字符串变量，默认值为null</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>声明局部变量</strong></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LCLA amount ;定义一个局部数字变量</span><br><span class="line">LCLL logic ;定义一个局部逻辑变量</span><br><span class="line">LCLS string ;定义一个局部字符串变量</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>变量赋值</strong></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">amount SETA 10 ;给amount赋值10</span><br><span class="line">logic SETL 1 ;给logic赋值1</span><br><span class="line">string SETS &quot;你好&quot; ;给string赋值&quot;你好&quot;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>定义寄存器列表</strong></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RegList RLIST &#123;R0-R4&#125; ;将R0到R4定义为RegList</span><br><span class="line">STMFD sp!, RegList ;将R0到R4寄存器入栈</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>数据定义</strong></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">LTORG ;在代码段最后或者无条件跳转后面或者子程序返回指令，定义数据缓冲池，存储常量信息</span><br><span class="line">	MAP 0x40000000 ;一个段中只能有一个map，定义map的基地址</span><br><span class="line">A FIELD #4 ;定义A占4个字节，A的起始位置就是MAP的地址</span><br><span class="line">B FIELD #4 ;定义B占4个字节，B的起始位置就是MAP加4</span><br><span class="line"></span><br><span class="line">string DCB &quot;hello&quot; ;分配一些字节单元给标号string</span><br><span class="line">DCD ;分配字单元，字对齐</span><br><span class="line">DCDU ;分配子单元，非字对齐</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>程序控制</strong></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IF	逻辑表达式</span><br><span class="line">	程序段1</span><br><span class="line">ELSE</span><br><span class="line">	程序段2</span><br><span class="line">ENDIF</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">WHILE 逻辑表达式</span><br><span class="line"> 	程序段</span><br><span class="line"> WEND</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>其他伪指令</strong></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ALIGN	4,3 ;4个字节对齐并且在上一个位置之后偏移3个字节</span><br><span class="line">AREA 段名,CODE,READWRITE ;段定义</span><br><span class="line">CODE16 ;16位指令</span><br><span class="line">CODE32 ;32位指令</span><br><span class="line">ENTRY ;程序入口</span><br><span class="line">END ;</span><br><span class="line">EXPLORT ;和GLOBAL一样，向外部声明</span><br><span class="line">IMPORT ;引入其他源文件中的符号并加入符号表</span><br><span class="line">EXTERN ;引入其他源文件中的符号但是如果没有调用，就不会加入符号表</span><br><span class="line">EQU ;将常量和标号等效另一个名字</span><br><span class="line">GET ;和INCLUDE一样，包含源文件</span><br><span class="line">ADR ;取一个标号的地址，在非字对齐255字节之内，字对齐1020之内</span><br><span class="line">ADRL ;和ADR一样但是范围不同，在非字对齐64k之内，字对齐256k之内</span><br><span class="line">LDR ;取地址，但是后面要加一个=，全局范围读取</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>宏</strong></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">	MACRO</span><br><span class="line">$MyMacro MacroName $value1,$value2</span><br><span class="line">	LDR R1,#3</span><br><span class="line">	LDR R0,#0</span><br><span class="line">$MyMacro.LOOP</span><br><span class="line">	SUB R1,#1</span><br><span class="line">	CMP R1,R0</span><br><span class="line">	BGT LOOP</span><br><span class="line">	MEND</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>运算符</strong></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">x + y ;相加</span><br><span class="line">x - y ;相减</span><br><span class="line">x * y ;相乘</span><br><span class="line">x / y ;整除</span><br><span class="line">x :MOD: y ;取余</span><br><span class="line">x :ROL: y ;循环左移</span><br><span class="line">x :ROR: y ;循环右移</span><br><span class="line">x :SHL: y ;左移</span><br><span class="line">x :SHR: y ;右移</span><br><span class="line">x :AND: y ;按位与</span><br><span class="line">x :OR: y ;按位或</span><br><span class="line">:NOT: y ;按位取反</span><br><span class="line">x :EOR: y ;按位异或</span><br><span class="line">;逻辑表达式</span><br><span class="line">x = y </span><br><span class="line">x &gt; y</span><br><span class="line">x &lt; y</span><br><span class="line">x &gt;= y</span><br><span class="line">x &lt;= y</span><br><span class="line">x /= y ;不等于</span><br><span class="line">x &lt;&gt; y ;不等于</span><br><span class="line">x :LAND: y ;逻辑与</span><br><span class="line">x :LOR: y ;逻辑或</span><br><span class="line">x :LEOR: y ;逻辑异或</span><br><span class="line">:LNOT: y ;逻辑取反</span><br><span class="line">:LEN: x ;取长度（字符长度）</span><br><span class="line">:CHR: x ;将ASCII码转成字符</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> ARM处理器汇编语言</li>
+        <li><strong>Author:</strong> HarderHeng</li>
+        <li><strong>Created at
+                :</strong> 2024-04-08 08:32:37</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2024-06-05 22:33:37
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://harderheng.life/2024/04/08/ARM汇编语言/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">#嵌入式开发</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">#汇编语言</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/ARM/">#ARM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/04/08/OriAndBlindForest-%E4%B8%80%E6%AE%B5%E8%BF%91%E4%B9%8E%E5%AE%8C%E7%BE%8E%E7%9A%84%E6%97%85%E7%A8%8B/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">OriAndBlindForest--一段近乎完美的旅程</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/04/05/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">动态规划背包问题</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div class="twikoo-container">
+        <script data-swup-reload-script
+                src='https://cdn.staticfile.org/twikoo/1.6.22/twikoo.all.min.js'
+        ></script>
+        <div id="twikoo-comment"></div>
+        <script data-swup-reload-script>
+            function loadTwikoo() {
+                twikoo.init({
+                    el: '#twikoo-comment',
+                    envId: 'https://harderheng.netlify.app/.netlify/functions/twikoo',
+                });
+            }
+
+            if ('true') {
+                const loadTwikooTimeout = setTimeout(() => {
+                    loadTwikoo();
+                    clearTimeout(loadTwikooTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadTwikoo);
+            }
+        </script>
+    </div>
+
+
+        
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">ARM处理器汇编语言</div>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Thumb%E7%8A%B6%E6%80%81%E5%88%87%E6%8D%A2"><span class="nav-number">1.</span> <span class="nav-text">Thumb状态切换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ARM%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2"><span class="nav-number">2.</span> <span class="nav-text">ARM工作模式切换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ARM%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">ARM寄存器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">3.1.</span> <span class="nav-text">通用寄存器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">3.2.</span> <span class="nav-text">状态寄存器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">3.3.</span> <span class="nav-text">特殊寄存器的操作</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ARM%E5%AD%98%E5%82%A8%E5%99%A8%E4%BD%93%E7%B3%BB"><span class="nav-number">4.</span> <span class="nav-text">ARM存储器体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4"><span class="nav-number">5.</span> <span class="nav-text">指令</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%BB%E5%9D%80"><span class="nav-number">5.1.</span> <span class="nav-text">寻址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="nav-number">5.2.</span> <span class="nav-text">常用指令</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%AA%E6%8C%87%E4%BB%A4"><span class="nav-number">6.</span> <span class="nav-text">伪指令</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+    
+<script src="/js/libs/minimasonry.min.js"></script>
+
+    
+<script src="/js/plugins/masonry.js" type="module"></script>
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

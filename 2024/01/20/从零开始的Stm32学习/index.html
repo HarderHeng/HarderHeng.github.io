@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/IMG_1117.png">
 <meta property="og:image" content="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113201719527.png">
 <meta property="article:published_time" content="2024-01-20T10:16:19.000Z">
-<meta property="article:modified_time" content="2024-04-20T08:44:03.058Z">
+<meta property="article:modified_time" content="2024-07-01T22:32:38.622Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="嵌入式开发">
 <meta property="article:tag" content="STM32">
@@ -595,15 +595,15 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">30</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">31</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">5</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">24</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">32</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -647,7 +647,7 @@
                     <div class="author flex items-center">
                         <span class="name text-default-text-color text-lg font-semibold">HarderHeng</span>
                         
-                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv4</span>
                         
                     </div>
                     <div class="meta-info">
@@ -661,8 +661,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-04-20 16:44:03</span>
-            <span class="mobile">2024-04-20 16:44:03</span>
+            <span class="desktop">2024-07-02 06:32:38</span>
+            <span class="mobile">2024-07-02 06:32:38</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -758,7 +758,7 @@
                      data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113133125832.png"
                       alt="image-20231113133125832"
                 ></p>
-<p><strong>通用定时器</strong>的核心还是时基单元，和基本定时器是一样的。通用定时器和高级定时器支持向下计数和中央对齐模式。通用定时器支持外部时钟驱动，从外部时钟进入的信号经过极性选择、边缘检测和预分频器还有滤波，可以直接作为时基单元的时钟，这一路叫做<strong>外部时钟模式2</strong>。另外的<strong>TRGI</strong>触发输入当做外部时钟，叫做<strong>外部时钟模式1</strong>。外部时钟可以直接接入TRGI；其他的定时器的TRGO输出也可以接入作为定时器的<strong>级联</strong>；也可以从CH1引脚的边沿，CH1引脚，CH2引脚作为输入。</p>
+<p><strong>通用定时器</strong>的核心还是时基单元，和基本定时器是一样的。通用定时器和高级定时器支持向下计数和中央对齐模式。通用定时器支持外部时钟驱动，从外部时钟进入的信号经过极性选择、边缘检测和预分频器还有滤波，可以直接作为时基单元的时钟，这一路叫做<strong>外部时钟模式2</strong>。另外的<strong>TRGI</strong>触发输入当做时钟，叫做<strong>外部时钟模式1</strong>。外部时钟可以直接接入TRGI；其他的定时器的TRGO输出也可以接入TRGI，作为定时器的<strong>级联</strong>；也可以从CH1引脚的边沿触发作为输入，类似于输入捕获。</p>
 <p>下半部分是输入捕获和输出比较的电路，这两个功能共用一套寄存器，所以同时只能使用其中一种功能。</p>
 <p><img  
                      lazyload
@@ -770,7 +770,6 @@
 <p><strong>预分频控制寄存器</strong>不会直接控制分频系数，预分频控制寄存器有一个<strong>缓冲寄存器</strong>，这才是真正起作用的寄存器。改变预分频控制寄存器后，在下一个周期时才会更改缓冲寄存器的值来改变分频系数。自动重装寄存器也有缓冲寄存器，效果是一样的。影子寄存器的作用就是保证数据的更改在同一个周期后更新，防止发生错误。</p>
 <p>计数器的<strong>计数频率</strong>就是输入的<strong>时钟频率&#x2F;（分频系数+1）</strong>,计数器溢出的频率<strong>（中断更新频率）</strong>就是<strong>计数频率&#x2F;（自动重装寄存器+1）</strong></p>
 <p>定时器的输出可以进入中断输出控制。</p>
-<p><strong>预分频控制寄存器</strong>不会直接控制分频系数，预分频控制寄存器有一个<strong>缓冲寄存器</strong>，这才是真正起作用的寄存器。改变预分频控制寄存器后，在下一个周期时才会更改缓冲寄存器的值来改变分频系数。</p>
 <p><em><strong>（1）使用TIM定时器</strong></em></p>
 <p><img  
                      lazyload
@@ -808,7 +807,7 @@
                       alt="IMG_1117"
                 ></p>
 <p>这两个互补的端口会分别导通正极和负极，在外面产生一个PWM波形，最高电压就是推挽电路的正极电压。在这两个端口前面还有一个死区生成器，在两个端口切换电平是提供一段时间的死区防止上两个端口接通时间比较接近导致的短路。</p>
-<p>要使用PWM首先需要配置TIM定时器，然后配置PWM这一块所有的寄存器，就可以使用PWM了。</p>
+<p>要使用PWM首先需要配置TIM定时器，然后配置<strong>输出比较</strong>这一块所有的寄存器，就可以使用PWM了。</p>
 <h4 id="6、RCC时钟树"><a href="#6、RCC时钟树" class="headerlink" title="6、RCC时钟树"></a>6、RCC时钟树</h4><p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -876,7 +875,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-04-20 16:44:03
+                    :</strong> 2024-07-02 06:32:38
             </li>
         
         <li>
