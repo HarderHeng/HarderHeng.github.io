@@ -1482,7 +1482,78 @@
   <entry>
     <title>Vim编辑器教程</title>
     <url>/2024/06/21/Vim%E7%BC%96%E8%BE%91%E5%99%A8%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h4 id="一、什么是Vim"><a href="#一、什么是Vim" class="headerlink" title="一、什么是Vim"></a>一、什么是Vim</h4><p><strong>Vim</strong>是从<strong>vi</strong>发展而来的一个文本编辑器，代码补全、编译等方便编程的功能还有插件很多，所以被程序员广泛使用作为程序开发工具。</p>
+<p>Vim看起来和VSCode这样的编辑器完全不一样，上手难度也较高，但是上手后在搭配Linux的Shell使用时可以有极高的效率，如果要使用Linux系统开发，Vim也具有一定的必要性和不可替代性。</p>
+<p>许多Linux的默认文本编辑器就是Vim，如果需要额外的安装Vim请使用<code>sudo apt-get install vim</code>进行安装，这里暂时不展开详解具体的配置方法。</p>
+<p><em><strong>Vim作为一个文本编辑器来说实在是不简单的，具有很陡峭的学习曲线，但是完全掌握后对效率的提升是很显著的。</strong></em></p>
+<h4 id="二、Vim入门"><a href="#二、Vim入门" class="headerlink" title="二、Vim入门"></a>二、Vim入门</h4><p>在Shell中使用<code>vim &#123;文件路径、文件名&#125;</code>就可以直接打开文件，打开文件后发现现在处在一个纯文本的界面，并且不能直接进行编辑，看起来让人毫无头绪。</p>
+<p>此时我们处在的模式叫做<strong>命令（普通）模式</strong>，通过特殊的命令例如<code>i</code>就可以进入到<strong>输入模式</strong>，退出编辑模式后可以按下<code>:</code>进入<strong>末行命令模式</strong>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/v2-c0e67ca4afc2a80c768b3e59f3bec04e_r.png"
+                      alt="v2-c0e67ca4afc2a80c768b3e59f3bec04e_r"
+                ></p>
+<p>在命令模式和末行命令模式中都是输入一些命令，来进行操作光标或者保存文件等等，只有在输入模式中才能对文本内容进行编辑。</p>
+<h5 id="1）命令模式"><a href="#1）命令模式" class="headerlink" title="1）命令模式"></a>1）命令模式</h5><ul>
+<li><strong>i</strong> – 切换到输入模式，在光标当前位置开始输入文本。</li>
+<li><strong>o</strong> – 在当前行的下方插入一个新行，并进入插入模式。</li>
+<li><strong>a</strong> – 进入插入模式，在光标下一个位置开始输入文本。</li>
+<li><strong>O</strong> – 在当前行的上方插入一个新行，并进入插入模式。</li>
+</ul>
+<p><em>上述几种命令都可以从命令模式切换到输入模式，<strong>按下Esc键</strong>就可以重新进入到命令模式</em></p>
+<ul>
+<li><strong>j</strong> – 将光标上移一行。</li>
+<li><strong>k</strong> – 将光标下移一行。</li>
+<li><strong>h</strong> – 将光标向左移动一格。</li>
+<li><strong>l</strong> – 将光标向右移动一格。</li>
+</ul>
+<p><em>上述几种<strong>移动光标</strong>的命令也可以使用键盘的上下左右实现，而使用字母区的命令可以让手指一直保持在键盘中央，不用过多转移从而提高效率</em></p>
+<ul>
+<li><strong>x</strong> – 删除当前光标所在处的字符。</li>
+<li><strong>dd</strong> – 剪切当前行。</li>
+<li><strong>yy</strong> – 复制当前行。</li>
+<li><strong>p</strong>（小写） – 粘贴剪贴板内容到光标下方。</li>
+<li><strong>P</strong>（大写）– 粘贴剪贴板内容到光标上方。</li>
+<li><strong>u</strong> – 撤销上一次操作。</li>
+<li><strong>Ctrl + r</strong> – 重做上一次撤销的操作。</li>
+</ul>
+<p><em>上述几种都是常规的编辑器用法</em></p>
+<ul>
+<li><strong>:</strong> – 切换到底线命令模式，以在最底一行输入命令。</li>
+</ul>
+<p><em>使用该命令进入底线命令模式，并且<strong>按下Esc键</strong>就可以重新回到命令模式</em></p>
+<h5 id="2）编辑模式"><a href="#2）编辑模式" class="headerlink" title="2）编辑模式"></a>2）编辑模式</h5><ul>
+<li><strong>字符按键以及Shift组合</strong>，输入字符。</li>
+<li><strong>ENTER</strong>，回车键，换行。</li>
+<li><strong>BACK SPACE</strong>，退格键，删除光标前一个字符。</li>
+<li><strong>DEL</strong>，删除键，删除光标后一个字符。</li>
+<li><strong>方向键</strong>，在文本中移动光标。</li>
+<li><strong>HOME</strong>&#x2F;<strong>END</strong>，移动光标到行首&#x2F;行尾。</li>
+<li><strong>Page Up</strong>&#x2F;<strong>Page Down</strong>，上&#x2F;下翻页。</li>
+<li><strong>Insert</strong>，切换光标为输入&#x2F;替换模式，光标将变成竖线&#x2F;下划线。</li>
+<li><strong>ESC</strong>，退出输入模式，切换到命令模式。</li>
+</ul>
+<p><em>编辑模式应该说是最常用的模式，在这里进行文本的编辑</em></p>
+<h5 id="3）末行命令模式"><a href="#3）末行命令模式" class="headerlink" title="3）末行命令模式"></a>3）末行命令模式</h5><p>使用<code>:</code>进入末行命令模式，可以使用一些组合命令。</p>
+<ul>
+<li><code>:w</code> – 保存文件。</li>
+<li><code>:q</code> – 退出 Vim 编辑器。</li>
+<li><code>:wq</code> – 保存文件并退出 Vim 编辑器。</li>
+<li><code>:q!</code> – 强制退出Vim编辑器，不保存修改。</li>
+</ul>
+<p><em>上述几种命令主要用来保存和退出编辑器</em></p>
+<h4 id="三、高级用法"><a href="#三、高级用法" class="headerlink" title="三、高级用法"></a>三、高级用法</h4><p>这里所介绍的高级用法是直接从复制粘贴而来，因为非常多且杂，一时半会记不住可能也用不到。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Shell</tag>
+        <tag>ZSH</tag>
+        <tag>Vim</tag>
+      </tags>
   </entry>
   <entry>
     <title>Ubuntu终端ZSH配置</title>
