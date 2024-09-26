@@ -1517,7 +1517,18 @@
 <p>这里不做过多的研究，一般认为是代理的问题。</p>
 <div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global https.proxy #设置代理</span><br><span class="line">git config --global --unset https.proxy #取消设置代理</span><br></pre></td></tr></table></figure></div>
 
+<h4 id="略略略"><a href="#略略略" class="headerlink" title="略略略"></a>略略略</h4><ul>
+<li><em><strong>框架可以使用zim或者其他的，提高运行性能。</strong></em></li>
+</ul>
 ]]></content>
+      <categories>
+        <category>实用教程</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Shell</tag>
+        <tag>ZSH</tag>
+      </tags>
   </entry>
   <entry>
     <title>Linux之Shell基础</title>

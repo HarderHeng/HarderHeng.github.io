@@ -26,8 +26,11 @@
 <meta property="og:description" content="ZSH安装安装 1sudo apt install zsh  作为默认终端 1chsh -s &#x2F;bin&#x2F;zsh  oh-my-zsh安装oh-my-zsh是zsh的一个框架，内置了许多主题和插件。 1sh -c &quot;$(curl -fsSL https:&#x2F;&#x2F;gitee.com&#x2F;shmhlsy&#x2F;oh-my-zsh-install.sh&#x2F;raw&#x2F;master&#x2F;install.sh)&quot;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-06-21T01:56:13.000Z">
-<meta property="article:modified_time" content="2024-09-03T16:17:22.555Z">
+<meta property="article:modified_time" content="2024-09-26T05:40:22.964Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Shell">
+<meta property="article:tag" content="ZSH">
 <meta name="twitter:card" content="summary">
     
     
@@ -584,11 +587,11 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">34</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">37</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">7</div>
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
@@ -617,8 +620,12 @@
 
         <div class="article-title relative w-full">
             
-                <div class="w-full flex items-center pt-6 justify-start">
-                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">Ubuntu终端ZSH配置</h1>
+                
+                
+                <img src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/68747470733a2f2f6f686d797a73682e73332e616d617a6f6e6177732e636f6d2f6f6d7a2d616e73692d6769746875622e706e67.png" alt="Ubuntu终端ZSH配置" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">Ubuntu终端ZSH配置</h1>
                 </div>
             
             </div>
@@ -646,13 +653,48 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-09-04 00:17:22</span>
-            <span class="mobile">2024-09-04 00:17:22</span>
+            <span class="desktop">2024-09-26 13:40:22</span>
+            <span class="mobile">2024-09-26 13:40:22</span>
             <span class="hover-info">Updated</span>
         </span>
     
 
     
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B/">实用教程</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Linux/">Linux</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Shell/">Shell</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/ZSH/">ZSH</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
     
 
     
@@ -704,6 +746,9 @@
 <p>这里不做过多的研究，一般认为是代理的问题。</p>
 <div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global https.proxy #设置代理</span><br><span class="line">git config --global --unset https.proxy #取消设置代理</span><br></pre></td></tr></table></figure></div>
 
+<h4 id="略略略"><a href="#略略略" class="headerlink" title="略略略"></a>略略略</h4><ul>
+<li><em><strong>框架可以使用zim或者其他的，提高运行性能。</strong></em></li>
+</ul>
 
         </div>
 
@@ -718,7 +763,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-09-04 00:17:22
+                    :</strong> 2024-09-26 13:40:22
             </li>
         
         <li>
@@ -740,6 +785,22 @@
             </div>
         
 
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Linux/">#Linux</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Shell/">#Shell</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/ZSH/">#ZSH</a>&nbsp;
+                    </li>
+                
+            </ul>
         
 
         
@@ -833,7 +894,7 @@
     <div class="post-toc">
         <div class="toc-title">On this page</div>
         <div class="page-title">Ubuntu终端ZSH配置</div>
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#ZSH%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">ZSH安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#oh-my-zsh%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">oh-my-zsh安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ZSH%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">ZSH常见问题</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#ZSH%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">ZSH安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#oh-my-zsh%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">oh-my-zsh安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ZSH%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">ZSH常见问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%95%A5%E7%95%A5%E7%95%A5"><span class="nav-number">4.</span> <span class="nav-text">略略略</span></a></li></ol>
 
     </div>
 </div>
