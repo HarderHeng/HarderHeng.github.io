@@ -20,6 +20,7 @@
 
 <div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt; &gt; <span class="built_in">obj</span>(N, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(M)); <span class="comment">//定义二维动态数组5行6列 </span></span><br></pre></td></tr></table></figure></div>
 
+<h4 id="四、向函数中传递函数指针"><a href="#四、向函数中传递函数指针" class="headerlink" title="四、向函数中传递函数指针"></a>四、向函数中传递函数指针</h4><p>在c语言中直接向函数传递</p>
 ]]></content>
       <categories>
         <category>学习笔记</category>
@@ -372,13 +373,14 @@
 </ul>
 <div class="highlight-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="comment">#makefile</span></span><br><span class="line"><span class="meta"><span class="keyword">.PHONY</span>: main.o</span></span><br><span class="line"><span class="section">all: main.o helloworld.o</span></span><br><span class="line">        gcc -o main main.o helloworld.o 	<span class="comment">#编译链接出main文件</span></span><br><span class="line">        @echo <span class="string">&quot;Make all&quot;</span></span><br><span class="line"><span class="section">main.o: main.c 						#依赖源文件main.c</span></span><br><span class="line">        gcc -c main.c 				<span class="comment">#编译出main.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make main.o&quot;</span></span><br><span class="line"><span class="section">helloworld.o: helloworld.c 			#依赖源文件helloworld.c</span></span><br><span class="line">        gcc -c helloworld.c 		<span class="comment">#编译出helloworld.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make helloworld.o&quot;</span></span><br></pre></td></tr></table></figure></div>
 
-<p>使用假目标后，可以进行同意目标的重复构建，此时<code>main.o</code>的构建被单纯的当成一个目标而并非是一个文件，并不会检查此时文件的存在性。</p>
+<p>使用假目标后，可以进行同一目标的重复构建，此时<code>main.o</code>的构建被单纯的当成一个目标而并非是一个文件，并不会检查此时文件的存在性。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
                      data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240409224235265.png"
                       alt="image-20240409224235265"
                 ></p>
+<h4 id="3、变量"><a href="#3、变量" class="headerlink" title="3、变量"></a>3、变量</h4><p>makefile中的变量有点像c语言中的宏定义，只进行字符串的替换。</p>
 ]]></content>
       <categories>
         <category>学习笔记</category>
@@ -460,12 +462,65 @@
   <entry>
     <title>STM32存储架构详解</title>
     <url>/2024/05/08/STM32%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="一、STM32内核还有MCU"><a href="#一、STM32内核还有MCU" class="headerlink" title="一、STM32内核还有MCU"></a>一、STM32内核还有MCU</h1><p>在一块STM32的芯片中，有内核、存储、总线和各种外设。</p>
+<p>STM32芯片本身叫做MCU，也可以是一个SOC，上述所有的硬件都被集成在其中。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/b0619d25b3f189336a6497bb32d126f5.png"
+                     
+                ></p>
+<p>其中的存储器有flash和sram两部分，下面会详细解释这些。</p>
+<p>作为一个stm32的芯片，其内存布局往往是被cortex-M3内核大致确定的，很多STM32都遵循着类似的内存布局。</p>
+<h1 id="二、STM32的虚拟内存"><a href="#二、STM32的虚拟内存" class="headerlink" title="二、STM32的虚拟内存"></a>二、STM32的虚拟内存</h1><p>STM32将整块芯片中所有可用的地址都统一映射为虚拟内存，32位的寄存器和地址总线允许的寻址空间为4G，这4GB的虚拟内存被ARM内核大致划分，对ST公司来说做了一些更具体和符合使用情况的细节划分。</p>
+<p><strong>此处的虚拟内存只是一种映射，stm32中没有虚拟内存的概念，也没有MMU专门管理内存。stm32的映射由MPU（memory protection unit）实现</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/6a5c979dfab180935017d06e26f7a318.png"
+                      alt="6a5c979dfab180935017d06e26f7a318"
+                ></p>
+<ul>
+<li><strong>Code</strong> 代码区，对应着硬件中的Flash，也就是stm32的rom，存放着从PC烧录过来的二进制可执行文件。</li>
+<li><strong>SRAM</strong> 对应着硬件中的片上ram，存放着从Flash拷贝过来的全局变量和静态变量，以及其他的一些<strong>执行过程</strong>中的使用的<strong>变量和栈</strong>。</li>
+<li><strong>Peripherals</strong> 用于片上外设的虚拟地址。</li>
+<li><strong>ExternalRAM</strong> 用于扩展外部存储器，将外置RAM连接到芯片并进行软件的配置就可以扩展RAM的大小。</li>
+<li><strong>External Devices</strong> 用于扩展片外的外设。</li>
+<li><strong>System Level</strong> 服务于CM3的外设，主要是NVIC和MPU以及调试工具等等。</li>
+</ul>
+<p><em><strong>嵌入式ARM处理器内核都是类哈佛架构，即数据总线和指令总线独立，那么最理想的情况就是程序放在Code区，数据放在SRAM区，以保证良好的性能</strong></em></p>
+<h2 id="位带区和位带别名区"><a href="#位带区和位带别名区" class="headerlink" title="位带区和位带别名区"></a>位带区和位带别名区</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/ff9fa8f1f8b33a3e8a48f21a7bf49cff.png"
+                      alt="ff9fa8f1f8b33a3e8a48f21a7bf49cff"
+                ></p>
+<p>在<strong>SRAM</strong>和<strong>Peripherals</strong>中存在一个位带区和位带别名区。以Peripherals为例，许多常用外设都放在位带区中，如果要操作某一个寄存器的单独一位，位带区中的每一位都会被单独映射到位带别名区，并且每一位映射为32位。</p>
+<p>STM32的内存空间是根据ARM内核划分的具体实现。</p>
+<p>STM32的4G内存被分为大<strong>小相同的8个block</strong>，每个大小就是512mb，可以和ARM内核的空间划分相对应。从低地址到高地址分别是：</p>
+<ul>
+<li><strong>Block0</strong>， <strong>Code代码区</strong>，存储着默认的中断向量表，同时连接着FLASH存储着烧录好的代码。</li>
+<li><strong>Block1，SRAM区</strong>，用于存放代码运行时的一些变量和堆栈。</li>
+<li><strong>Block2，Peripheral区</strong>，用于片上外设的地址，在这里可以修改片上外设的地址来操作外设。</li>
+<li><strong>Block3，Block4</strong> 这里是外置RAM区，用来扩展外部的存储器，包括flash和sram。准确来说是连接到FSMC（灵活静态存储器控制器）上。</li>
+<li><strong>Block5，FSMC寄存器</strong>，FSMC寄存器的地址就从这个块的起始地址开始。</li>
+<li><strong>Block6</strong>，保留地址。按理说Block5和6对应着ARM内核划分的<strong>片外外设</strong>区，但是对STM32的设计来说应该是把这1GB的内存全部用给了FSMC的寄存器，并没有给片外外设留空间。</li>
+<li><strong>Block7</strong>，内核内部外设。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>嵌入式开发</tag>
+        <tag>STM32</tag>
+        <tag>存储架构</tag>
+      </tags>
   </entry>
   <entry>
     <title>STM32及ARM中断详解</title>
     <url>/2024/05/08/STM32%E5%8F%8AARM%E4%B8%AD%E6%96%AD%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[<h4 id="ARM体系的中断和异常"><a href="#ARM体系的中断和异常" class="headerlink" title="ARM体系的中断和异常"></a>ARM体系的中断和异常</h4><p>当一个中断或者异常<strong>触发</strong>时，先看到这个中断源有没有被启动，以及它的优先级如何，然后进入<strong>中断向量表</strong>，如果允许进行中断或者异常的处理，就会根据中断向量表进入<strong>中断服务程序</strong>。</p>
+    <content><![CDATA[<h1 id="ARM体系的中断和异常"><a href="#ARM体系的中断和异常" class="headerlink" title="ARM体系的中断和异常"></a>ARM体系的中断和异常</h1><p>当一个中断或者异常<strong>触发</strong>时，先看到这个中断源有没有被启动，以及它的优先级如何，然后进入<strong>中断向量表</strong>，如果允许进行中断或者异常的处理，就会根据中断向量表进入<strong>中断服务程序</strong>。</p>
 <p>在中断服务程序中进行<strong>关中断、保存现场、开中断、处理中断和异常、关中断、恢复现场、开中断</strong></p>
 <p>在ARM体系中和异常统一由中断向量表管理。</p>
 <h5 id="中断向量表"><a href="#中断向量表" class="headerlink" title="中断向量表"></a>中断向量表</h5><p>中断向量表有低端和高端向量表两种，低端向量表就是从0x00000000开始，高端向量表处在0xFFFF0000位置。</p>
@@ -475,6 +530,17 @@
                      data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240508162736933.png"
                       alt="image-20240508162736933"
                 ></p>
+<h1 id="中断向量表和ResetHandler"><a href="#中断向量表和ResetHandler" class="headerlink" title="中断向量表和ResetHandler"></a>中断向量表和ResetHandler</h1><p>ARM中断向量表的位置默认为0x00000000，中断向量表如下。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">_start:</span><br><span class="line">    ldr pc, =Reset_Handler          /* 复位中断 */ </span><br><span class="line">    ldr pc, =Undefined_Handler      /* 未定义指令中断 */</span><br><span class="line">    ldr pc, =SVC_Handler            /* SVC(Supervisor)中断*/</span><br><span class="line">    ldr pc, =PrefAbort_Handler      /* 预取终止中断 */</span><br><span class="line">    ldr pc, =DataAbort_Handler      /* 数据终止中断 */</span><br><span class="line">    ldr pc, =NotUsed_Handler        /* 保留中断 */</span><br><span class="line">    ldr pc, =IRQ_Handler            /* IRQ 中断 */</span><br><span class="line">    ldr pc, =FIQ_Handler            /* FIQ(快速中断) */</span><br></pre></td></tr></table></figure></div>
+
+<p>当机器上电启动时会从这个代码开始，先进入ResetHandler进行系统的初始化。当进入中断时，会从中断向量表的起始地址（也就是上面_start）开始，根据中断的类型进行偏移，例如如果偏移量为0x08则会执行SVC中断的语句，pc寄存器直接被装入中断向量的地址，跳转到对应的中断处理。</p>
+<p><em>如果要防止中断嵌套，需要在中断服务程序中加入屏蔽中断的代码。</em></p>
+<p>ResetHandler中是机器上电启动后或者复位后进行初始化的代码，初始化后会进入**_main**函数最后才进入main函数。</p>
+<p>可以手动设置中断向量表的地址，一般的做法是在ResetHandler中设置。</p>
+<h1 id="STM32（Cortex-M）的中断服务程序"><a href="#STM32（Cortex-M）的中断服务程序" class="headerlink" title="STM32（Cortex-M）的中断服务程序"></a>STM32（Cortex-M）的中断服务程序</h1><p>对Cortex-M系列来说，并不遵循arm所规定的普通的中断向量表。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">__Vectors       DCD     __initial_sp              ; Top of Stack</span><br><span class="line">                DCD     Reset_Handler             ; Reset Handler</span><br><span class="line">                DCD     NMI_Handler               ; NMI Handler</span><br><span class="line">                DCD     HardFault_Handler         ; Hard Fault Handler</span><br><span class="line">                DCD     MemManage_Handler         ; MPU Fault Handler</span><br><span class="line">                DCD     BusFault_Handler          ; Bus Fault Handler</span><br><span class="line">                DCD     UsageFault_Handler        ; Usage Fault Handler</span><br></pre></td></tr></table></figure></div>
+
+<p>可以看到，中断向量表的第一行规定着<strong>栈初始化</strong>程序的地址，也就是说开机后会先初始化栈，然后才进行ResetHandler。</p>
 ]]></content>
   </entry>
   <entry>
@@ -887,7 +953,8 @@
 <p>也就是说<strong>被除数</strong>到底是多少根据<strong>除数</strong>来决定</p>
 <h4 id="AND与运算指令"><a href="#AND与运算指令" class="headerlink" title="AND与运算指令"></a>AND与运算指令</h4><p>and 后面可以有两个操作数，结果就是两个数相与的结果</p>
 <h4 id="OR指令"><a href="#OR指令" class="headerlink" title="OR指令"></a>OR指令</h4><p>和and类似</p>
-<h3 id="三、汇编语言中segment"><a href="#三、汇编语言中segment" class="headerlink" title="三、汇编语言中segment"></a>三、汇编语言中segment</h3><h4 id="DATA数据段"><a href="#DATA数据段" class="headerlink" title="DATA数据段"></a>DATA数据段</h4><p>也就相当于c语言中所有的变量存储的段，不管是有没有初始值都可以存储在这里。</p>
+<h3 id="三、汇编语言中segment"><a href="#三、汇编语言中segment" class="headerlink" title="三、汇编语言中segment"></a>三、汇编语言中segment</h3><p><em><strong>现在的x86-64体系已经废除了内存分段机制</strong></em></p>
+<h4 id="DATA数据段"><a href="#DATA数据段" class="headerlink" title="DATA数据段"></a>DATA数据段</h4><p>也就相当于c语言中所有的变量存储的段，不管是有没有初始值都可以存储在这里。</p>
 <p>声明变量时需要指定变量的长度。</p>
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">DATA SEGMENT</span><br><span class="line">···</span><br><span class="line">DATA ENDS</span><br></pre></td></tr></table></figure></div>
 
@@ -1140,10 +1207,10 @@
 </ul>
 <div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//递归法实现深度优先遍历</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">preOrderTraversal</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span>; <span class="comment">//空节点就直接返回，递归的归</span></span><br><span class="line">    <span class="comment">//root-&gt;data对root节点的数据进行访问</span></span><br><span class="line">    <span class="comment">//例如打印或者放入全局变量中或者添加一个参数传入数组</span></span><br><span class="line">    <span class="built_in">preOrderTraversal</span>(root-&gt;leftchild);</span><br><span class="line">    <span class="built_in">preOrderTraversal</span>(root-&gt;rightchild);</span><br><span class="line">    <span class="comment">//先序遍历中先访问根节点数据然后访问左右子树</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">inOrderTraversal</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span>; <span class="comment">//空节点就直接返回</span></span><br><span class="line">    <span class="built_in">inOrderTraversal</span>(root-&gt;leftchild);</span><br><span class="line">    <span class="comment">//root-&gt;data对root节点的数据进行访问</span></span><br><span class="line">    <span class="comment">//例如打印或者放入全局变量中或者添加一个参数传入数组</span></span><br><span class="line">    <span class="built_in">inOrderTraversal</span>(root-&gt;rightchild);</span><br><span class="line">    <span class="comment">//中序遍历中先访问左节点然后是根节点最后是右节点</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">postOrderTraversal</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span>; <span class="comment">//空节点就直接返回</span></span><br><span class="line">    <span class="built_in">postOrderTraversal</span>(root-&gt;leftchild);</span><br><span class="line">    <span class="built_in">postOrderTraversal</span>(root-&gt;rightchild);</span><br><span class="line">    <span class="comment">//root-&gt;data对root节点的数据进行访问</span></span><br><span class="line">    <span class="comment">//例如打印或者放入全局变量中或者添加一个参数传入数组</span></span><br><span class="line">    <span class="comment">//后序遍历在访问左右子树后再访问根节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
-<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//迭代法实现深度优先遍历</span></span><br><span class="line"><span class="function">vector&lt;Elemtype&gt; <span class="title">preOrderTraversal</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">    vector&lt;Elemtype&gt; val;</span><br><span class="line">    stack&lt;TreeNode*&gt; stack; <span class="comment">//借助栈结构进行遍历</span></span><br><span class="line">    stack.<span class="built_in">push</span>(root); <span class="comment">//将根节点压栈</span></span><br><span class="line">    <span class="keyword">while</span>(!stack.<span class="built_in">empty</span>())&#123;</span><br><span class="line">        TreeNode* node = stack.<span class="built_in">pop</span>(); <span class="comment">//直接弹出进行根节点的遍历</span></span><br><span class="line">        val.<span class="built_in">push_back</span>(node);</span><br><span class="line">        <span class="keyword">if</span>(!root-&gt;rightchild) stack.<span class="built_in">push</span>(root-&gt;rightchild);</span><br><span class="line">        <span class="keyword">if</span>(!root-&gt;leftchild) stack.<span class="built_in">push</span>(root-&gt;leftchild);</span><br><span class="line">        <span class="comment">//先压入右孩子才能保证左孩子先出栈</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//迭代法实现深度优先遍历</span></span><br><span class="line"><span class="function">vector&lt;Elemtype&gt; <span class="title">preOrderTraversal</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">    vector&lt;Elemtype&gt; val;</span><br><span class="line">    stack&lt;TreeNode*&gt; stack; <span class="comment">//借助栈结构进行遍历</span></span><br><span class="line">    stack.<span class="built_in">push</span>(root); <span class="comment">//将根节点压栈</span></span><br><span class="line">    <span class="keyword">while</span>(!stack.<span class="built_in">empty</span>())&#123;</span><br><span class="line">        TreeNode* node = stack.<span class="built_in">pop</span>(); <span class="comment">//直接弹出进行根节点的遍历</span></span><br><span class="line">        val.<span class="built_in">push_back</span>(node-&gt;val);</span><br><span class="line">        <span class="keyword">if</span>(!root-&gt;rightchild) stack.<span class="built_in">push</span>(root-&gt;rightchild);</span><br><span class="line">        <span class="keyword">if</span>(!root-&gt;leftchild) stack.<span class="built_in">push</span>(root-&gt;leftchild);</span><br><span class="line">        <span class="comment">//先压入右孩子才能保证左孩子先出栈</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> val;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">vector&lt;Elemtype&gt; <span class="title">inOrderTraversal</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">    vector&lt;Elemtype&gt; val;</span><br><span class="line">    stack&lt;TreeNode*&gt; stack;</span><br><span class="line">    TreeNode* cur = root;</span><br><span class="line">    <span class="keyword">while</span>(!stack.<span class="built_in">empty</span>() || cur != null)&#123;</span><br><span class="line"> 		<span class="keyword">if</span>(cur != null) &#123;</span><br><span class="line">            stack.<span class="built_in">push</span>(cur); <span class="comment">//将遍历到的节点压栈</span></span><br><span class="line">            cur = cur-&gt;left; <span class="comment">//继续向左子树遍历</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//如果遍历到左子树为空，则返回上一个节点</span></span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            cur = stack.<span class="built_in">pop</span>();</span><br><span class="line">            val.<span class="built_in">push_back</span>(cur-&gt;val); <span class="comment">//将上一个节点数据取出</span></span><br><span class="line">            cur = cur-&gt;right; <span class="comment">//尝试向右遍历</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> val;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">vector&lt;Elemtype&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode* root)</span></span>&#123;</span><br><span class="line">    vector&lt;Elemtype&gt; val;</span><br><span class="line">    stack&lt;TreeNode*&gt; stack;</span><br><span class="line">    TreeNode* cur = root;</span><br><span class="line">    TreeNode* pre = null;</span><br><span class="line">    <span class="keyword">while</span>(!stack.<span class="built_in">empty</span>() || cur)&#123;</span><br><span class="line">        <span class="keyword">while</span>(cur)&#123;</span><br><span class="line">            stack.<span class="built_in">push</span>(cur);</span><br><span class="line">            cur = cur-&gt;left;</span><br><span class="line">        &#125;</span><br><span class="line">        cur = stack</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
-
-
+<p><strong>先序遍历中进行<em>数据操作</em>的节点和<em>遍历</em>的节点是同一个，所以只要栈空了，就意味着没有要处理的数据了</strong></p>
+<p><strong>中序遍历中进行<em>数据操作</em>的节点和<em>遍历</em>的节点不是同一个，从上向下遍历入栈后才能进行出栈进行数据操作，所以栈空了不意味着遍历停止了，那么循环就有两个条件，要保证接下来没有要遍历的节点了而且栈里面也没有要入栈的节点了</strong></p>
 <h3 id="三、动态规划"><a href="#三、动态规划" class="headerlink" title="三、动态规划"></a>三、动态规划</h3><p>动态规划（Dynamic Programming）是一种编程的思路，将一个大型的问题分解为若干个更小的子问题，并且在这些子问题中寻找最优的子结构，子问题最终就汇成了大问题的答案。</p>
 <p>找到重叠子问题，使用记忆化搜索将计算过的子问题的结果存储起来，需要计算时就看这个结果是否被计算过直接拿来使用。单纯的记忆化搜索或者回溯是一个自顶向下的问题，动态规划则是一个自下而上的问题，从子问题开始使用备忘录进行记录，一直到最大问题。</p>
 <div class="highlight-container" data-rel="C++"><figure class="iseeu highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> mem[<span class="number">10</span>]; <span class="comment">//创建备忘录数组</span></span><br><span class="line"><span class="built_in">memset</span>(mem, <span class="number">-1</span>, <span class="built_in">sizeof</span>(mem)); <span class="comment">//将数组初始化为不可能为结果的数字，表示这个值没有被计算过</span></span><br><span class="line"><span class="keyword">if</span>(mem[i] &gt; <span class="number">0</span>) dp[i] = mem[i]; <span class="comment">//如果调用dp[i]时已经存在过备忘录中，也就是值不为负一，直接调用mem[i]</span></span><br><span class="line"><span class="keyword">else</span> dp[i] = <span class="built_in">fdp</span>(i); <span class="comment">//如果不存在就进行递归的计算，计算后还要将结果存入到备忘录中</span></span><br></pre></td></tr></table></figure></div>
@@ -1157,8 +1224,7 @@
 <ul>
 <li><strong>代码思路：</strong>利用一个二维的dp数组，表示在背包容量为<strong>x</strong>时挑选前<strong>y</strong>件物品时最大的价值，对于每一件物品都有两个选择，一个是拿另一个是不拿。</li>
 </ul>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></div>
-]]></content>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></div>]]></content>
       <categories>
         <category>学习笔记</category>
       </categories>
@@ -1541,6 +1607,11 @@
 <li><code>:q</code> – 退出 Vim 编辑器。</li>
 <li><code>:wq</code> – 保存文件并退出 Vim 编辑器。</li>
 <li><code>:q!</code> – 强制退出Vim编辑器，不保存修改。</li>
+<li><code>:wq!</code> –保存文件并强制退出Vim编辑器。</li>
+<li><code>:w 1.txt</code> – 将文件另存到1.txt。</li>
+<li><code>:1,3 w 1.txt</code> – 将1-3行内容另存到1.txt。</li>
+<li><code>:r 2.txt</code> – 将2.txt的内容写入到当前光标的位置。</li>
+<li><code>:5 r 2.txt</code> – 将2.txt写入到当前光标的第5行后</li>
 </ul>
 <p><em>上述几种命令主要用来保存和退出编辑器</em></p>
 <h4 id="三、高级用法"><a href="#三、高级用法" class="headerlink" title="三、高级用法"></a>三、高级用法</h4><p>这里所介绍的高级用法是直接从复制粘贴而来，因为非常多且杂，一时半会记不住可能也用不到。</p>
@@ -1617,8 +1688,97 @@
 <p>​		在控制台中，用户登录后就进入了Shell。</p>
 <h5 id="（2-终端"><a href="#（2-终端" class="headerlink" title="（2 终端"></a>（2 终端</h5><p>​		在Windows系统或者Linux桌面环境中，可以利用<strong>终端（Terminal）</strong>来使用Shell，其实终端本质上是一个终端模拟器，帮助用户在桌面环境下也可以使用Shell。</p>
 <h4 id="四、Bash介绍"><a href="#四、Bash介绍" class="headerlink" title="四、Bash介绍"></a>四、Bash介绍</h4><p>​		Bash是大多数Linux系统的默认Shell，具有许多现代化的强大功能。</p>
-<h4 id="五、PATH环境变量"><a href="#五、PATH环境变量" class="headerlink" title="五、PATH环境变量"></a>五、PATH环境变量</h4><p>Shell执行命令时，也可以调用其他程序。一般来说可以使用<em>绝对路径、相对路径或者环境变量</em>启动应用程序。这里的环境变量就是</p>
+<h4 id="五、环境变量"><a href="#五、环境变量" class="headerlink" title="五、环境变量"></a>五、环境变量</h4><p>环境变量有很多种。常见的如下。</p>
+<ul>
+<li><strong>PATH</strong>：<strong>决定了Shell将到那些目录中寻找命令和程序。</strong></li>
+<li><strong>HOME</strong>：当前用户主目录（默认目录）</li>
+<li><strong>USER</strong>：当前用户的用户名</li>
+<li><strong>HISTSIZE</strong>：历史记录数</li>
+<li><strong>SHELL</strong>：当前使用的Shell类型</li>
+<li><strong>HOSTNAME</strong>：主机名字</li>
+<li><strong>LANGUGE</strong>：语言相关的环境变量，多语言可以修改此环境变量</li>
+</ul>
+<p><em>环境变量的名称一般是大写的</em></p>
+<p>运行Shell时，会同时存在三种环境变量</p>
+<ul>
+<li>局部变量：在脚本或命令中定义，只在当前的Shell实例中有效，<strong>其他Shell启动的程序不能访问</strong></li>
+<li>环境变量：所有的程序都可以访问的变量。</li>
+<li>shell变量：是由shell程序设置的特殊变量，shell变量中有一部分是环境变量，有一部分是局部变量，保证了shell的正常运行。</li>
+</ul>
+<h5 id="shell变量移步下一部分"><a href="#shell变量移步下一部分" class="headerlink" title="shell变量移步下一部分"></a>shell变量移步下一部分</h5><p><strong>PATH环境变量</strong></p>
+<p>Shell执行命令时，也可以调用其他程序。一般来说可以使用<em>绝对路径、相对路径或者环境变量</em>启动应用程序。这里的环境变量就是一个可执行文件所在的路径。</p>
+<ul>
+<li><code>PATH=$PATH:/[路径]</code> <strong>临时添加，当前进程有效</strong></li>
+<li><code>export PATH=$PATH:/[路径]</code> <strong>临时添加，当前进程和子进程有效</strong></li>
+<li>更改</li>
+</ul>
+<h4 id="六、Shell脚本编程"><a href="#六、Shell脚本编程" class="headerlink" title="六、Shell脚本编程"></a>六、Shell脚本编程</h4><h5 id="创建文件和执行"><a href="#创建文件和执行" class="headerlink" title="创建文件和执行"></a>创建文件和执行</h5><p><code>vim test.sh</code>创建shell脚本文件并进行编辑。</p>
+<p>第一行用于指定脚本的执行shell，后面定义了一个name变量，然后打印出这个变量。</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/zsh </span></span><br><span class="line">name=<span class="string">&quot;Liuheng&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;name&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>使用<code>chmod +x test.sh</code>命令给脚本执行权限。</p>
+<p>然后<code>./test.sh</code>执行脚本，就打印出了变量。</p>
+<p><strong>脚本执行方式</strong></p>
+<ul>
+<li><strong>source</strong> <code>source [文件名]</code>这样进行脚本文件的执行时，会直接在当前的shell环境中执行，改变当前shell的内容，<strong>变量也会被临时添加进当前的shell</strong>。</li>
+<li><strong>bash</strong> <code>bash [文件名]</code>这样进行脚本文件的执行时，会<strong>创建子shell</strong>调用bash执行，将结果打印到当前shell而不会直接改变当前shell。</li>
+</ul>
+<p>如果是直接绝对路径加文件名进行执行，首先会根据指定的执行shell进行运行，如果没有指定那么就直接使用当前的shell的子shell。</p>
+<h5 id="shell变量"><a href="#shell变量" class="headerlink" title="shell变量"></a>shell变量</h5><p>变量在shell中是这样被定义的<code>name=&quot;tanghuan&quot;</code>，定义变量时，变量名不加美元符号$.</p>
+<p>变量的命名规则如下：</p>
+<ul>
+<li>命名只能使用英文字母，数字和下划线，首个字符不能以数字开头。</li>
+<li>中间不能有空格，可以使用下划线 _。</li>
+<li>不能使用标点符号。</li>
+<li>不能使用bash里的关键字（可用help命令查看保留关键字）。</li>
+<li>那后面的字符串的双引号是必须的吗？答案是否定的。</li>
+<li>字符串可以用单引号，也可以用双引号，也可以不用引号。</li>
+</ul>
+<p><strong>单引号字符串的限制</strong>：</p>
+<ul>
+<li>单引号里的任何字符都会原样输出，单引号字符串中的变量是无效的；</li>
+<li>单引号字串中不能出现单独一个的单引号（对单引号使用转义符后也不行），但可成对出现，作为字符串拼接使用。</li>
+</ul>
+<p><em>${NAME} 中的$后面带上一个花括号可以帮助确定变量范围，是良好的编码习惯。</em></p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">name=<span class="string">&quot;Liuheng&quot;</span></span><br><span class="line">x=<span class="string">&#x27;x,&#x27;</span><span class="variable">$&#123;name&#125;</span><span class="string">&#x27;&#x27;</span></span><br><span class="line">y=<span class="string">&#x27;y,$&#123;name&#125;&#x27;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;name&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;x&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;y&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>执行结果如下</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20241010094842433.png"
+                      alt="image-20241010094842433"
+                ></p>
+<p><strong>双引号的优点</strong>：</p>
+<ul>
+<li>双引号里可以有变量</li>
+<li>双引号里可以出现转义字符</li>
+</ul>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">name=&quot;Liuheng&quot;</span><br><span class="line">x=&quot;x,&quot;$&#123;name&#125;&quot;&quot;</span><br><span class="line">y=&quot;y,$&#123;name&#125;&quot;</span><br><span class="line">z=&quot;z,\&quot;$&#123;name&#125;\&quot;&quot;</span><br><span class="line">echo $&#123;name&#125;</span><br><span class="line">echo $&#123;x&#125;</span><br><span class="line">echo $&#123;y&#125;</span><br><span class="line">echo $&#123;z&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>执行结果如下</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20241010100112679.png"
+                      alt="image-20241010100112679"
+                ></p>
+<p><strong>其他操作和命令</strong></p>
+<ul>
+<li><code>readonly [变量名]</code> 变成只读</li>
+<li><code>unset [变量名]</code> 删除变量</li>
+<li><code>declare [变量名]</code>声明一个变量，默认是字符串，加一个 <code>-i</code> 可以创建整型变量。</li>
+<li>&#96;$</li>
+</ul>
 ]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Shell</tag>
+        <tag>环境变量</tag>
+      </tags>
   </entry>
   <entry>
     <title>标准库开发PWM详解</title>
@@ -1714,6 +1874,13 @@
                 ></p>
 <p>在另一篇文章中将尝试解决这个问题。</p>
 ]]></content>
+      <categories>
+        <category>问题解决</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+        <tag>Github</tag>
+      </tags>
   </entry>
   <entry>
     <title>C++中哈希表的几种使用方式</title>
@@ -1770,5 +1937,222 @@
     <title>Vivado入门</title>
     <url>/2024/09/04/Vivado%E5%85%A5%E9%97%A8/</url>
     <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>GitClone报错问题解决</title>
+    <url>/2024/10/11/GitClone%E6%8A%A5%E9%94%99%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>执行命令如下</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git clone git://github.com/jiangmiao/auto-pairs.git ~/.vim/bundle/auto-pairs</span><br></pre></td></tr></table></figure></div>
+
+
+
+<p>详细报错如下</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">fatal: unable to connect to github.com:</span><br><span class="line">github.com[0: 20.205.243.166]: errno=Connection timed out</span><br></pre></td></tr></table></figure></div>
+
+<p>发现这是因为使用了<code>git://**</code>导致的错误，更深的原因并不清楚，这里发现只要改用<code>https</code>就可以解决问题。</p>
+<h4 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h4><p>执行以下代码</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global url.https://github.com/.insteadOf git://github.com/</span><br><span class="line">git config --global url.&quot;https://&quot;.insteadOf git://</span><br></pre></td></tr></table></figure></div>
+
+<p>这些命令将向**.gitconfig**的配置文件下写入替代<code>git://</code>为<code>https://</code> 的规则。</p>
+<p>同理也可以直接向配置文件写入对应的规则。</p>
+]]></content>
+      <categories>
+        <category>问题解决</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+        <tag>Shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux下嵌入式开发环境搭建</title>
+    <url>/2024/10/09/Linux%E4%B8%8B%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<h4 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h4><ul>
+<li><strong>WSL2 Ubuntu 22.04</strong></li>
+<li><strong>VSCode</strong></li>
+<li><strong>Make</strong></li>
+<li><strong>Cmake</strong></li>
+</ul>
+<p>这里使用WSL虚拟机连接远程VSCode进行开发，如果是vmware或者其他虚拟机甚至是实体机都是同理的。</p>
+<p>Make和Cmake安装比较简单，这里就直接当做已经配置好的环境。</p>
+<h4 id="二、开发原理"><a href="#二、开发原理" class="headerlink" title="二、开发原理"></a>二、开发原理</h4><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/IMG_2223.PNG"
+                      alt="image"
+                ></p>
+<ul>
+<li>使用Cmake生成Makefile文件控制工程的编译</li>
+<li>使用VSCode进行代码的编写和调试</li>
+<li>使用交叉编译工具链和openocd工具将代码编译并下载到单片机内</li>
+</ul>
+<h4 id="三、工具安装"><a href="#三、工具安装" class="headerlink" title="三、工具安装"></a>三、工具安装</h4><h5 id="1、安装ARM交叉编译工具链"><a href="#1、安装ARM交叉编译工具链" class="headerlink" title="1、安装ARM交叉编译工具链"></a>1、安装ARM交叉编译工具链</h5><p><strong>交叉编译</strong>是指在一个平台上进行开发，然后编译出在另一个平台上运行的可执行文件的过程。嵌入式开发中常用交叉编译。</p>
+<p>安装arm-none-eabi-gcc。</p>
+<p><em>Ubuntu官方的APT源已经对<strong>gcc-arm-none-eabi</strong>停止维护了，只能下载到2021年份的版本，并且不含<strong>gdb-arm-none-eabi</strong></em></p>
+<p><em>在下载<strong>gdb-arm-none-eabi</strong>时会自动用<strong>gdb-multiarch</strong>替代</em></p>
+<p><code>sudo apt-get install gcc-arm-none-eabi</code></p>
+<p><code>sudo apt-get install gdb-arm-none-eabi</code></p>
+<p>（如果没有自动下载<strong>gdb-multiarch</strong>请执行<code>sudo apt-get install gdb-multiarch</code>）</p>
+<p><del>如果不希望使用命令行安装旧版的gcc工具链，请移步官网进行二进制文件直接安装</del></p>
+<h5 id="2、安装usbipd"><a href="#2、安装usbipd" class="headerlink" title="2、安装usbipd"></a>2、安装usbipd</h5><p><strong>强烈建议参考微软WSL2的<a class="link"   href="https://learn.microsoft.com/zh-cn/windows/wsl/connect-usb" >官方教程 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></strong></p>
+<ul>
+<li><p>在Github仓库中找到usbipd的驱动并下载安装。</p>
+</li>
+<li><p>插入JLink设备然后根据对应的<strong>命令</strong>将USB设备<strong>共享</strong>给WSL虚拟机。</p>
+</li>
+<li><p><strong>共享</strong>后使用<strong>附加</strong>命令WSL将接管USB设备并且Windwos将不能够再使用。</p>
+</li>
+<li><p>附加USB设备使用后可以<strong>解除</strong>附加的状态，使得Windows可以使用。</p>
+</li>
+</ul>
+<p>由于使用多个命令比较复杂，这里使用一个工具叫做**<a class="link"   href="https://github.com/nickbeth/wsl-usb-manager/releases" >wsl-usb-manager <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>**，可以使用可视化界面来进行各种操作。</p>
+<h5 id="3、安装OpenOCD"><a href="#3、安装OpenOCD" class="headerlink" title="3、安装OpenOCD"></a>3、安装OpenOCD</h5><p>OpenOCD是一个开源的编程和调试工具，用于嵌入式开发中与各种调试接口通信，支持各种处理器架构（如ARM、RISC-V等）和调试接口（如JTAG、SWD、BDM等）。主要为我们提供了<strong>调试</strong>和<strong>编程</strong>的功能。</p>
+<p><code>sudo apt-get install openocd</code></p>
+<h5 id="4、安装Cortex-Debug"><a href="#4、安装Cortex-Debug" class="headerlink" title="4、安装Cortex-Debug"></a>4、安装Cortex-Debug</h5><p>VSCode要和Cortex-Debug进行通信才能进行代码的调试。</p>
+]]></content>
+      <categories>
+        <category>项目开发</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>WSL</tag>
+        <tag>嵌入式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2024/10/30/Linux%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="SystemV启动流程"><a href="#SystemV启动流程" class="headerlink" title="SystemV启动流程"></a>SystemV启动流程</h1><h2 id="内核引导"><a href="#内核引导" class="headerlink" title="内核引导"></a>内核引导</h2><p>进入BIOS开机自检，BIOS接管硬件，将硬盘中的引导加载到内存中，找到第一个操作系统的内核并启动操作系统，读入**&#x2F;boot**目录下的内核文件。</p>
+<h2 id="运行INIT启动操作系统"><a href="#运行INIT启动操作系统" class="headerlink" title="运行INIT启动操作系统"></a>运行INIT启动操作系统</h2><p>INIT进程是系统所有进程的起点，用来初始化所有的进程。<br>INIT进程会读取配置文件&#x2F;etc&#x2F;inittab。</p>
+<h3 id="运行级别"><a href="#运行级别" class="headerlink" title="运行级别"></a>运行级别</h3><p>许多程序需要开机启动，在Windows叫做<strong>服务</strong>，在Linux叫做<strong>守护进程（daemon）</strong>，INIT进程会启动这些开机启动的守护进程。<br>在不同的<strong>运行等级（runlevel）</strong> 下会有不同的守护进程。</p>
+<ul>
+<li>运行级别0:系统停机状态，系统默认运行级别不能设为0</li>
+<li>运行级别1:单用户工作状态，root权限，用于系统维护，禁止远程登录</li>
+<li>运行级别2:多用户状态（没有NFS）</li>
+<li>运行级别3:完全的多用户状态（有NFS），登陆后进去控制台命令饭模式</li>
+<li>运行级别4:系统未使用，保留</li>
+<li>运行级别5:x11控制台，登陆后进入图形GUI模式</li>
+<li>运行级别6:系统正常关闭并重启，默认运行级别不能设为6，否则不能正常启动</li>
+</ul>
+<h3 id="系统初始化"><a href="#系统初始化" class="headerlink" title="系统初始化"></a>系统初始化</h3><p>调用rc.sysinit脚本，完成系统初始化。<br>然后运行不同的rc脚本文件，这些脚本文件如果是S开头的文件，将以start运行，如果脚本是K开头的文件，而且已经处于运行态，就会以stop来停止这些已经启动的守护进程，然后重新开始运行。<br>保证当INIT改变运行级别时，所有相关的守护进程都将重启。</p>
+<h2 id="建立终端"><a href="#建立终端" class="headerlink" title="建立终端"></a>建立终端</h2><p>rc执行完毕后返回INIT。这时候系统的环境和守护进程就配置好了。<br>INIT接下来会打开6个终端，供用户来登录。<br>在2、3、4、5的运行级别中都将以respawn方式运行mingetty程序，mingetty程序能打开终端，设置模式。</p>
+<h2 id="用户登录系统"><a href="#用户登录系统" class="headerlink" title="用户登录系统"></a>用户登录系统</h2><p>一般来说有三种登录方式</p>
+<ul>
+<li>命令行登录</li>
+<li>ssh登录</li>
+<li>图形界面登录</li>
+</ul>
+<h3 id="命令行登录"><a href="#命令行登录" class="headerlink" title="命令行登录"></a>命令行登录</h3><p>会有一个文本方式登录，mingetty会将用户输入的用户名密码传给login程序进行验证。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2024/10/30/Linux%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/</url>
+    <content><![CDATA[<h1 id="一、Linux中的用户管理"><a href="#一、Linux中的用户管理" class="headerlink" title="一、Linux中的用户管理"></a>一、Linux中的用户管理</h1><p>Linux是一个<strong>多用户</strong>多任务的分时操作系统，使用操作系统必须有一个用户，使用时以用户的身份进入系统。</p>
+<h1 id="二、Linux的用户权限"><a href="#二、Linux的用户权限" class="headerlink" title="二、Linux的用户权限"></a>二、Linux的用户权限</h1><p>Linux中三种用户权限。</p>
+<ul>
+<li>root管理员用户，</li>
+<li>普通用户，</li>
+</ul>
+<h2 id="root管理员用户"><a href="#root管理员用户" class="headerlink" title="root管理员用户"></a>root管理员用户</h2><p>具有系统的最高权限，可以访问和修改系统的所有文件和资源。一般不以root用户登录，而是使用sudo提供临时的管理员权限。</p>
+<h2 id="普通用户"><a href="#普通用户" class="headerlink" title="普通用户"></a>普通用户</h2><p>每一个普通用户都有自己的用户ID和权限，每个用户都有自己的<strong>home</strong>目录，用来存储个人的文件。<br>可以将普通用户加入<strong>sudo</strong>组，允许普通用户使用sudo暂时获取root权限。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>VSCode中Arduino开发环境搭建</title>
+    <url>/2024/10/16/VSCode%E4%B8%ADAduino%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>实用教程</category>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>嵌入式开发</tag>
+        <tag>Aduino</tag>
+        <tag>Esp8266</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WSL中出现Zone.identifer文件</title>
+    <url>/2024/10/16/WSL%E4%B8%AD%E5%87%BA%E7%8E%B0Zone-identifer%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>二叉树</title>
+    <url>/2024/09/27/%E4%BA%8C%E5%8F%89%E6%A0%91/</url>
+    <content><![CDATA[<h4 id="一、二叉树种类"><a href="#一、二叉树种类" class="headerlink" title="一、二叉树种类"></a>一、二叉树种类</h4><ul>
+<li><strong>满二叉树</strong> 二叉树只有度为2和0的节点，并且度为0的节点在同一层上，则这个二叉树是满二叉树。也就是每一层都是满的。</li>
+<li><strong>完全二叉树</strong> 除了最底层没填满，每一层都填满，并且优先填满最后一层的左节点。</li>
+<li><strong>完满二叉树</strong> 除了叶节点以外所有的节点都具有两个子节点。<em>区别于上述两种二叉树</em></li>
+<li><strong>二叉搜索树（BST）</strong> 一个有序树，左子树上的所有数值一定小于根节点，右子树则反之所有节点都大于根节点。</li>
+<li><strong>平衡二叉搜索树（AVL）</strong> 一颗空树或者，他的左右两个子树的高度差绝对值不超过1，左右子树也分别是平衡二叉树。</li>
+</ul>
+<p><em>二叉树可以采用<strong>链式存储结构</strong>也可以使用<strong>数组存储</strong>，使用数组进行表示适用于完全二叉树，别的二叉树会造成空间浪费</em></p>
+<ul>
+<li>链式存储就是一个节点同时存储左子树和右子树。</li>
+<li>数组存储用数组下标表示节点的序列，如果<strong>数组下标是i</strong>，其左孩子的序号就是<strong>2*i+1</strong>，右孩子的序号是<strong>2*i+2</strong>，父节点的序号是<strong>（i- 1）&#x2F;2</strong>。</li>
+</ul>
+<h4 id="二、二叉树的遍历"><a href="#二、二叉树的遍历" class="headerlink" title="二、二叉树的遍历"></a>二、二叉树的遍历</h4>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>数据结构</tag>
+        <tag>二叉树</tag>
+        <tag>二叉搜索树</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>stm32启动流程</title>
+    <url>/2024/10/30/stm32%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>.appimage文件安装</title>
+    <url>/2024/10/11/appimage%E6%96%87%E4%BB%B6%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>安装一个appimage文件，报错如下</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">dlopen(): error loading libfuse.so.2</span><br><span class="line"></span><br><span class="line">AppImages require FUSE to run.</span><br><span class="line">You might still be able to extract the contents of this AppImage</span><br><span class="line">if you run it with the --appimage-extract option.</span><br><span class="line">See https://github.com/AppImage/AppImageKit/wiki/FUSE</span><br></pre></td></tr></table></figure></div>
+
+<p>即需要安装FUSE才能够使用appimage文件。</p>
+<h4 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h4><p>根绝报错提供的网址，找到Github中FUSE的安装教程，根据自己的Ubuntu版本进行安装。</p>
+]]></content>
+      <categories>
+        <category>问题解决</category>
+        <category>实用教程</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在WSL2中使用系统代理</title>
+    <url>/2024/10/11/%E5%9C%A8WSL2%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%B3%BB%E7%BB%9F%E4%BB%A3%E7%90%86/</url>
+    <content><![CDATA[<h4 id="一、"><a href="#一、" class="headerlink" title="一、"></a>一、</h4><p>操作环境：</p>
+<ul>
+<li>WSL 2.3.24.0</li>
+<li>Windows 11 24H2</li>
+<li>Ubuntu 22.04</li>
+</ul>
+<p>同时需要准备好clash for Windows的代理。</p>
+<h4 id="二、配置代理镜像"><a href="#二、配置代理镜像" class="headerlink" title="二、配置代理镜像"></a>二、配置代理镜像</h4><h5 id="方法一：在WSL-setting中开启网络镜像"><a href="#方法一：在WSL-setting中开启网络镜像" class="headerlink" title="方法一：在WSL setting中开启网络镜像"></a>方法一：在WSL setting中开启网络镜像</h5><p>WSL比较新的版本中有WSL setting的图形化界面，在这个图形化界面中开启网络模式的镜像。</p>
+<h5 id="方法二：更改-wslconfig的内容"><a href="#方法二：更改-wslconfig的内容" class="headerlink" title="方法二：更改.wslconfig的内容"></a>方法二：更改.wslconfig的内容</h5><p>在<code>C:\Users\&lt;UserName&gt;</code>中找到.wslconfig的文件，直接在wsl中加入以下内容</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">[wsl2]</span><br><span class="line">networkingMode=mirrored</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="三、重启WSL"><a href="#三、重启WSL" class="headerlink" title="三、重启WSL"></a>三、重启WSL</h4><p>在终端中输入<code>wsl --shutdown</code>重启wsl<br><del>在这里我只重启了终端，反复尝试之后才发现需要重启WSL才行，直接关闭终端并不会关闭WSL</del></p>
+<p>尝试<code>wget google.com</code>出现正确的回应得到<code>index.html</code>就说明成功了。</p>
+<h4 id="四、略略略"><a href="#四、略略略" class="headerlink" title="四、略略略"></a>四、略略略</h4><p>我自己的问题到此为止并没有被解决，运行<code>git clone</code>依然显示超时。在另一篇博客中将解决这个问题。</p>
+]]></content>
+      <categories>
+        <category>实用教程</category>
+        <category>问题解决</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Shell</tag>
+        <tag>WSL</tag>
+        <tag>网络代理</tag>
+      </tags>
   </entry>
 </search>
