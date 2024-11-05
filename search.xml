@@ -642,8 +642,7 @@
   <entry>
     <title>从零开始的Stm32学习</title>
     <url>/2024/01/20/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Stm32%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<p><em><strong>写在前面</strong></em>  <em>原本是跟着江协科技的课入门了stm32f103，但是对stm32的开发还停留在一个比较浅的认知，以及实操水平有限只会使用库函数，所以想通过stm32f401re的学习从头到尾搞明白整个流程，也为将来自己画板子、写启动文件、汇编语言打好基础。</em></p>
-<h3 id="一、使用keil进行stm32开发"><a href="#一、使用keil进行stm32开发" class="headerlink" title="一、使用keil进行stm32开发"></a>一、使用keil进行stm32开发</h3><p>刚开始的入门软件是keil，所以这次也打算从keil入手，将keil学明白之后再尝试使用其他的软件和环境进行开发，同时也是使用库函数的方式进行开发。</p>
+    <content><![CDATA[<h3 id="一、使用keil进行stm32开发"><a href="#一、使用keil进行stm32开发" class="headerlink" title="一、使用keil进行stm32开发"></a>一、使用keil进行stm32开发</h3><p>刚开始的入门软件是keil，所以这次也打算从keil入手，将keil学明白之后再尝试使用其他的软件和环境进行开发，同时也是使用库函数的方式进行开发。</p>
 <p>使用keil中的<strong>pack installer</strong>安装自己要开发的板子的对应版本，然后在意法半导体官网去找相对应的软件包并解压。在官网的导航找到<strong>软件-》微控制器软件-》STM32微控制器软件-》标准外设软件库</strong>，然后选择适合自己的开发板的就可以。</p>
 <p>这里我用的是stm32f401re开发板，所以要找stm32f4的软件包，软件包中有对应的启动文件以及库函数，库函数直接对底层硬件进行操作，所以可以提高开发的效率，但是也同样会占用更多的资源（库函数之于直接操作寄存器就好像是高级语言之于低级语言）。在keil中新建工程，并且在对应的文件夹下建立<strong>Libraries</strong>（存放库函数）、<strong>User</strong>（存放自己写的main函数）、<strong>Start</strong>（存放各种启动文件）。</p>
 <p><strong>启动文件详解</strong>：1. CMSIS标准中定义了内核函数层，和设备外设访问层，</p>
@@ -659,13 +658,18 @@
 <h6 id="GPIO的八种工作模式"><a href="#GPIO的八种工作模式" class="headerlink" title="GPIO的八种工作模式"></a>GPIO的八种工作模式</h6><p><strong>1）模拟输入 GPIO_Mode_AIN</strong> 输入模式直接接入模拟输入</p>
 <p><strong>2）浮空输入 GPIO_Mode_IN_FLOATING</strong> 上下拉电阻选择浮空输入模式，容易被干扰</p>
 <p><strong>3）下拉输入 GPIO_Mode_IPD</strong> 上下拉电阻选择下拉输入模式，默认电平为低，可以用于检测由低到高的电平变化</p>
-<p><strong>4）上拉输入 GPIO_Mode_IPU</strong> 上下拉电阻选择上拉输入模式，默认电平为高，可以用于检测由低到高的电平变化</p>
+<p><strong>4）上拉输入 GPIO_Mode_IPU</strong> 上下拉电阻选择上拉输入模式，默认电平为高，可以用于检测由高到低的电平变化</p>
 <p><strong>5）开漏输出 GPIO_Mode_OUT_OD ** 上P_MOS不工作，只有下面的N_MOS在工作，可以输出低电平，不能直接输出高电平，要靠外面的上拉电阻。适合用作通讯协议的模式，不会强行输出高电平。</strong><em>可以同时输入输出。</em>**</p>
-<p><strong>6）推挽输出 GPIO_Mode_OUT_PP</strong> P_MOS和N_MOS都在工作，可以直接输出高低电平，是一种强推输出模式。<em><strong>可以同时输入输出</strong></em></p>
+<p><strong>6）推挽输出 GPIO_Mode_OUT_PP</strong> P_MOS和N_MOS都在工作，可以直接输出高低电平，是一种<strong>强推输出</strong>模式，具有强大的<strong>驱动能力</strong>。<em><strong>可以同时输入输出</strong></em></p>
 <p><strong>7）复用开漏输出 GPIO_Mode_AF_OD</strong> GPIO此时连接到片上外设受片上外设控制</p>
 <p><strong>8）复用推挽输出 GPIO_Mode_AF_PP</strong> GPIO此时连接到片上外设受片上外设控制</p>
-<h6 id="GPIO"><a href="#GPIO" class="headerlink" title="GPIO"></a>GPIO</h6><h4 id="2、NVIC（嵌套向量中断控制器）"><a href="#2、NVIC（嵌套向量中断控制器）" class="headerlink" title="2、NVIC（嵌套向量中断控制器）"></a>2、NVIC（嵌套向量中断控制器）</h4><p>NVIC是一个内核外设，也就是在芯片内部，但是不同厂家也会对NVIC的功能进行裁切，但是多数情况下的NVIC是差不多的，关于NVIC的定义一般放在<strong>misc.c</strong>和<strong>misc.h</strong>里面。NVIC是用来控制系统异常和外部中断的。</p>
-<h6 id="使用NVIC"><a href="#使用NVIC" class="headerlink" title="使用NVIC"></a>使用NVIC</h6><p>首先使能外设某个中断，这个具体由每个外设的相关中断使能位控制。然后要使能NVIC的中断，配置NVIC中断优先级，设置优先级分配组，一共有四位作为优先级，可以将四位分别分配给响应优先级和抢占优先级，使得两种优先级都有一定的范围，接下来使用NVIC的初始化结构体为开启的外设中断通道分配响应优先级和抢占优先级，<em>（响应优先级是中断同时发生时响应优先级高的可以产生中断，抢占优先级是在进行一个中断时另一个抢占优先级高的能够中断抢占优先级低的事件）</em>，然后使用初始化函数初始化NVIC。配置好NVIC和外设的中断之后，接下来要编写中断函数，当外设的中断事件触发时，就可以跳转到自己写的中断函数中。</p>
+<h4 id="2、NVIC（嵌套向量中断控制器）"><a href="#2、NVIC（嵌套向量中断控制器）" class="headerlink" title="2、NVIC（嵌套向量中断控制器）"></a>2、NVIC（嵌套向量中断控制器）</h4><p>NVIC是一个内核外设，也就是在芯片内部，但是不同厂家也会对NVIC的功能进行裁切，但是多数情况下的NVIC是差不多的，关于NVIC的定义一般放在<strong>misc.c</strong>和<strong>misc.h</strong>里面。NVIC是用来控制系统异常和外部中断的。</p>
+<h6 id="使用NVIC"><a href="#使用NVIC" class="headerlink" title="使用NVIC"></a>使用NVIC</h6><ul>
+<li>首先使能外设某个中断，这个具体由每个外设的相关中断使能位控制。</li>
+<li>然后要使能NVIC的中断，配置NVIC中断优先级，设置优先级分配组，一共有四位作为优先级，可以将四位分别分配给响应优先级和抢占优先级，使得两种优先级都有一定的范围。</li>
+<li>接下来使用NVIC的初始化结构体为开启的外设中断通道分配响应优先级和抢占优先级，<em>（响应优先级是中断同时发生时响应优先级高的可以产生中断，抢占优先级是在进行一个中断时另一个抢占优先级高的能够中断抢占优先级低的事件）</em>，然后使用初始化函数初始化NVIC。</li>
+<li>配置好NVIC和外设的中断之后，接下来要编写中断函数，当外设的中断事件触发时，就可以跳转到自己写的中断函数中。</li>
+</ul>
 <h4 id="3、USART"><a href="#3、USART" class="headerlink" title="3、USART"></a>3、USART</h4><h4 id="4、I2C"><a href="#4、I2C" class="headerlink" title="4、I2C"></a>4、I2C</h4><h4 id="5、TIM定时器"><a href="#5、TIM定时器" class="headerlink" title="5、TIM定时器"></a>5、TIM定时器</h4><p>定时器有三种，分别是基本定时器，通用定时器，高级定时器。</p>
 <p><img  
                      lazyload
@@ -758,25 +762,39 @@
 <h3 id="三、通信协议"><a href="#三、通信协议" class="headerlink" title="三、通信协议"></a>三、通信协议</h3><h4 id="1、I2C协议"><a href="#1、I2C协议" class="headerlink" title="1、I2C协议"></a>1、I2C协议</h4><p>同步半双工，带数据应答，支持总线挂载多设备，两条总线：<strong>SCL（时序总线）</strong>，<strong>SDA（数据总线）</strong></p>
 <p><strong>硬件I2C</strong>：STM32如果有I2C硬件模块可以直接使用，查手册找一下I2C挂载在何处，然后初始化I2C的各种属性。直接往数据寄存器中写入值发送然后直接从数据寄存器中读取数据。</p>
 <p><strong>软件I2C</strong>：可以使用软件函数的方式模拟I2C协议，初始化GPIO口，将一个口的输出作为SCL另一个作为SDA，然后根据I2C的时序特点在不同的时序阶段将数据放在SDA总线上，定时上拉和上拉SCL。</p>
+<p>所有设备的<strong>SCL和SDA</strong>都接在一起，挂载在同一条总线上，<strong>SCL</strong>由主设备进行控制，<strong>SDA</strong>可以由主设备释放给从设备使用。设备的<strong>SCL和SDA</strong>都需要使用<strong>开漏输出</strong>模式加<strong>上拉电阻</strong>。在<strong>一主多从</strong>模式中也可以使用<strong>推挽输出</strong>模式，但是在<strong>多主多从</strong>有可能会造成多个主设备短路，所以在<strong>任何情况下都需要使用开漏输出模式</strong>。</p>
 <p><em><strong>时序特点</strong></em>：</p>
 <p><strong>1)基本时序单元</strong></p>
-<p>​	<strong>产生起始条件：</strong>SCL高电平期间，SDA从高电平切换到低电平</p>
-<p>​	<strong>产生终止条件：</strong>SCL高电平期间，SDA从低电平切换到高电平</p>
-<p>​	<em>产生起始条件和终止条件都是由主机决定的。</em></p>
-<p>​	<strong>主机发送数据：</strong>SCL低电平期间将一位数据放到SDA上后，主机将SCL提到高电平，此时SDA不允许有变化，从而让从机接收数据，高位先行。</p>
-<p>​	<strong>主机接收数据：</strong>主机释放SDA将控制权交给从机，主机控制SCL，在低电平期间从机发送数据，在高电平期间主机接收数据</p>
-<p>​	<strong>发送应答：</strong>在主机接收完一个字节后，在下一个时钟发送一位数据，数据0表示应答</p>
-<p>​	<strong>接收应答：</strong>在主机发送给从机一个字节后，在下一个时钟发送一位数据给主机，主机此时要接受这个数据，数据0表示应答，数据1表示非应答</p>
+<ul>
+<li><p><strong>产生起始条件：</strong>SCL高电平期间，SDA从高电平切换到低电平</p>
+</li>
+<li><p><strong>产生终止条件：</strong>SCL高电平期间，SDA从低电平切换到高电平</p>
+</li>
+<li><p><em>产生起始条件和终止条件都是由主机决定的。</em></p>
+</li>
+<li><p><strong>主机发送数据：</strong>SCL低电平期间将一位数据放到SDA上后，主机将SCL提到高电平，此时SDA不允许有变化，从而让从机接收数据，高位先行。</p>
+</li>
+<li><p><strong>主机接收数据：</strong>主机释放SDA将控制权交给从机，主机控制SCL，在低电平期间从机发送数据，在高电平期间主机接收数据</p>
+</li>
+<li><p><strong>发送应答：</strong>在主机接收完一个字节后，在下一个时钟发送一位数据，数据0表示应答</p>
+</li>
+<li><p><strong>接收应答：</strong>在主机发送给从机一个字节后，在下一个时钟发送一位数据给主机，主机此时要接受这个数据，数据0表示应答，数据1表示非应答</p>
+</li>
+</ul>
 <p><strong>2)通信时序</strong></p>
-<p>​	<strong>指定地址写：</strong>对于指定设备的指定寄存器写入数据。</p>
-<p>​	第一个数据帧，七位地址<strong>＋</strong>一位读写位（0写1读），紧跟着就是应答位，从机此时应该给主机接受应答。第二个数据帧，可以是设备的内部寄存器地址，紧跟着应答位。</p>
+<ul>
+<li><strong>指定地址写：</strong>对于指定设备的指定寄存器写入数据。</li>
+</ul>
+<p>​	第一个数据帧，七位地址<strong>＋</strong>一位读写位（0写1读），紧跟着就是应答位，从机此时应该给主机接受应答。第二个数据帧，可以是设备的内部寄存器地址，紧跟着应答位。接下来的帧就可以发送要写入的数据，每写入一个字节，设备的内部寄存器地址指针就会<strong>自动递增</strong>。</p>
 <p>​	再往后主机可以产生终止条件。</p>
-<p>​	<strong>指定地址读：</strong>对指定设备的指定寄存器写入数据。</p>
-<p>​	第一个数据帧，七位地址**+<strong>一位读写位（此时写入），然后从机数据应答，第二个数据帧，指定设备的内部寄存器地址，然后从机应答，</strong><em>此时重新产生起始条件</em><strong>，第三个数据帧指定七位地址</strong>+**一个读写位（此时读入），	第四个数据帧就是从机返回给主机的数据。</p>
+<ul>
+<li><strong>指定地址读：</strong>对指定设备的指定寄存器写入数据。</li>
+</ul>
+<p>​	第一个数据帧，七位地址**+<strong>一位读写位（此时写入），然后从机数据应答，第二个数据帧，指定设备的内部寄存器地址，然后从机应答，</strong><em>此时重新产生起始条件</em><strong>，第三个数据帧指定七位地址</strong>+**一个读写位（此时读入），第四个数据帧就是从机返回给主机的数据。每读取一个字节，设备内部寄存器地址的指针会自动递增。</p>
 <p>​	最后主机产生终止条件。</p>
-<ol start="3">
-<li></li>
-</ol>
+<h5 id="10bit地址读写"><a href="#10bit地址读写" class="headerlink" title="10bit地址读写"></a>10bit地址读写</h5><p>如果是10bit的从机地址，需要两个字节确定从机地址，第一个字节为<code>11110 XX X</code>，前面的<code>11110</code>是IIC协议中保留的特殊地址指令，后面XX是从机地址的前两位，（剩下的八位要在下一个字节中给出），最后一位依然是读写位。在第一个字节后前两位地址满足的从机都需要进行ACK应答。</p>
+<p>主设备指定地址写，确定从机地址之后就可以接着发送其他数据进行写入。</p>
+<p>主设备指定地址读，确定从机地址之后，接着发送<strong>寄存器地址</strong>，然后<strong>重新发送第一个字节</strong>重复起始信号并且改成读。</p>
 <h4 id="2、USART协议"><a href="#2、USART协议" class="headerlink" title="2、USART协议"></a>2、USART协议</h4><p>异步全双工，点对点通信，两个引脚<strong>TX和RX</strong>，分别用来发送数据和接收数据，点对点发送数据也就是TX接RX，RX接TX。</p>
 <p>波特率是串口通信的速率。</p>
 <p><em><strong>时序特点：</strong></em></p>
@@ -2153,6 +2171,78 @@
         <tag>Shell</tag>
         <tag>WSL</tag>
         <tag>网络代理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vim编辑器插件&amp;功能优化</title>
+    <url>/2024/10/09/Vim%E7%BC%96%E8%BE%91%E5%99%A8%E6%8F%92%E4%BB%B6-%E5%8A%9F%E8%83%BD%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<h4 id="常用插件"><a href="#常用插件" class="headerlink" title="常用插件"></a>常用插件</h4><p>在使用插件之前，我们先安装一个插件的管理器<strong>Pathogen</strong>。使用包管理器可以使得插件的安装更加简单。</p>
+<ul>
+<li><p>确保自己在用户根目录下<code>cd ~</code></p>
+</li>
+<li><p>创建文件夹（如果文件夹不存在）<code>mkdir -p ~/.vim/autoload ~/.vim/bundle</code></p>
+</li>
+<li><p>安装插件<code>curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim</code></p>
+</li>
+<li><p>创建vim配置文件<code>vim .vimrc</code></p>
+</li>
+<li><p>在配置文件中写入以下内容</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">execute pathogen#infect()</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">如果第一次创建.vimrc文件则加上以下内容。</span></span><br><span class="line">syntax on</span><br><span class="line">filetype plugin indent on</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>接下来下载插件只需要进入<code>.vim/bundle</code>文件夹然后直接<code>git clone</code>即可。</p>
+</li>
+</ul>
+<h5 id="一、Ctags"><a href="#一、Ctags" class="headerlink" title="一、Ctags"></a>一、Ctags</h5><p>Ctags 是一个用于生成代码索引的工具，它允许用户快速在项目中的不同文件和符号之间跳转。这为使用文本编辑器的开发者提供了极大的便利，特别是在处理大型代码库时。Ctags 基于源代码文件，创建一个列表（通常称为标签文件），其中包含各种代码元素（如函数、变量等）的位置。</p>
+<p><strong>安装和功能集成</strong></p>
+<ul>
+<li>Ubuntu中命令行安装<code>sudo apt-get install universal-ctags</code></li>
+<li>在需要使用的工程根目录下运行<code>ctags -R .</code>就生成了<strong>tags文件</strong></li>
+<li></li>
+</ul>
+<h5 id="二、AutoPairs"><a href="#二、AutoPairs" class="headerlink" title="二、AutoPairs"></a>二、AutoPairs</h5><p>AutoPairs是一个自动补全配对符号的插件。</p>
+<p>使用这个插件后，当我们敲入一个符号时，会自动补全它的所匹配的另一个符号。比如，我们敲入 <code>[</code> 时，它会自动补全 <code>]</code> 。当我们删掉 <code>[</code> 时，<code>]</code> 也自动被删除了。</p>
+<p><strong>安装</strong></p>
+<ul>
+<li>直接运行<code>git clone git://github.com/jiangmiao/auto-pairs.git ~/.vim/bundle/auto-pairs</code></li>
+</ul>
+<p><del>这里在我的运行环境下出现了一些问题，请移步到本人的其他博客解决问题。 指路：WSL2网络代理问题和GitClone下载超时问题</del></p>
+<h5 id="三、YCM"><a href="#三、YCM" class="headerlink" title="三、YCM"></a>三、YCM</h5><p>YCM全称YouCompleteMe，在github中搜索全名才能找得到。</p>
+<p>YCM是一个代码补全插件，功能十分强大，但是安装起来也相对繁琐。</p>
+<p><strong>安装</strong></p>
+<ul>
+<li><p>首先检查自己的vim版本是否满足最低版本要求，如果不满足需要自己手动升级一下。<del>这里使用Ubuntu系统基本不可能升级到最新版</del></p>
+</li>
+<li><p>执行如下命令删除旧版vim。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get remove vim</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>尝试编译安装最新版vim</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">cd ~ </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">进入根目录</span></span><br><span class="line">git clone https://github.com/vim/vim.git</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">克隆远程仓库</span></span><br><span class="line">sudo apt install clang</span><br><span class="line">sudo apt install libtool-bin</span><br><span class="line">sudo apt install python3</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">安装一些前置依赖</span></span><br><span class="line">cd vim/src</span><br><span class="line">make</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">进入文件夹编译</span></span><br><span class="line">make test</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">安装测试</span></span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>在上一步的安装测试中，我的环境下出现了一些错误，例如“屏幕尺寸不够大”其实就是字号太大了，和其他的几个error，我没找到错误的解决方法，所以干脆直接放弃治疗。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>虽然比较玄学，但是在这里我确实直接成功安装了。尽管安装成功依然出现了一些问题。这里vim缺少对python的支持，所以不能使用YCM。</p>
+<p>使用以下代码开启对python的支持，并且重新编译。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">cd vim/src</span><br><span class="line">make clean</span><br><span class="line">./configure --with-features=huge --enable-python3interp --enable-pythoninterp --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu/ --enable-rubyinterp --enable-luainterp --enable-perlinterp --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu/ --enable-multibyte --enable-cscope      --prefix=/usr/local/vim/</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>使用<code>vim --version | grep python</code>命令检查vim是否已经支持python。在下面python项前面有加号即代表支持。</p>
+</li>
+<li><p>接下来进行插件的安装。以下内容都是基于官方安装教程进行的，有条件可以去github仓库按照官方安装来。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">cd ~/.vim/bundle</span><br><span class="line">git clone https://github.com/ycm-core/YouCompleteMe.git</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">克隆官方仓库</span></span><br><span class="line">apt install build-essential cmake vim-nox python3-dev</span><br><span class="line">apt install mono-complete golang nodejs openjdk-17-jdk openjdk-17-jre npm</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">安装前置依赖</span></span><br><span class="line">cd ~/.vim/bundle/YouCompleteMe</span><br><span class="line">python3 install.py --all</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">执行脚本安装编译</span></span><br></pre></td></tr></table></figure></div>
+
+<p>在此处我依然出现了一些问题，无法安装go语言的依赖。最后只安装了clangd的自动补全，如果遇到类似问题请自行解决。</p>
+</li>
+<li><p>到此为止就安装完成了。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>实用教程</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Shell</tag>
+        <tag>Vim</tag>
       </tags>
   </entry>
 </search>

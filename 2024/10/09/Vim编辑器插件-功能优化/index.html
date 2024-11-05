@@ -13,21 +13,24 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://example.com/2024/10/30/linux启动流程/"/>
+    <link rel="canonical" href="http://example.com/2024/10/09/vim编辑器插件-功能优化/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="SystemV启动流程内核引导进入BIOS开机自检，BIOS接管硬件，将硬盘中的引导加载到内存中，找到第一个操作系统的内核并启动操作系统，读入**&#x2F;boot**目录下的内核文件。 运行INIT启动操作系统INIT进程是系统所有进程的起点，用来初始化所有的进程。INIT进程会读取配置文件&#x2F;etc&#x2F;inittab。 运行级别许多程序需要开机启动，在Windows叫做服务，">
+        <meta name="description" content="学习了Vim的基础使用后，希望添加一些插件提升日常使用效率。（目前暂时搁置）">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/2024/10/30/Linux%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/index.html">
+<meta property="og:title" content="Vim编辑器插件&amp;功能优化">
+<meta property="og:url" content="http://example.com/2024/10/09/Vim%E7%BC%96%E8%BE%91%E5%99%A8%E6%8F%92%E4%BB%B6-%E5%8A%9F%E8%83%BD%E4%BC%98%E5%8C%96/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="SystemV启动流程内核引导进入BIOS开机自检，BIOS接管硬件，将硬盘中的引导加载到内存中，找到第一个操作系统的内核并启动操作系统，读入**&#x2F;boot**目录下的内核文件。 运行INIT启动操作系统INIT进程是系统所有进程的起点，用来初始化所有的进程。INIT进程会读取配置文件&#x2F;etc&#x2F;inittab。 运行级别许多程序需要开机启动，在Windows叫做服务，">
+<meta property="og:description" content="学习了Vim的基础使用后，希望添加一些插件提升日常使用效率。（目前暂时搁置）">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-10-30T09:39:11.504Z">
-<meta property="article:modified_time" content="2024-10-30T09:39:11.000Z">
+<meta property="article:published_time" content="2024-10-09T08:38:50.000Z">
+<meta property="article:modified_time" content="2024-11-05T13:19:54.203Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Shell">
+<meta property="article:tag" content="Vim">
 <meta name="twitter:card" content="summary">
     
     
@@ -39,6 +42,8 @@
     <!--- Page Info-->
     
     <title>
+        
+            Vim编辑器插件&amp;功能优化 -
         
         Heng&#39;s Blog
     </title>
@@ -616,7 +621,7 @@
         <div class="article-title relative w-full">
             
                 <div class="w-full flex items-center pt-6 justify-start">
-                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3"></h1>
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">Vim编辑器插件&amp;功能优化</h1>
                 </div>
             
             </div>
@@ -637,20 +642,55 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2024-10-30 17:39:11</span>
-        <span class="mobile">2024-10-30 17:39:11</span>
+        <span class="desktop">2024-10-09 16:38:50</span>
+        <span class="mobile">2024-10-09 16:38:50</span>
         <span class="hover-info">Created</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-10-30 17:39:11</span>
-            <span class="mobile">2024-10-30 17:39:11</span>
+            <span class="desktop">2024-11-05 21:19:54</span>
+            <span class="mobile">2024-11-05 21:19:54</span>
             <span class="hover-info">Updated</span>
         </span>
     
 
     
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B/">实用教程</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Linux/">Linux</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Shell/">Shell</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Vim/">Vim</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
     
 
     
@@ -672,27 +712,65 @@
 
 
         <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-            <h1 id="SystemV启动流程"><a href="#SystemV启动流程" class="headerlink" title="SystemV启动流程"></a>SystemV启动流程</h1><h2 id="内核引导"><a href="#内核引导" class="headerlink" title="内核引导"></a>内核引导</h2><p>进入BIOS开机自检，BIOS接管硬件，将硬盘中的引导加载到内存中，找到第一个操作系统的内核并启动操作系统，读入**&#x2F;boot**目录下的内核文件。</p>
-<h2 id="运行INIT启动操作系统"><a href="#运行INIT启动操作系统" class="headerlink" title="运行INIT启动操作系统"></a>运行INIT启动操作系统</h2><p>INIT进程是系统所有进程的起点，用来初始化所有的进程。<br>INIT进程会读取配置文件&#x2F;etc&#x2F;inittab。</p>
-<h3 id="运行级别"><a href="#运行级别" class="headerlink" title="运行级别"></a>运行级别</h3><p>许多程序需要开机启动，在Windows叫做<strong>服务</strong>，在Linux叫做<strong>守护进程（daemon）</strong>，INIT进程会启动这些开机启动的守护进程。<br>在不同的<strong>运行等级（runlevel）</strong> 下会有不同的守护进程。</p>
+            <h4 id="常用插件"><a href="#常用插件" class="headerlink" title="常用插件"></a>常用插件</h4><p>在使用插件之前，我们先安装一个插件的管理器<strong>Pathogen</strong>。使用包管理器可以使得插件的安装更加简单。</p>
 <ul>
-<li>运行级别0:系统停机状态，系统默认运行级别不能设为0</li>
-<li>运行级别1:单用户工作状态，root权限，用于系统维护，禁止远程登录</li>
-<li>运行级别2:多用户状态（没有NFS）</li>
-<li>运行级别3:完全的多用户状态（有NFS），登陆后进去控制台命令饭模式</li>
-<li>运行级别4:系统未使用，保留</li>
-<li>运行级别5:x11控制台，登陆后进入图形GUI模式</li>
-<li>运行级别6:系统正常关闭并重启，默认运行级别不能设为6，否则不能正常启动</li>
+<li><p>确保自己在用户根目录下<code>cd ~</code></p>
+</li>
+<li><p>创建文件夹（如果文件夹不存在）<code>mkdir -p ~/.vim/autoload ~/.vim/bundle</code></p>
+</li>
+<li><p>安装插件<code>curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim</code></p>
+</li>
+<li><p>创建vim配置文件<code>vim .vimrc</code></p>
+</li>
+<li><p>在配置文件中写入以下内容</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">execute pathogen#infect()</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">如果第一次创建.vimrc文件则加上以下内容。</span></span><br><span class="line">syntax on</span><br><span class="line">filetype plugin indent on</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>接下来下载插件只需要进入<code>.vim/bundle</code>文件夹然后直接<code>git clone</code>即可。</p>
+</li>
 </ul>
-<h3 id="系统初始化"><a href="#系统初始化" class="headerlink" title="系统初始化"></a>系统初始化</h3><p>调用rc.sysinit脚本，完成系统初始化。<br>然后运行不同的rc脚本文件，这些脚本文件如果是S开头的文件，将以start运行，如果脚本是K开头的文件，而且已经处于运行态，就会以stop来停止这些已经启动的守护进程，然后重新开始运行。<br>保证当INIT改变运行级别时，所有相关的守护进程都将重启。</p>
-<h2 id="建立终端"><a href="#建立终端" class="headerlink" title="建立终端"></a>建立终端</h2><p>rc执行完毕后返回INIT。这时候系统的环境和守护进程就配置好了。<br>INIT接下来会打开6个终端，供用户来登录。<br>在2、3、4、5的运行级别中都将以respawn方式运行mingetty程序，mingetty程序能打开终端，设置模式。</p>
-<h2 id="用户登录系统"><a href="#用户登录系统" class="headerlink" title="用户登录系统"></a>用户登录系统</h2><p>一般来说有三种登录方式</p>
+<h5 id="一、Ctags"><a href="#一、Ctags" class="headerlink" title="一、Ctags"></a>一、Ctags</h5><p>Ctags 是一个用于生成代码索引的工具，它允许用户快速在项目中的不同文件和符号之间跳转。这为使用文本编辑器的开发者提供了极大的便利，特别是在处理大型代码库时。Ctags 基于源代码文件，创建一个列表（通常称为标签文件），其中包含各种代码元素（如函数、变量等）的位置。</p>
+<p><strong>安装和功能集成</strong></p>
 <ul>
-<li>命令行登录</li>
-<li>ssh登录</li>
-<li>图形界面登录</li>
+<li>Ubuntu中命令行安装<code>sudo apt-get install universal-ctags</code></li>
+<li>在需要使用的工程根目录下运行<code>ctags -R .</code>就生成了<strong>tags文件</strong></li>
+<li></li>
 </ul>
-<h3 id="命令行登录"><a href="#命令行登录" class="headerlink" title="命令行登录"></a>命令行登录</h3><p>会有一个文本方式登录，mingetty会将用户输入的用户名密码传给login程序进行验证。</p>
+<h5 id="二、AutoPairs"><a href="#二、AutoPairs" class="headerlink" title="二、AutoPairs"></a>二、AutoPairs</h5><p>AutoPairs是一个自动补全配对符号的插件。</p>
+<p>使用这个插件后，当我们敲入一个符号时，会自动补全它的所匹配的另一个符号。比如，我们敲入 <code>[</code> 时，它会自动补全 <code>]</code> 。当我们删掉 <code>[</code> 时，<code>]</code> 也自动被删除了。</p>
+<p><strong>安装</strong></p>
+<ul>
+<li>直接运行<code>git clone git://github.com/jiangmiao/auto-pairs.git ~/.vim/bundle/auto-pairs</code></li>
+</ul>
+<p><del>这里在我的运行环境下出现了一些问题，请移步到本人的其他博客解决问题。 指路：WSL2网络代理问题和GitClone下载超时问题</del></p>
+<h5 id="三、YCM"><a href="#三、YCM" class="headerlink" title="三、YCM"></a>三、YCM</h5><p>YCM全称YouCompleteMe，在github中搜索全名才能找得到。</p>
+<p>YCM是一个代码补全插件，功能十分强大，但是安装起来也相对繁琐。</p>
+<p><strong>安装</strong></p>
+<ul>
+<li><p>首先检查自己的vim版本是否满足最低版本要求，如果不满足需要自己手动升级一下。<del>这里使用Ubuntu系统基本不可能升级到最新版</del></p>
+</li>
+<li><p>执行如下命令删除旧版vim。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove vim</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>尝试编译安装最新版vim</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cd ~ </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">进入根目录</span></span><br><span class="line">git clone https://github.com/vim/vim.git</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">克隆远程仓库</span></span><br><span class="line">sudo apt install clang</span><br><span class="line">sudo apt install libtool-bin</span><br><span class="line">sudo apt install python3</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">安装一些前置依赖</span></span><br><span class="line">cd vim/src</span><br><span class="line">make</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">进入文件夹编译</span></span><br><span class="line">make test</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">安装测试</span></span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>在上一步的安装测试中，我的环境下出现了一些错误，例如“屏幕尺寸不够大”其实就是字号太大了，和其他的几个error，我没找到错误的解决方法，所以干脆直接放弃治疗。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>虽然比较玄学，但是在这里我确实直接成功安装了。尽管安装成功依然出现了一些问题。这里vim缺少对python的支持，所以不能使用YCM。</p>
+<p>使用以下代码开启对python的支持，并且重新编译。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd vim/src</span><br><span class="line">make clean</span><br><span class="line">./configure --with-features=huge --enable-python3interp --enable-pythoninterp --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu/ --enable-rubyinterp --enable-luainterp --enable-perlinterp --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu/ --enable-multibyte --enable-cscope      --prefix=/usr/local/vim/</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>使用<code>vim --version | grep python</code>命令检查vim是否已经支持python。在下面python项前面有加号即代表支持。</p>
+</li>
+<li><p>接下来进行插件的安装。以下内容都是基于官方安装教程进行的，有条件可以去github仓库按照官方安装来。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.vim/bundle</span><br><span class="line">git clone https://github.com/ycm-core/YouCompleteMe.git</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">克隆官方仓库</span></span><br><span class="line">apt install build-essential cmake vim-nox python3-dev</span><br><span class="line">apt install mono-complete golang nodejs openjdk-17-jdk openjdk-17-jre npm</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">安装前置依赖</span></span><br><span class="line">cd ~/.vim/bundle/YouCompleteMe</span><br><span class="line">python3 install.py --all</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">执行脚本安装编译</span></span><br></pre></td></tr></table></figure></div>
+
+<p>在此处我依然出现了一些问题，无法安装go语言的依赖。最后只安装了clangd的自动补全，如果遇到类似问题请自行解决。</p>
+</li>
+<li><p>到此为止就安装完成了。</p>
+</li>
+</ul>
 
         </div>
 
@@ -700,18 +778,18 @@
             <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
                 <div class="article-copyright-info-container">
     <ul>
-        <li><strong>Title:</strong> </li>
+        <li><strong>Title:</strong> Vim编辑器插件&amp;功能优化</li>
         <li><strong>Author:</strong> HarderHeng</li>
         <li><strong>Created at
-                :</strong> 2024-10-30 17:39:11</li>
+                :</strong> 2024-10-09 16:38:50</li>
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-10-30 17:39:11
+                    :</strong> 2024-11-05 21:19:54
             </li>
         
         <li>
-            <strong>Link:</strong> https://harderheng.life/2024/10/30/Linux启动流程/
+            <strong>Link:</strong> https://harderheng.life/2024/10/09/Vim编辑器插件-功能优化/
         </li>
         <li>
             <strong>
@@ -730,6 +808,22 @@
         
 
         
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Linux/">#Linux</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Shell/">#Shell</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Vim/">#Vim</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
 
         
 
@@ -739,13 +833,13 @@
                     <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="prev"
                         rel="prev"
-                        href="/2024/10/30/Linux%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86/"
+                        href="/2024/10/09/Linux%E4%B8%8B%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"
                         >
                             <span class="left arrow-icon flex justify-center items-center">
                                 <i class="fa-solid fa-chevron-left"></i>
                             </span>
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item"></span>
+                                <span class="post-nav-title-item">Linux下嵌入式开发环境搭建</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                         </a>
@@ -755,10 +849,10 @@
                     <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="next"
                         rel="next"
-                        href="/2024/10/16/VSCode%E4%B8%ADAduino%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"
+                        href="/2024/09/27/%E4%BA%8C%E5%8F%89%E6%A0%91/"
                         >
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">VSCode中Arduino开发环境搭建</span>
+                                <span class="post-nav-title-item">二叉树</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex justify-center items-center">
@@ -821,8 +915,8 @@
             <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">On this page</div>
-        <div class="page-title"></div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SystemV%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">SystemV启动流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E5%BC%95%E5%AF%BC"><span class="nav-number">1.1.</span> <span class="nav-text">内核引导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8CINIT%E5%90%AF%E5%8A%A8%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.2.</span> <span class="nav-text">运行INIT启动操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%BA%A7%E5%88%AB"><span class="nav-number">1.2.1.</span> <span class="nav-text">运行级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.2.2.</span> <span class="nav-text">系统初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E7%BB%88%E7%AB%AF"><span class="nav-number">1.3.</span> <span class="nav-text">建立终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.4.</span> <span class="nav-text">用户登录系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%99%BB%E5%BD%95"><span class="nav-number">1.4.1.</span> <span class="nav-text">命令行登录</span></a></li></ol></li></ol></li></ol>
+        <div class="page-title">Vim编辑器插件&amp;功能优化</div>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%8F%92%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">常用插件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%80%E3%80%81Ctags"><span class="nav-number">1.1.</span> <span class="nav-text">一、Ctags</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%8C%E3%80%81AutoPairs"><span class="nav-number">1.2.</span> <span class="nav-text">二、AutoPairs</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%89%E3%80%81YCM"><span class="nav-number">1.3.</span> <span class="nav-text">三、YCM</span></a></li></ol></li></ol>
 
     </div>
 </div>
