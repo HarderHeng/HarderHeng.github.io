@@ -1724,6 +1724,7 @@
 <li>shell变量：是由shell程序设置的特殊变量，shell变量中有一部分是环境变量，有一部分是局部变量，保证了shell的正常运行。</li>
 </ul>
 <h5 id="shell变量移步下一部分"><a href="#shell变量移步下一部分" class="headerlink" title="shell变量移步下一部分"></a>shell变量移步下一部分</h5><p><strong>PATH环境变量</strong></p>
+<p><em>使用<code>printenv</code>打印环境变量</em></p>
 <p>Shell执行命令时，也可以调用其他程序。一般来说可以使用<em>绝对路径、相对路径或者环境变量</em>启动应用程序。这里的环境变量就是一个可执行文件所在的路径。</p>
 <ul>
 <li><code>PATH=$PATH:/[路径]</code> <strong>临时添加，当前进程有效</strong></li>
@@ -1732,7 +1733,7 @@
 </ul>
 <h4 id="六、Shell脚本编程"><a href="#六、Shell脚本编程" class="headerlink" title="六、Shell脚本编程"></a>六、Shell脚本编程</h4><h5 id="创建文件和执行"><a href="#创建文件和执行" class="headerlink" title="创建文件和执行"></a>创建文件和执行</h5><p><code>vim test.sh</code>创建shell脚本文件并进行编辑。</p>
 <p>第一行用于指定脚本的执行shell，后面定义了一个name变量，然后打印出这个变量。</p>
-<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/zsh </span></span><br><span class="line">name=<span class="string">&quot;Liuheng&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;name&#125;</span></span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/zsh </span></span><br><span class="line">name=<span class="string">&quot;Liuheng&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;name&#125;</span></span><br></pre></td></tr></table></figure></div>
 
 <p>使用<code>chmod +x test.sh</code>命令给脚本执行权限。</p>
 <p>然后<code>./test.sh</code>执行脚本，就打印出了变量。</p>
@@ -1758,7 +1759,7 @@
 <li>单引号字串中不能出现单独一个的单引号（对单引号使用转义符后也不行），但可成对出现，作为字符串拼接使用。</li>
 </ul>
 <p><em>${NAME} 中的$后面带上一个花括号可以帮助确定变量范围，是良好的编码习惯。</em></p>
-<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">name=<span class="string">&quot;Liuheng&quot;</span></span><br><span class="line">x=<span class="string">&#x27;x,&#x27;</span><span class="variable">$&#123;name&#125;</span><span class="string">&#x27;&#x27;</span></span><br><span class="line">y=<span class="string">&#x27;y,$&#123;name&#125;&#x27;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;name&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;x&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;y&#125;</span></span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">name=<span class="string">&quot;Liuheng&quot;</span></span><br><span class="line">x=<span class="string">&#x27;x,&#x27;</span><span class="variable">$&#123;name&#125;</span><span class="string">&#x27;&#x27;</span></span><br><span class="line">y=<span class="string">&#x27;y,$&#123;name&#125;&#x27;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;name&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;x&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;y&#125;</span></span><br></pre></td></tr></table></figure></div>
 
 <p>执行结果如下</p>
 <p><img  
@@ -1772,7 +1773,7 @@
 <li>双引号里可以有变量</li>
 <li>双引号里可以出现转义字符</li>
 </ul>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">name=&quot;Liuheng&quot;</span><br><span class="line">x=&quot;x,&quot;$&#123;name&#125;&quot;&quot;</span><br><span class="line">y=&quot;y,$&#123;name&#125;&quot;</span><br><span class="line">z=&quot;z,\&quot;$&#123;name&#125;\&quot;&quot;</span><br><span class="line">echo $&#123;name&#125;</span><br><span class="line">echo $&#123;x&#125;</span><br><span class="line">echo $&#123;y&#125;</span><br><span class="line">echo $&#123;z&#125;</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">name=&quot;Liuheng&quot;</span><br><span class="line">x=&quot;x,&quot;$&#123;name&#125;&quot;&quot;</span><br><span class="line">y=&quot;y,$&#123;name&#125;&quot;</span><br><span class="line">z=&quot;z,\&quot;$&#123;name&#125;\&quot;&quot;</span><br><span class="line">echo $&#123;name&#125;</span><br><span class="line">echo $&#123;x&#125;</span><br><span class="line">echo $&#123;y&#125;</span><br><span class="line">echo $&#123;z&#125;</span><br></pre></td></tr></table></figure></div>
 
 <p>执行结果如下</p>
 <p><img  
@@ -1954,7 +1955,15 @@
   <entry>
     <title>Vivado入门</title>
     <url>/2024/09/04/Vivado%E5%85%A5%E9%97%A8/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="为什么使用vivado"><a href="#为什么使用vivado" class="headerlink" title="为什么使用vivado"></a>为什么使用vivado</h1><h1 id="使用Vivado关联第三方的编辑器"><a href="#使用Vivado关联第三方的编辑器" class="headerlink" title="使用Vivado关联第三方的编辑器"></a>使用Vivado关联第三方的编辑器</h1><p>Vivado内置的代码高亮和代码补全并不容易使用，但是Vivado允许我们自己关联第三方的代码编辑器，这里使用VSCode。</p>
+<ul>
+<li>顶栏中找到Tools-&gt;Settings</li>
+<li>在设置中左栏找到TextEditor</li>
+<li>右边选择编辑器选择<strong>CustomEditor</strong>，注意一定是<strong>CustomEditor</strong>而不是<strong>直接选VSCode</strong>。</li>
+<li>在下面输入命令<code>cmd /S /k &quot;code -g [file name]:[line number]&quot; </code>即可。</li>
+</ul>
+<p>关联VSCode之后，需要安装一个能进行Verilog语言代码高亮的扩展即可快捷高效的进行开发了。</p>
+]]></content>
   </entry>
   <entry>
     <title>GitClone报错问题解决</title>
@@ -2124,16 +2133,30 @@
   <entry>
     <title>stm32启动流程</title>
     <url>/2024/10/30/stm32%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="一、启动模式"><a href="#一、启动模式" class="headerlink" title="一、启动模式"></a>一、启动模式</h1><p>stm32根据两个boot引脚有三种启动模式。分别是</p>
+<ul>
+<li><strong>从FLASH启动</strong>，是直接运行代码常用的模式。</li>
+<li><strong>从SRAM启动</strong>，是进行调试常用的模式。</li>
+<li><strong>从系统存储器启动</strong>，直接通过bootloader</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>STM32</tag>
+        <tag>ARM</tag>
+        <tag>Bootloader</tag>
+      </tags>
   </entry>
   <entry>
     <title>.appimage文件安装</title>
     <url>/2024/10/11/appimage%E6%96%87%E4%BB%B6%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>安装一个appimage文件，报错如下</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">dlopen(): error loading libfuse.so.2</span><br><span class="line"></span><br><span class="line">AppImages require FUSE to run.</span><br><span class="line">You might still be able to extract the contents of this AppImage</span><br><span class="line">if you run it with the --appimage-extract option.</span><br><span class="line">See https://github.com/AppImage/AppImageKit/wiki/FUSE</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">dlopen(): error loading libfuse.so.2</span><br><span class="line"></span><br><span class="line">AppImages require FUSE to run.</span><br><span class="line">You might still be able to extract the contents of this AppImage</span><br><span class="line">if you run it with the --appimage-extract option.</span><br><span class="line">See https://github.com/AppImage/AppImageKit/wiki/FUSE</span><br></pre></td></tr></table></figure></div>
 
 <p>即需要安装FUSE才能够使用appimage文件。</p>
-<h4 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h4><p>根绝报错提供的网址，找到Github中FUSE的安装教程，根据自己的Ubuntu版本进行安装。</p>
+<h4 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h4><p>根据报错提供的网址，找到Github中FUSE的安装教程，根据自己的Ubuntu版本进行安装。</p>
 ]]></content>
       <categories>
         <category>问题解决</category>
@@ -2244,5 +2267,192 @@
         <tag>Shell</tag>
         <tag>Vim</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>C语言指针退化问题</title>
+    <url>/2024/11/27/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E9%80%80%E5%8C%96%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>ELF可执行文件的结构详解</title>
+    <url>/2024/12/03/ELF%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E7%9A%84%E7%BB%93%E6%9E%84%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<h1 id="一、ELF文件是什么"><a href="#一、ELF文件是什么" class="headerlink" title="一、ELF文件是什么"></a>一、ELF文件是什么</h1><p>ELF可以是<strong>目标文件</strong>、<strong>静态或者动态的链接文件</strong>、<strong>可执行文件</strong>。</p>
+<p>前两种文件是中间文件，最终的可执行文件只能是</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>6.S081操作系统笔记</title>
+    <url>/2024/12/04/6-S081%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>HPatchLite代码解读</title>
+    <url>/2024/11/25/HPatchLite%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>RUST语言学习</title>
+    <url>/2024/11/08/RUST%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h1 id="一、Rust环境搭建"><a href="#一、Rust环境搭建" class="headerlink" title="一、Rust环境搭建"></a>一、Rust环境搭建</h1><p>这里介绍简单的Linux下Rust环境搭建，可以使用Windows或者Linux。</p>
+<p>Rust有一个官方的工具来管理Rust的安装和更新，可以直接下载使用脚本一键安装。</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">curl --proto <span class="string">&#x27;=https&#x27;</span> --tlsv1.2 -sSf https://sh.rustup.rs | sh</span><br></pre></td></tr></table></figure></div>
+
+<p>在安装过程中直接按y同意继续安装即可。</p>
+<p>在安装的最后会要求更新环境变量，按照命令行给出的提示操作即可。</p>
+<h1 id="二、Cargo教程"><a href="#二、Cargo教程" class="headerlink" title="二、Cargo教程"></a>二、Cargo教程</h1><p>Cargo是Rust官方的项目管理器，也是一个包管理器，可以通过Cargo操作Rust项目也可以用来管理社区的Rust包。</p>
+<p>安装Rust会自动安装Cargo。</p>
+<ul>
+<li><strong>使用Cargo新建一个项目工程</strong> <code>Cargo new my_project</code></li>
+<li><strong>使用Cargo编译工程</strong> <code>Cargo build</code></li>
+<li><strong>使用Cargo运行可执行文件</strong> <code>Cargo run</code></li>
+</ul>
+<h1 id="三、数据类型"><a href="#三、数据类型" class="headerlink" title="三、数据类型"></a>三、数据类型</h1><p>Rust是<strong>强类型语言</strong>，也就是说具有自动判断变量类型的能力。<br>Rust定义的变量默认是<strong>不可变</strong>的，如果要可变的话需要在变量前面加上<strong>mut</strong>来修饰。</p>
+<h2 id="整数类型（Integer）"><a href="#整数类型（Integer）" class="headerlink" title="整数类型（Integer）"></a>整数类型（Integer）</h2><p>整数型分为<strong>有符号</strong>和<strong>无符号</strong>两种，根据位长度又分为不同的类型。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20241112184811048.png"
+                      alt="image-20241112184811048"
+                ></p>
+<p>arch的位长度代表着目前平台的位长度。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20241112184908401.png"
+                      alt="image-20241112184908401"
+                ></p>
+<p>可以用不同的进制表示整型，在一个比较长的数字中加入下划线可以增加可读性。</p>
+<h2 id="浮点型（FloatintPoint）"><a href="#浮点型（FloatintPoint）" class="headerlink" title="浮点型（FloatintPoint）"></a>浮点型（FloatintPoint）</h2><p>Rust支持64位浮点和32位浮点。默认是64位浮点。</p>
+<p>Rust不支持**++<strong>或者</strong>–<strong>这样的变量</strong>自增自减语法**。</p>
+<h2 id="布尔型"><a href="#布尔型" class="headerlink" title="布尔型"></a>布尔型</h2><p>布尔型用bool表示，只有true和false。</p>
+<h2 id="字符型"><a href="#字符型" class="headerlink" title="字符型"></a>字符型</h2><p>字符型用char表示，Rust中的char长度为4个字节。</p>
+<h2 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h2><p>元组是用()括起来的一堆数据，可以是不同的数据类型。</p>
+<p>可以使用<code>.</code>来对一个元组其中的数据进行读取。</p>
+<p>元组的数据类型和个数一旦定义就不能被改变，长度固定无法动态增加或减少元素。</p>
+<div class="code-container" data-rel="Rust"><figure class="iseeu highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">a</span>:(<span class="type">i64</span>, <span class="type">f64</span>, <span class="type">i16</span>) = (<span class="number">1</span>, <span class="number">2.0</span>, <span class="number">3</span>); <span class="comment">//声明</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,a.<span class="number">1</span>); <span class="comment">//使用</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>数组和c语言很像。</p>
+<div class="code-container" data-rel="Rust"><figure class="iseeu highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">a</span> = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]; <span class="comment">//声明</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,a[<span class="number">0</span>]); <span class="comment">//使用</span></span><br></pre></td></tr></table></figure></div>
+
+<h1 id="四、Rust注释"><a href="#四、Rust注释" class="headerlink" title="四、Rust注释"></a>四、Rust注释</h1><p>Rust使用 <strong>&#x2F;&#x2F;</strong> 单行注释，使用 <strong>&#x2F;&#x2F;&#x2F;</strong> 进行多行注释。</p>
+<p>在一个函数之前进行多行注释，可以作为文档说明注释，将来使用这个函数时就可以看到对应的说明。</p>
+<div class="code-container" data-rel="Rust"><figure class="iseeu highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// 将一个数字加到另一个数字上</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">///#example</span></span><br><span class="line"><span class="comment">/// let x = add(1, 2);</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">add</span>(a: <span class="type">i32</span>, b: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="type">i32</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="五、Rust函数"><a href="#五、Rust函数" class="headerlink" title="五、Rust函数"></a>五、Rust函数</h1><p>Rust函数的基本格式如下。</p>
+<div class="code-container" data-rel="Rust"><figure class="iseeu highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">function_name</span>(a: <span class="type">i32</span>, b: <span class="type">i64</span>) <span class="punctuation">-&gt;</span> <span class="title function_ invoke__">i64</span>(</span><br><span class="line">    <span class="comment">//函数体</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
+
+<p>所有函数开头都是 <strong>fn</strong> ，后面是函数名，再往后是<strong>入参</strong>，然后箭头指向<strong>返回值的类型</strong>。</p>
+<p><strong>函数可以在任何被访问到的地方进行定义，不是必须在其被调用之前进行定义</strong></p>
+<h2 id="Rust函数体和表达式"><a href="#Rust函数体和表达式" class="headerlink" title="Rust函数体和表达式"></a>Rust函数体和表达式</h2><p>可以用 **<code>&#123;&#125;</code>**包括一个复杂的表达式。</p>
+<div class="code-container" data-rel="Rust"><figure class="iseeu highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">a</span> = &#123;</span><br><span class="line">	<span class="keyword">let</span> <span class="variable">b</span> = <span class="number">1</span>;</span><br><span class="line">	b + <span class="number">1</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//最后a的值就是b+1</span></span><br></pre></td></tr></table></figure></div>
+
+<p>同样的函数体也可以以一个数值<strong>表达式</strong>结尾。</p>
+<p>除了以表达式结尾，还可以是<strong>return</strong>返回值。</p>
+<h1 id="六、条件语句"><a href="#六、条件语句" class="headerlink" title="六、条件语句"></a>六、条件语句</h1>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>语言学习</tag>
+        <tag>RUST</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>GCC和GDB命令使用详解</title>
+    <url>/2024/11/29/GCC%E5%92%8CGDB%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>VSCode调试C语言程序</title>
+    <url>/2024/11/28/VSCode%E8%B0%83%E8%AF%95C%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F/</url>
+    <content><![CDATA[<h1 id="一、环境介绍"><a href="#一、环境介绍" class="headerlink" title="一、环境介绍"></a>一、环境介绍</h1><ul>
+<li>Windows11 24H2</li>
+<li>WSL2</li>
+<li>Ubuntu 22.04</li>
+</ul>
+<p>Linux系统下gdb工具默认安装好，使用VSCode进行WSL远程连接。</p>
+<h1 id="二、原理介绍"><a href="#二、原理介绍" class="headerlink" title="二、原理介绍"></a>二、原理介绍</h1><p>VSCode进行调试时，需要一个<strong>launch.json</strong>，这个配置文件描述了使用什么样的<strong>调试器</strong>，以及进行调试时的其他配置。</p>
+<p>如果在VSCode中要进行调试工作，必须要在.vscode文件夹中有一个能完成调试任务的json。</p>
+<p>接下来借助我自己写的launch.json来讲解每个部分的功能，也作为一个写调试配置文件的参考。</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span>   <span class="comment">// 使用的 launch.json 版本</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>   <span class="comment">// 配置调试器的配置列表</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Hpatchi Debug&quot;</span><span class="punctuation">,</span>   <span class="comment">// 调试器配置的名称，可以自定义，可以区别不同的调试器配置</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span>   <span class="comment">// 调试器类型为 C++ 调试</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span>   <span class="comment">// 请求启动调试会话</span></span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/hpatchi&quot;</span><span class="punctuation">,</span>   <span class="comment">// 可执行文件的路径，主要的修改点，这里就是我的工作目录下的hpatchi</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 程序启动时的参数，会将这些参数依次输入给启动调试的程序</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;-f&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;$&#123;workspaceFolder&#125;/TestDemo/FBCM-0056.lbf&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;$&#123;workspaceFolder&#125;/DiffFile&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;$&#123;workspaceFolder&#125;/newFile-00D7.lbf&quot;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            </span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span>   <span class="comment">// 是否在程序入口处停止</span></span><br><span class="line"></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="punctuation">,</span>   <span class="comment">// 工作目录</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span>   <span class="comment">// 环境变量设置</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span>   <span class="comment">// 是否使用外部控制台</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 使用 gdb 调试器，也可以设置成别的调试器</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 配置 gdb的初始化命令</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                 <span class="comment">//启用漂亮打印，输出格式对齐</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Enable pretty-printing for gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="comment">//防止gdb调试进入标准库函数，实测没啥用，可以不加</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;防止 gdb 打开标准库函数&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-interpreter-exec console \&quot;skip -rfu std::.*\&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            </span><br><span class="line">            <span class="attr">&quot;symbolLoadInfo&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;loadAll&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;exceptionList&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="comment">// 在启动调试会话之前运行的任务，启动在task.json中提前配置好的任务名称。</span></span><br><span class="line">            <span class="comment">//&quot;preLaunchTask&quot;: &quot;Build&quot;,</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// gdb 调试器的路径，使用什么调试器就换成对应的路径，可以使用 which 命令找到一个程序的位置</span></span><br><span class="line">            <span class="attr">&quot;miDebuggerPath&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/usr/bin/gdb&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+<h1 id="三、GDB原理"><a href="#三、GDB原理" class="headerlink" title="三、GDB原理"></a>三、GDB原理</h1><p>GDB是默认的c语言调试器，一般和gcc一起使用。</p>
+<p>如果要使用gdb进行调试，使用gcc编译时就需要进行一些操作。</p>
+<p>使用gcc编译需要在<strong>编译命令</strong>后加上<code>-g</code>，这样进行编译时gcc就会自动将源代码和编译后的机器语言对应，就可以进行调试追踪。</p>
+<p><strong>一定要在.c文件的编译阶段加上-g的命令才能正确生成调试信息，如果在链接阶段加上-g命令是指保留.o文件中的调试信息。即如果不在编译阶段生成调试信息，那这个文件在最后调试时就不会包含调试信息。</strong></p>
+<p>推荐在gcc时使用的命令</p>
+<ul>
+<li><strong>-g</strong> 必须加上否则无法进行代码的追踪。</li>
+<li><strong>-Wall</strong>，warn all的缩写，编译时会将所有的warn警告提示出来。</li>
+<li><strong>-O0</strong> 不进行编译优化，防止代码的顺序被调整或者某些调试变量被优化掉。</li>
+</ul>
+<h4 id="GCC的编译优化问题"><a href="#GCC的编译优化问题" class="headerlink" title="GCC的编译优化问题"></a>GCC的编译优化问题</h4><p>gcc进行编译时会默认进行优化等级为<strong>O1</strong>的优化，编译器会尝试简单的优化代码流程和变量。</p>
+<p>对应的如果进行了优化，部分调试信息就会减少，所以在调试过程中要慎重选择优化等级。</p>
+<p>较低的优化等级可以提升编译速度，但是会导致较慢的执行速度或者较大的文件大小。使用比较高的优化等级时可以根据需要优化执行速度和文件大小，但是会牺牲编译的时间。</p>
+<h1 id="四、如何在Make项目中进行调试"><a href="#四、如何在Make项目中进行调试" class="headerlink" title="四、如何在Make项目中进行调试"></a>四、如何在Make项目中进行调试</h1><p>上面介绍了如果要进行调试需要在执行<strong>gcc</strong>命令进行编译时加上**-g**的命令。</p>
+<p>在<strong>Make</strong>项目中往往很多文件都是通过隐含规则<strong>自动推导</strong>出来的，这时候我们就无法显式的加上<code>-g</code>命令来生成调试信息。只有在编译阶段生成了调试信息的文件，在最终调试时才能把代码运行过程和源文件对应起来。</p>
+<p>遇到这种情况我们可以在<strong>CFLAGS</strong>变量中加入<code>-g</code>命令，<strong>CFLAGS</strong>中的所有参数都会被编译器默认使用，不管是自动推导还是使用gcc命令进行编译。</p>
+<h1 id="五、tips"><a href="#五、tips" class="headerlink" title="五、tips"></a>五、tips</h1><p>我在调试文件的过程中，只在最后一步可执行文件后面加入了<code>-g</code>命令，导致的后果就是只有这个可执行文件的源文件可以被调试模式追踪，其他的源文件都没法进行调试。</p>
+<p>在这里我尝试对makefile进行修改，然后使用了一些命令来查看make将会执行的命令。</p>
+<p><code>make -n</code>可以将make将会执行的命令，不管是显式规则规定的还是自动推导的，所有的命令都会显示出来，然后我将这些信息直接重定向输出到一个文件，接着修改一次makefile，再进行一次输出，我就得到了包含着make执行的命令的两个文件。</p>
+<p>使用<strong>vimdiff</strong>命令就可以在vim中看到两个文件的区别之处，但是vim毕竟是一个命令行工具，如果需要更复杂的文本操作，还是需要使用VSCode，并且VSCode支持更多的插件和操作，自然使用起来就更方便。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>C语言</tag>
+        <tag>VSCode</tag>
+        <tag>开发测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>压缩算法</title>
+    <url>/2024/11/21/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="压缩算法基础"><a href="#压缩算法基础" class="headerlink" title="压缩算法基础"></a>压缩算法基础</h1><p>一堆数据相当于一块海绵，可以通过压缩算法来压缩其体积，但是最终不能够无限制的进行压缩，最多把海绵中的空气挤出来不能够把海绵本身完全挤没。</p>
+<h2 id="无损压缩算法"><a href="#无损压缩算法" class="headerlink" title="无损压缩算法"></a>无损压缩算法</h2><p>无损压缩算法可以保证数据不被丢失。</p>
+<p>常见的无损压缩算法有<strong>哈夫曼编码、字典编码、预测编码</strong></p>
+<h2 id="有损压缩算法"><a href="#有损压缩算法" class="headerlink" title="有损压缩算法"></a>有损压缩算法</h2><p>顾名思义，这种算法会导致数据部分损失，适用于媒体传输，对数据的完整性要求不高的场景。</p>
+<p>常见的有损压缩算法有<strong>转换编码、量化、基于模型的压缩</strong></p>
+<h1 id="LZ77压缩算法"><a href="#LZ77压缩算法" class="headerlink" title="LZ77压缩算法"></a>LZ77压缩算法</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>LZ77算法是一个无损压缩算法，是一种基于字典的压缩算法，现代很多压缩算法都是基于LZ77。</p>
+<h2 id="原理介绍"><a href="#原理介绍" class="headerlink" title="原理介绍"></a>原理介绍</h2><p>定义以下几个：</p>
+<ul>
+<li><strong>lookahead buffer</strong> 等待编码的区域</li>
+<li><strong>search buffer</strong> 已经编码的区域，搜索缓冲区，也有一个大小（其实就是字典）</li>
+<li><strong>sliding window</strong> 滑动窗口，一个固定长度</li>
+</ul>
+<p>从<strong>待编码区域</strong>的第一个数据开始，从<strong>已编码区域</strong>中寻找这样的一个子串，使得子串和<strong>待编码区域</strong>起始位置的串相同。如果能找到这样的一个串，则返回一个组<strong>（O,L）</strong>，其中O表示两个匹配串的偏移值，即<strong>待编码区</strong>第一个数据到<strong>已编码数据</strong>中串的第一个数据；L表示找到的串的长度。</p>
+<p>一旦找到一整个串，就将这个<strong>待编码区</strong>的串全部放到<strong>已编码区中</strong>，并且返回那个组。</p>
+<p>如果从第一个数据开始就没有找到对应串，则返回一个<strong>（0,0,Byte）</strong>，其中Byte是这个<strong>待编码区</strong>没有找到的串，并且将这个数据放进<strong>已编码区</strong>。</p>
+<p><em>对一个要进行编码的串，编码之后就会变成<strong>一系列的组</strong>，然后这个组本身就代表了压缩前的字符串。</em></p>
+<p>简单代码实现。</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line">## 解压缩</span><br><span class="line"></span><br><span class="line">有了一整个压缩后的串之后，就从前往后对每一个组进行解码。</span><br><span class="line"></span><br><span class="line">* 如果是（<span class="number">0</span>,<span class="number">0</span>,Byte）类型的组，则直接还原Byte的这个字符。</span><br><span class="line">* 如果是（O,L）这样的组，则向前寻找通过偏移量和串长度，找到这个位置应该是字符。</span><br><span class="line"></span><br><span class="line">## 缺陷</span><br><span class="line"></span><br><span class="line">原本的数据是一系列的字符，那么将这些字符转化成一系列的组**按理说**可以减少编码的字符数量。</span><br><span class="line"></span><br><span class="line">实际上，我们想象一个字符串，其中每一个字符第一次出现时都需要以一个组（<span class="number">0</span>,<span class="number">0</span>,Byte）表示，那么也就是将一个字符变成了三个字符！在这里就会失去压缩的意义，因为数据竟然变多了。当然我们可以将（<span class="number">0</span>,<span class="number">0</span>,Byte）进行特殊处理，将其直接记为Byte。</span><br><span class="line"></span><br><span class="line">再想象一下，如果在**待编码区**遇到了一个数据，这个数据在**已编码区**出现过，那么就用一个组来表示它，也就是一个字符变成了两个字符！和上面类似，直接用一个字符来记录它。</span><br><span class="line"></span><br><span class="line">再一次考虑一种情况，这个**待编码区**的子串长度为<span class="number">2</span>，那么会用两个字符的组来表示，也就是说数据量基本没有被压缩。</span><br><span class="line"></span><br><span class="line">***以上的情况告诉我们，当串的长度小于三时，压缩是没有意义的，空间并不能够被压缩***</span><br><span class="line"></span><br><span class="line"># LZ78算法</span><br><span class="line"></span><br><span class="line">## 简介</span><br><span class="line"></span><br><span class="line">LZ78和LZ77类似，但是不是采用**滑动窗口**而是**字典**的形式。</span><br><span class="line"></span><br><span class="line">## 原理介绍</span><br><span class="line"></span><br><span class="line">从前向后进行编码，会遇到以下三种情况，进行不同的操作。</span><br><span class="line"></span><br><span class="line">* 第一次遇到一个字符，也就是这个字符不在字典当中，将其表示为（<span class="number">0</span>,Byte），并且将这个字符做一个顺序的索引存入字典，（n,Byte），n为存入字典的顺序。</span><br><span class="line">* 如果**这个字符**在字典当中，则在字典中寻找以**这个字符**为前缀的**最长串**，然后将这个**最长串**和**往后**的一个字符，表示为（n,Byte），这里的**n**表示字典中的**最长串**在字典中的顺序，后面的Byte表示**往后**的一个字符。这个表示就是压缩后的形式，并且将这个**最长串**和**往后**的这个字符按顺序加入到字典中，也是按照一个组（n,Byte）的形式加入。</span><br><span class="line">* 如果最后一个串，是已经在字典中存在的串，也就是其后不存在多余的那个字符，则直接（n,）来表示，n表示这个串在字典中的顺序。</span><br><span class="line"></span><br><span class="line">简单实现</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+<pre><code>
+## 解压缩
+
+* 如果遇到（0,Byte）类型的组，则直接恢复这个字符，并且将这个字符加入字典。
+* 如果遇到了其他类型的组，则在字典中寻找字符，并且加上后面自带的那个字符。
+* 将所有的压缩后的表示形式进行展开。
+
+## Huffman压缩算法
+</code></pre>
+]]></content>
+  </entry>
+  <entry>
+    <title>理想汽车嵌入式算法实习经历</title>
+    <url>/2024/11/21/%E7%90%86%E6%83%B3%E6%B1%BD%E8%BD%A6%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%AE%97%E6%B3%95%E5%AE%9E%E4%B9%A0%E7%BB%8F%E5%8E%86/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>相机安卓app开发</title>
+    <url>/2024/11/11/%E7%9B%B8%E6%9C%BA%E5%AE%89%E5%8D%93app%E5%BC%80%E5%8F%91/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2024/11/22/%E7%BC%96%E8%AF%91%E5%99%A8%E5%9F%BA%E7%A1%80%E4%BA%86%E8%A7%A3/</url>
+    <content><![CDATA[<h1 id="编译器组成"><a href="#编译器组成" class="headerlink" title="编译器组成"></a>编译器组成</h1><p>编译器由前端、中间代码优化、后端三部分组成。<br><strong>前端</strong>负责识别代码语法，将代码转化成中间代码。<br><strong>中间代码优化</strong>一定程度上和语言无关，进行优化后将中间代码传给后端。<br><strong>后端</strong>负责将中间代码转化成目标平台的可执行代码。</p>
+<h1 id="LLVM"><a href="#LLVM" class="headerlink" title="LLVM"></a>LLVM</h1>]]></content>
   </entry>
 </search>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="Hexo Theme Redefine">
     
-    <meta name="author" content="HarderHeng">
+    <meta name="author" content="The Redefine Team">
     <!-- preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,180 +18,40 @@
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta property="og:type" content="website">
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://example.com/page/4/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
     
     
     <!--- Icon Part-->
-    <link rel="icon" type="image/png" href="/images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20240510162247.jpg" sizes="192x192">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20240510162247.jpg">
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
     <meta name="theme-color" content="#A31F34">
-    <link rel="shortcut icon" href="/images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20240510162247.jpg">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
     <!--- Page Info-->
     
     <title>
         
-        Heng&#39;s Blog
+            Theme Redefine - Redefine Your Hexo Journey.
+        
     </title>
 
     
 <link rel="stylesheet" href="/fonts/Chillax/chillax.css">
 
 
-    
-        <style>
-    :root {
-        --preloader-background-color: #fff;
-        --preloader-text-color: #000;
-    }
-
-    @media (prefers-color-scheme: dark) {
-        :root {
-            --preloader-background-color: #202124;
-            --preloader-text-color: #fff;
-        }
-    }
-
-    @media (prefers-color-scheme: light) {
-        :root {
-            --preloader-background-color: #fff;
-            --preloader-text-color: #000;
-        }
-    }
-
-    @media (max-width: 600px) {
-        .ml13 {
-            font-size: 2.6rem !important; /* Adjust this value as needed */
-        }
-    }
-
-    .preloader {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
-        align-items: center;
-        justify-content: center;
-        position: fixed;
-        padding: 12px;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh; /* 'h-screen' is 100% of the viewport height */
-        background-color: var(--preloader-background-color);
-        z-index: 1100; /* 'z-[1100]' sets the z-index */
-        transition: opacity 0.2s ease-in-out;
-    }
-
-    .ml13 {
-        font-size: 3.2rem;
-        /* text-transform: uppercase; */
-        color: var(--preloader-text-color);
-        letter-spacing: -1px;
-        font-weight: 500;
-        font-family: 'Chillax-Variable', sans-serif;
-        text-align: center;
-    }
-
-    .ml13 .word {
-        display: inline-flex;
-        flex-wrap: wrap;
-        white-space: nowrap;
-    }
-
-    .ml13 .letter {
-        display: inline-block;
-        line-height: 1em;
-    }
-</style>
-
-<div class="preloader">
-    
-<script src="/js/libs/anime.min.js"></script>
-
-    <h1 class="ml13">
-        Heng&#39;s Blog
-    </h1>
-    <script>
-        var textWrapper = document.querySelector('.ml13');
-        // Split text into words
-        var words = textWrapper.textContent.trim().split(' ');
-
-        // Clear the existing content
-        textWrapper.innerHTML = '';
-
-        // Wrap each word and its letters in spans
-        words.forEach(function(word) {
-            var wordSpan = document.createElement('span');
-            wordSpan.classList.add('word');
-            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
-            textWrapper.appendChild(wordSpan);
-            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
-        });
-
-
-        anime.timeline({loop: true})
-            .add({
-                targets: '.ml13 .letter',
-                translateY: [100,0],
-                translateZ: 0,
-                opacity: [0,1],
-                easing: "easeOutExpo",
-                duration: 1400,
-                delay: (el, i) => 300 + 30 * i
-            }).add({
-            targets: '.ml13 .letter',
-            translateY: [0,-100],
-            opacity: [1,0],
-            easing: "easeInExpo",
-            duration: 1200,
-            delay: (el, i) => 100 + 30 * i
-        });
-
-        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
-
-        // If the theme status is not found in local storage, check the preferred color scheme
-        if (themeStatus === undefined || themeStatus === null) {
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                themeStatus = 'dark';
-            } else {
-                themeStatus = 'light';
-            }
-        }
-
-        // Now you can use the themeStatus variable in your code
-        if (themeStatus) {
-            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
-            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
-        } else {
-            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
-            document.documentElement.style.setProperty('--preloader-text-color', '#000');
-        }
-
-        window.addEventListener('load', function () {
-            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
-        });
-
-        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
-        hidePreloaderAfterTimeout(5000);
-
-        function hidePreloaderAfterTimeout(delay) {
-            setTimeout(function () {
-                var preloader = document.querySelector('.preloader');
-                preloader.style.opacity = '0';
-                setTimeout(function () {
-                    preloader.style.display = 'none';
-                }, 200);
-            }, delay);
-        }
-    </script>
-</div>
+    <!--- Inject Part-->
     
 
     
@@ -200,27 +60,27 @@
 
     
         
-<link rel="stylesheet" href="/assets/build/styles.css">
+<link rel="stylesheet" href="/css/build/tailwind.css">
 
     
 
     
-<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
 
     
-<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
 
     <!--- Font Part-->
     
     
     
     
-
-    <!--- Inject Part-->
     
+    
+
     <script id="hexo-configurations">
     window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
-    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"simple","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":6,"number":true,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/50c479bb3650f0114d57f327a16842daaacf4e2c.jpg","dark":"/images/50c479bb3650f0114d57f327a16842daaacf4e2c.jpg"},"title":"Welcome to my Blog","subtitle":{"text":["Welcome","Love"],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn"},"typing_speed":150,"backing_speed":0,"starting_delay":1000,"backing_delay":1500,"loop":false,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"4.0rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"主页":{"path":"/","icon":"fa-regular fa-house"},"归档":{"path":"/archives","icon":"fa-regular fa-archive"},"标签":{"path":"/tags/","icon":"fa-regular fa-tags"},"分类":{"path":"/categories","icon":"fa-regular fa-tags"},"相册":{"path":"/masonry/","icon":"fa-regular fa-image"},"关于":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Github":"https://github.com/HarderHeng","碎碎念":"/odds"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"cloud"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"info","announcement":"欢迎来到我的个人博客,我在这里记录我的生活和学习,正如我的域名后缀一样","links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/10/1 00:00:00"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Theme Redefine","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
     window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
     window.data = {"masonry":true};
   </script>
@@ -245,23 +105,23 @@
 <meta name="generator" content="Hexo 7.0.0"></head>
 
 
+
 <body>
-<div class="progress-bar-container">
-    
+	<div class="progress-bar-container">
+	
 
-    
-        <span class="pjax-progress-bar"></span>
-<!--        <span class="swup-progress-icon">-->
-<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
-<!--        </span>-->
-    
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
 </div>
-
 
 <main class="page-container" id="swup">
 
-    
-        <style>
+	
+	<style>
     .home-article-item,
     .sidebar-links,
     .sidebar-content,
@@ -289,28 +149,23 @@
     }
 </style>
 
-<div class="home-banner-background">
+<div class="home-banner-background transition-fade fixed top-0 left-0 w-screen h-screen scale-125 sm:scale-110 box-border will-change-transform bg-cover">
+    <img src="/images/wallhaven-wqery6-light.webp" alt="home-banner-background" class="w-full h-full object-cover dark:hidden">
+    <img src="/images/wallhaven-wqery6-dark.webp" alt="home-banner-background" class="w-full h-full object-cover hidden dark:block">
 </div>
 
 
-    
+	
 
-    <div class="main-content-container">
-
-
-        <div class="main-content-header">
-            <header class="navbar-container">
-
-    <div class="navbar-content">
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
         <div class="left">
-            
-                <a class="logo-image" href="/">
-                    <img src="/images/heng.svg">
-                </a>
             
             <a class="logo-title" href="/">
                 <h1>
-                Heng&#39;s Blog
+                Theme Redefine
                 </h1>
             </a>
         </div>
@@ -329,7 +184,7 @@
                                    href="/"
                                         >
                                     <i class="fa-regular fa-house fa-fw"></i>
-                                    主页
+                                    HOME
                                     
                                 </a>
 
@@ -337,125 +192,11 @@
                                 
                             </li>
                     
-                        
-                            
-
-                            <li class="navbar-item">
-                                <!-- Menu -->
-                                <a class=""
-                                   href="/archives"
-                                        >
-                                    <i class="fa-regular fa-archive fa-fw"></i>
-                                    归档
-                                    
-                                </a>
-
-                                <!-- Submenu -->
-                                
-                            </li>
-                    
-                        
-                            
-
-                            <li class="navbar-item">
-                                <!-- Menu -->
-                                <a class=""
-                                   href="/tags/"
-                                        >
-                                    <i class="fa-regular fa-tags fa-fw"></i>
-                                    标签
-                                    
-                                </a>
-
-                                <!-- Submenu -->
-                                
-                            </li>
-                    
-                        
-                            
-
-                            <li class="navbar-item">
-                                <!-- Menu -->
-                                <a class=""
-                                   href="/categories"
-                                        >
-                                    <i class="fa-regular fa-tags fa-fw"></i>
-                                    分类
-                                    
-                                </a>
-
-                                <!-- Submenu -->
-                                
-                            </li>
-                    
-                        
-                            
-
-                            <li class="navbar-item">
-                                <!-- Menu -->
-                                <a class=""
-                                   href="/masonry/"
-                                        >
-                                    <i class="fa-regular fa-image fa-fw"></i>
-                                    相册
-                                    
-                                </a>
-
-                                <!-- Submenu -->
-                                
-                            </li>
-                    
-                        
-                            
-
-                            <li class="navbar-item">
-                                <!-- Menu -->
-                                <a class="has-dropdown"
-                                   href="#"
-                                        onClick=&#34;return false;&#34;>
-                                    <i class="fa-regular fa-user fa-fw"></i>
-                                    关于
-                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
-                                </a>
-
-                                <!-- Submenu -->
-                                
-                                    <ul class="sub-menu">
-                                        
-                                            <li>
-                                                <a href="/about">
-                                                    ME
-                                                </a>
-                                            </li>
-                                        
-                                            <li>
-                                                <a target="_blank" rel="noopener" href="https://github.com/HarderHeng">
-                                                    GITHUB
-                                                </a>
-                                            </li>
-                                        
-                                            <li>
-                                                <a href="/odds">
-                                                    碎碎念
-                                                </a>
-                                            </li>
-                                        
-                                    </ul>
-                                
-                            </li>
-                    
-                    
-                        <li class="navbar-item search search-popup-trigger">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </li>
                     
                 </ul>
             </div>
             <!-- Mobile -->
             <div class="mobile">
-                
-                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
-                    </div>
                 
                 <div class="icon-item navbar-bar">
                     <div class="navbar-bar-middle"></div>
@@ -464,8 +205,8 @@
         </div>
     </div>
 
-    <!-- Mobile drawer -->
-    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
         <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
             
                 
@@ -477,7 +218,7 @@
                            href="/"
                         >
                             <span>
-                                主页
+                                HOME
                             </span>
                             
                                 <i class="fa-regular fa-house fa-sm fa-fw"></i>
@@ -488,130 +229,14 @@
                         
                     </li>
             
-                
-                    
 
-                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
-                        
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
-                           href="/archives"
-                        >
-                            <span>
-                                归档
-                            </span>
-                            
-                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
-                            
-                        </a>
-                        
-
-                        
-                    </li>
             
-                
-                    
-
-                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
-                        
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
-                           href="/tags/"
-                        >
-                            <span>
-                                标签
-                            </span>
-                            
-                                <i class="fa-regular fa-tags fa-sm fa-fw"></i>
-                            
-                        </a>
-                        
-
-                        
-                    </li>
-            
-                
-                    
-
-                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
-                        
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
-                           href="/categories"
-                        >
-                            <span>
-                                分类
-                            </span>
-                            
-                                <i class="fa-regular fa-tags fa-sm fa-fw"></i>
-                            
-                        </a>
-                        
-
-                        
-                    </li>
-            
-                
-                    
-
-                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
-                        
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
-                           href="/masonry/"
-                        >
-                            <span>
-                                相册
-                            </span>
-                            
-                                <i class="fa-regular fa-image fa-sm fa-fw"></i>
-                            
-                        </a>
-                        
-
-                        
-                    </li>
-            
-                
-                    
-
-                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
-                        
-                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
-                             navbar-data-toggle="submenu-关于"
-                        >
-                            <span>
-                                关于
-                            </span>
-                            
-                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
-                            
-                        </div>
-                        
-
-                        
-                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-关于">
-                                
-                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
-                                        <a class=" text-third-text-color text-xl"
-                                           href="/about">ME</a>
-                                    </div>
-                                
-                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
-                                        <a class=" text-third-text-color text-xl"
-                                           target="_blank" rel="noopener" href="https://github.com/HarderHeng">GITHUB</a>
-                                    </div>
-                                
-                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
-                                        <a class=" text-third-text-color text-xl"
-                                           href="/odds">碎碎念</a>
-                                    </div>
-                                
-                            </div>
-                        
-                    </li>
             
         </ul>
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">48</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">53</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -619,7 +244,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">49</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">60</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -630,28 +255,28 @@
 </header>
 
 
-        </div>
+		</div>
 
-        <div class="main-content-body">
-
-            
-                <div class="home-sidebar-container">
+		<div class="main-content-body transition-fade-up">
+			
+			<div class="home-sidebar-container">
     <div class="sticky-container sticky">
         
         
-            <div class="sidebar-content">
+            
+            <div class="sidebar-content" >
                 <div class="avatar flex justify-center">
-    <img src="/images/IMG_0295.JPG">
+    <img src="/images/redefine-avatar.svg">
 </div>
                 <div class="author flex flex-col justify-center my-2.5 mx-0">
-    <div class="name">HarderHeng</div>
+    <div class="name">The Redefine Team</div>
     
         <div class="label">Lv4</div>
     
 </div>
                 <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">48</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">53</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -659,64 +284,20 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">49</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">60</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
             </div>
-            
-                <div class="sidebar-links"   marginTop >
-                    <div class="site-info">
-                        <div class="site-name">Heng&#39;s Blog</div>
-                        
-                            <div class="announcement">
-                                欢迎来到我的个人博客,我在这里记录我的生活和学习,正如我的域名后缀一样
-                            </div>
-                        
-                    </div>
-                    
-                        
-                            
-                                <a class="links" href="/archives">
-                                    
-                                        <i class="fa-regular fa-archive icon-space"></i>
-                                    
-                                    <span class="link-name">Archives</span>
-                                </a>
-                            
-                        
-                            
-                                <a class="links" href="/tags">
-                                    
-                                        <i class="fa-regular fa-tags icon-space"></i>
-                                    
-                                    <span class="link-name">Tags</span>
-                                </a>
-                            
-                        
-                            
-                                <a class="links" href="/categories">
-                                    
-                                        <i class="fa-regular fa-folder icon-space"></i>
-                                    
-                                    <span class="link-name">Categories</span>
-                                </a>
-                            
-                        
-                    
-                </div>
-            
         
 
     </div>
 </div>
 
-            
+			
 
-            <div class="main-content">
-
-                
-                    <div class="home-content-container">
+			<div class="main-content">
+				<div class="home-content-container">
     <ul class="home-article-list">
         
             <li class="home-article-item">
@@ -728,13 +309,14 @@
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/04/24/uC-OS%E7%A7%BB%E6%A4%8D/">
-                            uC/OS移植
+                        <a href="/2024/07/03/Stm32%E8%BD%AF%E4%BB%B6%E5%BB%B6%E6%97%B6%E6%96%B9%E6%B3%95/">
+                            STM32产生延时的方法
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
+                            
                             
                         
                     </div>
@@ -742,100 +324,9 @@
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Apr 24 2024 16:58:31 GMT+0800">
+            <span class="home-article-date" data-date="Wed Jul 03 2024 23:50:54 GMT+0800">
                 
-                    2024-04-24
-                
-            </span>
-        </span>
-        
-        
-    </div>
-
-    <a href="/2024/04/24/uC-OS%E7%A7%BB%E6%A4%8D/">Read more<span class="seo-reader-text">uC/OS移植</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/04/18/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%AE%9E%E9%AA%8C/">
-                            汇编语言实验
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            一、Debug的使用
--r查看寄存器
-
--r ax 改变ax寄存器的值
-
--d 加内存地址 查看内存
-
--d 连续查看内存地址
-
--e 加内存地址加 值 修改内存中的内容
-
--a 加地址 使指令指针寄存器指向指定的地址，并且在接下来的指令中可以将指令...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Thu Apr 18 2024 18:53:07 GMT+0800">
-                
-                    2024-04-18
-                
-            </span>
-        </span>
-        
-        
-    </div>
-
-    <a href="/2024/04/18/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%AE%9E%E9%AA%8C/">Read more<span class="seo-reader-text">汇编语言实验</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/04/13/Makefile%E8%AF%A6%E8%A7%A3/">
-                            Makefile详解
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            一、Makefile是什么makefile定义了一些规则来制定项目如何进行编译。
-makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
-目标通常是文件名，并且大概率是.o文件。紧跟着的生成这个文件的规则，通常是其源文件...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Sat Apr 13 2024 16:58:28 GMT+0800">
-                
-                    2024-04-13
+                    2024-07-03
                 
             </span>
         </span>
@@ -853,6 +344,16 @@ makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
                     
                     
                 
+                    
+                        
+                            <li>></li>
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%BC%80%E5%8F%91%E6%8A%80%E5%B7%A7/">开发技巧</a>&nbsp;
+                        </li>
+                    
+                    
+                
             </ul>
         </span>
         
@@ -863,17 +364,17 @@ makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
                     
                         <li>
                             
-                            <a href="/tags/C%E8%AF%AD%E8%A8%80/">C语言</a>&nbsp;
+                            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a>&nbsp;
                         </li>
                     
                         <li>
                             | 
-                            <a href="/tags/makefile/">makefile</a>&nbsp;
+                            <a href="/tags/RTOS/">RTOS</a>&nbsp;
                         </li>
                     
                         <li>
                             | 
-                            <a href="/tags/make/">make</a>&nbsp;
+                            <a href="/tags/STM32/">STM32</a>&nbsp;
                         </li>
                     
                 </ul>
@@ -881,7 +382,7 @@ makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
         
     </div>
 
-    <a href="/2024/04/13/Makefile%E8%AF%A6%E8%A7%A3/">Read more<span class="seo-reader-text">Makefile详解</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2024/07/03/Stm32%E8%BD%AF%E4%BB%B6%E5%BB%B6%E6%97%B6%E6%96%B9%E6%B3%95/">Read more<span class="seo-reader-text">STM32产生延时的方法</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -897,31 +398,31 @@ makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
 
                 
                     <div id="home-article-thumbnail" class="home-article-thumbnail relative h-[150px] overflow-hidden rounded-t-large">
-                        <a href="/2024/04/08/OriAndBlindForest-%E4%B8%80%E6%AE%B5%E8%BF%91%E4%B9%8E%E5%AE%8C%E7%BE%8E%E7%9A%84%E6%97%85%E7%A8%8B/">
-                            <img src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/v2-d5da3c6730b28e8bd870b2d370de75f4_r.png" alt="OriAndBlindForest--一段近乎完美的旅程" class="w-full h-full object-cover dark:brightness-75 transition-all" />
+                        <a href="/2024/06/21/Vim%E7%BC%96%E8%BE%91%E5%99%A8%E6%95%99%E7%A8%8B/">
+                            <img src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/Vimlogo.svg.png" alt="Vim编辑器教程" class="w-full h-full object-cover dark:brightness-75 transition-all" />
                         </a>
                     </div>
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-5">
                     <h3 class="home-article-title">
-                        <a href="/2024/04/08/OriAndBlindForest-%E4%B8%80%E6%AE%B5%E8%BF%91%E4%B9%8E%E5%AE%8C%E7%BE%8E%E7%9A%84%E6%97%85%E7%A8%8B/">
-                            OriAndBlindForest--一段近乎完美的旅程
+                        <a href="/2024/06/21/Vim%E7%BC%96%E8%BE%91%E5%99%A8%E6%95%99%E7%A8%8B/">
+                            Vim编辑器教程
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
-                            一、奥日初印象​		作为一款横版平台动作游戏，在我刚接触时仅仅是对横版游戏的喜爱。在最基础的平台跳跃动作，加上精灵之火自瞄的攻击系统，这显然是一款更侧重跳跃或者其他动作而削弱攻击动作的游戏，仅凭这一点已经让我这个横版游戏爱好者愿意继续上手玩下去。
-​...
+                            <p>Vim编辑器是一款效率极高的程序开发工具，在Shell中基本都要使用Vim来进行编辑，本篇博客将介绍如何高效率的使用Vim。</p>
+
                         
                     </div>
 
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Mon Apr 08 2024 21:14:33 GMT+0800">
+            <span class="home-article-date" data-date="Fri Jun 21 2024 10:45:26 GMT+0800">
                 
-                    2024-04-08
+                    2024-06-21
                 
             </span>
         </span>
@@ -934,7 +435,7 @@ makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
                     
                         
                         <li>
-                            <a href="/categories/%E6%B8%B8%E6%88%8F%E9%9A%8F%E7%AC%94/">游戏随笔</a>&nbsp;
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
                         </li>
                     
                     
@@ -949,17 +450,17 @@ makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
                     
                         <li>
                             
-                            <a href="/tags/%E9%93%B6%E6%B2%B3%E6%81%B6%E9%AD%94%E5%9F%8E/">银河恶魔城</a>&nbsp;
+                            <a href="/tags/Linux/">Linux</a>&nbsp;
                         </li>
                     
                         <li>
                             | 
-                            <a href="/tags/%E6%A8%AA%E7%89%88%E6%B8%B8%E6%88%8F/">横版游戏</a>&nbsp;
+                            <a href="/tags/Shell/">Shell</a>&nbsp;
                         </li>
                     
                         <li>
                             | 
-                            <a href="/tags/%E7%BE%8E%E6%9C%AF%E4%BC%98%E7%A7%80/">美术优秀</a>&nbsp;
+                            <a href="/tags/ZSH/">ZSH</a>&nbsp;
                         </li>
                     
                 </ul>
@@ -967,7 +468,7 @@ makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
         
     </div>
 
-    <a href="/2024/04/08/OriAndBlindForest-%E4%B8%80%E6%AE%B5%E8%BF%91%E4%B9%8E%E5%AE%8C%E7%BE%8E%E7%9A%84%E6%97%85%E7%A8%8B/">Read more<span class="seo-reader-text">OriAndBlindForest--一段近乎完美的旅程</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2024/06/21/Vim%E7%BC%96%E8%BE%91%E5%99%A8%E6%95%99%E7%A8%8B/">Read more<span class="seo-reader-text">Vim编辑器教程</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -982,24 +483,417 @@ makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/04/08/ARM%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">
-                            ARM处理器汇编语言
+                        <a href="/2024/06/21/Linux%E4%B9%8BShell%E5%9F%BA%E7%A1%80/">
+                            Linux之Shell基础
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
-                            Thumb状态切换Thumb是16位指令的状态，可以使用16位指令，在进行切换时不会改变通用寄存器。
-1234567;现在是ARM指令集MOV R0,#1 ;将1放进r0寄存器BX R0 ;跳转的最低位是1，ARM指令集下地址最低位都是0，也就是从A...
+                            
+                            一、Shell是什么​		我们现在的使用的操作系统都是带有图形界面的，早期的操作系统是使用命令行的。操作系统本身只是一些内核代码，图形化界面让我们可以简单的使用操作系统，命令行也是让我们能够对操作系统进行输入和输出。但是真正能够控制操作系统硬件的只有内核，不管是图形化界面还是命令行，他们都是帮助用户使用操作系统内核的工具，是用户和内核的桥梁。
+​		对用户来说，他们不能也没有必要直接接触内核...
                         
                     </div>
 
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Mon Apr 08 2024 08:32:37 GMT+0800">
+            <span class="home-article-date" data-date="Fri Jun 21 2024 10:00:29 GMT+0800">
                 
-                    2024-04-08
+                    2024-06-21
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/Linux/">Linux</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/Shell/">Shell</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">环境变量</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2024/06/21/Linux%E4%B9%8BShell%E5%9F%BA%E7%A1%80/">Read more<span class="seo-reader-text">Linux之Shell基础</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+                    
+                
+
+                
+                    <div id="home-article-thumbnail" class="home-article-thumbnail relative h-[150px] overflow-hidden rounded-t-large">
+                        <a href="/2024/06/21/Ubuntu%E7%BB%88%E7%AB%AFZSH%E9%85%8D%E7%BD%AE/">
+                            <img src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/68747470733a2f2f6f686d797a73682e73332e616d617a6f6e6177732e636f6d2f6f6d7a2d616e73692d6769746875622e706e67.png" alt="Ubuntu终端ZSH配置" class="w-full h-full object-cover dark:brightness-75 transition-all" />
+                        </a>
+                    </div>
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-5">
+                    <h3 class="home-article-title">
+                        <a href="/2024/06/21/Ubuntu%E7%BB%88%E7%AB%AFZSH%E9%85%8D%E7%BD%AE/">
+                            Ubuntu终端ZSH配置
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            ZSH安装安装
+1sudo apt install zsh
+
+作为默认终端
+1chsh -s /bin/zsh
+
+oh-my-zsh安装oh-my-zsh是zsh的一个框架，内置了许多主题和插件。
+1sh -c &quot;$(curl -fsSL https://gitee.com/shmhlsy/oh-my-zsh-install.sh/raw/master/install.sh)&qu...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Fri Jun 21 2024 09:56:13 GMT+0800">
+                
+                    2024-06-21
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B/">实用教程</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/Linux/">Linux</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/Shell/">Shell</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/ZSH/">ZSH</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2024/06/21/Ubuntu%E7%BB%88%E7%AB%AFZSH%E9%85%8D%E7%BD%AE/">Read more<span class="seo-reader-text">Ubuntu终端ZSH配置</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/06/21/%E6%A0%87%E5%87%86%E5%BA%93%E5%BC%80%E5%8F%91PWM%E8%AF%A6%E8%A7%A3/">
+                            标准库开发PWM详解
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Fri Jun 21 2024 08:42:51 GMT+0800">
+                
+                    2024-06-21
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2024/06/21/%E6%A0%87%E5%87%86%E5%BA%93%E5%BC%80%E5%8F%91PWM%E8%AF%A6%E8%A7%A3/">Read more<span class="seo-reader-text">标准库开发PWM详解</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/06/14/hdrtest/">
+                            hdrtest
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            
+
+
+
+
+
+    
+     一一一    
+
+
+
+
+
+
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Fri Jun 14 2024 02:36:05 GMT+0800">
+                
+                    2024-06-14
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2024/06/14/hdrtest/">Read more<span class="seo-reader-text">hdrtest</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/05/12/LightRoom%E5%90%8E%E6%9C%9F%E7%85%A7%E7%89%87%E7%AE%A1%E7%90%86/">
+                            LightRoom后期照片管理
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            前言作为一个摄影入门甚至还没有买相机的小白，每次漫展借舍友的相机也要拍coser，现在尝试学习后期。
+在这里记录一下我自己根据网上的学习和自己的实际情况，确定除了一套后期照片管理的流程。
+一、拍摄并导出拍摄后在相机内可以对照片进行分级，然后如果是比较明显的废片比如完全没有对焦、拍到了空地之类的就在拍摄后直接手动删掉，减少后期筛选的强度，毕竟去一次漫展可以拍好几百张的照片再放到后期筛选废片实在...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Sun May 12 2024 00:08:00 GMT+0800">
+                
+                    2024-05-12
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2024/05/12/LightRoom%E5%90%8E%E6%9C%9F%E7%85%A7%E7%89%87%E7%AE%A1%E7%90%86/">Read more<span class="seo-reader-text">LightRoom后期照片管理</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/05/08/SystemView%E7%AE%80%E5%8D%95%E7%A7%BB%E6%A4%8D/">
+                            SystemView简单移植
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            一、SystemView是什么SystemView是由SEGGER公司开发的嵌入式系统可视化分析工具，可以用来可视化的监控嵌入式操作系统的运行，帮助我们更好的学习和开发嵌入式操作系统。
+SystemView支持uC&#x2F;OS-II、μC&#x2F;OS-III、FreeRTOS、embOS和无OS的裸机系统。
+SystemView可以使用串口、J-Link等连接方式和硬件进行连接。
+二...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Wed May 08 2024 21:39:17 GMT+0800">
+                
+                    2024-05-08
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2024/05/08/SystemView%E7%AE%80%E5%8D%95%E7%A7%BB%E6%A4%8D/">Read more<span class="seo-reader-text">SystemView简单移植</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/05/08/STM32%E5%8F%8AARM%E4%B8%AD%E6%96%AD%E8%AF%A6%E8%A7%A3/">
+                            STM32及ARM中断详解
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            ARM体系的中断和异常当一个中断或者异常触发时，先看到这个中断源有没有被启动，以及它的优先级如何，然后进入中断向量表，如果允许进行中断或者异常的处理，就会根据中断向量表进入中断服务程序。
+在中断服务程序中进行关中断、保存现场、开中断、处理中断和异常、关中断、恢复现场、开中断
+在ARM体系中和异常统一由中断向量表管理。
+中断向量表中断向量表有低端和高端向量表两种，低端向量表就是从0x00000...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Wed May 08 2024 15:59:41 GMT+0800">
+                
+                    2024-05-08
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2024/05/08/STM32%E5%8F%8AARM%E4%B8%AD%E6%96%AD%E8%AF%A6%E8%A7%A3/">Read more<span class="seo-reader-text">STM32及ARM中断详解</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/05/08/STM32%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/">
+                            STM32存储架构详解
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            <p>以STM32为例解析MCU的存储架构，希望以此能够加深对嵌入式硬件的认识，以后也可以更快的上手其他的硬件。</p>
+
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Wed May 08 2024 15:54:38 GMT+0800">
+                
+                    2024-05-08
                 
             </span>
         </span>
@@ -1032,12 +926,12 @@ makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
                     
                         <li>
                             | 
-                            <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">汇编语言</a>&nbsp;
+                            <a href="/tags/STM32/">STM32</a>&nbsp;
                         </li>
                     
                         <li>
                             | 
-                            <a href="/tags/ARM/">ARM</a>&nbsp;
+                            <a href="/tags/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84/">存储架构</a>&nbsp;
                         </li>
                     
                 </ul>
@@ -1045,394 +939,7 @@ makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
         
     </div>
 
-    <a href="/2024/04/08/ARM%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">Read more<span class="seo-reader-text">ARM处理器汇编语言</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/04/05/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">
-                            动态规划背包问题
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            一、0-1背包问题现在有一个背包容量为v，有一系列的物品分别有wgt[i]的重量和val[i]的价值。问怎么取物品装到背包里使得总价值最大。
-对于每一个物品都有选与不选两种决策，那么对每一个物品进行规划，如果选择了物品，那么可用容量减少但是价值增加。...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Fri Apr 05 2024 20:42:48 GMT+0800">
-                
-                    2024-04-05
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2024/04/05/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">Read more<span class="seo-reader-text">动态规划背包问题</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/04/03/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E5%AD%97%E6%AE%B5%E8%AF%A6%E8%A7%A3/">
-                            数据库数据结构和字段详解
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            一、在数据库中创建表1234create table table_test(    id int comment &#x27;id&#x27;,    name varchar(10))comment &#x27;测试表&#x27;;
-
-上述代码创建...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Apr 03 2024 18:20:28 GMT+0800">
-                
-                    2024-04-03
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/SQL/">SQL</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2024/04/03/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E5%AD%97%E6%AE%B5%E8%AF%A6%E8%A7%A3/">Read more<span class="seo-reader-text">数据库数据结构和字段详解</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/03/25/Picgo%E5%9B%BE%E5%BA%8A%E6%90%AD%E9%85%8D%E9%98%BF%E9%87%8C%E4%BA%91OSS%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/">
-                            Picgo图床搭配阿里云OSS创建个人图床
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            由于写这篇博客时Picgo图床还没有配置好，所以没有插入对应步骤的图片。
-一、picgo下载找到picgo的github主页，选择release发行版，然后找到适合自己电脑系统的版本进行下载和安装。linux版本可以使用appimage文件进行安装，...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Mon Mar 25 2024 18:35:47 GMT+0800">
-                
-                    2024-03-25
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/">配置记录</a>&nbsp;
-                        </li>
-                    
-                    
-                
-                    
-                        
-                            <li>></li>
-                        
-                        <li>
-                            <a href="/categories/%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E5%9B%BE%E5%BA%8A/">图床</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2024/03/25/Picgo%E5%9B%BE%E5%BA%8A%E6%90%AD%E9%85%8D%E9%98%BF%E9%87%8C%E4%BA%91OSS%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%9B%BE%E5%BA%8A/">Read more<span class="seo-reader-text">Picgo图床搭配阿里云OSS创建个人图床</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/02/27/EmbeddedSystem/">
-                            EmbeddedSystem
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            <p>本学期的综设课程要求移植一个嵌入式操作系统到Stm32上，这里记录下整个嵌入式操作系统的实操学习过程，理论会放在另一篇文章中</p>
-
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Tue Feb 27 2024 10:28:16 GMT+0800">
-                
-                    2024-02-27
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/RTOS/">RTOS</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2024/02/27/EmbeddedSystem/">Read more<span class="seo-reader-text">EmbeddedSystem</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/02/27/DataBase/">
-                            DataBase
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            一、数据库理解1、什么是数据库数据库是一种依照特定数据模型，组织、存储和管理数据的文件集合。组织与存储系统数据，为系统软件从中存取从中存取数据提供支持。
-关系型数据库：在关系模型基础上，由多张相互连接的二维表组成的数据库。
-2、什么是数据模型数据模型...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Tue Feb 27 2024 10:27:49 GMT+0800">
-                
-                    2024-02-27
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/SQL/">SQL</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/PostgreSQL/">PostgreSQL</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2024/02/27/DataBase/">Read more<span class="seo-reader-text">DataBase</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2024/05/08/STM32%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/">Read more<span class="seo-reader-text">STM32存储架构详解</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -1442,23 +949,19 @@ makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
 
     <div class="home-paginator px-7 py-5">
         <div class="paginator">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa-regular fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/"><i class="fa-regular fa-angle-right"></i></a>
+	<a class="extend prev" rel="prev" href="/page/3/"><i class="fa-regular fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/"><i class="fa-regular fa-angle-right"></i></a>
 </div>
-
+  
     </div>
 </div>
 
-                    <div class="comment-container pjax"></div>
-                
+			</div>
 
-            </div>
+			
+		</div>
 
-            
-
-        </div>
-
-        <div class="main-content-footer">
-            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
     <div class="info-container py-3 text-center">
         
         <div class="text-center">
@@ -1467,7 +970,16 @@ makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
               <span>2022</span>
               -
             
-            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">The Redefine Team</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        60 posts in total
+                    </span>
+                    
+                </p>
+            
         </div>
         
             <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
@@ -1488,7 +1000,7 @@ makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
         
         <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
             <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
-            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span>
         </div>
         
         
@@ -1517,103 +1029,72 @@ makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
         
     </div>  
 </footer>
-        </div>
-    </div>
+		</div>
+	</div>
 
-    
+	
 
-    <div class="right-side-tools-container">
-        <div class="side-tools-container">
-    <ul class="hidden-tools-list">
-        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
-            <i class="fa-regular fa-magnifying-glass-plus"></i>
-        </li>
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
 
-        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
-            <i class="fa-regular fa-magnifying-glass-minus"></i>
-        </li>
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
 
-        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
-            <i class="fa-regular fa-moon"></i>
-        </li>
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
 
-        <!-- rss -->
-        
+		<!-- rss -->
+		
 
-        
+		
 
-        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
-            <i class="fa-regular fa-arrow-down"></i>
-        </li>
-    </ul>
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
 
-    <ul class="visible-tools-list">
-        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
-            <i class="fa-regular fa-cog fa-spin"></i>
-        </li>
-        
-            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
-                <i class="arrow-up fas fa-arrow-up"></i>
-                <span class="percent"></span>
-            </li>
-        
-        
-    </ul>
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
 </div>
 
-    </div>
-
-    <div class="image-viewer-container">
-    <img src="">
-</div>
-
-
-    
-        <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-          <span class="search-input-field-pre">
-            <i class="fa-solid fa-keyboard"></i>
-          </span>
-            <div class="search-input-container">
-                <input autocomplete="off"
-                       autocorrect="off"
-                       autocapitalize="off"
-                       placeholder="Search..."
-                       spellcheck="false"
-                       type="search"
-                       class="search-input"
-                >
-            </div>
-            <span class="popup-btn-close">
-                <i class="fa-solid fa-times"></i>
-            </span>
-        </div>
-        <div id="search-result">
-            <div id="no-result">
-                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
-            </div>
-        </div>
-    </div>
-</div>
-
-    
+	
 
 </main>
 
 
-    
-<script src="/js/libs/Swup.min.js"></script>
 
-<script src="/js/libs/SwupSlideTheme.min.js"></script>
+<script src="/js/build/libs/Swup.min.js"></script>
 
-<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
 
-<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
 
-<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
 
-<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
 
 <script>
     const swup = new Swup({
@@ -1637,49 +1118,42 @@ makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
 
 
 
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
 
+<script src="/js/build/utils.js" type="module"></script>
 
+<script src="/js/build/main.js" type="module"></script>
 
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
 
-<script src="/js/tools/imageViewer.js" type="module"></script>
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
 
-<script src="/js/utils.js" type="module"></script>
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
 
-<script src="/js/main.js" type="module"></script>
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
 
-<script src="/js/layouts/navbarShrink.js" type="module"></script>
-
-<script src="/js/tools/scrollTopBottom.js" type="module"></script>
-
-<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
-
-<script src="/js/layouts/categoryList.js" type="module"></script>
-
-
-
-    
-<script src="/js/tools/localSearch.js" type="module"></script>
 
 
 
 
     
-<script src="/js/tools/codeBlock.js" type="module"></script>
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
 
 
 
 
     
-<script src="/js/layouts/lazyload.js" type="module"></script>
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
 
 
 
 
     
-<script src="/js/tools/runtime.js"></script>
+<script src="/js/build/tools/runtime.js"></script>
 
     
-<script src="/js/libs/odometer.min.js"></script>
+<script src="/js/build/libs/odometer.min.js"></script>
 
     
 <link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
@@ -1688,10 +1162,10 @@ makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
 
 
   
-<script src="/js/libs/Typed.min.js"></script>
+<script src="/js/build/libs/Typed.min.js"></script>
 
   
-<script src="/js/plugins/typed.js" type="module"></script>
+<script src="/js/build/plugins/typed.js" type="module"></script>
 
 
 
@@ -1699,27 +1173,41 @@ makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
 
 
     
-<script src="/js/libs/minimasonry.min.js"></script>
+<script src="/js/build/libs/minimasonry.min.js"></script>
 
     
-<script src="/js/plugins/masonry.js" type="module"></script>
+<script src="/js/build/plugins/masonry.js" type="module"></script>
 
 
 
-
-
-<div class="post-scripts" data-swup-reload-script>
-    
-        
-<script src="/js/tools/tocToggle.js" type="module"></script>
-
-<script src="/js/layouts/toc.js" type="module"></script>
-
-<script src="/js/plugins/tabs.js" type="module"></script>
 
     
-</div>
+<script src="/js/build/libs/anime.min.js"></script>
 
 
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
 </body>
+
 </html>
