@@ -314,15 +314,15 @@
   <entry>
     <title>Makefile详解</title>
     <url>/2024/04/13/Makefile%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[<h3 id="一、Makefile是什么"><a href="#一、Makefile是什么" class="headerlink" title="一、Makefile是什么"></a>一、Makefile是什么</h3><p>makefile定义了一些规则来制定项目如何进行编译。</p>
+    <content><![CDATA[<h1 id="一、Makefile是什么"><a href="#一、Makefile是什么" class="headerlink" title="一、Makefile是什么"></a>一、Makefile是什么</h1><p>makefile定义了一些规则来制定项目如何进行编译。</p>
 <p>makefile中包含了一系列的**目标(Targets)<strong>和</strong>规则(Rules)**。</p>
 <p>目标通常是文件名，并且大概率是.o文件。紧跟着的生成这个文件的规则，通常是其源文件和编译的命令。<strong>编译的命令也可以是能够命令行执行的命令。</strong></p>
 <p>除了目标和规则，makefile也可以用来指定编译器的某些行为例如使用哪一个编译器或者编译器优化等级等等。</p>
-<h3 id="二、Makefile基础"><a href="#二、Makefile基础" class="headerlink" title="二、Makefile基础"></a>二、Makefile基础</h3><h4 id="1、目标"><a href="#1、目标" class="headerlink" title="1、目标"></a>1、目标</h4><ul>
+<h1 id="二、Makefile基础"><a href="#二、Makefile基础" class="headerlink" title="二、Makefile基础"></a>二、Makefile基础</h1><h2 id="1、目标"><a href="#1、目标" class="headerlink" title="1、目标"></a>1、目标</h2><ul>
 <li>makefile文件直接命名为<strong>makefile</strong>才能让make工具识别。</li>
 <li>makefile的编写规则为目标+编写规则，在目标名后面加上<code>：</code>就代表这是一个目标的条目</li>
 </ul>
-<div class="highlight-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">all:</span></span><br><span class="line">	@echo <span class="string">&quot;HelloWorld&quot;</span>\</span><br><span class="line"><span class="comment">#目标名为all,在构建目标时执行echo命令，加上@后在命令行里就不会打印多余的内容</span></span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">all:</span></span><br><span class="line">	@echo <span class="string">&quot;HelloWorld&quot;</span>\</span><br><span class="line"><span class="comment">#目标名为all,在构建目标时执行echo命令，加上@后在命令行里就不会打印多余的内容</span></span><br></pre></td></tr></table></figure></div>
 
 <p><img  
                      lazyload
@@ -332,8 +332,8 @@
                 ></p>
 <ul>
 <li><p>如果在同一个makefile中定义了多个目标，然后直接在命令行中执行<code>make</code>命令，就会执行makefile中的第一个目标。当然也可以自己指定要构建的目标。</p>
-<h4 id="2、依赖"><a href="#2、依赖" class="headerlink" title="2、依赖"></a>2、依赖</h4><p>依赖是包含在规则中的一部分，如果一个目标依赖于另一个目标，那么就要依次先构建依赖的关系目标，才能构建当前的目标。</p>
-<div class="highlight-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">all: test</span></span><br><span class="line">	@echo <span class="string">&quot;HelloWorld&quot;</span></span><br><span class="line"><span class="section">test:</span></span><br><span class="line">	@echo <span class="string">&quot;test&quot;</span></span><br><span class="line"><span class="comment">#在构建目标all时，会先构建其先决条件test目标</span></span><br></pre></td></tr></table></figure></div>
+<h2 id="2、依赖"><a href="#2、依赖" class="headerlink" title="2、依赖"></a>2、依赖</h2><p>依赖是包含在规则中的一部分，如果一个目标依赖于另一个目标，那么就要依次先构建依赖的关系目标，才能构建当前的目标。</p>
+<div class="code-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">all: test</span></span><br><span class="line">	@echo <span class="string">&quot;HelloWorld&quot;</span></span><br><span class="line"><span class="section">test:</span></span><br><span class="line">	@echo <span class="string">&quot;test&quot;</span></span><br><span class="line"><span class="comment">#在构建目标all时，会先构建其先决条件test目标</span></span><br></pre></td></tr></table></figure></div>
 
 <p><img  
                      lazyload
@@ -341,15 +341,15 @@
                      data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240409214548703.png"
                       alt="image-20240409214548703"
                 ></p>
-<h4 id="3、规则"><a href="#3、规则" class="headerlink" title="3、规则"></a>3、规则</h4><p>一条目标的条目其实也就是一个整个规则，由<strong>目标</strong>、<strong>依赖</strong>和<strong>命令</strong>组成。其中依赖必须在构建该目标之前就已经满足，这个依赖也可以是其他的目标，也就是会被先构建出来才会构建原本的目标。规则的命令需要能够生成出目标，才能被其他目标作为依赖。</p>
+<h2 id="3、规则"><a href="#3、规则" class="headerlink" title="3、规则"></a>3、规则</h2><p>一条目标的条目其实也就是一个整个规则，由<strong>目标</strong>、<strong>依赖</strong>和<strong>命令</strong>组成。其中依赖必须在构建该目标之前就已经满足，这个依赖也可以是其他的目标，也就是会被先构建出来才会构建原本的目标。规则的命令需要能够生成出目标，才能被其他目标作为依赖。</p>
 </li>
 </ul>
-<h3 id="三、Makefile的特性"><a href="#三、Makefile的特性" class="headerlink" title="三、Makefile的特性"></a>三、Makefile的特性</h3><h4 id="1、不重复构建"><a href="#1、不重复构建" class="headerlink" title="1、不重复构建"></a>1、不重复构建</h4><p>如果在makefile中以文件作为构建的目标，在执行make的时候就会将对应的文件构建出来，这些文件会一直存在，如果在下一次的构建中这些文件的源文件没有被修改，那么就不会重复构建这些文件。</p>
-<div class="highlight-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="comment">#makefile</span></span><br><span class="line"><span class="section">all: main.o helloworld.o</span></span><br><span class="line">        gcc -o main main.o helloworld.o 	<span class="comment">#编译链接出main文件</span></span><br><span class="line">        @echo <span class="string">&quot;Make all&quot;</span></span><br><span class="line"><span class="section">main.o: main.c 						#依赖源文件main.c</span></span><br><span class="line">        gcc -c main.c 				<span class="comment">#编译出main.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make main.o&quot;</span></span><br><span class="line"><span class="section">helloworld.o: helloworld.c 			#依赖源文件helloworld.c</span></span><br><span class="line">        gcc -c helloworld.c 		<span class="comment">#编译出helloworld.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make helloworld.o&quot;</span></span><br></pre></td></tr></table></figure></div>
+<h1 id="三、Makefile的特性"><a href="#三、Makefile的特性" class="headerlink" title="三、Makefile的特性"></a>三、Makefile的特性</h1><h2 id="1、不重复构建"><a href="#1、不重复构建" class="headerlink" title="1、不重复构建"></a>1、不重复构建</h2><p>如果在makefile中以文件作为构建的目标，在执行make的时候就会将对应的文件构建出来，这些文件会一直存在，如果在下一次的构建中这些文件的源文件没有被修改，那么就不会重复构建这些文件。</p>
+<div class="code-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="comment">#makefile</span></span><br><span class="line"><span class="section">all: main.o helloworld.o</span></span><br><span class="line">        gcc -o main main.o helloworld.o 	<span class="comment">#编译链接出main文件</span></span><br><span class="line">        @echo <span class="string">&quot;Make all&quot;</span></span><br><span class="line"><span class="section">main.o: main.c 						#依赖源文件main.c</span></span><br><span class="line">        gcc -c main.c 				<span class="comment">#编译出main.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make main.o&quot;</span></span><br><span class="line"><span class="section">helloworld.o: helloworld.c 			#依赖源文件helloworld.c</span></span><br><span class="line">        gcc -c helloworld.c 		<span class="comment">#编译出helloworld.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make helloworld.o&quot;</span></span><br></pre></td></tr></table></figure></div>
 
-<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//main.c</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">void</span> <span class="title function_">helloworld</span><span class="params">()</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">        helloworld();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//main.c</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">void</span> <span class="title function_">helloworld</span><span class="params">()</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">        helloworld();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
-<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//helloworld.c</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">helloworld</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;HelloWorld&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//helloworld.c</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">helloworld</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;HelloWorld&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
 <p><img  
                      lazyload
@@ -360,7 +360,7 @@
 <p>执行了两次make,可以看到后一次make并没有构建目标<code>main.o</code>和<code>helloworld.o</code>，因为前一次make已经生成了这两个文件，并且在后一次make时会自动识别<code>main.c</code>和<code>helloworld.c</code>是否发生了更新时间的变化，也就是是否进行了更改，如果<code>.c</code>源文件没有被更改，make就认为要构建的目标<code>main.o</code>和<code>helloworld.o</code>也是最新的不需要进行重新构建。</p>
 <p><em><strong>那为什么all会被重新构建呢？</strong></em></p>
 <p>因为构建目标是<strong>all</strong>而不是gcc的目标<strong>main</strong>，main文件已经存在了但是目标all并不存在，关键在于要构建的目标是否存在。</p>
-<h4 id="2、假目标"><a href="#2、假目标" class="headerlink" title="2、假目标"></a>2、假目标</h4><p>有时候我们构建出一个目标后，这个目标已经存在那么在进行重新构建时就不会执行任何该目标下的命令。但是有时我们需要该目标下除了<strong>构建这个目标的命令之外的命令</strong>，就需要想办法暂时屏蔽掉<strong>不重复构建的特性</strong>，这时候就可以用到假目标。</p>
+<h2 id="2、假目标"><a href="#2、假目标" class="headerlink" title="2、假目标"></a>2、假目标</h2><p>有时候我们构建出一个目标后，这个目标已经存在那么在进行重新构建时就不会执行任何该目标下的命令。但是有时我们需要该目标下除了<strong>构建这个目标的命令之外的命令</strong>，就需要想办法暂时屏蔽掉<strong>不重复构建的特性</strong>，这时候就可以用到假目标。</p>
 <p>​																		<em>不使用假目标的效果</em></p>
 <p><img  
                      lazyload
@@ -371,7 +371,7 @@
 <ul>
 <li>假目标就是为了避免所要构建的目标和已经存在的文件重名的情况。</li>
 </ul>
-<div class="highlight-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="comment">#makefile</span></span><br><span class="line"><span class="meta"><span class="keyword">.PHONY</span>: main.o</span></span><br><span class="line"><span class="section">all: main.o helloworld.o</span></span><br><span class="line">        gcc -o main main.o helloworld.o 	<span class="comment">#编译链接出main文件</span></span><br><span class="line">        @echo <span class="string">&quot;Make all&quot;</span></span><br><span class="line"><span class="section">main.o: main.c 						#依赖源文件main.c</span></span><br><span class="line">        gcc -c main.c 				<span class="comment">#编译出main.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make main.o&quot;</span></span><br><span class="line"><span class="section">helloworld.o: helloworld.c 			#依赖源文件helloworld.c</span></span><br><span class="line">        gcc -c helloworld.c 		<span class="comment">#编译出helloworld.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make helloworld.o&quot;</span></span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="comment">#makefile</span></span><br><span class="line"><span class="meta"><span class="keyword">.PHONY</span>: main.o</span></span><br><span class="line"><span class="section">all: main.o helloworld.o</span></span><br><span class="line">        gcc -o main main.o helloworld.o 	<span class="comment">#编译链接出main文件</span></span><br><span class="line">        @echo <span class="string">&quot;Make all&quot;</span></span><br><span class="line"><span class="section">main.o: main.c 						#依赖源文件main.c</span></span><br><span class="line">        gcc -c main.c 				<span class="comment">#编译出main.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make main.o&quot;</span></span><br><span class="line"><span class="section">helloworld.o: helloworld.c 			#依赖源文件helloworld.c</span></span><br><span class="line">        gcc -c helloworld.c 		<span class="comment">#编译出helloworld.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make helloworld.o&quot;</span></span><br></pre></td></tr></table></figure></div>
 
 <p>使用假目标后，可以进行同一目标的重复构建，此时<code>main.o</code>的构建被单纯的当成一个目标而并非是一个文件，并不会检查此时文件的存在性。</p>
 <p><img  
@@ -380,7 +380,21 @@
                      data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240409224235265.png"
                       alt="image-20240409224235265"
                 ></p>
-<h4 id="3、变量"><a href="#3、变量" class="headerlink" title="3、变量"></a>3、变量</h4><p>makefile中的变量有点像c语言中的宏定义，只进行字符串的替换。</p>
+<h2 id="3、变量"><a href="#3、变量" class="headerlink" title="3、变量"></a>3、变量</h2><p>makefile中的变量有点像c语言中的宏定义，只进行字符串的替换。</p>
+<div class="code-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line">SRC = folder</span><br><span class="line"><span class="variable">$(SRC)</span></span><br></pre></td></tr></table></figure></div>
+
+<p>直接定义变量，然后使用变量时就直接<code>$( )</code>进行引用。</p>
+<h3 id="内置变量"><a href="#内置变量" class="headerlink" title="内置变量"></a>内置变量</h3><p>对一条规则来说，需要有<strong>目标</strong>和<strong>依赖</strong>。</p>
+<ul>
+<li>$@：表示目标文件</li>
+<li>$^：表示所有依赖的文件</li>
+<li>$&lt;：表示第一个依赖文件</li>
+</ul>
+<p>这三个内置变量在一条规则内使用则可以直接代表这些意义。</p>
+<h3 id="变量赋值"><a href="#变量赋值" class="headerlink" title="变量赋值"></a>变量赋值</h3><p>这里有三种赋值方式。</p>
+<ul>
+<li><strong>&#x3D;</strong>  这种赋值方式会在调用变量时进行变量的赋值计算</li>
+</ul>
 ]]></content>
       <categories>
         <category>学习笔记</category>
@@ -2271,7 +2285,27 @@
   <entry>
     <title>C语言指针退化问题</title>
     <url>/2024/11/27/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E9%80%80%E5%8C%96%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="数组指针"><a href="#数组指针" class="headerlink" title="数组指针"></a>数组指针</h1><p>考虑以下的代码。</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">char</span> a[] = &#123;<span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;o&#x27;</span>,<span class="string">&#x27;\n&#x27;</span>&#125;;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="keyword">sizeof</span>(a));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>定义了一个内容为<code>hello</code>的字符串，此时使用sizeof传入的<code>a</code>本质上是是一个数组指针，它即指向整个字符串，也指向字符串的第一个元素，在同一个域内调用<code>sizeof</code>，会将数组信息传递给<code>sizeof</code>，所以输出结果为字符串的长度<strong>6</strong>。</p>
+<p>即，一个数组的名字，即是指向第一个元素的指针（pointer to the first element），也能代表一整个数组（the pointer to the array）。</p>
+<h1 id="指针退化"><a href="#指针退化" class="headerlink" title="指针退化"></a>指针退化</h1><p>在上面的代码中显然sizeof将<code>a</code>视为是代表一整个数组的指针，所以返回大小为<strong>6</strong>。</p>
+<p>接下来考虑以下的代码。</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">char</span> a[] = &#123;<span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;o&#x27;</span>,<span class="string">&#x27;\n&#x27;</span>&#125;;</span><br><span class="line">    <span class="type">char</span> *p = a;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="keyword">sizeof</span>(p));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>这段代码中创建了一个char类型的<code>p</code>指针，将<code>a</code>的值传递给<code>p</code>，最后的输出结果为<strong>4</strong>。</p>
+<p>此时<code>sizeof</code>会将<code>p</code>认为是一个单纯的指针，不会传递数组的信息进去，也就是说不能够知道后面的数组有多长，最后返回的值也就是指针的长度<strong>4</strong>（32位系统下）。</p>
+<h1 id="数组传递参数"><a href="#数组传递参数" class="headerlink" title="数组传递参数"></a>数组传递参数</h1><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">size</span><span class="params">(<span class="type">char</span> a[])</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">sizeof</span>(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">char</span> a[] = &#123;<span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;o&#x27;</span>,<span class="string">&#x27;\n&#x27;</span>&#125;;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,size(a));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>在这里给数组传参，将数组传参进去，本质上还是传递了一个指针进去，数组指针经过传参退化成了普通指针，所以得到的值为<strong>4</strong>。</p>
+<h1 id="不会指针退化的情况"><a href="#不会指针退化的情况" class="headerlink" title="不会指针退化的情况"></a>不会指针退化的情况</h1><ul>
+<li>直接使用sizeof最原始数组名进行求值，可以得到数组的长度。</li>
+<li>对数组名进行取地址操作，即得到一个指向数组的指针，对这个指针进行操作则不会出现指针退化。</li>
+</ul>
+<p>即只要传递的是<strong>数组名</strong>这个<strong>常量指针</strong>本身，就不会发生退化，如果传递的是一个普通指针，其值等于数组的首地址，并不能和数组名这个常量指针等价。</p>
+<p>所以如果传递的是<strong>常量指针的地址</strong>，比如<code>&amp;arr</code>，这种情况实际传递了常量指针，就不会发生指针退化。</p>
+]]></content>
   </entry>
   <entry>
     <title>ELF可执行文件的结构详解</title>
@@ -2279,8 +2313,30 @@
     <content><![CDATA[<h1 id="一、ELF文件是什么"><a href="#一、ELF文件是什么" class="headerlink" title="一、ELF文件是什么"></a>一、ELF文件是什么</h1><p>ELF可以是<strong>目标文件</strong>、<strong>静态或者动态的链接文件</strong>、<strong>可执行文件</strong>。</p>
 <p>前两种文件是中间文件，目标文件需要链接成为<strong>可执行文件</strong>或者<strong>链接文件</strong>，最终执行的只有可执行文件。</p>
 <p>一个具有代码的源文件，经过预编译，编译，汇编之后得到了.o目标文件，通过将.o文件已经是具有实际机器指令的文件。</p>
-<p>接下来根据目标文件就可以生成</p>
-<p>接下来我们介绍ELF文件的格式。</p>
+<p>将所有的目标文件和静态库还有动态库一起链接起来，就得到了最终的可执行文件。</p>
+<h1 id="二、内存的基本构成"><a href="#二、内存的基本构成" class="headerlink" title="二、内存的基本构成"></a>二、内存的基本构成</h1><p>要了解ELF文件的构成，我们需要知道执行一个程序的内存是什么样的。</p>
+<p>一个程序在运行过程中会占用：</p>
+<ul>
+<li>data数据段，存放全局变量和静态变量</li>
+<li>rodata只读数据段，存放不可被更改的只读数据</li>
+<li>stack栈，存放程序运行过程中的函数调用、返回地址、传递参数</li>
+<li>heap堆，动态申请的内存</li>
+<li>text代码段，存放着实际执行的指令代码，是只读的</li>
+</ul>
+<p>根据这些我们可以知道，stack和heap是程序运行时才会使用到，那么elf文件中基本存储的就是<strong>data数据段</strong>，也就是全局变量和静态变量，以及执行的<strong>text代码段</strong>。</p>
+<p>实际上，数据段在程序中被分成了两部分来存储分别是<strong>data</strong>和<strong>bss</strong>段。data段存储已经初始化的静态变量和全局变量，bss段存储没有初始化额静态变量和全局变量。如果是被初始化为<strong>0</strong>的静态变量或者全局变量也会被存放到bss段。为什么会专门分成data和bss两部分呢？</p>
+<p>对data段来说每一个变量都需要有一个<strong>值</strong>，而bss段中则不需要，只需要记录<strong>变量本身的长度</strong>，在操作系统加载程序时才会将这些bss段的变量初始化为0，节省了elf文件的空间。</p>
+<h1 id="三、ELF实际组成"><a href="#三、ELF实际组成" class="headerlink" title="三、ELF实际组成"></a>三、ELF实际组成</h1><ul>
+<li><h3 id="ELF头："><a href="#ELF头：" class="headerlink" title="ELF头："></a>ELF头：</h3><p>包含了elf文件的总体信息，包括文件的类型（可执行文件、目标文件、链接库），目标机器的架构，程序入口点的位置等等基础信息。</p>
+</li>
+<li><h3 id="ProgramHeaderTable"><a href="#ProgramHeaderTable" class="headerlink" title="ProgramHeaderTable"></a>ProgramHeaderTable</h3><p>程序头表描述了程序在内存中的布局，也就是描述了各个段的大小、内存位置等等信息，在加载这个elf文件时根据程序头表将elf文件中的段加载到内存的各个位置。</p>
+</li>
+<li><h3 id="SectionHeaderTable"><a href="#SectionHeaderTable" class="headerlink" title="SectionHeaderTable"></a>SectionHeaderTable</h3><p>段表描述了各个段在整个文件中的布局，包括**.code、.data、.bss<strong>还有</strong>符号表**等等，每一个段都有自己的属性，在文件中的偏移地址。</p>
+</li>
+<li><h3 id="实际数据"><a href="#实际数据" class="headerlink" title="实际数据"></a>实际数据</h3><p>这部分就是在上面的段表中描述的各个段的实际数据。</p>
+</li>
+<li></li>
+</ul>
 <h1 id="生成静态链接库和动态链接库"><a href="#生成静态链接库和动态链接库" class="headerlink" title="生成静态链接库和动态链接库"></a>生成静态链接库和动态链接库</h1><h2 id="1-静态链接库"><a href="#1-静态链接库" class="headerlink" title="1. 静态链接库"></a>1. 静态链接库</h2><ul>
 <li><p>将.c文件编译成目标文件.o</p>
 <div class="code-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">gcc -c myfunc.c</span><br></pre></td></tr></table></figure></div>
@@ -2500,5 +2556,265 @@
     <url>/2024/11/22/%E7%BC%96%E8%AF%91%E5%99%A8%E5%9F%BA%E7%A1%80%E4%BA%86%E8%A7%A3/</url>
     <content><![CDATA[<h1 id="编译器组成"><a href="#编译器组成" class="headerlink" title="编译器组成"></a>编译器组成</h1><p>编译器由前端、中间代码优化、后端三部分组成。<br><strong>前端</strong>负责识别代码语法，将代码转化成中间代码。<br><strong>中间代码优化</strong>一定程度上和语言无关，进行优化后将中间代码传给后端。<br><strong>后端</strong>负责将中间代码转化成目标平台的可执行代码。</p>
 <h1 id="LLVM"><a href="#LLVM" class="headerlink" title="LLVM"></a>LLVM</h1>]]></content>
+  </entry>
+  <entry>
+    <title>Cmake学习</title>
+    <url>/2024/12/20/Cmake%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<h1 id="Cmake基础"><a href="#Cmake基础" class="headerlink" title="Cmake基础"></a>Cmake基础</h1>]]></content>
+  </entry>
+  <entry>
+    <title>6.S081课程实验</title>
+    <url>/2024/12/05/6-S081%E8%AF%BE%E7%A8%8B%E5%AE%9E%E9%AA%8C/</url>
+    <content><![CDATA[<h1 id="Lab1-环境搭建"><a href="#Lab1-环境搭建" class="headerlink" title="Lab1:环境搭建"></a>Lab1:环境搭建</h1><p><em>这里根据官方教程并不能够有预想的效果，所以就尝试理解原理并逐步安装所需要的工具。撰写本文的时间是2024&#x2F;12&#x2F;5，所有的软件版本和github仓库都以目前的时间为准。</em></p>
+<p>目前使用的环境是</p>
+<ul>
+<li>Windows11 24H2</li>
+<li>WSL2</li>
+<li>Ubuntu 22.04LTS</li>
+</ul>
+<p>在WSL中进行环境的搭建。</p>
+<h2 id="安装riscv-gnu-toolchain"><a href="#安装riscv-gnu-toolchain" class="headerlink" title="安装riscv-gnu-toolchain"></a>安装riscv-gnu-toolchain</h2><p>实验使用的xv6操作系统现在只有riscv的版本还在维护，所以我们使用riscv的交叉编译工具链来编译xv6系统，并运行在<strong>qemu</strong>的虚拟机上。</p>
+<p>在这里直接按照官方教程中的进行操作。</p>
+<p><code>sudo apt-get install git build-essential gdb-multiarch qemu-system-misc gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu </code></p>
+<p>这样就安装了交叉编译环境。</p>
+<h2 id="安装qemu虚拟机"><a href="#安装qemu虚拟机" class="headerlink" title="安装qemu虚拟机"></a>安装qemu虚拟机</h2><p>qemu是一个开源的虚拟机平台，可以在多个平台上模拟出各种指令集和操作系统，并且支持虚拟化加速（WSL就是Windows下的虚拟机，再套一层qemu虚拟机，目前不清能不能够加速）。一般来说要使用qemu模拟器都是在linux环境下使用。</p>
+<p>按照上面的命令直接下载APT包的<code>qemu-system-misc</code>是比较新的一个版本，会出现一些兼容性问题（我直接下载得到的6.1.0版本在启动xv6系统时直接卡住没法启动）。</p>
+<p>所以我们在这里尝试直接安装旧版本的qemu虚拟机。</p>
+<div class="code-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://download.qemu.org/qemu-4.1.0.tar.xz #获取qemu虚拟机安装包</span><br><span class="line">tar xf qemu-4.1.0.tar.xz #解压包</span><br><span class="line"></span><br><span class="line">./configure --disable-kvm --disable-werror --prefix=/usr/local/bin --target-list=&quot;riscv64-softmmu&quot; #配置自动生成</span><br><span class="line">make #编译项目</span><br><span class="line">sudo make install #安装程序</span><br></pre></td></tr></table></figure></div>
+
+<p>其中<strong>prefix</strong>命令指示着安装的位置，这里建议直接安装到**&#x2F;usr&#x2F;local&#x2F;bin**。</p>
+<p>安装之后运行命令<code>qemu-system-riscv64 -version</code>得到版本号为<code>4.1.0</code>则为成功。</p>
+<h2 id="拉取XV6系统的代码并编译"><a href="#拉取XV6系统的代码并编译" class="headerlink" title="拉取XV6系统的代码并编译"></a>拉取XV6系统的代码并编译</h2><p>在官方教程里提供的包因为一种莫名其妙原因无法拉取，暂时未解决，直接找了xv6的源码仓库拉取，然后进行编译。</p>
+<div class="code-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">make</span><br><span class="line">make qemu</span><br></pre></td></tr></table></figure></div>
+
+<p>不出意外的话在这里就可以正常的启动xv6的操作系统了。</p>
+<div class="code-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">xv6 kernel is booting</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">hart 2 starting</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">hart 1 starting</span></span><br></pre></td></tr></table></figure></div>
+
+<p>之后如果需要启动xv6操作系统，可以直接在源代码文件夹下使用命令</p>
+<div class="code-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">qemu-system-riscv64 -machine virt -bios none -kernel kernel/kernel -m 128M -smp 3 -nographic -drive file=fs.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0</span><br></pre></td></tr></table></figure></div>
+
+<p>如果要在别的地方使用这个命令，kernel和fs.img需要添加文件的绝对位置。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Git拉取代码时报错repositoryNotFound</title>
+    <url>/2024/12/05/Git%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E6%97%B6%E6%8A%A5%E9%94%99repositoryNotFound/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Keil6和vscode</title>
+    <url>/2024/12/24/Keil6%E5%92%8Cvscode/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Keil调试STM32以及性能监控</title>
+    <url>/2024/12/17/Keil%E8%B0%83%E8%AF%95STM32%E4%BB%A5%E5%8F%8A%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/</url>
+    <content><![CDATA[<h1 id="一、Keil调试"><a href="#一、Keil调试" class="headerlink" title="一、Keil调试"></a>一、Keil调试</h1><p>Keil调试分为硬件调试和软件仿真两部分。</p>
+<p>尽管软件模拟已经很接近真实环境了，但是归根结底不如直接硬件调试。</p>
+<p>调试过程中，可以查看各种寄存器的值，各种变量的值，以及直接查看RAM和ROM中某个地址的值。</p>
+<p>在Keil中</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Keil报错Cannot Load Flash Device Description!</title>
+    <url>/2024/12/18/Keil%E6%8A%A5%E9%94%99Cannot-Load-Flash-Device-Description/</url>
+    <content><![CDATA[<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>使用Keil打开Cubemx创建的工程文件，编写好代码进行烧录时报错”Cannot Load Flash Device Description”，点击确定后提示Error:Flash Download failed - “Cortex-M4”。</p>
+<h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><p>结合别人的博客和官方教程得知是因为从cubemx生成的项目和使用的MDK版本不匹配，导致项目的Flash下载算法不正确。所以只要选择一个正确的Flash下载算法就可以了。</p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>点开<strong>魔法棒</strong>-&gt;<strong>Utilities</strong>，在上面这部分有一个<strong>Settings</strong>按钮，在下面点击<strong>Add</strong>添加一个下载算法，选择自己使用的芯片和对应Flash大小就可以了。</p>
+]]></content>
+      <categories>
+        <category>问题解决</category>
+      </categories>
+      <tags>
+        <tag>嵌入式开发</tag>
+        <tag>STM32</tag>
+        <tag>Keil</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LZ4编译Windows库文件</title>
+    <url>/2024/12/18/LZ4%E7%BC%96%E8%AF%91Windows%E5%BA%93%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Linux下小工具使用</title>
+    <url>/2024/12/23/Linux%E4%B8%8B%E5%B0%8F%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="DD"><a href="#DD" class="headerlink" title="DD"></a>DD</h2><p>截取一个二进制文件的数据。</p>
+<p>使用：</p>
+<div class="code-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">dd if=inputfilename of=outputfilename bs=1 count=20000</span><br></pre></td></tr></table></figure></div>
+
+<p>bs是输入输出的块大小，count是块的数量。可以使用<code>skip=N</code>跳过输入文件的前N个块位置，<code>seek=N</code>跳过输出文件的前N个块位置。</p>
+<h3 id="Hexdump"><a href="#Hexdump" class="headerlink" title="Hexdump"></a>Hexdump</h3><p>查看一个二进制文件里面的数据。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Linux下开发STM32环境搭建</title>
+    <url>/2024/12/17/Linux%E4%B8%8B%E5%BC%80%E5%8F%91STM32%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<h1 id="一、大致思路"><a href="#一、大致思路" class="headerlink" title="一、大致思路"></a>一、大致思路</h1><p>本次搭建环境的大致思路是</p>
+<ul>
+<li>Windows + wsl</li>
+<li>Cubemx进行基础配置和makefile的生成</li>
+<li>vscode进行项目开发</li>
+<li>gcc-arm-none-eabi交叉编译工具链进行项目编译</li>
+<li>OpenOCD进行代码的烧录</li>
+<li>配合GDBserver进行调试</li>
+</ul>
+<p>本质上进行一个嵌入式项目的开发，写代码，编译成可执行文件，将可执行文件烧录到嵌入式平台上，就是我们要做的所有的事情。对使用集成开发环境来说，我们不需要关系如何编译，如何烧录，只需要进行项目的构建和代码的编写，最后按下编译和烧录还有调试按钮。而在这篇教程中我们将尝试自己从头构建项目，STM32所需要的所有启动文件放到项目中，然后构建一个<strong>makefile</strong>来规定如何进行编译，最后使用<strong>OpenOCD</strong>工具进行可执行文件的烧录，以及通过<strong>GDBserver</strong>进行代码在嵌入式平台上的调试。</p>
+<h1 id="二、Cubemx安装"><a href="#二、Cubemx安装" class="headerlink" title="二、Cubemx安装"></a>二、Cubemx安装</h1><p>对于WSL这里默认已经配置好了。如果没有配置好可以去微软官网上自己尝试配置，不会花太长时间。或者使用其他的虚拟机也可以，但是使用WSL和vscode配合会非常简单而流畅。</p>
+<p>这里到了第一个难点。</p>
+<p>在我们的大致思路中需要makefile来进行项目的编译，但是如果要我们从头自己写一个这样的makefile是非常困难的事情，所以将使用st官方提供的Cubemx来进行makefile的生成。</p>
+<h4 id="踩坑：请不要在linux平台上使用Cubemx。"><a href="#踩坑：请不要在linux平台上使用Cubemx。" class="headerlink" title="踩坑：请不要在linux平台上使用Cubemx。"></a>踩坑：请不要在linux平台上使用Cubemx。</h4><p>Cubemx并不是开源软件，并不能够自行在MacOS或者Linux上进行编译。ST用了java来做跨平台，这里关于java跨平台的具体细节我就不再详细了解，但是这个没有对Linux平台做过适配的软件显然是可能出问题的。在我的WSL上根据教程安装了之后，并不能够正常启动。<em>或许也有可能是因为WSL没有图形化界面，但是Linux版本的Cubemx是自带的图形界面的。最终安装成功后进行启动并没有成功，所以在WSL环境或者Linux环境下尽可能不要使用Cubemx。</em></p>
+<p>回到Windows平台的Cubemx的安装上来，可以选择去ST的”<a class="link"   href="https://www.st.com.cn/zh/development-tools/stm32cubemx.html" >官网<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“找到安装包，可能过程比较麻烦，需要邮箱接收下载地址的。下载的时候不要使用迅雷进行接管，直接使用浏览器自带的下载器进行下载。并且下载过程中<strong>概率</strong>出现下载的zip包不完整的情况，在我这里的概率是100%。所以我干脆直接找了别人的网盘链接下载并安装。</p>
+<p>在安装Cubemx之前，请确保自己的java环境是OK的。在“<a class="link"   href="https://www.java.com/zh-CN/" >java<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“官网上下载软件。点击下载然后找到适合自己的版本下载并安装即可。</p>
+<p>安装java之后即可开始Cubemx的安装，安装过程也没有什么好注意的都是一路next。</p>
+<h2 id="Cubemx配置"><a href="#Cubemx配置" class="headerlink" title="Cubemx配置"></a>Cubemx配置</h2><p>安装Cubemx之后打开Cubemx进行配置，请移步另一篇博客“<a href="">STM32Cubemx教程</a>”这里不再赘述。</p>
+<h1 id="三、工具链和openocd安装"><a href="#三、工具链和openocd安装" class="headerlink" title="三、工具链和openocd安装"></a>三、工具链和openocd安装</h1><p>按理说我们在这里需要安装交叉编译的工具链，但是对<code>arm-none-eabi-gcc</code>这个交叉编译工具链来说，会稍微有一些麻烦。</p>
+<p>在我的Ubuntu22.04LTS中，apt包管理器中下载的<code>arm-none-eabi-gcc</code>并不直接包含<code>gdb</code>，如果手动下载<code>gdb-arm-none-eabi</code>的话则会以<code>gdb-multiarch</code>代替它。在这里可以选择自己下载交叉编译的工具链然后进行解压到一个位置，再把文件夹加入到环境变量中。</p>
+<p>在这里我并没有采用上面的方法，我直接使用apt进行了下载，分别下载了<code>arm-none-eabi-gcc</code>和<code>gdb-multiarch</code>。</p>
+<div class="code-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install arm-none-eabi-gcc</span><br><span class="line">sudo apt-get install arm-none-eabi-gdb</span><br><span class="line">arm-none-eabi-gcc -v #gcc版本</span><br><span class="line">gdb-multiarch -v #gdb版本</span><br></pre></td></tr></table></figure></div>
+
+<p>这两个工具并没有被下载到<code>/usr/local/bin</code>中，而是到了<code>/usr/bin</code>中。対编译来说这是无所谓的，makefile能够自动找到编译器的位置，但是调试时我们是需要gdb的具体位置的。</p>
+<p>接下来下载openocd。</p>
+<div class="code-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install openocd</span><br><span class="line">openocd -v #openocd版本</span><br></pre></td></tr></table></figure></div>
+
+<p>到这里为止我们基本把需要的工具和依赖处理完了。</p>
+<h1 id="四、配置部分内容"><a href="#四、配置部分内容" class="headerlink" title="四、配置部分内容"></a>四、配置部分内容</h1><p>Cubemx给我们生成的项目文件并不完美，需要我们完善一个地方。</p>
+<p>为了在调试过程中能够看到寄存器的数值，调试器需要知道寄存器的分布，我们需要找到SVD文件。</p>
+<p>在Windows下的keil中如果下载过对应芯片的Pack，可以在<strong>Keil文件夹</strong>下<code>ARM/PACK/Keil/STM32xxxx_DFP/x.x.x/CMSIS/SVD/</code>，在这里找到自己的芯片或者开发板对应的svd，并将这个文件爱你拷贝到项目的主目录中。</p>
+<p>另外openocd给出的配置文件中可能存在一些问题。</p>
+<p>启用openocd时需要指出使用的下载器和芯片类型，在我这里就是stlinkv2和stm32h723。</p>
+<p>对stlinkv2来说这个文件没有什么用，会将配置文件直接导向stlink.cfg，即只需要选择stlink.cfg就可以。</p>
+<p>对于stm32h7x.cfg这个文件，存在一个可能会报错的地方。我们进入到文件中找到<code>reset_config srst_only</code>这个地方，将后面的<code>srst_only</code>这个东西改成<code>none</code>就可以了。</p>
+<p><em><strong>如果Debug时没有出现问题应该就不需要修改这里</strong></em></p>
+<h1 id="五、尝试启动测试"><a href="#五、尝试启动测试" class="headerlink" title="五、尝试启动测试"></a>五、尝试启动测试</h1><p>对项目进行<code>make</code>编译，得到中间文件和可执行文件在<code>build</code>文件夹下。</p>
+<p>启动openocd。后面的两部分根据自己的下载器类型和芯片类型进行更改，在<code>/usr/share/openocd/scripts</code>中可以找到<code>interface</code>和<code>target</code>两个文件夹。</p>
+<div class="code-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">openocd -f interface/stlink-v2.cfg -f target/stm32h7x.cfg</span><br></pre></td></tr></table></figure></div>
+
+<p>然后打开另一个终端，输入运行以下命令。</p>
+<div class="code-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">telnet localhost 4444 #连接openocd</span><br><span class="line">program /home/···/build/···.bin #烧录可执行文件，一定是完整的路径</span><br><span class="line">reset #复位</span><br><span class="line">exit #退出openocd连接</span><br></pre></td></tr></table></figure></div>
+
+<p>这样就顺利进行了代码的烧录。</p>
+<h1 id="六、编写json脚本一键编译烧录调试"><a href="#六、编写json脚本一键编译烧录调试" class="headerlink" title="六、编写json脚本一键编译烧录调试"></a>六、编写json脚本一键编译烧录调试</h1><p>创建<code>launch.json</code>和<code>tasks.json</code>。</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// 使用 IntelliSense 了解相关属性。 </span></span><br><span class="line">    <span class="comment">// 悬停以查看现有属性的描述。</span></span><br><span class="line">    <span class="comment">// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;executable&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./build/clock_test.elf&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Debug with OpenOCD&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cortex-debug&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;servertype&quot;</span><span class="punctuation">:</span> <span class="string">&quot;openocd&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;configFiles&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">            <span class="string">&quot;/usr/share/openocd/scripts/interface/stlink-v2.cfg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="string">&quot;/usr/share/openocd/scripts/target/stm32h7x.cfg&quot;</span></span><br><span class="line">        <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;searchDir&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;runToEntryPoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;main&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;showDevDebugOutput&quot;</span><span class="punctuation">:</span> <span class="string">&quot;none&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;gdbPath&quot;</span><span class="punctuation">:</span><span class="string">&quot;/usr/bin/gdb-multiarch&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;svdFile&quot;</span><span class="punctuation">:</span><span class="string">&quot;STM32H723.svd&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Build&quot;</span><span class="punctuation">,</span></span><br><span class="line">         <span class="attr">&quot;liveWatch&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;samplesPerSecond&quot;</span><span class="punctuation">:</span> <span class="number">4</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// See https://go.microsoft.com/fwlink/?LinkId=733558</span></span><br><span class="line">    <span class="comment">// for the documentation about the tasks.json format</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;tasks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Build&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;shell&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;make&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>其中，<code>launch.json</code>中的<code>executable,configFiles,svdFile</code>需要根据自己的项目来，如果使用的是自己下载的交叉编译工具链，则需要将<code>gdbPath</code>改成<code>armToolchainPath</code>，值为自己的交叉编译工具链的位置。</p>
+<h1 id="七、调试"><a href="#七、调试" class="headerlink" title="七、调试"></a>七、调试</h1><p>在需要调试的位置打上断点，按下F5就会进行编译，烧录，调试一系列的流程。在左边可以看到变量的值，cpu寄存器的值，还有下面外设寄存器的值。</p>
+<p>然后就像调试普通的vscode项目一样进行调试即可。</p>
+<h1 id="八、Ex"><a href="#八、Ex" class="headerlink" title="八、Ex"></a>八、Ex</h1><p>这样构建的项目只能说非常初级，接下来将深入的开发方式。</p>
+<ul>
+<li><h4 id="使用Cubemx只能HAL库"><a href="#使用Cubemx只能HAL库" class="headerlink" title="使用Cubemx只能HAL库"></a>使用Cubemx只能HAL库</h4></li>
+<li><h4 id="没有加入嵌入式操作系统的调试"><a href="#没有加入嵌入式操作系统的调试" class="headerlink" title="没有加入嵌入式操作系统的调试"></a>没有加入嵌入式操作系统的调试</h4></li>
+<li><h4 id="没有自己手动编写makefile来控制编译过程"><a href="#没有自己手动编写makefile来控制编译过程" class="headerlink" title="没有自己手动编写makefile来控制编译过程"></a>没有自己手动编写makefile来控制编译过程</h4></li>
+<li><h4 id="没有办法看到调试过程中的更多参数比如RAM占用和调试时间"><a href="#没有办法看到调试过程中的更多参数比如RAM占用和调试时间" class="headerlink" title="没有办法看到调试过程中的更多参数比如RAM占用和调试时间"></a>没有办法看到调试过程中的更多参数比如RAM占用和调试时间</h4></li>
+</ul>
+<p>希望接下来能够解决这些问题。</p>
+]]></content>
+      <tags>
+        <tag>嵌入式开发</tag>
+        <tag>STM32</tag>
+        <tag>STM32Cubemx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pip包管理器</title>
+    <url>/2024/12/05/Pip%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Linux可运行软件位置和环境变量</title>
+    <url>/2024/12/05/Linux%E5%8F%AF%E8%BF%90%E8%A1%8C%E8%BD%AF%E4%BB%B6%E4%BD%8D%E7%BD%AE%E5%92%8C%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[<p><strong>在Linux中运行软件就是一行命令的事，但是这些运行的软件具体在哪呢？</strong></p>
+<h1 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h1><p>任何一个软件都可以将其文件夹放到环境变量中，就可以使用命令唤起这个软件。</p>
+<p>使用包管理器安装的软件会被默认安装到**&#x2F;usr&#x2F;bin**的位置中。</p>
+<p>而自己编译的软件要看软件的编译脚本安装到什么位置，一般是**&#x2F;usr&#x2F;local&#x2F;bin**中。</p>
+<p>上面两个文件夹都在<strong>环境变量PATH</strong>中，所以可以被直接执行。并且**&#x2F;usr&#x2F;local&#x2F;bin<strong>文件夹在PATH环境变量中比</strong>&#x2F;usr&#x2F;bin**更加靠前，也就是说会优先调用用户自己编译出来的应用程序。</p>
+<h1 id="所有的-bin文件夹"><a href="#所有的-bin文件夹" class="headerlink" title="所有的&#x2F;bin文件夹"></a>所有的&#x2F;bin文件夹</h1><ul>
+<li><p>&#x2F;bin 存放所有用户皆可用的系统程序，系统启动或者系统修复时可用（在没有挂载 &#x2F;usr 目录时就可以使用）</p>
+</li>
+<li><p>&#x2F;sbin 存放超级用户才能使用的系统程序</p>
+</li>
+<li><p>&#x2F;usr&#x2F;bin 存放所有用户都可用的应用程序</p>
+</li>
+<li><p>&#x2F;usr&#x2F;sbin 存放超级用户才能使用的应用程序</p>
+</li>
+<li><p>&#x2F;usr&#x2F;local&#x2F;bin 存放所有用户都可用的与本地机器无关的程序</p>
+</li>
+<li><p>&#x2F;usr&#x2F;local&#x2F;sbin 存放超级用户才能使用的与本地机器无关的程序</p>
+</li>
+</ul>
+<h1 id="开源软件安装指南"><a href="#开源软件安装指南" class="headerlink" title="开源软件安装指南"></a>开源软件安装指南</h1><p>如果是一个标准的开源项目，将源码解包之后怎么才能安装呢？</p>
+<div class="code-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">./configure -prefix=/usr/local</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure></div>
+
+<p>第一条命令<code>configure</code>是由项目开发者提供的命令，用来自己配置编译和安装的过程，并且会生成一个makefile文件以供接下来使用。<code>prefix</code>命令用来指定安装位置，一般来说是**&#x2F;usr&#x2F;local**，也有的默认安装位置就是这样。</p>
+<p>第二条命令<code>make</code>就是根据makefile编译源文件。</p>
+<p>第三条命令就是根据makefile中的install目标，进行软件的安装，会直接安装到对应位置。</p>
+<p>软件被安装的位置就是选择的安装位置的**&#x2F;bin<strong>文件夹中，已经被默认包含在环境变量中的，所以就可以直接使用软件了。软件的其他文件比如库文件，也都会在安装位置的</strong>&#x2F;lib**文件夹，同样的别的资源文件都会放在对应的文件夹中。</p>
+<p>如果开发者在makefile中预留了<strong>uninstall</strong>构建目标，还可以使用<code>make uninstall</code>命令来卸载软件。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>STM32教程之HAL库开发</title>
+    <url>/2024/12/17/STM32%E6%95%99%E7%A8%8B%E4%B9%8BHAL%E5%BA%93%E5%BC%80%E5%8F%91/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>STM32Cubemx教程</title>
+    <url>/2024/12/17/STM32Cubemx%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="一、创建项目"><a href="#一、创建项目" class="headerlink" title="一、创建项目"></a>一、创建项目</h1><p>三种创建项目的方法，一般可以使用前两种分别是选择<strong>MCU</strong>和选择<strong>ST官方开发板</strong>。</p>
+<p>这里以<strong>MCU</strong>为例，选择MCU的core和系列然后找到具体型号。</p>
+<p>然后点击右上角<strong>Start Project</strong>，开始配置项目。</p>
+<h1 id="二、项目配置"><a href="#二、项目配置" class="headerlink" title="二、项目配置"></a>二、项目配置</h1><p>接下来进入到具体的项目基础配置。</p>
+<h2 id="Pinout-Configuration"><a href="#Pinout-Configuration" class="headerlink" title="Pinout&amp;Configuration"></a>Pinout&amp;Configuration</h2><p>在这里可以初始化自己需要使用的外设，就不需要在项目中自己调用函数或者配置寄存器进行外设的初始化了。</p>
+<p>在右边有一张芯片的大图，在这张图中可以直接点击引脚，在每个引脚上有可以选择的各种功能比如<strong>USART</strong>或者<strong>I2C</strong>，也可以单纯的只配置GPIO输入输出。在右下角可以点击搜索找到自己需要的引脚。</p>
+<p>在最左边一列是可配置的外设。</p>
+<p>最基本需要配置的外设是<strong>RCC时钟</strong>和<strong>SYS时钟</strong>。RCC时钟不用多说，只要选择好使用哪个时钟源即可，后面还可以进一步手动配置<strong>锁相环</strong>和<strong>分频器</strong>给特定外设提供自己需要的频率。SYS时钟是一个使用<strong>HAL库</strong>才会需要的参数东西，简单来说就是提供一个全局的可用时钟，用来实现HAL提供的Delay操作。</p>
+<h2 id="Clock-Configuration"><a href="#Clock-Configuration" class="headerlink" title="Clock Configuration"></a>Clock Configuration</h2><p>在这里可以进行详细的时钟配置，也就是所谓的RCC时钟树。</p>
+<p>最左边的是时钟源，包括内部外部高速低速时钟。右边是使用时钟的外设，包括一些总线和TIM定时器等等。</p>
+<h2 id="Project-Manager"><a href="#Project-Manager" class="headerlink" title="Project Manager"></a>Project Manager</h2><p>在这里控制整个项目的生成，比较关键的参数就是生成的位置和生成的项目类型。在项目类型这里，如果是使用Windows平台下的MDK进行开发，则选择MDK-ARM，如果是使用vscode进行开发，则使用makefile选项。</p>
+<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h2><p>暂时没用到过，将来会更新更详细的整体配置和使用。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>实用教程</category>
+      </categories>
+      <tags>
+        <tag>嵌入式开发</tag>
+        <tag>STM32</tag>
+        <tag>Keil</tag>
+        <tag>STM32Cubemx</tag>
+        <tag>HAL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>压缩算法BenchMark使用</title>
+    <url>/2024/12/10/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95BenchMark%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>LZbench是一个通用的</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>性能分析工具gprof</title>
+    <url>/2024/12/19/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7gprof/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>折腾编译器Clang+LLVM</title>
+    <url>/2024/12/20/%E6%8A%98%E8%85%BE%E7%BC%96%E8%AF%91%E5%99%A8Clang-LLVM/</url>
+    <content><![CDATA[<h1 id="一、编译安装LLVM"><a href="#一、编译安装LLVM" class="headerlink" title="一、编译安装LLVM"></a>一、编译安装LLVM</h1><p>在github上找到LLVMProject并下载。</p>
+<p>这里整个项目过大，在我的机器上<code>git clone</code>会出现一定的问题，所以直接选择下载zip文件并解压缩。</p>
+<p>在LLVM的官方文档中有构建的教程，这里对整体的过程做一个记录。</p>
+<p>进入到LLVM的目录中，执行<code>cmake -S llvm -B build -G &quot;Unix Makefiles -DCMAKE_BUILD_TYPE=Release&quot; </code>。在这里我是用的构建工具是make，所以中间那个Generator选择“Unix Makefiles”，后面的构建类型可以选择Release构建出发行版。</p>
+<p>之后就会在build文件夹下生成makefile了，可以到build文件夹下进行<code>make</code>。这里我们选择直接按照官方教程来<code>cmake --build build</code>，对于不是<code>Unix Makefiles</code>的构建工具，也可以使用这个命令。接下来就是等待漫长的编译时间。</p>
+<p><em>在这一步进行编译时，如果是<code>make</code>构架工具可以加上<code>-j Numberofcpus</code>来进行加速因为<code>make</code>构建<strong>默认没有多线程！</strong></em></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>编译器死代码消除</title>
+    <url>/2024/12/19/%E7%BC%96%E8%AF%91%E5%99%A8%E6%AD%BB%E4%BB%A3%E7%A0%81%E6%B6%88%E9%99%A4/</url>
+    <content><![CDATA[<h1 id="一、编译过程"><a href="#一、编译过程" class="headerlink" title="一、编译过程"></a>一、编译过程</h1><p>源文件经过预编译，编译，汇编，链接这些过程，最终得到可执行文件。</p>
+<p>预编译阶段处理宏定义、注释等等。</p>
+<p>编译阶段将执行<strong>词法分析、语法分析、语法分析、语义分析和中间代码生成</strong>，可能还会进行中间代码优化。</p>
+]]></content>
   </entry>
 </search>

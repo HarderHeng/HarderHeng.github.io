@@ -608,15 +608,15 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">53</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">56</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">13</div>
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">60</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">77</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -653,7 +653,7 @@
 				<div class="author flex items-center">
 					<span class="name text-default-text-color text-lg font-semibold">HarderHeng</span>
 					
-					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv4</span>
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv5</span>
 					
 				</div>
 				<div class="meta-info">
@@ -667,8 +667,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-10-15 14:22:19</span>
-            <span class="mobile">2024-10-15 14:22:19</span>
+            <span class="desktop">2024-12-23 15:24:58</span>
+            <span class="mobile">2024-12-23 15:24:58</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -730,15 +730,15 @@
 
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			<h3 id="一、Makefile是什么"><a href="#一、Makefile是什么" class="headerlink" title="一、Makefile是什么"></a>一、Makefile是什么</h3><p>makefile定义了一些规则来制定项目如何进行编译。</p>
+			<h1 id="一、Makefile是什么"><a href="#一、Makefile是什么" class="headerlink" title="一、Makefile是什么"></a>一、Makefile是什么</h1><p>makefile定义了一些规则来制定项目如何进行编译。</p>
 <p>makefile中包含了一系列的**目标(Targets)<strong>和</strong>规则(Rules)**。</p>
 <p>目标通常是文件名，并且大概率是.o文件。紧跟着的生成这个文件的规则，通常是其源文件和编译的命令。<strong>编译的命令也可以是能够命令行执行的命令。</strong></p>
 <p>除了目标和规则，makefile也可以用来指定编译器的某些行为例如使用哪一个编译器或者编译器优化等级等等。</p>
-<h3 id="二、Makefile基础"><a href="#二、Makefile基础" class="headerlink" title="二、Makefile基础"></a>二、Makefile基础</h3><h4 id="1、目标"><a href="#1、目标" class="headerlink" title="1、目标"></a>1、目标</h4><ul>
+<h1 id="二、Makefile基础"><a href="#二、Makefile基础" class="headerlink" title="二、Makefile基础"></a>二、Makefile基础</h1><h2 id="1、目标"><a href="#1、目标" class="headerlink" title="1、目标"></a>1、目标</h2><ul>
 <li>makefile文件直接命名为<strong>makefile</strong>才能让make工具识别。</li>
 <li>makefile的编写规则为目标+编写规则，在目标名后面加上<code>：</code>就代表这是一个目标的条目</li>
 </ul>
-<div class="highlight-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">all:</span></span><br><span class="line">	@echo <span class="string">&quot;HelloWorld&quot;</span>\</span><br><span class="line"><span class="comment">#目标名为all,在构建目标时执行echo命令，加上@后在命令行里就不会打印多余的内容</span></span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">all:</span></span><br><span class="line">	@echo <span class="string">&quot;HelloWorld&quot;</span>\</span><br><span class="line"><span class="comment">#目标名为all,在构建目标时执行echo命令，加上@后在命令行里就不会打印多余的内容</span></span><br></pre></td></tr></table></figure></div>
 
 <p><img  
                      lazyload
@@ -748,8 +748,8 @@
                 ></p>
 <ul>
 <li><p>如果在同一个makefile中定义了多个目标，然后直接在命令行中执行<code>make</code>命令，就会执行makefile中的第一个目标。当然也可以自己指定要构建的目标。</p>
-<h4 id="2、依赖"><a href="#2、依赖" class="headerlink" title="2、依赖"></a>2、依赖</h4><p>依赖是包含在规则中的一部分，如果一个目标依赖于另一个目标，那么就要依次先构建依赖的关系目标，才能构建当前的目标。</p>
-<div class="highlight-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">all: test</span></span><br><span class="line">	@echo <span class="string">&quot;HelloWorld&quot;</span></span><br><span class="line"><span class="section">test:</span></span><br><span class="line">	@echo <span class="string">&quot;test&quot;</span></span><br><span class="line"><span class="comment">#在构建目标all时，会先构建其先决条件test目标</span></span><br></pre></td></tr></table></figure></div>
+<h2 id="2、依赖"><a href="#2、依赖" class="headerlink" title="2、依赖"></a>2、依赖</h2><p>依赖是包含在规则中的一部分，如果一个目标依赖于另一个目标，那么就要依次先构建依赖的关系目标，才能构建当前的目标。</p>
+<div class="code-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">all: test</span></span><br><span class="line">	@echo <span class="string">&quot;HelloWorld&quot;</span></span><br><span class="line"><span class="section">test:</span></span><br><span class="line">	@echo <span class="string">&quot;test&quot;</span></span><br><span class="line"><span class="comment">#在构建目标all时，会先构建其先决条件test目标</span></span><br></pre></td></tr></table></figure></div>
 
 <p><img  
                      lazyload
@@ -757,15 +757,15 @@
                      data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240409214548703.png"
                       alt="image-20240409214548703"
                 ></p>
-<h4 id="3、规则"><a href="#3、规则" class="headerlink" title="3、规则"></a>3、规则</h4><p>一条目标的条目其实也就是一个整个规则，由<strong>目标</strong>、<strong>依赖</strong>和<strong>命令</strong>组成。其中依赖必须在构建该目标之前就已经满足，这个依赖也可以是其他的目标，也就是会被先构建出来才会构建原本的目标。规则的命令需要能够生成出目标，才能被其他目标作为依赖。</p>
+<h2 id="3、规则"><a href="#3、规则" class="headerlink" title="3、规则"></a>3、规则</h2><p>一条目标的条目其实也就是一个整个规则，由<strong>目标</strong>、<strong>依赖</strong>和<strong>命令</strong>组成。其中依赖必须在构建该目标之前就已经满足，这个依赖也可以是其他的目标，也就是会被先构建出来才会构建原本的目标。规则的命令需要能够生成出目标，才能被其他目标作为依赖。</p>
 </li>
 </ul>
-<h3 id="三、Makefile的特性"><a href="#三、Makefile的特性" class="headerlink" title="三、Makefile的特性"></a>三、Makefile的特性</h3><h4 id="1、不重复构建"><a href="#1、不重复构建" class="headerlink" title="1、不重复构建"></a>1、不重复构建</h4><p>如果在makefile中以文件作为构建的目标，在执行make的时候就会将对应的文件构建出来，这些文件会一直存在，如果在下一次的构建中这些文件的源文件没有被修改，那么就不会重复构建这些文件。</p>
-<div class="highlight-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#makefile</span></span><br><span class="line"><span class="section">all: main.o helloworld.o</span></span><br><span class="line">        gcc -o main main.o helloworld.o 	<span class="comment">#编译链接出main文件</span></span><br><span class="line">        @echo <span class="string">&quot;Make all&quot;</span></span><br><span class="line"><span class="section">main.o: main.c 						#依赖源文件main.c</span></span><br><span class="line">        gcc -c main.c 				<span class="comment">#编译出main.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make main.o&quot;</span></span><br><span class="line"><span class="section">helloworld.o: helloworld.c 			#依赖源文件helloworld.c</span></span><br><span class="line">        gcc -c helloworld.c 		<span class="comment">#编译出helloworld.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make helloworld.o&quot;</span></span><br></pre></td></tr></table></figure></div>
+<h1 id="三、Makefile的特性"><a href="#三、Makefile的特性" class="headerlink" title="三、Makefile的特性"></a>三、Makefile的特性</h1><h2 id="1、不重复构建"><a href="#1、不重复构建" class="headerlink" title="1、不重复构建"></a>1、不重复构建</h2><p>如果在makefile中以文件作为构建的目标，在执行make的时候就会将对应的文件构建出来，这些文件会一直存在，如果在下一次的构建中这些文件的源文件没有被修改，那么就不会重复构建这些文件。</p>
+<div class="code-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#makefile</span></span><br><span class="line"><span class="section">all: main.o helloworld.o</span></span><br><span class="line">        gcc -o main main.o helloworld.o 	<span class="comment">#编译链接出main文件</span></span><br><span class="line">        @echo <span class="string">&quot;Make all&quot;</span></span><br><span class="line"><span class="section">main.o: main.c 						#依赖源文件main.c</span></span><br><span class="line">        gcc -c main.c 				<span class="comment">#编译出main.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make main.o&quot;</span></span><br><span class="line"><span class="section">helloworld.o: helloworld.c 			#依赖源文件helloworld.c</span></span><br><span class="line">        gcc -c helloworld.c 		<span class="comment">#编译出helloworld.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make helloworld.o&quot;</span></span><br></pre></td></tr></table></figure></div>
 
-<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//main.c</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">void</span> <span class="title function_">helloworld</span><span class="params">()</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">        helloworld();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//main.c</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">void</span> <span class="title function_">helloworld</span><span class="params">()</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">        helloworld();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
-<div class="highlight-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//helloworld.c</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">helloworld</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;HelloWorld&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//helloworld.c</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">helloworld</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;HelloWorld&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
 <p><img  
                      lazyload
@@ -776,7 +776,7 @@
 <p>执行了两次make,可以看到后一次make并没有构建目标<code>main.o</code>和<code>helloworld.o</code>，因为前一次make已经生成了这两个文件，并且在后一次make时会自动识别<code>main.c</code>和<code>helloworld.c</code>是否发生了更新时间的变化，也就是是否进行了更改，如果<code>.c</code>源文件没有被更改，make就认为要构建的目标<code>main.o</code>和<code>helloworld.o</code>也是最新的不需要进行重新构建。</p>
 <p><em><strong>那为什么all会被重新构建呢？</strong></em></p>
 <p>因为构建目标是<strong>all</strong>而不是gcc的目标<strong>main</strong>，main文件已经存在了但是目标all并不存在，关键在于要构建的目标是否存在。</p>
-<h4 id="2、假目标"><a href="#2、假目标" class="headerlink" title="2、假目标"></a>2、假目标</h4><p>有时候我们构建出一个目标后，这个目标已经存在那么在进行重新构建时就不会执行任何该目标下的命令。但是有时我们需要该目标下除了<strong>构建这个目标的命令之外的命令</strong>，就需要想办法暂时屏蔽掉<strong>不重复构建的特性</strong>，这时候就可以用到假目标。</p>
+<h2 id="2、假目标"><a href="#2、假目标" class="headerlink" title="2、假目标"></a>2、假目标</h2><p>有时候我们构建出一个目标后，这个目标已经存在那么在进行重新构建时就不会执行任何该目标下的命令。但是有时我们需要该目标下除了<strong>构建这个目标的命令之外的命令</strong>，就需要想办法暂时屏蔽掉<strong>不重复构建的特性</strong>，这时候就可以用到假目标。</p>
 <p>​																		<em>不使用假目标的效果</em></p>
 <p><img  
                      lazyload
@@ -787,7 +787,7 @@
 <ul>
 <li>假目标就是为了避免所要构建的目标和已经存在的文件重名的情况。</li>
 </ul>
-<div class="highlight-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#makefile</span></span><br><span class="line"><span class="meta"><span class="keyword">.PHONY</span>: main.o</span></span><br><span class="line"><span class="section">all: main.o helloworld.o</span></span><br><span class="line">        gcc -o main main.o helloworld.o 	<span class="comment">#编译链接出main文件</span></span><br><span class="line">        @echo <span class="string">&quot;Make all&quot;</span></span><br><span class="line"><span class="section">main.o: main.c 						#依赖源文件main.c</span></span><br><span class="line">        gcc -c main.c 				<span class="comment">#编译出main.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make main.o&quot;</span></span><br><span class="line"><span class="section">helloworld.o: helloworld.c 			#依赖源文件helloworld.c</span></span><br><span class="line">        gcc -c helloworld.c 		<span class="comment">#编译出helloworld.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make helloworld.o&quot;</span></span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#makefile</span></span><br><span class="line"><span class="meta"><span class="keyword">.PHONY</span>: main.o</span></span><br><span class="line"><span class="section">all: main.o helloworld.o</span></span><br><span class="line">        gcc -o main main.o helloworld.o 	<span class="comment">#编译链接出main文件</span></span><br><span class="line">        @echo <span class="string">&quot;Make all&quot;</span></span><br><span class="line"><span class="section">main.o: main.c 						#依赖源文件main.c</span></span><br><span class="line">        gcc -c main.c 				<span class="comment">#编译出main.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make main.o&quot;</span></span><br><span class="line"><span class="section">helloworld.o: helloworld.c 			#依赖源文件helloworld.c</span></span><br><span class="line">        gcc -c helloworld.c 		<span class="comment">#编译出helloworld.o</span></span><br><span class="line">        @echo <span class="string">&quot;Make helloworld.o&quot;</span></span><br></pre></td></tr></table></figure></div>
 
 <p>使用假目标后，可以进行同一目标的重复构建，此时<code>main.o</code>的构建被单纯的当成一个目标而并非是一个文件，并不会检查此时文件的存在性。</p>
 <p><img  
@@ -796,7 +796,21 @@
                      data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20240409224235265.png"
                       alt="image-20240409224235265"
                 ></p>
-<h4 id="3、变量"><a href="#3、变量" class="headerlink" title="3、变量"></a>3、变量</h4><p>makefile中的变量有点像c语言中的宏定义，只进行字符串的替换。</p>
+<h2 id="3、变量"><a href="#3、变量" class="headerlink" title="3、变量"></a>3、变量</h2><p>makefile中的变量有点像c语言中的宏定义，只进行字符串的替换。</p>
+<div class="code-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SRC = folder</span><br><span class="line"><span class="variable">$(SRC)</span></span><br></pre></td></tr></table></figure></div>
+
+<p>直接定义变量，然后使用变量时就直接<code>$( )</code>进行引用。</p>
+<h3 id="内置变量"><a href="#内置变量" class="headerlink" title="内置变量"></a>内置变量</h3><p>对一条规则来说，需要有<strong>目标</strong>和<strong>依赖</strong>。</p>
+<ul>
+<li>$@：表示目标文件</li>
+<li>$^：表示所有依赖的文件</li>
+<li>$&lt;：表示第一个依赖文件</li>
+</ul>
+<p>这三个内置变量在一条规则内使用则可以直接代表这些意义。</p>
+<h3 id="变量赋值"><a href="#变量赋值" class="headerlink" title="变量赋值"></a>变量赋值</h3><p>这里有三种赋值方式。</p>
+<ul>
+<li><strong>&#x3D;</strong>  这种赋值方式会在调用变量时进行变量的赋值计算</li>
+</ul>
 
 		</div>
 
@@ -811,7 +825,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-10-15 14:22:19
+                    :</strong> 2024-12-23 15:24:58
             </li>
         
         <li>
@@ -936,7 +950,7 @@
 	<div class="post-toc">
 		<div class="toc-title">On this page</div>
 		<div class="page-title">Makefile详解</div>
-		<ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81Makefile%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">一、Makefile是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Makefile%E5%9F%BA%E7%A1%80"><span class="nav-number">2.</span> <span class="nav-text">二、Makefile基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E7%9B%AE%E6%A0%87"><span class="nav-number">2.1.</span> <span class="nav-text">1、目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E4%BE%9D%E8%B5%96"><span class="nav-number">2.2.</span> <span class="nav-text">2、依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E8%A7%84%E5%88%99"><span class="nav-number">2.3.</span> <span class="nav-text">3、规则</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81Makefile%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-number">3.</span> <span class="nav-text">三、Makefile的特性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E4%B8%8D%E9%87%8D%E5%A4%8D%E6%9E%84%E5%BB%BA"><span class="nav-number">3.1.</span> <span class="nav-text">1、不重复构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E5%81%87%E7%9B%AE%E6%A0%87"><span class="nav-number">3.2.</span> <span class="nav-text">2、假目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E5%8F%98%E9%87%8F"><span class="nav-number">3.3.</span> <span class="nav-text">3、变量</span></a></li></ol></li></ol>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81Makefile%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">一、Makefile是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Makefile%E5%9F%BA%E7%A1%80"><span class="nav-number">2.</span> <span class="nav-text">二、Makefile基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E7%9B%AE%E6%A0%87"><span class="nav-number">2.1.</span> <span class="nav-text">1、目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E4%BE%9D%E8%B5%96"><span class="nav-number">2.2.</span> <span class="nav-text">2、依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E8%A7%84%E5%88%99"><span class="nav-number">2.3.</span> <span class="nav-text">3、规则</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81Makefile%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-number">3.</span> <span class="nav-text">三、Makefile的特性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E4%B8%8D%E9%87%8D%E5%A4%8D%E6%9E%84%E5%BB%BA"><span class="nav-number">3.1.</span> <span class="nav-text">1、不重复构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E5%81%87%E7%9B%AE%E6%A0%87"><span class="nav-number">3.2.</span> <span class="nav-text">2、假目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E5%8F%98%E9%87%8F"><span class="nav-number">3.3.</span> <span class="nav-text">3、变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F"><span class="nav-number">3.3.1.</span> <span class="nav-text">内置变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E8%B5%8B%E5%80%BC"><span class="nav-number">3.3.2.</span> <span class="nav-text">变量赋值</span></a></li></ol></li></ol></li></ol>
 
 	</div>
 </div>
@@ -963,7 +977,7 @@
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        60 posts in total
+                        77 posts in total
                     </span>
                     
                 </p>

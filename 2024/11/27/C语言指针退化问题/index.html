@@ -608,15 +608,15 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">53</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">56</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">13</div>
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">60</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">77</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -653,7 +653,7 @@
 				<div class="author flex items-center">
 					<span class="name text-default-text-color text-lg font-semibold">HarderHeng</span>
 					
-					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv4</span>
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv5</span>
 					
 				</div>
 				<div class="meta-info">
@@ -667,8 +667,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-11-27 10:19:57</span>
-            <span class="mobile">2024-11-27 10:19:57</span>
+            <span class="desktop">2024-12-17 09:32:06</span>
+            <span class="mobile">2024-12-17 09:32:06</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -695,7 +695,27 @@
 
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			
+			<h1 id="数组指针"><a href="#数组指针" class="headerlink" title="数组指针"></a>数组指针</h1><p>考虑以下的代码。</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">char</span> a[] = &#123;<span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;o&#x27;</span>,<span class="string">&#x27;\n&#x27;</span>&#125;;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="keyword">sizeof</span>(a));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>定义了一个内容为<code>hello</code>的字符串，此时使用sizeof传入的<code>a</code>本质上是是一个数组指针，它即指向整个字符串，也指向字符串的第一个元素，在同一个域内调用<code>sizeof</code>，会将数组信息传递给<code>sizeof</code>，所以输出结果为字符串的长度<strong>6</strong>。</p>
+<p>即，一个数组的名字，即是指向第一个元素的指针（pointer to the first element），也能代表一整个数组（the pointer to the array）。</p>
+<h1 id="指针退化"><a href="#指针退化" class="headerlink" title="指针退化"></a>指针退化</h1><p>在上面的代码中显然sizeof将<code>a</code>视为是代表一整个数组的指针，所以返回大小为<strong>6</strong>。</p>
+<p>接下来考虑以下的代码。</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">char</span> a[] = &#123;<span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;o&#x27;</span>,<span class="string">&#x27;\n&#x27;</span>&#125;;</span><br><span class="line">    <span class="type">char</span> *p = a;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="keyword">sizeof</span>(p));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>这段代码中创建了一个char类型的<code>p</code>指针，将<code>a</code>的值传递给<code>p</code>，最后的输出结果为<strong>4</strong>。</p>
+<p>此时<code>sizeof</code>会将<code>p</code>认为是一个单纯的指针，不会传递数组的信息进去，也就是说不能够知道后面的数组有多长，最后返回的值也就是指针的长度<strong>4</strong>（32位系统下）。</p>
+<h1 id="数组传递参数"><a href="#数组传递参数" class="headerlink" title="数组传递参数"></a>数组传递参数</h1><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">size</span><span class="params">(<span class="type">char</span> a[])</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">sizeof</span>(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">char</span> a[] = &#123;<span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;o&#x27;</span>,<span class="string">&#x27;\n&#x27;</span>&#125;;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,size(a));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>在这里给数组传参，将数组传参进去，本质上还是传递了一个指针进去，数组指针经过传参退化成了普通指针，所以得到的值为<strong>4</strong>。</p>
+<h1 id="不会指针退化的情况"><a href="#不会指针退化的情况" class="headerlink" title="不会指针退化的情况"></a>不会指针退化的情况</h1><ul>
+<li>直接使用sizeof最原始数组名进行求值，可以得到数组的长度。</li>
+<li>对数组名进行取地址操作，即得到一个指向数组的指针，对这个指针进行操作则不会出现指针退化。</li>
+</ul>
+<p>即只要传递的是<strong>数组名</strong>这个<strong>常量指针</strong>本身，就不会发生退化，如果传递的是一个普通指针，其值等于数组的首地址，并不能和数组名这个常量指针等价。</p>
+<p>所以如果传递的是<strong>常量指针的地址</strong>，比如<code>&amp;arr</code>，这种情况实际传递了常量指针，就不会发生指针退化。</p>
+
 		</div>
 
 		
@@ -709,7 +729,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-11-27 10:19:57
+                    :</strong> 2024-12-17 09:32:06
             </li>
         
         <li>
@@ -818,7 +838,7 @@
 	<div class="post-toc">
 		<div class="toc-title">On this page</div>
 		<div class="page-title">C语言指针退化问题</div>
-		
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E6%8C%87%E9%92%88"><span class="nav-number">1.</span> <span class="nav-text">数组指针</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E9%80%80%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">指针退化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">数组传递参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8D%E4%BC%9A%E6%8C%87%E9%92%88%E9%80%80%E5%8C%96%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">4.</span> <span class="nav-text">不会指针退化的情况</span></a></li></ol>
 
 	</div>
 </div>
@@ -845,7 +865,7 @@
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        60 posts in total
+                        77 posts in total
                     </span>
                     
                 </p>
