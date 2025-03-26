@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://example.com/2024/11/22/编译器基础了解/"/>
+    <link rel="canonical" href="http://example.com/page/9/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -259,6 +259,41 @@
 <main class="page-container" id="swup">
 
 	
+	<style>
+    .home-article-item,
+    .sidebar-links,
+    .sidebar-content,
+    a.page-number,
+    a.extend,
+    .sidebar-links .links:hover,
+    .right-bottom-tools,
+    footer.footer {
+        background-color: var(--background-color-transparent-80) !important;
+    }
+    .right-bottom-tools:hover,
+    a.page-number:hover,
+    a.extend:hover {
+        background-color: var(--primary-color) !important;
+    }
+    .site-info,
+    .home-article-sticky-label {
+        background-color: var(--background-color-transparent-15) !important;
+    }
+    .home-article-sticky-label {
+        backdrop-filter: none !important;
+    }
+    .home-banner-background {
+        filter: blur(15px);
+    }
+</style>
+
+<div class="home-banner-background transition-fade fixed top-0 left-0 w-screen h-screen scale-125 sm:scale-110 box-border will-change-transform bg-cover">
+    <img src="/images/wallhaven-wqery6-light.webp" alt="home-banner-background" class="w-full h-full object-cover dark:hidden">
+    <img src="/images/wallhaven-wqery6-dark.webp" alt="home-banner-background" class="w-full h-full object-cover hidden dark:block">
+</div>
+
+
+	
 
 	<div class="main-content-container flex flex-col justify-between min-h-dvh">
 		<div class="main-content-header">
@@ -271,9 +306,9 @@
                 </a>
             
             <a class="logo-title" href="/">
-                
+                <h1>
                 Heng&#39;s Blog
-                
+                </h1>
             </a>
         </div>
 
@@ -287,7 +322,7 @@
 
                             <li class="navbar-item">
                                 <!-- Menu -->
-                                <a class=""
+                                <a class="active"
                                    href="/"
                                         >
                                     <i class="fa-regular fa-house fa-fw"></i>
@@ -435,7 +470,7 @@
 
                     <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
                         
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
                            href="/"
                         >
                             <span>
@@ -608,7 +643,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">56</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">76</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -616,7 +651,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">77</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">103</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -631,201 +666,726 @@
 
 		<div class="main-content-body transition-fade-up">
 			
+			<div class="home-sidebar-container">
+    <div class="sticky-container sticky">
+        
+        
+            <div class="sidebar-content">
+                <div class="avatar flex justify-center">
+    <img src="/images/IMG_0295.JPG">
+</div>
+                <div class="author flex flex-col justify-center my-2.5 mx-0">
+    <div class="name">HarderHeng</div>
+    
+        <div class="label">Lv5</div>
+    
+</div>
+                <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">76</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">13</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">103</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+            </div>
+            
+                <div class="sidebar-links"   marginTop >
+                    <div class="site-info">
+                        <div class="site-name">Heng&#39;s Blog</div>
+                        
+                            <div class="announcement">
+                                欢迎来到我的个人博客,我在这里记录我的生活和学习,正如我的域名后缀一样
+                            </div>
+                        
+                    </div>
+                    
+                        
+                            
+                                <a class="links" href="/archives">
+                                    
+                                        <i class="fa-regular fa-archive icon-space"></i>
+                                    
+                                    <span class="link-name">Archives</span>
+                                </a>
+                            
+                        
+                            
+                                <a class="links" href="/tags">
+                                    
+                                        <i class="fa-regular fa-tags icon-space"></i>
+                                    
+                                    <span class="link-name">Tags</span>
+                                </a>
+                            
+                        
+                            
+                                <a class="links" href="/categories">
+                                    
+                                        <i class="fa-regular fa-folder icon-space"></i>
+                                    
+                                    <span class="link-name">Categories</span>
+                                </a>
+                            
+                        
+                    
+                </div>
+            
+        
+
+    </div>
+</div>
+
+			
 
 			<div class="main-content">
-				<div class="post-page-container flex relative justify-between box-border w-full h-full">
-	<div class="article-content-container">
+				<div class="home-content-container">
+    <ul class="home-article-list">
+        
+            <li class="home-article-item">
 
-		<div class="article-title relative w-full">
-			
-			<div class="w-full flex items-center pt-6 justify-start">
-				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3"></h1>
-			</div>
-			
-		</div>
+                
 
-		
-		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
-			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
-				<img src="/images/IMG_0295.JPG">
-			</div>
-			<div class="info flex flex-col justify-between">
-				<div class="author flex items-center">
-					<span class="name text-default-text-color text-lg font-semibold">HarderHeng</span>
-					
-					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv5</span>
-					
-				</div>
-				<div class="meta-info">
-					<div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2024-11-22 17:29:46</span>
-        <span class="mobile">2024-11-22 17:29:46</span>
-        <span class="hover-info">Created</span>
-    </span>
-    
-        <span class="article-date article-meta-item">
-            <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-11-22 17:29:46</span>
-            <span class="mobile">2024-11-22 17:29:46</span>
-            <span class="hover-info">Updated</span>
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/05/08/SystemView%E7%AE%80%E5%8D%95%E7%A7%BB%E6%A4%8D/">
+                            SystemView简单移植
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            一、SystemView是什么SystemView是由SEGGER公司开发的嵌入式系统可视化分析工具，可以用来可视化的监控嵌入式操作系统的运行，帮助我们更好的学习和开发嵌入式操作系统。
+SystemView支持uC&#x2F;OS-II、μC&#x2F;OS-III、FreeRTOS、embOS和无OS的裸机系统。
+SystemView可以使用串口、J-Link等连接方式和硬件进行连接。
+二...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Wed May 08 2024 21:39:17 GMT+0800">
+                
+                    2024-05-08
+                
+            </span>
         </span>
-    
+        
+        
+    </div>
 
-    
-    
-
-    
-    
-    
-    
-        <span class="article-pv article-meta-item">
-            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
-        </span>
-    
+    <a href="/2024/05/08/SystemView%E7%AE%80%E5%8D%95%E7%A7%BB%E6%A4%8D/">Read more<span class="seo-reader-text">SystemView简单移植</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
-				</div>
-			</div>
-		</div>
-		
-
-		
-
-
-		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			<h1 id="编译器组成"><a href="#编译器组成" class="headerlink" title="编译器组成"></a>编译器组成</h1><p>编译器由前端、中间代码优化、后端三部分组成。<br><strong>前端</strong>负责识别代码语法，将代码转化成中间代码。<br><strong>中间代码优化</strong>一定程度上和语言无关，进行优化后将中间代码传给后端。<br><strong>后端</strong>负责将中间代码转化成目标平台的可执行代码。</p>
-<h1 id="LLVM"><a href="#LLVM" class="headerlink" title="LLVM"></a>LLVM</h1>
-		</div>
-
-		
-		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
-			<div class="article-copyright-info-container">
-    <ul>
-        <li><strong>Title:</strong> </li>
-        <li><strong>Author:</strong> HarderHeng</li>
-        <li><strong>Created at
-                :</strong> 2024-11-22 17:29:46</li>
-        
-            <li>
-                <strong>Updated at
-                    :</strong> 2024-11-22 17:29:46
+                </div>
             </li>
         
-        <li>
-            <strong>Link:</strong> https://harderheng.life/2024/11/22/编译器基础了解/
-        </li>
-        <li>
-            <strong>
-                License:
-            </strong>
-            
+            <li class="home-article-item">
 
-            
-                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
-            
-        </li>
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/05/08/STM32%E5%8F%8AARM%E4%B8%AD%E6%96%AD%E8%AF%A6%E8%A7%A3/">
+                            STM32及ARM中断详解
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            ARM体系的中断和异常当一个中断或者异常触发时，先看到这个中断源有没有被启动，以及它的优先级如何，然后进入中断向量表，如果允许进行中断或者异常的处理，就会根据中断向量表进入中断服务程序。
+在中断服务程序中进行关中断、保存现场、开中断、处理中断和异常、关中断、恢复现场、开中断
+在ARM体系中和异常统一由中断向量表管理。
+中断向量表中断向量表有低端和高端向量表两种，低端向量表就是从0x00000...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Wed May 08 2024 15:59:41 GMT+0800">
+                
+                    2024-05-08
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2024/05/08/STM32%E5%8F%8AARM%E4%B8%AD%E6%96%AD%E8%AF%A6%E8%A7%A3/">Read more<span class="seo-reader-text">STM32及ARM中断详解</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/05/08/STM32%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/">
+                            STM32存储架构详解
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            <p>以STM32为例解析MCU的存储架构，希望以此能够加深对嵌入式硬件的认识，以后也可以更快的上手其他的硬件。</p>
+
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Wed May 08 2024 15:54:38 GMT+0800">
+                
+                    2024-05-08
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/STM32/">STM32</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84/">存储架构</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2024/05/08/STM32%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/">Read more<span class="seo-reader-text">STM32存储架构详解</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/05/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E8%A1%A5%E5%85%85%E7%9F%A5%E8%AF%86%E7%89%88%EF%BC%89/">
+                            计算机组成原理（补充知识版）
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            一、数据的二进制表示计算机中的所有数据都是由二进制数表示的，基本上都是使用二进制补码来表示。数据可以分为有符号数和无符号数，区分后进行运算会相对简单。
+对于原码，就是将十进制数转化成二进制数，如果是负数的话最高位为一。
+对于反码，如果是负数就将其绝对值的原码每个位都取反，正数的反码和原码相同。
+对于补码，现在计算机体系中主要使用的就是补码，补码将正负数统一的表示，并且使用同一套加法电路就可以...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Wed May 08 2024 10:50:04 GMT+0800">
+                
+                    2024-05-08
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2024/05/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%EF%BC%88%E8%A1%A5%E5%85%85%E7%9F%A5%E8%AF%86%E7%89%88%EF%BC%89/">Read more<span class="seo-reader-text">计算机组成原理（补充知识版）</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/04/24/uC-OS%E7%A7%BB%E6%A4%8D/">
+                            uC/OS移植
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            一、任务切换123456789101112131415161718192021222324252627282930313233343536373839404142434445PendSV_Handler    CPSID   I                                                   ; Cortex-M7 errata notice. See N...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Wed Apr 24 2024 16:58:31 GMT+0800">
+                
+                    2024-04-24
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2024/04/24/uC-OS%E7%A7%BB%E6%A4%8D/">Read more<span class="seo-reader-text">uC/OS移植</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/04/18/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%AE%9E%E9%AA%8C/">
+                            汇编语言实验
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            一、Debug的使用
+-r查看寄存器
+
+-r ax 改变ax寄存器的值
+
+-d 加内存地址 查看内存
+
+-d 连续查看内存地址
+
+-e 加内存地址加 值 修改内存中的内容
+
+-a 加地址 使指令指针寄存器指向指定的地址，并且在接下来的指令中可以将指令写入地址中
+
+-t 单步执行
+
+-u 加地址将内存地址中的机器码变成汇编语言
+
+
+二、CS + IP构成了指令的地址
+通用寄存器可以分为高八位和...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Thu Apr 18 2024 18:53:07 GMT+0800">
+                
+                    2024-04-18
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2024/04/18/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%AE%9E%E9%AA%8C/">Read more<span class="seo-reader-text">汇编语言实验</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/04/13/Makefile%E8%AF%A6%E8%A7%A3/">
+                            Makefile详解
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            一、Makefile是什么makefile定义了一些规则来制定项目如何进行编译。
+makefile中包含了一系列的**目标(Targets)和规则(Rules)**。
+目标通常是文件名，并且大概率是.o文件。紧跟着的生成这个文件的规则，通常是其源文件和编译的命令。编译的命令也可以是能够命令行执行的命令。
+除了目标和规则，makefile也可以用来指定编译器的某些行为例如使用哪一个编译器或者编...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Sat Apr 13 2024 16:58:28 GMT+0800">
+                
+                    2024-04-13
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/C%E8%AF%AD%E8%A8%80/">C语言</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/makefile/">makefile</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/make/">make</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2024/04/13/Makefile%E8%AF%A6%E8%A7%A3/">Read more<span class="seo-reader-text">Makefile详解</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+                    
+                
+
+                
+                    <div id="home-article-thumbnail" class="home-article-thumbnail relative h-[150px] overflow-hidden rounded-t-large">
+                        <a href="/2024/04/08/OriAndBlindForest-%E4%B8%80%E6%AE%B5%E8%BF%91%E4%B9%8E%E5%AE%8C%E7%BE%8E%E7%9A%84%E6%97%85%E7%A8%8B/">
+                            <img src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/v2-d5da3c6730b28e8bd870b2d370de75f4_r.png" alt="OriAndBlindForest--一段近乎完美的旅程" class="w-full h-full object-cover dark:brightness-75 transition-all" />
+                        </a>
+                    </div>
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-5">
+                    <h3 class="home-article-title">
+                        <a href="/2024/04/08/OriAndBlindForest-%E4%B8%80%E6%AE%B5%E8%BF%91%E4%B9%8E%E5%AE%8C%E7%BE%8E%E7%9A%84%E6%97%85%E7%A8%8B/">
+                            OriAndBlindForest--一段近乎完美的旅程
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            一、奥日初印象​		作为一款横版平台动作游戏，在我刚接触时仅仅是对横版游戏的喜爱。在最基础的平台跳跃动作，加上精灵之火自瞄的攻击系统，这显然是一款更侧重跳跃或者其他动作而削弱攻击动作的游戏，仅凭这一点已经让我这个横版游戏爱好者愿意继续上手玩下去。
+​		除了最基本的游戏模式外，首先关注到的还有游戏画面。本身奥日的美术风格就十分喜人，偏写实的风格搭配上合适的光影效果，在奇幻的世界中营造出不错的...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Mon Apr 08 2024 21:14:33 GMT+0800">
+                
+                    2024-04-08
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E6%B8%B8%E6%88%8F%E9%9A%8F%E7%AC%94/">游戏随笔</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E9%93%B6%E6%B2%B3%E6%81%B6%E9%AD%94%E5%9F%8E/">银河恶魔城</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E6%A8%AA%E7%89%88%E6%B8%B8%E6%88%8F/">横版游戏</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E7%BE%8E%E6%9C%AF%E4%BC%98%E7%A7%80/">美术优秀</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2024/04/08/OriAndBlindForest-%E4%B8%80%E6%AE%B5%E8%BF%91%E4%B9%8E%E5%AE%8C%E7%BE%8E%E7%9A%84%E6%97%85%E7%A8%8B/">Read more<span class="seo-reader-text">OriAndBlindForest--一段近乎完美的旅程</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/04/08/ARM%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">
+                            ARM处理器汇编语言
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            Thumb状态切换Thumb是16位指令的状态，可以使用16位指令，在进行切换时不会改变通用寄存器。
+1234567;现在是ARM指令集MOV R0,#1 ;将1放进r0寄存器BX R0 ;跳转的最低位是1，ARM指令集下地址最低位都是0，也就是从ARM指令集跳到Thumb指令集;现在是Thumb指令集MOV R0,#0 ;将0放进r0寄存器BX R0 ;跳转的最低位是0，Thumb指令集下...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Mon Apr 08 2024 08:32:37 GMT+0800">
+                
+                    2024-04-08
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">汇编语言</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/ARM/">ARM</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2024/04/08/ARM%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">Read more<span class="seo-reader-text">ARM处理器汇编语言</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/04/05/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">
+                            动态规划背包问题
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            一、0-1背包问题现在有一个背包容量为v，有一系列的物品分别有wgt[i]的重量和val[i]的价值。问怎么取物品装到背包里使得总价值最大。
+对于每一个物品都有选与不选两种决策，那么对每一个物品进行规划，如果选择了物品，那么可用容量减少但是价值增加。
+1234567891011int dp[n + 1][v + 1];//dp数组for(int i = 0; i &lt;= n; i++)&...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Fri Apr 05 2024 20:42:48 GMT+0800">
+                
+                    2024-04-05
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2024/04/05/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">Read more<span class="seo-reader-text">动态规划背包问题</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
     </ul>
+
+    <div class="home-paginator px-7 py-5">
+        <div class="paginator">
+	<a class="extend prev" rel="prev" href="/page/8/"><i class="fa-regular fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/10/"><i class="fa-regular fa-angle-right"></i></a>
 </div>
-
-		</div>
-		
-
-		
-
-		
-
-		
-		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
-			
-			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-				<a class="prev" rel="prev" href="/2024/11/25/HPatchLite%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/">
-					<span class="left arrow-icon flex justify-center items-center">
-						<i class="fa-solid fa-chevron-left"></i>
-					</span>
-					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">HPatchLite代码解读</span>
-						<span class="post-nav-item">Prev posts</span>
-					</span>
-				</a>
-			</div>
-			
-			
-			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-				<a class="next" rel="next" href="/2024/11/21/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/">
-					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">压缩算法</span>
-						<span class="post-nav-item">Next posts</span>
-					</span>
-					<span class="right arrow-icon flex justify-center items-center">
-						<i class="fa-solid fa-chevron-right"></i>
-					</span>
-				</a>
-			</div>
-			
-		</div>
-		
-
-
-		
-		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
-			<div class="comments-container mt-10 w-full ">
-    <div id="comment-anchor" class="w-full h-2.5"></div>
-    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
-        Comments
+  
     </div>
-    
-
-        
-            
-    <div class="twikoo-container">
-        <script data-swup-reload-script
-                src='https://cdnjs.cloudflare.com/ajax/libs/twikoo/1.6.10/twikoo.all.min.js'
-        ></script>
-        <div id="twikoo-comment"></div>
-        <script data-swup-reload-script>
-            function loadTwikoo() {
-                twikoo.init({
-                    el: '#twikoo-comment',
-                    envId: 'https://harderheng.netlify.app/.netlify/functions/twikoo',
-                });
-            }
-
-            if ('true') {
-                const loadTwikooTimeout = setTimeout(() => {
-                    loadTwikoo();
-                    clearTimeout(loadTwikooTimeout);
-                }, 1000);
-            } else {
-                window.addEventListener('DOMContentLoaded', loadTwikoo);
-            }
-        </script>
-    </div>
-
-
-        
-        
-    
 </div>
 
-		</div>
-		
-	</div>
-
-	
-	<div class="toc-content-container">
-		<div class="post-toc-wrap">
-	<div class="post-toc">
-		<div class="toc-title">On this page</div>
-		<div class="page-title"></div>
-		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8%E7%BB%84%E6%88%90"><span class="nav-number">1.</span> <span class="nav-text">编译器组成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LLVM"><span class="nav-number">2.</span> <span class="nav-text">LLVM</span></a></li></ol>
-
-	</div>
-</div>
-	</div>
-	
-</div>
 			</div>
 
 			
@@ -841,12 +1401,12 @@
               <span>2022</span>
               -
             
-            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
             
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        77 posts in total
+                        103 posts in total
                     </span>
                     
                 </p>
@@ -903,26 +1463,6 @@
 		</div>
 	</div>
 
-	
-	<div class="post-tools">
-		<div class="post-tools-container">
-	<ul class="article-tools-list">
-		<!-- TOC aside toggle -->
-		
-		<li class="right-bottom-tools page-aside-toggle">
-			<i class="fa-regular fa-outdent"></i>
-		</li>
-		
-
-		<!-- go comment -->
-		
-		<li class="go-comment">
-			<i class="fa-regular fa-comments"></i>
-		</li>
-		
-	</ul>
-</div>
-	</div>
 	
 
 	<div class="right-side-tools-container">

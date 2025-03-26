@@ -608,7 +608,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">56</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">76</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -616,7 +616,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">77</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">103</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -667,13 +667,52 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-12-23 15:25:02</span>
-            <span class="mobile">2024-12-23 15:25:02</span>
+            <span class="desktop">2025-03-07 12:33:06</span>
+            <span class="mobile">2025-03-07 12:33:06</span>
             <span class="hover-info">Updated</span>
         </span>
     
 
     
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/STM32/">STM32</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Linux/">Linux</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/ELF/">ELF</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
     
 
     
@@ -709,18 +748,23 @@
 <li>text代码段，存放着实际执行的指令代码，是只读的</li>
 </ul>
 <p>根据这些我们可以知道，stack和heap是程序运行时才会使用到，那么elf文件中基本存储的就是<strong>data数据段</strong>，也就是全局变量和静态变量，以及执行的<strong>text代码段</strong>。</p>
-<p>实际上，数据段在程序中被分成了两部分来存储分别是<strong>data</strong>和<strong>bss</strong>段。data段存储已经初始化的静态变量和全局变量，bss段存储没有初始化额静态变量和全局变量。如果是被初始化为<strong>0</strong>的静态变量或者全局变量也会被存放到bss段。为什么会专门分成data和bss两部分呢？</p>
+<p>实际上，数据段在程序中被分成了两部分来存储分别是<strong>data</strong>和<strong>bss</strong>段。data段存储已经初始化的静态变量和全局变量，bss段存储没有初始化的静态变量和全局变量。如果是被初始化为<strong>0</strong>的静态变量或者全局变量也会被存放到bss段。为什么会专门分成data和bss两部分呢？</p>
 <p>对data段来说每一个变量都需要有一个<strong>值</strong>，而bss段中则不需要，只需要记录<strong>变量本身的长度</strong>，在操作系统加载程序时才会将这些bss段的变量初始化为0，节省了elf文件的空间。</p>
 <h1 id="三、ELF实际组成"><a href="#三、ELF实际组成" class="headerlink" title="三、ELF实际组成"></a>三、ELF实际组成</h1><ul>
-<li><h3 id="ELF头："><a href="#ELF头：" class="headerlink" title="ELF头："></a>ELF头：</h3><p>包含了elf文件的总体信息，包括文件的类型（可执行文件、目标文件、链接库），目标机器的架构，程序入口点的位置等等基础信息。</p>
+<li><h3 id="ELF头："><a href="#ELF头：" class="headerlink" title="ELF头："></a>ELF头：</h3><p>包含了elf文件的总体信息，包括文件的类型（可执行文件、目标文件、链接库），目标机器的架构，程序入口点的位置等等基础信息。比较重要的是段表和程序头表的偏移地址，通过这个偏移地址就能在ELF文件中找到段表和程序头表。</p>
 </li>
-<li><h3 id="ProgramHeaderTable"><a href="#ProgramHeaderTable" class="headerlink" title="ProgramHeaderTable"></a>ProgramHeaderTable</h3><p>程序头表描述了程序在内存中的布局，也就是描述了各个段的大小、内存位置等等信息，在加载这个elf文件时根据程序头表将elf文件中的段加载到内存的各个位置。</p>
+<li><h3 id="ProgramHeaderTable"><a href="#ProgramHeaderTable" class="headerlink" title="ProgramHeaderTable"></a>ProgramHeaderTable</h3><p>程序头表描述了程序在内存中的布局，也就是描述了各个段（Segments）的大小、内存位置等等信息，在加载这个elf文件时根据程序头表将elf文件中的段加载到内存的各个位置。如果是一个可执行文件一定会有程序头表，如果是可重定向文件则没有。</p>
+<p>这里的段是加载器的基本单位，加载器将每个段加载到内存。一个段可以包含很多个节。</p>
 </li>
-<li><h3 id="SectionHeaderTable"><a href="#SectionHeaderTable" class="headerlink" title="SectionHeaderTable"></a>SectionHeaderTable</h3><p>段表描述了各个段在整个文件中的布局，包括**.code、.data、.bss<strong>还有</strong>符号表**等等，每一个段都有自己的属性，在文件中的偏移地址。</p>
+<li><h3 id="SectionHeaderTable"><a href="#SectionHeaderTable" class="headerlink" title="SectionHeaderTable"></a>SectionHeaderTable</h3><p>段表描述了各个节（Section）在整个文件中的布局，包括**.code、.data、.bss<strong>还有</strong>符号表**等等，每一个节都有自己的段属性，在文件中的偏移地址。</p>
+<p>节是链接器的基本单元，链接器将多个属性相同的节链接到同一个段中。</p>
 </li>
 <li><h3 id="实际数据"><a href="#实际数据" class="headerlink" title="实际数据"></a>实际数据</h3><p>这部分就是在上面的段表中描述的各个段的实际数据。</p>
 </li>
-<li></li>
+</ul>
+<h1 id="四、在嵌入式中的实际应用"><a href="#四、在嵌入式中的实际应用" class="headerlink" title="四、在嵌入式中的实际应用"></a>四、在嵌入式中的实际应用</h1><ul>
+<li><strong>启动文件</strong>：在启动文件中会声明几个属性为<strong>text</strong>的段，用来完成<strong>ResetHandler</strong>和<strong>内存搬运</strong>，以及声明中断向量表。</li>
+<li><strong>链接脚本</strong>：链接脚本要将启动文件中的特殊段搬运到合理的位置。比如将中断向量表放到FLASH的起始位置。将剩下的text放到其他合适的位置。</li>
 </ul>
 <h1 id="生成静态链接库和动态链接库"><a href="#生成静态链接库和动态链接库" class="headerlink" title="生成静态链接库和动态链接库"></a>生成静态链接库和动态链接库</h1><h2 id="1-静态链接库"><a href="#1-静态链接库" class="headerlink" title="1. 静态链接库"></a>1. 静态链接库</h2><ul>
 <li><p>将.c文件编译成目标文件.o</p>
@@ -766,7 +810,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-12-23 15:25:02
+                    :</strong> 2025-03-07 12:33:06
             </li>
         
         <li>
@@ -788,6 +832,26 @@
 		</div>
 		
 
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">#嵌入式开发</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/STM32/">#STM32</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/Linux/">#Linux</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/ELF/">#ELF</a>&nbsp;
+			</li>
+			
+		</ul>
 		
 
 		
@@ -875,7 +939,7 @@
 	<div class="post-toc">
 		<div class="toc-title">On this page</div>
 		<div class="page-title">ELF可执行文件的结构详解</div>
-		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81ELF%E6%96%87%E4%BB%B6%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">一、ELF文件是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%86%85%E5%AD%98%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9E%84%E6%88%90"><span class="nav-number">2.</span> <span class="nav-text">二、内存的基本构成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81ELF%E5%AE%9E%E9%99%85%E7%BB%84%E6%88%90"><span class="nav-number">3.</span> <span class="nav-text">三、ELF实际组成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ELF%E5%A4%B4%EF%BC%9A"><span class="nav-number">3.0.1.</span> <span class="nav-text">ELF头：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ProgramHeaderTable"><span class="nav-number">3.0.2.</span> <span class="nav-text">ProgramHeaderTable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SectionHeaderTable"><span class="nav-number">3.0.3.</span> <span class="nav-text">SectionHeaderTable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E6%95%B0%E6%8D%AE"><span class="nav-number">3.0.4.</span> <span class="nav-text">实际数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%92%8C%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93"><span class="nav-number">4.</span> <span class="nav-text">生成静态链接库和动态链接库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93"><span class="nav-number">4.1.</span> <span class="nav-text">1. 静态链接库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93"><span class="nav-number">4.2.</span> <span class="nav-text">2. 动态链接库</span></a></li></ol></li></ol>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81ELF%E6%96%87%E4%BB%B6%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">一、ELF文件是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%86%85%E5%AD%98%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9E%84%E6%88%90"><span class="nav-number">2.</span> <span class="nav-text">二、内存的基本构成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81ELF%E5%AE%9E%E9%99%85%E7%BB%84%E6%88%90"><span class="nav-number">3.</span> <span class="nav-text">三、ELF实际组成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ELF%E5%A4%B4%EF%BC%9A"><span class="nav-number">3.0.1.</span> <span class="nav-text">ELF头：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ProgramHeaderTable"><span class="nav-number">3.0.2.</span> <span class="nav-text">ProgramHeaderTable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SectionHeaderTable"><span class="nav-number">3.0.3.</span> <span class="nav-text">SectionHeaderTable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E6%95%B0%E6%8D%AE"><span class="nav-number">3.0.4.</span> <span class="nav-text">实际数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%9C%A8%E5%B5%8C%E5%85%A5%E5%BC%8F%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">四、在嵌入式中的实际应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%92%8C%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93"><span class="nav-number">5.</span> <span class="nav-text">生成静态链接库和动态链接库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93"><span class="nav-number">5.1.</span> <span class="nav-text">1. 静态链接库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93"><span class="nav-number">5.2.</span> <span class="nav-text">2. 动态链接库</span></a></li></ol></li></ol>
 
 	</div>
 </div>
@@ -897,12 +961,12 @@
               <span>2022</span>
               -
             
-            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
             
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        77 posts in total
+                        103 posts in total
                     </span>
                     
                 </p>

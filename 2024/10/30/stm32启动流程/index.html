@@ -608,7 +608,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">56</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">76</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -616,7 +616,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">77</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">103</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -667,8 +667,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-12-03 13:46:14</span>
-            <span class="mobile">2024-12-03 13:46:14</span>
+            <span class="desktop">2025-02-17 09:05:11</span>
+            <span class="mobile">2025-02-17 09:05:11</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -732,10 +732,15 @@
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
 			<h1 id="一、启动模式"><a href="#一、启动模式" class="headerlink" title="一、启动模式"></a>一、启动模式</h1><p>stm32根据两个boot引脚有三种启动模式。分别是</p>
 <ul>
-<li><strong>从FLASH启动</strong>，是直接运行代码常用的模式。</li>
-<li><strong>从SRAM启动</strong>，是进行调试常用的模式。</li>
-<li><strong>从系统存储器启动</strong>，直接通过bootloader</li>
+<li><strong>从FLASH启动</strong>，是直接运行代码常用的模式。地址是0x08000000，被映射到0x00000000</li>
+<li><strong>从SRAM启动</strong>，是进行调试常用的模式。地址是0x20000000，并没有映射到0x00000000，需要在应用程序初始化代码中重新设置向量标的位置。</li>
+<li><strong>从系统存储器启动</strong>，一般是运行芯片厂商烧写好的固件，对stm32来说是串口下载的固件。地址是0x1FFFF000，被映射到0x0000000。</li>
 </ul>
+<h1 id="二、硬件复位"><a href="#二、硬件复位" class="headerlink" title="二、硬件复位"></a>二、硬件复位</h1><h3 id="1-复位后的流程"><a href="#1-复位后的流程" class="headerlink" title="1. 复位后的流程"></a>1. 复位后的流程</h3><ol>
+<li>只要是复位，硬件就会自动按照启动模式进行内存的映射。例如从Flash启动，会将0x08000000映射到0x00000000。</li>
+<li>cpu上电后处在<strong>SVC</strong>模式，并且从0x00000000处开始执行代码。</li>
+<li>正常的启动模式会从0x00000000读取数据，这里存放着中断向量表。中断向量表的第一条是SP地址，</li>
+</ol>
 
 		</div>
 
@@ -750,7 +755,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-12-03 13:46:14
+                    :</strong> 2025-02-17 09:05:11
             </li>
         
         <li>
@@ -875,7 +880,7 @@
 	<div class="post-toc">
 		<div class="toc-title">On this page</div>
 		<div class="page-title">stm32启动流程</div>
-		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">一、启动模式</span></a></li></ol>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">一、启动模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%A1%AC%E4%BB%B6%E5%A4%8D%E4%BD%8D"><span class="nav-number">2.</span> <span class="nav-text">二、硬件复位</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%A4%8D%E4%BD%8D%E5%90%8E%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. 复位后的流程</span></a></li></ol></li></ol></li></ol>
 
 	</div>
 </div>
@@ -897,12 +902,12 @@
               <span>2022</span>
               -
             
-            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
             
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        77 posts in total
+                        103 posts in total
                     </span>
                     
                 </p>

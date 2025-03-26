@@ -608,7 +608,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">56</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">76</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -616,7 +616,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">77</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">103</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -667,8 +667,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-11-05 15:27:10</span>
-            <span class="mobile">2024-11-05 15:27:10</span>
+            <span class="desktop">2025-02-17 09:05:49</span>
+            <span class="mobile">2025-02-17 09:05:49</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -741,7 +741,9 @@
 <p>其中的存储器有flash和sram两部分，下面会详细解释这些。</p>
 <p>作为一个stm32的芯片，其内存布局往往是被cortex-M3内核大致确定的，很多STM32都遵循着类似的内存布局。</p>
 <h1 id="二、STM32的虚拟内存"><a href="#二、STM32的虚拟内存" class="headerlink" title="二、STM32的虚拟内存"></a>二、STM32的虚拟内存</h1><p>STM32将整块芯片中所有可用的地址都统一映射为虚拟内存，32位的寄存器和地址总线允许的寻址空间为4G，这4GB的虚拟内存被ARM内核大致划分，对ST公司来说做了一些更具体和符合使用情况的细节划分。</p>
+<p>为什么说是虚拟内存呢？因为这些内存将所有的地址空间统一编址，不同硬件的物理地址都被划分到这里的虚拟内存。</p>
 <p><strong>此处的虚拟内存只是一种映射，stm32中没有虚拟内存的概念，也没有MMU专门管理内存。stm32的映射由MPU（memory protection unit）实现</strong></p>
+<p><em>对于没有MMU内存管理单元的ARM简单MCU，其内存划分都遵循相同划分。</em></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -775,6 +777,12 @@
 <li><strong>Block6</strong>，保留地址。按理说Block5和6对应着ARM内核划分的<strong>片外外设</strong>区，但是对STM32的设计来说应该是把这1GB的内存全部用给了FSMC的寄存器，并没有给片外外设留空间。</li>
 <li><strong>Block7</strong>，内核内部外设。</li>
 </ul>
+<h1 id="三、STM32的RAM"><a href="#三、STM32的RAM" class="headerlink" title="三、STM32的RAM"></a>三、STM32的RAM</h1><p>在一个单片机程序中，<strong>代码和只读数据</strong>被存储在Flash中，<strong>全局变量、静态变量</strong>被存储在RAM中。</p>
+<p><em><strong>在RAM中还有堆和栈。</strong></em></p>
+<p>在启动文件<code>startupstm32xxxx.s</code>中一开始就是对堆内存和栈内存大小的定义。在整个RAM的空间中，从下往上依次是<strong>data、bss、HEAP、STACK</strong>。</p>
+<p>Heap和Stack的大小和位置在硬件系统上电时被确定。</p>
+<p>其中Heap从低地址向高地址扩展，而Stack从高地址向低地址扩展。</p>
+<p>在系统上电时，存储在FLASH中的<strong>全局变量</strong>和<strong>静态变量</strong>被搬运到RAM中。</p>
 
 		</div>
 
@@ -789,7 +797,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-11-05 15:27:10
+                    :</strong> 2025-02-17 09:05:49
             </li>
         
         <li>
@@ -914,7 +922,7 @@
 	<div class="post-toc">
 		<div class="toc-title">On this page</div>
 		<div class="page-title">STM32存储架构详解</div>
-		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81STM32%E5%86%85%E6%A0%B8%E8%BF%98%E6%9C%89MCU"><span class="nav-number">1.</span> <span class="nav-text">一、STM32内核还有MCU</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81STM32%E7%9A%84%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="nav-number">2.</span> <span class="nav-text">二、STM32的虚拟内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8D%E5%B8%A6%E5%8C%BA%E5%92%8C%E4%BD%8D%E5%B8%A6%E5%88%AB%E5%90%8D%E5%8C%BA"><span class="nav-number">2.1.</span> <span class="nav-text">位带区和位带别名区</span></a></li></ol></li></ol>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81STM32%E5%86%85%E6%A0%B8%E8%BF%98%E6%9C%89MCU"><span class="nav-number">1.</span> <span class="nav-text">一、STM32内核还有MCU</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81STM32%E7%9A%84%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="nav-number">2.</span> <span class="nav-text">二、STM32的虚拟内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8D%E5%B8%A6%E5%8C%BA%E5%92%8C%E4%BD%8D%E5%B8%A6%E5%88%AB%E5%90%8D%E5%8C%BA"><span class="nav-number">2.1.</span> <span class="nav-text">位带区和位带别名区</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81STM32%E7%9A%84RAM"><span class="nav-number">3.</span> <span class="nav-text">三、STM32的RAM</span></a></li></ol>
 
 	</div>
 </div>
@@ -936,12 +944,12 @@
               <span>2022</span>
               -
             
-            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
             
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        77 posts in total
+                        103 posts in total
                     </span>
                     
                 </p>

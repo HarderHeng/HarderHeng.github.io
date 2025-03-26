@@ -643,7 +643,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">56</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">76</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -651,7 +651,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">77</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">103</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -682,7 +682,7 @@
 </div>
                 <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">56</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">76</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -690,7 +690,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">77</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">103</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -757,26 +757,27 @@
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/10/30/Linux%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/">
-                            
+                        <a href="/2024/12/20/%E6%8A%98%E8%85%BE%E7%BC%96%E8%AF%91%E5%99%A8Clang-LLVM/">
+                            折腾编译器Clang+LLVM
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
                             
-                            SystemV启动流程内核引导进入BIOS开机自检，BIOS接管硬件，将硬盘中的引导加载到内存中，找到第一个操作系统的内核并启动操作系统，读入**&#x2F;boot**目录下的内核文件。
-运行INIT启动操作系统INIT进程是系统所有进程的起点，用来初始化所有的进程。INIT进程会读取配置文件&#x2F;etc&#x2F;inittab。
-运行级别许多程序需要开机启动，在Windows叫做...
+                            一、编译安装LLVM在github上找到LLVMProject并下载。
+这里整个项目过大，在我的机器上git clone会出现一定的问题，所以直接选择下载zip文件并解压缩。
+在LLVM的官方文档中有构建的教程，这里对整体的过程做一个记录。
+进入到LLVM的目录中，执行cmake -S llvm -B build -G &quot;Unix Makefiles -DCMAKE_BUILD_T...
                         
                     </div>
 
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Oct 30 2024 17:39:11 GMT+0800">
+            <span class="home-article-date" data-date="Fri Dec 20 2024 11:18:08 GMT+0800">
                 
-                    2024-10-30
+                    2024-12-20
                 
             </span>
         </span>
@@ -784,7 +785,7 @@
         
     </div>
 
-    <a href="/2024/10/30/Linux%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/">Read more<span class="seo-reader-text"></span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2024/12/20/%E6%8A%98%E8%85%BE%E7%BC%96%E8%AF%91%E5%99%A8Clang-LLVM/">Read more<span class="seo-reader-text">折腾编译器Clang+LLVM</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -799,14 +800,57 @@
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/10/16/VSCode%E4%B8%ADAduino%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
-                            VSCode中Arduino开发环境搭建
+                        <a href="/2024/12/19/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7gprof/">
+                            性能分析工具gprof
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
-                            <p>准备学习esp8266，遂尝试在vscode中配置esp8266的开发环境。</p>
+                            
+                            
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Thu Dec 19 2024 16:29:29 GMT+0800">
+                
+                    2024-12-19
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2024/12/19/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7gprof/">Read more<span class="seo-reader-text">性能分析工具gprof</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/12/19/%E7%BC%96%E8%AF%91%E5%99%A8%E6%AD%BB%E4%BB%A3%E7%A0%81%E6%B6%88%E9%99%A4/">
+                            编译器死代码消除
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            一、编译过程源文件经过预编译，编译，汇编，链接这些过程，最终得到可执行文件。
+预编译阶段处理宏定义、注释等等。
+编译阶段将执行词法分析、语法分析、语法分析、语义分析和中间代码生成，可能还会进行中间代码优化。
 
                         
                     </div>
@@ -814,9 +858,90 @@
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Oct 16 2024 20:40:29 GMT+0800">
+            <span class="home-article-date" data-date="Thu Dec 19 2024 11:23:07 GMT+0800">
                 
-                    2024-10-16
+                    2024-12-19
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2024/12/19/%E7%BC%96%E8%AF%91%E5%99%A8%E6%AD%BB%E4%BB%A3%E7%A0%81%E6%B6%88%E9%99%A4/">Read more<span class="seo-reader-text">编译器死代码消除</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/12/18/LZ4%E7%BC%96%E8%AF%91Windows%E5%BA%93%E6%96%87%E4%BB%B6/">
+                            LZ4编译Windows库文件
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Wed Dec 18 2024 16:08:53 GMT+0800">
+                
+                    2024-12-18
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2024/12/18/LZ4%E7%BC%96%E8%AF%91Windows%E5%BA%93%E6%96%87%E4%BB%B6/">Read more<span class="seo-reader-text">LZ4编译Windows库文件</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/12/18/Keil%E6%8A%A5%E9%94%99Cannot-Load-Flash-Device-Description/">
+                            Keil报错Cannot Load Flash Device Description!
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            问题使用Keil打开Cubemx创建的工程文件，编写好代码进行烧录时报错”Cannot Load Flash Device Description”，点击确定后提示Error:Flash Download failed - “Cortex-M4”。
+原因结合别人的博客和官方教程得知是因为从cubemx生成的项目和使用的MDK版本不匹配，导致项目的Flash下载算法不正确。所以只要选择一个正确...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Wed Dec 18 2024 10:12:59 GMT+0800">
+                
+                    2024-12-18
                 
             </span>
         </span>
@@ -829,17 +954,7 @@
                     
                         
                         <li>
-                            <a href="/categories/%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B/">实用教程</a>&nbsp;
-                        </li>
-                    
-                    
-                
-                    
-                        
-                            <li>></li>
-                        
-                        <li>
-                            <a href="/categories/%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                            <a href="/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">问题解决</a>&nbsp;
                         </li>
                     
                     
@@ -859,12 +974,12 @@
                     
                         <li>
                             | 
-                            <a href="/tags/Aduino/">Aduino</a>&nbsp;
+                            <a href="/tags/STM32/">STM32</a>&nbsp;
                         </li>
                     
                         <li>
                             | 
-                            <a href="/tags/Esp8266/">Esp8266</a>&nbsp;
+                            <a href="/tags/Keil/">Keil</a>&nbsp;
                         </li>
                     
                 </ul>
@@ -872,7 +987,7 @@
         
     </div>
 
-    <a href="/2024/10/16/VSCode%E4%B8%ADAduino%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">Read more<span class="seo-reader-text">VSCode中Arduino开发环境搭建</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2024/12/18/Keil%E6%8A%A5%E9%94%99Cannot-Load-Flash-Device-Description/">Read more<span class="seo-reader-text">Keil报错Cannot Load Flash Device Description!</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -887,24 +1002,28 @@
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/10/16/WSL%E4%B8%AD%E5%87%BA%E7%8E%B0Zone-identifer%E6%96%87%E4%BB%B6/">
-                            WSL中出现Zone.identifer文件
+                        <a href="/2024/12/17/Keil%E8%B0%83%E8%AF%95STM32%E4%BB%A5%E5%8F%8A%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/">
+                            Keil调试STM32以及性能监控
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
                             
-                            
+                            一、Keil调试Keil调试分为硬件调试和软件仿真两部分。
+尽管软件模拟已经很接近真实环境了，但是归根结底不如直接硬件调试。
+调试过程中，可以查看各种寄存器的值，各种变量的值，以及直接查看RAM和ROM中某个地址的值。
+在Keil中
+
                         
                     </div>
 
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Oct 16 2024 17:25:09 GMT+0800">
+            <span class="home-article-date" data-date="Tue Dec 17 2024 16:27:08 GMT+0800">
                 
-                    2024-10-16
+                    2024-12-17
                 
             </span>
         </span>
@@ -912,7 +1031,7 @@
         
     </div>
 
-    <a href="/2024/10/16/WSL%E4%B8%AD%E5%87%BA%E7%8E%B0Zone-identifer%E6%96%87%E4%BB%B6/">Read more<span class="seo-reader-text">WSL中出现Zone.identifer文件</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2024/12/17/Keil%E8%B0%83%E8%AF%95STM32%E4%BB%A5%E5%8F%8A%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/">Read more<span class="seo-reader-text">Keil调试STM32以及性能监控</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -927,75 +1046,32 @@
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/10/11/appimage%E6%96%87%E4%BB%B6%E5%AE%89%E8%A3%85/">
-                            .appimage文件安装
+                        <a href="/2024/12/17/STM32%E6%95%99%E7%A8%8B%E4%B9%8BHAL%E5%BA%93%E5%BC%80%E5%8F%91/">
+                            STM32教程之HAL库开发
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
-                            <p>有时候在Ubuntu中安装软件需要使用到appimage安装，但是会出现报错。在这里尝试解决。</p>
-
+                            
+                            
                         
                     </div>
 
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Fri Oct 11 2024 03:19:30 GMT+0800">
+            <span class="home-article-date" data-date="Tue Dec 17 2024 14:46:04 GMT+0800">
                 
-                    2024-10-11
+                    2024-12-17
                 
             </span>
         </span>
         
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">问题解决</a>&nbsp;
-                        </li>
-                    
-                    
-                
-                    
-                        
-                            <li>></li>
-                        
-                        <li>
-                            <a href="/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B/">实用教程</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/Linux/">Linux</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Shell/">Shell</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
         
     </div>
 
-    <a href="/2024/10/11/appimage%E6%96%87%E4%BB%B6%E5%AE%89%E8%A3%85/">Read more<span class="seo-reader-text">.appimage文件安装</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2024/12/17/STM32%E6%95%99%E7%A8%8B%E4%B9%8BHAL%E5%BA%93%E5%BC%80%E5%8F%91/">Read more<span class="seo-reader-text">STM32教程之HAL库开发</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -1010,346 +1086,28 @@
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/10/11/GitClone%E6%8A%A5%E9%94%99%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">
-                            GitClone报错问题解决
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            <p>在配置vim插件的过程中准备克隆github仓库到本地，但是出现 errno&#x3D;Connection timed out 的报错，现在尝试处理。</p>
-
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Fri Oct 11 2024 02:34:10 GMT+0800">
-                
-                    2024-10-11
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">问题解决</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/Git/">Git</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Shell/">Shell</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2024/10/11/GitClone%E6%8A%A5%E9%94%99%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">Read more<span class="seo-reader-text">GitClone报错问题解决</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/10/11/%E5%9C%A8WSL2%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%B3%BB%E7%BB%9F%E4%BB%A3%E7%90%86/">
-                            在WSL2中使用系统代理
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            <p>在使用WSL2的过程中，使用Github超时，不挂代理完全连接不了，这里尝试将系统代理同步给WSL。</p>
-
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Fri Oct 11 2024 01:46:52 GMT+0800">
-                
-                    2024-10-11
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B/">实用教程</a>&nbsp;
-                        </li>
-                    
-                    
-                
-                    
-                        
-                            <li>></li>
-                        
-                        <li>
-                            <a href="/categories/%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">问题解决</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/Linux/">Linux</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Shell/">Shell</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/WSL/">WSL</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2024/10/11/%E5%9C%A8WSL2%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%B3%BB%E7%BB%9F%E4%BB%A3%E7%90%86/">Read more<span class="seo-reader-text">在WSL2中使用系统代理</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/10/09/Linux%E4%B8%8B%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
-                            Linux下嵌入式开发环境搭建
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            <p>根据学长的笔记尝试移植四轴飞行器项目到Linux系统上。</p>
-
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Oct 09 2024 19:50:55 GMT+0800">
-                
-                    2024-10-09
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/">项目开发</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/Linux/">Linux</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/WSL/">WSL</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2024/10/09/Linux%E4%B8%8B%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">Read more<span class="seo-reader-text">Linux下嵌入式开发环境搭建</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/10/09/Vim%E7%BC%96%E8%BE%91%E5%99%A8%E6%8F%92%E4%BB%B6-%E5%8A%9F%E8%83%BD%E4%BC%98%E5%8C%96/">
-                            Vim编辑器插件&amp;功能优化
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            <p>学习了Vim的基础使用后，希望添加一些插件提升日常使用效率。（目前暂时搁置）</p>
-
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Oct 09 2024 16:38:50 GMT+0800">
-                
-                    2024-10-09
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B/">实用教程</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/Linux/">Linux</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Shell/">Shell</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/Vim/">Vim</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2024/10/09/Vim%E7%BC%96%E8%BE%91%E5%99%A8%E6%8F%92%E4%BB%B6-%E5%8A%9F%E8%83%BD%E4%BC%98%E5%8C%96/">Read more<span class="seo-reader-text">Vim编辑器插件&amp;功能优化</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/09/27/%E4%BA%8C%E5%8F%89%E6%A0%91/">
-                            二叉树
+                        <a href="/2024/12/17/STM32Cubemx%E6%95%99%E7%A8%8B/">
+                            STM32Cubemx教程
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
                             
-                            一、二叉树种类
-满二叉树 二叉树只有度为2和0的节点，并且度为0的节点在同一层上，则这个二叉树是满二叉树。也就是每一层都是满的。
-完全二叉树 除了最底层没填满，每一层都填满，并且优先填满最后一层的左节点。
-完满二叉树 除了叶节点以外所有的节点都具有两个子节点。区别于上述两种二叉树
-二叉搜索树（BST） 一个有序树，左子树上的所有数值一定小于根节点，右子树则反之所有节点都大于根节点。
-平衡二叉...
+                            一、创建项目三种创建项目的方法，一般可以使用前两种分别是选择MCU和选择ST官方开发板。
+这里以MCU为例，选择MCU的core和系列然后找到具体型号。
+然后点击右上角Start Project，开始配置项目。
+二、项目配置接下来进入到具体的项目基础配置。
+Pinout&amp;Configuration在这里可以初始化自己需要使用的外设，就不需要在项目中自己调用函数或者配置寄存器进行外设的...
                         
                     </div>
 
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Fri Sep 27 2024 14:11:34 GMT+0800">
+            <span class="home-article-date" data-date="Tue Dec 17 2024 13:52:17 GMT+0800">
                 
-                    2024-09-27
+                    2024-12-17
                 
             </span>
         </span>
@@ -1367,6 +1125,16 @@
                     
                     
                 
+                    
+                        
+                            <li>></li>
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B/">实用教程</a>&nbsp;
+                        </li>
+                    
+                    
+                
             </ul>
         </span>
         
@@ -1377,17 +1145,17 @@
                     
                         <li>
                             
-                            <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+                            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a>&nbsp;
                         </li>
                     
                         <li>
                             | 
-                            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>&nbsp;
+                            <a href="/tags/STM32/">STM32</a>&nbsp;
                         </li>
                     
                         <li>
                             | 
-                            <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">二叉树</a>&nbsp;
+                            <a href="/tags/Keil/">Keil</a>&nbsp;
                         </li>
                     
                 </ul>
@@ -1395,7 +1163,7 @@
         
     </div>
 
-    <a href="/2024/09/27/%E4%BA%8C%E5%8F%89%E6%A0%91/">Read more<span class="seo-reader-text">二叉树</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2024/12/17/STM32Cubemx%E6%95%99%E7%A8%8B/">Read more<span class="seo-reader-text">STM32Cubemx教程</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -1410,49 +1178,35 @@
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/09/20/C-%E4%B8%AD%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F/">
-                            C++中哈希表的几种使用方式
+                        <a href="/2024/12/17/Linux%E4%B8%8B%E5%BC%80%E5%8F%91STM32%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+                            Linux下开发STM32环境搭建
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
                             
-                            一、哈希表详解哈希表由一个索引和一个值组成，一般哈希表用来快速判断一个元素是否出现在集合里。
-将一个值映射到哈希表中的函数叫哈希函数，每个值都会被哈希函数映射成一个索引，直接查找这个索引就可以实现快速判断。
-有时候哈希函数可能会导致两个不同的值被映射成了同一个索引，这叫做哈希碰撞。
-如何解决哈希碰撞？
+                            一、大致思路本次搭建环境的大致思路是
 
-拉链法 在同一个哈希表的位置，
+Windows + wsl
+Cubemx进行基础配置和makefile的生成
+vscode进行项目开发
+gcc-arm-none-eabi交叉编译工具链进行项目编译
+OpenOCD进行代码的烧录
+配合GDBserver进行调试
 
-
+本质上进行一个嵌入式项目的开发，写代码，编译成可执行文件，将可执行文件烧录到嵌入式平台上，就是我们要做的所有的事情。对使用集...
                         
                     </div>
 
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Fri Sep 20 2024 22:56:29 GMT+0800">
+            <span class="home-article-date" data-date="Tue Dec 17 2024 11:08:17 GMT+0800">
                 
-                    2024-09-20
+                    2024-12-17
                 
             </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
         </span>
         
         
@@ -1462,17 +1216,17 @@
                     
                         <li>
                             
-                            <a href="/tags/C/">C++</a>&nbsp;
+                            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a>&nbsp;
                         </li>
                     
                         <li>
                             | 
-                            <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+                            <a href="/tags/STM32/">STM32</a>&nbsp;
                         </li>
                     
                         <li>
                             | 
-                            <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/">哈希表</a>&nbsp;
+                            <a href="/tags/STM32Cubemx/">STM32Cubemx</a>&nbsp;
                         </li>
                     
                 </ul>
@@ -1480,7 +1234,48 @@
         
     </div>
 
-    <a href="/2024/09/20/C-%E4%B8%AD%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F/">Read more<span class="seo-reader-text">C++中哈希表的几种使用方式</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2024/12/17/Linux%E4%B8%8B%E5%BC%80%E5%8F%91STM32%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">Read more<span class="seo-reader-text">Linux下开发STM32环境搭建</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2024/12/10/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95BenchMark%E4%BD%BF%E7%94%A8/">
+                            压缩算法BenchMark使用
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            LZbench是一个通用的
+
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Tue Dec 10 2024 10:48:59 GMT+0800">
+                
+                    2024-12-10
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2024/12/10/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95BenchMark%E4%BD%BF%E7%94%A8/">Read more<span class="seo-reader-text">压缩算法BenchMark使用</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -1490,7 +1285,7 @@
 
     <div class="home-paginator px-7 py-5">
         <div class="paginator">
-	<a class="extend prev" rel="prev" href="/page/3/"><i class="fa-regular fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/"><i class="fa-regular fa-angle-right"></i></a>
+	<a class="extend prev" rel="prev" href="/page/3/"><i class="fa-regular fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/5/"><i class="fa-regular fa-angle-right"></i></a>
 </div>
   
     </div>
@@ -1511,12 +1306,12 @@
               <span>2022</span>
               -
             
-            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
             
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        77 posts in total
+                        103 posts in total
                     </span>
                     
                 </p>

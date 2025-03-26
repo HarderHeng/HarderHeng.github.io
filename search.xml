@@ -384,17 +384,53 @@
 <div class="code-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line">SRC = folder</span><br><span class="line"><span class="variable">$(SRC)</span></span><br></pre></td></tr></table></figure></div>
 
 <p>直接定义变量，然后使用变量时就直接<code>$( )</code>进行引用。</p>
-<h3 id="内置变量"><a href="#内置变量" class="headerlink" title="内置变量"></a>内置变量</h3><p>对一条规则来说，需要有<strong>目标</strong>和<strong>依赖</strong>。</p>
+<p>一些常用的能简化Makefile编写的自定义变量：</p>
+<ul>
+<li>TARGET：目标，可以是各种目标比如TARGET_1，TARGET_2。</li>
+<li>OBJECTS：可执行的<code>.o</code>文件，也可以加上一些标识。</li>
+<li>SOURCE：源文件地址。</li>
+<li>INCLUDE：头文件地址。</li>
+</ul>
+<h3 id="预定义变量"><a href="#预定义变量" class="headerlink" title="预定义变量"></a>预定义变量</h3><p>在make中有一些预定义变量，除了作为自己可以直接使用的变量，有的地方的隐式规则也可能会调用这些预定义变量。</p>
+<ul>
+<li>CC：C语言编译器</li>
+<li>CFLAGS：C语言默认使用的选项</li>
+<li>CXX：Cpp语言编译器</li>
+<li>CXXFLAGS：Cpp语言默认使用的选项</li>
+</ul>
+<p>一般优化等级、调试等等的选项都可以写在上述的两种FLAGS中。</p>
+<h3 id="自动变量"><a href="#自动变量" class="headerlink" title="自动变量"></a>自动变量</h3><p>对一条规则来说，需要有<strong>目标</strong>和<strong>依赖</strong>。</p>
 <ul>
 <li>$@：表示目标文件</li>
 <li>$^：表示所有依赖的文件</li>
 <li>$&lt;：表示第一个依赖文件</li>
 </ul>
 <p>这三个内置变量在一条规则内使用则可以直接代表这些意义。</p>
+<div class="code-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">main: main.o test.o</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$^</span> -o <span class="variable">$@</span></span><br></pre></td></tr></table></figure></div>
+
+<p>上面的例子就是说用所有的依赖文件作为编译器参数，来生成目标文件<code>main</code>。</p>
 <h3 id="变量赋值"><a href="#变量赋值" class="headerlink" title="变量赋值"></a>变量赋值</h3><p>这里有三种赋值方式。</p>
 <ul>
 <li><strong>&#x3D;</strong>  这种赋值方式会在调用变量时进行变量的赋值计算</li>
 </ul>
+<h3 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h3><p>make支持shell中的通配符。</p>
+<ul>
+<li><code>*.c</code>：所有后缀为<code>.c</code>的文件，常用来匹配文件路径。</li>
+<li><code>%.c</code>：匹配任何字符，常用于模式匹配。</li>
+<li><code>?</code>：匹配一个单个的字符。</li>
+<li><code>[]</code>：用于匹配括号内的任意单一字符。</li>
+</ul>
+<h2 id="4、隐式规则"><a href="#4、隐式规则" class="headerlink" title="4、隐式规则"></a>4、隐式规则</h2><p>隐晦规则会使得make进行自动推导。</p>
+<p>要使用一个<code>.o</code>文件时，如果没有定义生成<code>.o</code>文件的规则，则自动寻找这个<code>.o</code>文件对应的<code>.c</code>文件，进行自动的生成。</p>
+<p>自动推导时，就会使用预定义的变量。</p>
+<h2 id="5、模式匹配"><a href="#5、模式匹配" class="headerlink" title="5、模式匹配"></a>5、模式匹配</h2><p>模式匹配常和通配符一起使用，表示一系列的规则，来自动化的包含文件或者生成文件。</p>
+<h3 id="模式规则"><a href="#模式规则" class="headerlink" title="模式规则"></a>模式规则</h3><div class="code-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">%.o: %.c</span></span><br><span class="line">gcc -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br></pre></td></tr></table></figure></div>
+
+<p>上述的规则用来匹配一个<code>.o</code>和<code>.c</code>文件，对每一个需要用到的<code>.o</code>文件都适用这个模式，根据下面的命令进行生成。</p>
+<h3 id="Wildcard关键字"><a href="#Wildcard关键字" class="headerlink" title="Wildcard关键字"></a>Wildcard关键字</h3><div class="code-container" data-rel="Makefile"><figure class="iseeu highlight makefile"><table><tr><td class="code"><pre><span class="line">objects:= <span class="variable">$(<span class="built_in">wildcard</span> *.o)</span></span><br></pre></td></tr></table></figure></div>
+
+<p>上述的赋值语句使用了<code>wildcard</code>关键字，用来展开后面的通配符。</p>
+<h2 id="6、文件搜寻"><a href="#6、文件搜寻" class="headerlink" title="6、文件搜寻"></a>6、文件搜寻</h2><p>make执行命令时默认在当前的目录下工作，如果要在其他的目录中寻找文件，则</p>
 ]]></content>
       <categories>
         <category>学习笔记</category>
@@ -453,14 +489,14 @@
 <p><em><strong>空行可以用来分隔函数和类，便于代码的维护和重构。</strong></em></p>
 <p><em><strong>同一行显示多条语句可以使用分号 <code>;</code> 进行分隔。</strong></em></p>
 <p><em><strong>py中不需要像c一样声明变量，只要直接写出变量并给出初始值就行。</strong></em></p>
-<h3 id="二、py注释（写注释是一个好习惯）"><a href="#二、py注释（写注释是一个好习惯）" class="headerlink" title="二、py注释（写注释是一个好习惯）"></a>二、py注释（写注释是一个好习惯）</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#这是注释</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">这是注释</span></span><br><span class="line"><span class="string"># &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">这是注释</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;hello world!&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+<h3 id="二、py注释（写注释是一个好习惯）"><a href="#二、py注释（写注释是一个好习惯）" class="headerlink" title="二、py注释（写注释是一个好习惯）"></a>二、py注释（写注释是一个好习惯）</h3><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#这是注释</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">这是注释</span></span><br><span class="line"><span class="string"># &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">这是注释</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;hello world!&quot;</span>)</span><br></pre></td></tr></table></figure></div>
 
 <p>python有这三种常用的注释。</p>
 <h3 id="三、标准数据类型"><a href="#三、标准数据类型" class="headerlink" title="三、标准数据类型"></a>三、标准数据类型</h3><h6 id="（1-Numbers数字"><a href="#（1-Numbers数字" class="headerlink" title="（1 Numbers数字"></a>（1 Numbers数字</h6><p>数字中有<strong>整型</strong>、__浮点型__、<strong>布尔型</strong>、<strong>复数型</strong></p>
 <h6 id="（2-String字符串"><a href="#（2-String字符串" class="headerlink" title="（2 String字符串"></a>（2 String字符串</h6><p>字符串用单引号<code>&#39;str&#39;</code>和双引号<code>&quot;str&quot;</code>表示 ，然后可以用三引号表示多行字符串。转义符和c语言中的转义符是一样的都是反斜杠<code>\</code>。</p>
 <p>怎么让转义符不生效？在整个字符串前面加上<code>r</code>。连续的字符串可以被自动连接起来，也可以用<code>+</code>表示两个字符串的相连，用乘号<code>*</code>加上次数表示重复。</p>
 <p>字符串的最后一个字符不能是反斜杠</p>
-<h6 id="（3-List列表"><a href="#（3-List列表" class="headerlink" title="（3 List列表"></a>（3 List列表</h6><h6 id="（4-Tuple元组"><a href="#（4-Tuple元组" class="headerlink" title="（4 Tuple元组"></a>（4 Tuple元组</h6><h6 id="（5-Dictionary字典"><a href="#（5-Dictionary字典" class="headerlink" title="（5 Dictionary字典"></a>（5 Dictionary字典</h6><h3 id="四、字符串"><a href="#四、字符串" class="headerlink" title="四、字符串"></a>四、字符串</h3>]]></content>
+<h6 id="（3-List列表"><a href="#（3-List列表" class="headerlink" title="（3 List列表"></a>（3 List列表</h6><h6 id="（4-Tuple元组"><a href="#（4-Tuple元组" class="headerlink" title="（4 Tuple元组"></a>（4 Tuple元组</h6><h6 id="（5-Dictionary字典"><a href="#（5-Dictionary字典" class="headerlink" title="（5 Dictionary字典"></a>（5 Dictionary字典</h6><h3 id="四、字符串"><a href="#四、字符串" class="headerlink" title="四、字符串"></a>四、字符串</h3><h3 id="五、Python脚本"><a href="#五、Python脚本" class="headerlink" title="五、Python脚本"></a>五、Python脚本</h3>]]></content>
       <categories>
         <category>学习笔记</category>
       </categories>
@@ -487,7 +523,9 @@
 <p>其中的存储器有flash和sram两部分，下面会详细解释这些。</p>
 <p>作为一个stm32的芯片，其内存布局往往是被cortex-M3内核大致确定的，很多STM32都遵循着类似的内存布局。</p>
 <h1 id="二、STM32的虚拟内存"><a href="#二、STM32的虚拟内存" class="headerlink" title="二、STM32的虚拟内存"></a>二、STM32的虚拟内存</h1><p>STM32将整块芯片中所有可用的地址都统一映射为虚拟内存，32位的寄存器和地址总线允许的寻址空间为4G，这4GB的虚拟内存被ARM内核大致划分，对ST公司来说做了一些更具体和符合使用情况的细节划分。</p>
+<p>为什么说是虚拟内存呢？因为这些内存将所有的地址空间统一编址，不同硬件的物理地址都被划分到这里的虚拟内存。</p>
 <p><strong>此处的虚拟内存只是一种映射，stm32中没有虚拟内存的概念，也没有MMU专门管理内存。stm32的映射由MPU（memory protection unit）实现</strong></p>
+<p><em>对于没有MMU内存管理单元的ARM简单MCU，其内存划分都遵循相同划分。</em></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -521,6 +559,12 @@
 <li><strong>Block6</strong>，保留地址。按理说Block5和6对应着ARM内核划分的<strong>片外外设</strong>区，但是对STM32的设计来说应该是把这1GB的内存全部用给了FSMC的寄存器，并没有给片外外设留空间。</li>
 <li><strong>Block7</strong>，内核内部外设。</li>
 </ul>
+<h1 id="三、STM32的RAM"><a href="#三、STM32的RAM" class="headerlink" title="三、STM32的RAM"></a>三、STM32的RAM</h1><p>在一个单片机程序中，<strong>代码和只读数据</strong>被存储在Flash中，<strong>全局变量、静态变量</strong>被存储在RAM中。</p>
+<p><em><strong>在RAM中还有堆和栈。</strong></em></p>
+<p>在启动文件<code>startupstm32xxxx.s</code>中一开始就是对堆内存和栈内存大小的定义。在整个RAM的空间中，从下往上依次是<strong>data、bss、HEAP、STACK</strong>。</p>
+<p>Heap和Stack的大小和位置在硬件系统上电时被确定。</p>
+<p>其中Heap从低地址向高地址扩展，而Stack从高地址向低地址扩展。</p>
+<p>在系统上电时，存储在FLASH中的<strong>全局变量</strong>和<strong>静态变量</strong>被搬运到RAM中。</p>
 ]]></content>
       <categories>
         <category>学习笔记</category>
@@ -538,6 +582,7 @@
 <p>在中断服务程序中进行<strong>关中断、保存现场、开中断、处理中断和异常、关中断、恢复现场、开中断</strong></p>
 <p>在ARM体系中和异常统一由中断向量表管理。</p>
 <h5 id="中断向量表"><a href="#中断向量表" class="headerlink" title="中断向量表"></a>中断向量表</h5><p>中断向量表有低端和高端向量表两种，低端向量表就是从0x00000000开始，高端向量表处在0xFFFF0000位置。</p>
+<p><em>下图中的中断向量表基本对应着ArmV7-A架构，而CortexM架构都可以使用自定义的中断向量表，不用遵循下表。如果是更新的Arm指令集版本，和下表也有较大区别</em></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -545,16 +590,35 @@
                       alt="image-20240508162736933"
                 ></p>
 <h1 id="中断向量表和ResetHandler"><a href="#中断向量表和ResetHandler" class="headerlink" title="中断向量表和ResetHandler"></a>中断向量表和ResetHandler</h1><p>ARM中断向量表的位置默认为0x00000000，中断向量表如下。</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">_start:</span><br><span class="line">    ldr pc, =Reset_Handler          /* 复位中断 */ </span><br><span class="line">    ldr pc, =Undefined_Handler      /* 未定义指令中断 */</span><br><span class="line">    ldr pc, =SVC_Handler            /* SVC(Supervisor)中断*/</span><br><span class="line">    ldr pc, =PrefAbort_Handler      /* 预取终止中断 */</span><br><span class="line">    ldr pc, =DataAbort_Handler      /* 数据终止中断 */</span><br><span class="line">    ldr pc, =NotUsed_Handler        /* 保留中断 */</span><br><span class="line">    ldr pc, =IRQ_Handler            /* IRQ 中断 */</span><br><span class="line">    ldr pc, =FIQ_Handler            /* FIQ(快速中断) */</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">_start:</span><br><span class="line">    ldr pc, =Reset_Handler          /* 复位中断 */ </span><br><span class="line">    ldr pc, =Undefined_Handler      /* 未定义指令中断 */</span><br><span class="line">    ldr pc, =SVC_Handler            /* SVC(Supervisor)中断*/</span><br><span class="line">    ldr pc, =PrefAbort_Handler      /* 预取终止中断 */</span><br><span class="line">    ldr pc, =DataAbort_Handler      /* 数据终止中断 */</span><br><span class="line">    ldr pc, =NotUsed_Handler        /* 保留中断 */</span><br><span class="line">    ldr pc, =IRQ_Handler            /* IRQ 中断 */</span><br><span class="line">    ldr pc, =FIQ_Handler            /* FIQ(快速中断) */</span><br></pre></td></tr></table></figure></div>
 
 <p>当机器上电启动时会从这个代码开始，先进入ResetHandler进行系统的初始化。当进入中断时，会从中断向量表的起始地址（也就是上面_start）开始，根据中断的类型进行偏移，例如如果偏移量为0x08则会执行SVC中断的语句，pc寄存器直接被装入中断向量的地址，跳转到对应的中断处理。</p>
 <p><em>如果要防止中断嵌套，需要在中断服务程序中加入屏蔽中断的代码。</em></p>
 <p>ResetHandler中是机器上电启动后或者复位后进行初始化的代码，初始化后会进入**_main**函数最后才进入main函数。</p>
 <p>可以手动设置中断向量表的地址，一般的做法是在ResetHandler中设置。</p>
 <h1 id="STM32（Cortex-M）的中断服务程序"><a href="#STM32（Cortex-M）的中断服务程序" class="headerlink" title="STM32（Cortex-M）的中断服务程序"></a>STM32（Cortex-M）的中断服务程序</h1><p>对Cortex-M系列来说，并不遵循arm所规定的普通的中断向量表。</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">__Vectors       DCD     __initial_sp              ; Top of Stack</span><br><span class="line">                DCD     Reset_Handler             ; Reset Handler</span><br><span class="line">                DCD     NMI_Handler               ; NMI Handler</span><br><span class="line">                DCD     HardFault_Handler         ; Hard Fault Handler</span><br><span class="line">                DCD     MemManage_Handler         ; MPU Fault Handler</span><br><span class="line">                DCD     BusFault_Handler          ; Bus Fault Handler</span><br><span class="line">                DCD     UsageFault_Handler        ; Usage Fault Handler</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">__Vectors       DCD     __initial_sp              ; Top of Stack</span><br><span class="line">                DCD     Reset_Handler             ; Reset Handler</span><br><span class="line">                DCD     NMI_Handler               ; NMI Handler</span><br><span class="line">                DCD     HardFault_Handler         ; Hard Fault Handler</span><br><span class="line">                DCD     MemManage_Handler         ; MPU Fault Handler</span><br><span class="line">                DCD     BusFault_Handler          ; Bus Fault Handler</span><br><span class="line">                DCD     UsageFault_Handler        ; Usage Fault Handler</span><br></pre></td></tr></table></figure></div>
 
-<p>可以看到，中断向量表的第一行规定着<strong>栈初始化</strong>程序的地址，也就是说开机后会先初始化栈，然后才进行ResetHandler。</p>
+<p>可以看到，中断向量表的第一行规定着<strong>栈初始化</strong>的地址，也就是说开机后会先初始化栈，然后才进行ResetHandler。</p>
+<h1 id="中断和异常触发流程-Cortex-M"><a href="#中断和异常触发流程-Cortex-M" class="headerlink" title="中断和异常触发流程(Cortex-M)"></a>中断和异常触发流程(Cortex-M)</h1><ul>
+<li>保存现场（硬件）：将一些寄存器的值自动的保存到SP指向的栈中。</li>
+<li>分辨异常&#x2F;中断（硬件）：根据异常&#x2F;中断号在中断向量表中找到中断服务程序的地址并进行跳转。</li>
+<li>中断服务程序结束后，从栈中恢复现场（软件）</li>
+</ul>
+<h2 id="1-保存现场"><a href="#1-保存现场" class="headerlink" title="1. 保存现场"></a>1. 保存现场</h2><p>不管是触发中断还是异常，硬件都会自动保存<strong>R0到R3、R12、LR、xPSR</strong>寄存器。</p>
+<p>剩下的寄存器将在中断服务程序中进行保存。</p>
+<p>根据ATPCS标准，被调用的函数如果要是用<strong>R4到R11</strong>寄存器，则需要在被调用函数的内部进行压栈。</p>
+<ul>
+<li><strong>调用C语言的中断服务程序</strong>：编译器会自动生成保存现场的汇编代码，不需要程序员手动的保存。</li>
+<li><strong>调用汇编编写的中断服务程序</strong>：需要在中断服务程序中手动编写保存现场的程序。</li>
+</ul>
+<h2 id="2-根据中断号进入中断"><a href="#2-根据中断号进入中断" class="headerlink" title="2. 根据中断号进入中断"></a>2. 根据中断号进入中断</h2><p>寻找中断向量表，再根据中断号，在中断向量表中进行偏移。</p>
+<h2 id="3-恢复现场。。。。"><a href="#3-恢复现场。。。。" class="headerlink" title="3. 恢复现场。。。。"></a>3. 恢复现场。。。。</h2><h1 id="NVIC中断优先级"><a href="#NVIC中断优先级" class="headerlink" title="NVIC中断优先级"></a>NVIC中断优先级</h1><p>不同系列的芯片有不同位数的中断优先级，这个中断优先级一般是在BASEPRI寄存器的最高几位。比如CortexM系列的CPU，中断优先级位数有4位，就是BASEPRI寄存器的高四位。</p>
+<p>优先级数字越小，中断越优先。</p>
+<p>中断优先级又被<strong>NVIC</strong>分成抢占优先级和响应优先级，可以配置对应的优先级分组。比如4位优先级里面，有两位是抢占优先级，有两位是响应优先级。我们发现如果中断优先级的设置只有4位的话，也就是只有16个不同的优先级，注定了一些中断必须要在同一个优先级中。对抢占优先级和响应优先级的处理是NVIC负责的，抢占优先级更高的可以中断嵌套其他更低的中断，而相同的抢占优先级的任务里，顺序执行响应优先级更高的。而对于整个优先级都完全一样的中断，则会通过自然优先级，也就是在中断向量表中的位置来判断。越靠前的自然优先级就越高。</p>
+<p>本身抢占优先级和响应优先级这两个东西配合在一起，才是BASEPRI看到的真正的任务优先级，但是NVIC把他们拆成了两部分来使用。对BASEPRI寄存器来说，对优先级进行屏蔽，不在乎抢占还是响应，会直接屏蔽掉比寄存器的数值更大的那些中断。</p>
+<p>NVIC可以管理的是中断，一般来源于外设或者内核异常。而有一些异常，比如<strong>HardFault</strong>或者<strong>NMI</strong>，他们在中断向量表的最前面，但是不通过NVIC进行中断的管理，并且其优先级也不能够被配置。他们的优先级默认被配置为最高，任何情况下发生这几个异常都是最先进行处理。而在这之后的<strong>MemManage和BusFault</strong>等等异常，包括操作系统常用到的<strong>SysTick</strong>和<strong>PenSV</strong>都是NVIC管理的内核异常。再往后，就是NVIC管理的外设的中断。</p>
+<p>在操作系统中，一般使用到的中断就是<strong>SysTick</strong>和<strong>PendSV</strong>。SysTick用于提供操作系统时钟，并且在合适的时候进行唤起任务的切换。PendSV则用于进行任务的切换。PendSV的可配置优先级一般为最低，然后SysTick为其次。</p>
 ]]></content>
   </entry>
   <entry>
@@ -651,7 +715,21 @@
   <entry>
     <title>uC/OS移植</title>
     <url>/2024/04/24/uC-OS%E7%A7%BB%E6%A4%8D/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="一、任务切换"><a href="#一、任务切换" class="headerlink" title="一、任务切换"></a>一、任务切换</h1><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">PendSV_Handler</span><br><span class="line">    CPSID   I                                                   ; Cortex-M7 errata notice. See Note #5</span><br><span class="line">    MOV32   R2, OS_KA_BASEPRI_Boundary                          ; Set BASEPRI priority level required for exception preemption</span><br><span class="line">    LDR     R1, [R2]</span><br><span class="line">    MSR     BASEPRI, R1</span><br><span class="line">    DSB</span><br><span class="line">    ISB</span><br><span class="line">    CPSIE   I</span><br><span class="line"></span><br><span class="line">    MRS     R0, PSP                                             ; PSP is process stack pointer</span><br><span class="line">    STMFD   R0!, &#123;R4-R11, R14&#125;                                  ; Save remaining regs r4-11, R14 on process stack</span><br><span class="line"></span><br><span class="line">    LDR     R5, =OSTCBCur                                       ; OSTCBCur-&gt;OSTCBStkPtr = SP;</span><br><span class="line">    LDR     R1, [R5]</span><br><span class="line">    STR     R0, [R1]                                            ; R0 is SP of process being switched out</span><br><span class="line"></span><br><span class="line">                                                                ; At this point, entire context of process has been saved</span><br><span class="line">    MOV     R4, LR                                              ; Save LR exc_return value</span><br><span class="line">    BL      OSTaskSwHook                                        ; Call OSTaskSwHook() for FPU Push &amp; Pop</span><br><span class="line"></span><br><span class="line">    LDR     R0, =OSPrioCur                                      ; OSPrioCur = OSPrioHighRdy;</span><br><span class="line">    LDR     R1, =OSPrioHighRdy</span><br><span class="line">    LDRB    R2, [R1]</span><br><span class="line">    STRB    R2, [R0]</span><br><span class="line"></span><br><span class="line">    LDR     R1, =OSTCBHighRdy                                   ; OSTCBCur  = OSTCBHighRdy;</span><br><span class="line">    LDR     R2, [R1]</span><br><span class="line">    STR     R2, [R5]</span><br><span class="line"></span><br><span class="line">    ORR     LR,  R4, #0x04                                      ; Ensure exception return uses process stack</span><br><span class="line">    LDR     R0,  [R2]                                           ; R0 is new process SP; SP = OSTCBHighRdy-&gt;OSTCBStkPtr;</span><br><span class="line">    LDMFD   R0!, &#123;R4-R11, R14&#125;                                  ; Restore r4-11, R14 from new process stack</span><br><span class="line">    MSR     PSP, R0                                             ; Load PSP with new process SP</span><br><span class="line"></span><br><span class="line">    MOV32   R2, #0                                              ; Restore BASEPRI priority level to 0</span><br><span class="line">    CPSID   I</span><br><span class="line">    MSR     BASEPRI, R2</span><br><span class="line">    DSB</span><br><span class="line">    ISB</span><br><span class="line">    CPSIE   I</span><br><span class="line">    BX      LR                                                  ; Exception return will restore remaining context</span><br><span class="line"></span><br><span class="line">    ALIGN                                                       ; Removes warning[A1581W]: added &lt;no_padbytes&gt; of padding at &lt;address&gt;</span><br><span class="line"></span><br><span class="line">    END</span><br></pre></td></tr></table></figure></div>
+
+
+
+<ol>
+<li><p>触发PendSV的中断，进入中断服务程序。</p>
+</li>
+<li><p>屏蔽低优先级的中断，或者直接关闭中断。关中断防止额外的中断嵌套。</p>
+</li>
+<li><p>使用<strong>MRS</strong>指令读取PSP指针的值。因为CPU进入了中断模式，SP指针已经变成了<strong>MSP</strong>，所以不能直接压栈，只能通过<strong>MRS</strong>指令读取PSP的值，再将<strong>R4到R11和R14寄存器的值</strong>直接压栈进入PSP。</p>
+<p><em><strong>为什么不保存其他寄存器的值？</strong></em></p>
+</li>
+<li></li>
+</ol>
+]]></content>
   </entry>
   <entry>
     <title>从零开始的Stm32学习</title>
@@ -748,6 +826,8 @@
                 ></p>
 <p>这两个互补的端口会分别导通正极和负极，在外面产生一个PWM波形，最高电压就是推挽电路的正极电压。在这两个端口前面还有一个死区生成器，在两个端口切换电平是提供一段时间的死区防止上两个端口接通时间比较接近导致的短路。</p>
 <p>要使用PWM首先需要配置TIM定时器，然后配置<strong>输出比较</strong>这一块所有的寄存器，就可以使用PWM了。</p>
+<p><em><strong>（3）输入捕获Input Capture</strong></em></p>
+<p>输入捕获和输出比较共用一系列的寄存器</p>
 <h4 id="6、RCC时钟树"><a href="#6、RCC时钟树" class="headerlink" title="6、RCC时钟树"></a>6、RCC时钟树</h4><p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -1952,7 +2032,7 @@
   <entry>
     <title>FPGA入门</title>
     <url>/2024/09/04/FPGA%E5%85%A5%E9%97%A8/</url>
-    <content><![CDATA[<h3 id="一、电路设计"><a href="#一、电路设计" class="headerlink" title="一、电路设计"></a>一、电路设计</h3><h4 id="一、逻辑门"><a href="#一、逻辑门" class="headerlink" title="一、逻辑门"></a>一、逻辑门</h4><ul>
+    <content><![CDATA[<h1 id="一、电路设计"><a href="#一、电路设计" class="headerlink" title="一、电路设计"></a>一、电路设计</h1><h4 id="一、逻辑门"><a href="#一、逻辑门" class="headerlink" title="一、逻辑门"></a>一、逻辑门</h4><ul>
 <li>与门</li>
 <li>或门</li>
 <li>非门</li>
@@ -1963,7 +2043,93 @@
 <li><strong>正逻辑</strong>中高电压是<em><strong>1</strong></em>，低电压是<em><strong>0</strong></em></li>
 <li><strong>负逻辑</strong>中高电压是<em><strong>0</strong></em>，高电压是<em><strong>1</strong></em></li>
 </ul>
-<h4 id="三、逻辑函数的标准形式"><a href="#三、逻辑函数的标准形式" class="headerlink" title="三、逻辑函数的标准形式"></a>三、逻辑函数的标准形式</h4><h5 id="（1、最小项"><a href="#（1、最小项" class="headerlink" title="（1、最小项"></a>（1、最小项</h5><p>如果一个具有n个变量的函数的积包含全部的n个变量，每个变量都以原变量和反变量的形式出现一次，则称为最小项。</p>
+<h1 id="二、Verilog语言"><a href="#二、Verilog语言" class="headerlink" title="二、Verilog语言"></a>二、Verilog语言</h1><h2 id="1-基础语法"><a href="#1-基础语法" class="headerlink" title="1.基础语法"></a>1.基础语法</h2><h3 id="（1）数值表示"><a href="#（1）数值表示" class="headerlink" title="（1）数值表示"></a>（1）数值表示</h3><h4 id="逻辑数值"><a href="#逻辑数值" class="headerlink" title="逻辑数值"></a>逻辑数值</h4><ul>
+<li>0：低电平，逻辑0</li>
+<li>1：高电平，裸机1</li>
+<li>x或者X：状态未知</li>
+<li>z或者Z：高阻，上拉为1，下拉为0。</li>
+</ul>
+<h4 id="整数数值"><a href="#整数数值" class="headerlink" title="整数数值"></a>整数数值</h4><p>整数数值前面可以<strong>指明位宽</strong>，可以声明<strong>进制</strong>。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">4&#x27;b1011 //表示4bit的二进制数1011</span><br><span class="line">32&#x27;h1234_abcd //表示32bit的16进制数1234_abcd，加下划线可以提高可读性。</span><br></pre></td></tr></table></figure></div>
+
+<p>如果是<strong>负数</strong>，则在整个数字最前面加一个负号。</p>
+<h4 id="实数数值"><a href="#实数数值" class="headerlink" title="实数数值"></a>实数数值</h4><p>实数数值可以用两种方法表示，<strong>十进制</strong>和<strong>科学计数法</strong>。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">123.123 //十进制表示法</span><br><span class="line">123123e-3 //科学计数法</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><p>字符串中不能够包含回车符号，不能换行书写。一个字符串被认为是一个单字节的序列。</p>
+<h3 id="（2）数据类型"><a href="#（2）数据类型" class="headerlink" title="（2）数据类型"></a>（2）数据类型</h3><p>最常用的数据类型是<strong>线网Wire</strong>和<strong>寄存器Reg</strong>。</p>
+<h4 id="线网Wire"><a href="#线网Wire" class="headerlink" title="线网Wire"></a>线网Wire</h4><p>表示硬件单元之间的物理连接，其值由连接的器件的输出端连续驱动。如果没有驱动单元连接到wire型变量，缺省值一般为”Z”。</p>
+<div class="code-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> interrupt;</span><br><span class="line"><span class="keyword">wire</span> flag;</span><br><span class="line"><span class="keyword">wire</span> gnd = <span class="number">1</span>b&#x27;<span class="number">0</span>;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="寄存器Reg"><a href="#寄存器Reg" class="headerlink" title="寄存器Reg"></a>寄存器Reg</h4><p>寄存器用来表示存储单元，会一直保持原有的数值直到被某一个输入给改写。</p>
+<div class="code-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">reg</span> flag;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h4><p>在线网和寄存器的位宽大于1的时候，可以被声明成向量的形式。</p>
+<div class="code-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">7</span>:<span class="number">0</span>] data;</span><br><span class="line"><span class="keyword">reg</span> [<span class="number">3</span>:<span class="number">0</span>] alu;</span><br><span class="line"><span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">6</span>] counter</span><br></pre></td></tr></table></figure></div>
+
+<p>声明成向量之后，我们可以对其中的某几位进行选择使用。</p>
+<p><strong>Verilog还支持指定bit位后固定位宽的向量域选择访问</strong></p>
+<div class="code-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line">A = data[<span class="number">31</span>-:<span class="number">8</span>];</span><br><span class="line">A = data[<span class="number">31</span>:<span class="number">24</span>];</span><br><span class="line">A = data[<span class="number">24</span>+:<span class="number">8</span>];</span><br></pre></td></tr></table></figure></div>
+
+<p>上述的三种表达式是等价的，都表示data的24位到31位。</p>
+<p>对数据进行组合形成新的向量时，需要使用大括号。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">wire [31:0] temp;</span><br><span class="line">temp = &#123;byte1[0:7], byte2[8:31]&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="寄存器型变量"><a href="#寄存器型变量" class="headerlink" title="寄存器型变量"></a>寄存器型变量</h4><p>整数，实数，时间等数据类型属于寄存器类型。</p>
+<ul>
+<li>整数：integer</li>
+<li>实数：real</li>
+<li>时间：time，调用系统函数<code>$time</code>获得当前的仿真时间</li>
+</ul>
+<p>变量并不代表电路中的信号，只是用来记录一些值。</p>
+<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><p>可以声明任意维数的数组，数组中的每一个元素必须是一个标量或者向量。</p>
+<div class="code-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">integer</span> <span class="keyword">int</span>[<span class="number">7</span>:<span class="number">0</span>];</span><br><span class="line"><span class="keyword">reg</span> [<span class="number">3</span>:<span class="number">0</span>] counter[<span class="number">7</span>:<span class="number">0</span>][<span class="number">3</span>:<span class="number">0</span>];</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="存储器"><a href="#存储器" class="headerlink" title="存储器"></a>存储器</h4><p>存储器变量就是一种寄存器数组，可以用来描述RAM或者ROM的行为。</p>
+<div class="code-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>] RAM[<span class="number">0</span>:<span class="number">1023</span>]; <span class="comment">//1kb的存储器</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h4><div class="code-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">parameter</span> data_width = <span class="number">10&#x27;d32</span>;</span><br></pre></td></tr></table></figure></div>
+
+<p>参数用来表示常量，只能被赋值一次。</p>
+<p>局部参数用<code>localparam</code>来声明，作用和用法和<code>parameter</code>相同，区别在于它不能够被赋值。</p>
+<h3 id="（3）编译指令"><a href="#（3）编译指令" class="headerlink" title="（3）编译指令"></a>（3）编译指令</h3><h4 id="define-undef"><a href="#define-undef" class="headerlink" title="`define ,&#96;undef"></a>`define ,&#96;undef</h4><p>**`define**用于文本替换，和C语言中的<code>#define</code>类似，一旦被编译在整个编译过程中都会有效。</p>
+<p>**`undef**用于取消之前的&#96;define。</p>
+<p><strong>`ifdef，`ifndef，`elsif，`else，`endif</strong></p>
+<p>都是条件编译指令，和C语言中的条件编译基本一致。</p>
+<h4 id="include"><a href="#include" class="headerlink" title="`include"></a>`include</h4><p>**`include**可以在编译时将一个Verilog文件包含在另一个文件中，类似于C语言中的<code>#include</code>。</p>
+<h4 id="timescale"><a href="#timescale" class="headerlink" title="`timescale"></a>`timescale</h4><p>在Verilog模型中，时延有具体的单位时间表述，用**&#96;timescale**编译指令将时间单位和实际时间相关联。</p>
+<div class="code-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="meta">`<span class="keyword">timescale</span> time_unit / time_precision</span></span><br></pre></td></tr></table></figure></div>
+
+<p>time_unit是时间单位，time_precision是时间精度，时间精度不能超过时间单位的大小。</p>
+<p><strong>`timescale**会一直生效直到遇到另一个**`timescale</strong>指令或者**&#96;resetall**指令。</p>
+<p>多个模块带有**&#96;timescale**时，会将所有的时延精度替换为最小的那个时延精度。</p>
+<h4 id="default-nettype"><a href="#default-nettype" class="headerlink" title="&#96;default_nettype"></a>&#96;default_nettype</h4><p>设置默认的变量类型。如果没有给一个变量定义类型，则默认可以是<code>wire、reg、none</code>。</p>
+<p>设置为none的时候，不允许出现未定义类型的变量，可以规范代码编写。</p>
+<h4 id="resetall"><a href="#resetall" class="headerlink" title="&#96;resetall"></a>&#96;resetall</h4><p>将所有编译指令重新设置为默认值。**&#96;resetall**可以使得缺省连线类型为线网类型。</p>
+<p>将<strong>`resetall**加到模块最后，可以将当前的**&#96;timscale</strong>取消，防止传递到下一个模块。</p>
+<h4 id="unconnected-drive，-nounconnected-drive"><a href="#unconnected-drive，-nounconnected-drive" class="headerlink" title="`unconnected_drive，`nounconnected_drive"></a>`unconnected_drive，`nounconnected_drive</h4><p>在这两个编译指令中间的，任何未连接的输入端口，都会被默认设置为正偏电路状态或者反偏电路状态。</p>
+<div class="code-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="meta">`<span class="keyword">unconnected_drive</span> pull1</span></span><br><span class="line">. . .</span><br><span class="line"> / *在这两个程序指令间的所有未连接的输入端口为正偏电路状态（连接到高电平） * /</span><br><span class="line"><span class="meta">`<span class="keyword">nounconnected_drive</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">`<span class="keyword">unconnected_drive</span> pull0</span></span><br><span class="line">. . .</span><br><span class="line"> / *在这两个程序指令间的所有未连接的输入端口为反偏电路状态（连接到低电平） * /</span><br><span class="line"><span class="meta">`<span class="keyword">nounconnected_drive</span> </span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="（4）电路逻辑描述"><a href="#（4）电路逻辑描述" class="headerlink" title="（4）电路逻辑描述"></a>（4）电路逻辑描述</h3><h4 id="assign"><a href="#assign" class="headerlink" title="assign"></a>assign</h4><ul>
+<li>用于组合逻辑</li>
+<li>用于wire类型的信号</li>
+<li>赋值是连续的，只要输入信号发生改变输出信号就立刻跟着改变</li>
+<li>一般用于逻辑运算或连接不同模块的信号</li>
+</ul>
+<div class="code-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assign</span> a=b;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="always"><a href="#always" class="headerlink" title="always"></a>always</h4><ul>
+<li>用于时序逻辑</li>
+<li>赋值通常是给reg类型的</li>
+<li>只有在条件满足时，才会触发</li>
+</ul>
+<div class="code-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    reg_a = <span class="number">0</span>;</span><br><span class="line">    reg_b = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">//在clk的上升沿触发</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>阻塞赋值和非阻塞赋值</strong></p>
+<ul>
+<li>阻塞赋值 <strong>&#x3D;</strong> ，从前往后依次赋值</li>
+<li>非阻塞赋值 <strong>&lt;&#x3D;</strong> ，所有的赋值语句并行进行</li>
+</ul>
 ]]></content>
   </entry>
   <entry>
@@ -2149,10 +2315,15 @@
     <url>/2024/10/30/stm32%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[<h1 id="一、启动模式"><a href="#一、启动模式" class="headerlink" title="一、启动模式"></a>一、启动模式</h1><p>stm32根据两个boot引脚有三种启动模式。分别是</p>
 <ul>
-<li><strong>从FLASH启动</strong>，是直接运行代码常用的模式。</li>
-<li><strong>从SRAM启动</strong>，是进行调试常用的模式。</li>
-<li><strong>从系统存储器启动</strong>，直接通过bootloader</li>
+<li><strong>从FLASH启动</strong>，是直接运行代码常用的模式。地址是0x08000000，被映射到0x00000000</li>
+<li><strong>从SRAM启动</strong>，是进行调试常用的模式。地址是0x20000000，并没有映射到0x00000000，需要在应用程序初始化代码中重新设置向量标的位置。</li>
+<li><strong>从系统存储器启动</strong>，一般是运行芯片厂商烧写好的固件，对stm32来说是串口下载的固件。地址是0x1FFFF000，被映射到0x0000000。</li>
 </ul>
+<h1 id="二、硬件复位"><a href="#二、硬件复位" class="headerlink" title="二、硬件复位"></a>二、硬件复位</h1><h3 id="1-复位后的流程"><a href="#1-复位后的流程" class="headerlink" title="1. 复位后的流程"></a>1. 复位后的流程</h3><ol>
+<li>只要是复位，硬件就会自动按照启动模式进行内存的映射。例如从Flash启动，会将0x08000000映射到0x00000000。</li>
+<li>cpu上电后处在<strong>SVC</strong>模式，并且从0x00000000处开始执行代码。</li>
+<li>正常的启动模式会从0x00000000读取数据，这里存放着中断向量表。中断向量表的第一条是SP地址，</li>
+</ol>
 ]]></content>
       <categories>
         <category>学习笔记</category>
@@ -2324,18 +2495,23 @@
 <li>text代码段，存放着实际执行的指令代码，是只读的</li>
 </ul>
 <p>根据这些我们可以知道，stack和heap是程序运行时才会使用到，那么elf文件中基本存储的就是<strong>data数据段</strong>，也就是全局变量和静态变量，以及执行的<strong>text代码段</strong>。</p>
-<p>实际上，数据段在程序中被分成了两部分来存储分别是<strong>data</strong>和<strong>bss</strong>段。data段存储已经初始化的静态变量和全局变量，bss段存储没有初始化额静态变量和全局变量。如果是被初始化为<strong>0</strong>的静态变量或者全局变量也会被存放到bss段。为什么会专门分成data和bss两部分呢？</p>
+<p>实际上，数据段在程序中被分成了两部分来存储分别是<strong>data</strong>和<strong>bss</strong>段。data段存储已经初始化的静态变量和全局变量，bss段存储没有初始化的静态变量和全局变量。如果是被初始化为<strong>0</strong>的静态变量或者全局变量也会被存放到bss段。为什么会专门分成data和bss两部分呢？</p>
 <p>对data段来说每一个变量都需要有一个<strong>值</strong>，而bss段中则不需要，只需要记录<strong>变量本身的长度</strong>，在操作系统加载程序时才会将这些bss段的变量初始化为0，节省了elf文件的空间。</p>
 <h1 id="三、ELF实际组成"><a href="#三、ELF实际组成" class="headerlink" title="三、ELF实际组成"></a>三、ELF实际组成</h1><ul>
-<li><h3 id="ELF头："><a href="#ELF头：" class="headerlink" title="ELF头："></a>ELF头：</h3><p>包含了elf文件的总体信息，包括文件的类型（可执行文件、目标文件、链接库），目标机器的架构，程序入口点的位置等等基础信息。</p>
+<li><h3 id="ELF头："><a href="#ELF头：" class="headerlink" title="ELF头："></a>ELF头：</h3><p>包含了elf文件的总体信息，包括文件的类型（可执行文件、目标文件、链接库），目标机器的架构，程序入口点的位置等等基础信息。比较重要的是段表和程序头表的偏移地址，通过这个偏移地址就能在ELF文件中找到段表和程序头表。</p>
 </li>
-<li><h3 id="ProgramHeaderTable"><a href="#ProgramHeaderTable" class="headerlink" title="ProgramHeaderTable"></a>ProgramHeaderTable</h3><p>程序头表描述了程序在内存中的布局，也就是描述了各个段的大小、内存位置等等信息，在加载这个elf文件时根据程序头表将elf文件中的段加载到内存的各个位置。</p>
+<li><h3 id="ProgramHeaderTable"><a href="#ProgramHeaderTable" class="headerlink" title="ProgramHeaderTable"></a>ProgramHeaderTable</h3><p>程序头表描述了程序在内存中的布局，也就是描述了各个段（Segments）的大小、内存位置等等信息，在加载这个elf文件时根据程序头表将elf文件中的段加载到内存的各个位置。如果是一个可执行文件一定会有程序头表，如果是可重定向文件则没有。</p>
+<p>这里的段是加载器的基本单位，加载器将每个段加载到内存。一个段可以包含很多个节。</p>
 </li>
-<li><h3 id="SectionHeaderTable"><a href="#SectionHeaderTable" class="headerlink" title="SectionHeaderTable"></a>SectionHeaderTable</h3><p>段表描述了各个段在整个文件中的布局，包括**.code、.data、.bss<strong>还有</strong>符号表**等等，每一个段都有自己的属性，在文件中的偏移地址。</p>
+<li><h3 id="SectionHeaderTable"><a href="#SectionHeaderTable" class="headerlink" title="SectionHeaderTable"></a>SectionHeaderTable</h3><p>段表描述了各个节（Section）在整个文件中的布局，包括**.code、.data、.bss<strong>还有</strong>符号表**等等，每一个节都有自己的段属性，在文件中的偏移地址。</p>
+<p>节是链接器的基本单元，链接器将多个属性相同的节链接到同一个段中。</p>
 </li>
 <li><h3 id="实际数据"><a href="#实际数据" class="headerlink" title="实际数据"></a>实际数据</h3><p>这部分就是在上面的段表中描述的各个段的实际数据。</p>
 </li>
-<li></li>
+</ul>
+<h1 id="四、在嵌入式中的实际应用"><a href="#四、在嵌入式中的实际应用" class="headerlink" title="四、在嵌入式中的实际应用"></a>四、在嵌入式中的实际应用</h1><ul>
+<li><strong>启动文件</strong>：在启动文件中会声明几个属性为<strong>text</strong>的段，用来完成<strong>ResetHandler</strong>和<strong>内存搬运</strong>，以及声明中断向量表。</li>
+<li><strong>链接脚本</strong>：链接脚本要将启动文件中的特殊段搬运到合理的位置。比如将中断向量表放到FLASH的起始位置。将剩下的text放到其他合适的位置。</li>
 </ul>
 <h1 id="生成静态链接库和动态链接库"><a href="#生成静态链接库和动态链接库" class="headerlink" title="生成静态链接库和动态链接库"></a>生成静态链接库和动态链接库</h1><h2 id="1-静态链接库"><a href="#1-静态链接库" class="headerlink" title="1. 静态链接库"></a>1. 静态链接库</h2><ul>
 <li><p>将.c文件编译成目标文件.o</p>
@@ -2368,6 +2544,15 @@
 <div class="code-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=.</span><br></pre></td></tr></table></figure></div></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>嵌入式开发</tag>
+        <tag>STM32</tag>
+        <tag>Linux</tag>
+        <tag>ELF</tag>
+      </tags>
   </entry>
   <entry>
     <title>6.S081操作系统笔记</title>
@@ -2385,7 +2570,37 @@
 <p>Kernel中同时运行着大量的服务，例如文件系统、进程管理和内存管理。</p>
 <p>用户空间程序要使用这些服务，需要使用Kernel提供给用户的接口，这些接口被称为系统调用（SystemCall）。要使用系统调用，硬件就会运行在内核态。用户并没有直接操作硬件的权限，只有内核可以对硬件进行操作。</p>
 <p>操作系统控制硬件，并向上层提供使用接口，就是操作系统的结构。</p>
-]]></content>
+<h2 id="1-3-Process-and-Memory"><a href="#1-3-Process-and-Memory" class="headerlink" title="1.3 Process and Memory"></a>1.3 Process and Memory</h2><p>Process是指进程，拥有独立的用户空间内存和软件硬件资源，kernel用<strong>PID</strong>标识每一个进程。</p>
+<p><strong>常用的syscall</strong></p>
+<ul>
+<li><p><code>fork</code>：<code>int fork()</code></p>
+<p>让现在这个进程生成另外一个和当前进程内存完全相同的子进程。在父进程中<code>fork</code>的返回值是子进程的PID，在子进程中返回值是0。实际上在fork的具体实现中，主要流程为：</p>
+<ul>
+<li>分配子进程的空间和PCB</li>
+<li>复制内存空间和寄存器</li>
+<li>设置父子关系</li>
+<li>将子进程的返回值寄存器修改为0</li>
+<li>增加文件描述符表的引用计数，共享相同的文件资源</li>
+<li>设置子进程为可执行状态，子程序开始根据之前设置好的寄存器状态还有内存空间<strong>执行</strong></li>
+<li>父进程返回子进程的PID</li>
+</ul>
+<p>在以上的流程中就实现了子进程的返回值为0。</p>
+<p>由于<strong>写时复制（CopyOnWrite）</strong>机制，<code>fork</code>之后会创建新的虚拟内存而不分配物理内存，而只有在子进程或者父进程要<strong>写</strong>内存页时，才会给子进程分配<strong>物理内存页</strong>并且进行拷贝。两个进程的虚拟内存页将<strong>共享</strong>同一个物理内存页，直到某一个内存页要被修改。</p>
+</li>
+<li><p><code>exit</code>：<code>int exit(int status)</code></p>
+<p>让调用这个函数的进程停止执行，并且将内存等占用的资源全部释放。需要一个整数的参数，0表示以正常状态退出，1表示以非正常状态退出。</p>
+</li>
+<li><p><code>wait</code>：<code>int wait(int *status)</code></p>
+<p>等待子进程退出，并且返回子进程的PID，子进程的退出状态存储到<code>status</code>中。如果调用者没有子进程，将返回-1。</p>
+</li>
+<li><p><code>exec</code>：<code>int exec(char *file, char *argv[])</code></p>
+<p>加载一个可执行文件，并且传入参数。如果执行错误则返回-1，如果执行成功则不会返回。</p>
+<p><code>exec</code>是一系列的系统调用，一旦成功执行exec，就会用新的可执行文件的内存空间完全替换掉其调用者的内存空间，所以如果成功执行就没有返回值了。因为是内存的替换，所以PID是不会改变的。</p>
+</li>
+</ul>
+<p>xv6shell使用上述的四个系统调用为用户执行程序，执行一个程序时先调用<code>fork</code>创建一个子shell，并且<code>wait</code>子shell的结束，在子shell中通过<code>exec</code>执行程序。</p>
+<p><em>在shell的实现中，可以看到写时复制的好处。创建子shell之后，其内存空间不会分配实际的物理空间，在之后exec时会将之前的内存空间全部替换，之前的数据全都是没有用的。</em></p>
+<h2 id="1-4-I-O-and-File-description"><a href="#1-4-I-O-and-File-description" class="headerlink" title="1.4 I&#x2F;O and File description"></a>1.4 I&#x2F;O and File description</h2>]]></content>
   </entry>
   <entry>
     <title>HPatchLite代码解读</title>
@@ -2406,7 +2621,8 @@
 <ul>
 <li><strong>使用Cargo新建一个项目工程</strong> <code>Cargo new my_project</code></li>
 <li><strong>使用Cargo编译工程</strong> <code>Cargo build</code></li>
-<li><strong>使用Cargo运行可执行文件</strong> <code>Cargo run</code></li>
+<li><strong>使用Cargo运行可执行文件（编译并运行）</strong> <code>Cargo run</code></li>
+<li><strong>使用Cargo进行编译检查（比直接进行编译要快，适合快速检查错误）</strong> <code>Cargo check</code></li>
 </ul>
 <h1 id="三、数据类型"><a href="#三、数据类型" class="headerlink" title="三、数据类型"></a>三、数据类型</h1><p>Rust是<strong>强类型语言</strong>，也就是说具有自动判断变量类型的能力。<br>Rust定义的变量默认是<strong>不可变</strong>的，如果要可变的话需要在变量前面加上<strong>mut</strong>来修饰。</p>
 <h2 id="整数类型（Integer）"><a href="#整数类型（Integer）" class="headerlink" title="整数类型（Integer）"></a>整数类型（Integer）</h2><p>整数型分为<strong>有符号</strong>和<strong>无符号</strong>两种，根据位长度又分为不同的类型。</p>
@@ -2434,11 +2650,11 @@
 <div class="code-container" data-rel="Rust"><figure class="iseeu highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">a</span>:(<span class="type">i64</span>, <span class="type">f64</span>, <span class="type">i16</span>) = (<span class="number">1</span>, <span class="number">2.0</span>, <span class="number">3</span>); <span class="comment">//声明</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,a.<span class="number">1</span>); <span class="comment">//使用</span></span><br></pre></td></tr></table></figure></div>
 
 <h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>数组和c语言很像。</p>
-<div class="code-container" data-rel="Rust"><figure class="iseeu highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">a</span> = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]; <span class="comment">//声明</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,a[<span class="number">0</span>]); <span class="comment">//使用</span></span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Rust"><figure class="iseeu highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">a</span> = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]; <span class="comment">//声明</span></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>,a[<span class="number">0</span>]); <span class="comment">//使用</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">b</span>: [<span class="type">i32</span>: <span class="number">5</span>] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]; <span class="comment">//声明定义一个元素为i32，长度为5的数组</span></span><br></pre></td></tr></table></figure></div>
 
 <h1 id="四、Rust注释"><a href="#四、Rust注释" class="headerlink" title="四、Rust注释"></a>四、Rust注释</h1><p>Rust使用 <strong>&#x2F;&#x2F;</strong> 单行注释，使用 <strong>&#x2F;&#x2F;&#x2F;</strong> 进行多行注释。</p>
 <p>在一个函数之前进行多行注释，可以作为文档说明注释，将来使用这个函数时就可以看到对应的说明。</p>
-<div class="code-container" data-rel="Rust"><figure class="iseeu highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// 将一个数字加到另一个数字上</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">///#example</span></span><br><span class="line"><span class="comment">/// let x = add(1, 2);</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">add</span>(a: <span class="type">i32</span>, b: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="type">i32</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Rust"><figure class="iseeu highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="comment">/// 将一个数字加到另一个数字上</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">///#example</span></span><br><span class="line"><span class="comment">/// let x = add(1, 2);</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">add</span>(a: <span class="type">i32</span>, b: <span class="type">i32</span>) <span class="punctuation">-&gt;</span> <span class="type">i32</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b <span class="comment">/*这也是一个注释*/</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*多行注释</span></span><br><span class="line"><span class="comment"> *多行注释</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
 
 <h1 id="五、Rust函数"><a href="#五、Rust函数" class="headerlink" title="五、Rust函数"></a>五、Rust函数</h1><p>Rust函数的基本格式如下。</p>
 <div class="code-container" data-rel="Rust"><figure class="iseeu highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">fn</span> <span class="title function_">function_name</span>(a: <span class="type">i32</span>, b: <span class="type">i64</span>) <span class="punctuation">-&gt;</span> <span class="title function_ invoke__">i64</span>(</span><br><span class="line">    <span class="comment">//函数体</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
@@ -2450,7 +2666,23 @@
 
 <p>同样的函数体也可以以一个数值<strong>表达式</strong>结尾。</p>
 <p>除了以表达式结尾，还可以是<strong>return</strong>返回值。</p>
-<h1 id="六、条件语句"><a href="#六、条件语句" class="headerlink" title="六、条件语句"></a>六、条件语句</h1>]]></content>
+<h1 id="六、条件语句"><a href="#六、条件语句" class="headerlink" title="六、条件语句"></a>六、条件语句</h1><div class="code-container" data-rel="Rust"><figure class="iseeu highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">a</span> = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">b</span> = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">if</span> a &lt; <span class="number">1</span> &#123;</span><br><span class="line">    b += <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> a &gt;= <span class="number">1</span> &amp;&amp; a &lt; <span class="number">2</span> &#123;</span><br><span class="line">    b += <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    b += <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>条件判断语句中的条件，必须是<strong>bool</strong>类型，并且不允许使用<strong>小括号（）</strong>包括起来。</p>
+<p>即使是<strong>单条语句</strong>也必须使用**大括号{}**包括起来。</p>
+<p>并且<strong>if else</strong>可以作为函数体表达式，也就是说可以将条件判断的执行语句直接作为返回值。</p>
+<div class="code-container" data-rel="Rust"><figure class="iseeu highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">a</span>:<span class="type">i32</span> = <span class="keyword">if</span> b &gt; <span class="number">1</span> &#123;<span class="number">1</span>&#125; <span class="keyword">else</span> &#123;<span class="number">0</span>&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="七、循环"><a href="#七、循环" class="headerlink" title="七、循环"></a>七、循环</h1><h2 id="1-while循环"><a href="#1-while循环" class="headerlink" title="1. while循环"></a>1. while循环</h2><div class="code-container" data-rel="Rust"><figure class="iseeu highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">a</span> = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">i</span> = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span> i &lt; <span class="number">10</span> &#123;</span><br><span class="line">	a += i;</span><br><span class="line">    i += <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>while循环和if类似，其条件判断语句不用加括号。C语言中的for循环一般使用while结构来实现。</p>
+<h2 id="2-for循环"><a href="#2-for循环" class="headerlink" title="2. for循环"></a>2. for循环</h2><div class="code-container" data-rel="Rust"><figure class="iseeu highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">a</span>: [<span class="type">i32</span>: <span class="number">3</span>] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">for</span> <span class="variable">i</span> <span class="keyword">in</span> <span class="number">0</span>..<span class="number">2</span> &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, a[i]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用0..2作为一个range迭代器</span></span><br><span class="line"><span class="keyword">for</span> <span class="variable">i</span> <span class="keyword">in</span> a.<span class="title function_ invoke__">iter</span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, a[i]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//直接使用数组的迭代器</span></span><br></pre></td></tr></table></figure></div>
+
+<p>在for循环中的<strong>i</strong>，是一个每次循环被定义的<strong>不可变</strong>变量，本质上其值等于迭代器，换句话说for循环和迭代器是绑定的。</p>
+<h2 id="3-loop循环"><a href="#3-loop循环" class="headerlink" title="3. loop循环"></a>3. loop循环</h2><p>loop 循环是一个无限循环，在循环内部判断循环条件然后跳出循环。</p>
+<div class="code-container" data-rel="Rust"><figure class="iseeu highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">a</span> = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">loop</span> &#123;</span><br><span class="line">	a += <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, a);</span><br><span class="line">	<span class="keyword">if</span> a &gt; <span class="number">10</span>&#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, a);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="八、迭代器"><a href="#八、迭代器" class="headerlink" title="八、迭代器"></a>八、迭代器</h1>]]></content>
       <categories>
         <category>学习笔记</category>
       </categories>
@@ -2462,7 +2694,92 @@
   <entry>
     <title>GCC和GDB命令使用详解</title>
     <url>/2024/11/29/GCC%E5%92%8CGDB%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="一、GCC介绍"><a href="#一、GCC介绍" class="headerlink" title="一、GCC介绍"></a>一、GCC介绍</h1><p>GCC是Linux平台默认的编译器，全称是GNU Compiler Collection。GCC是GNU项目开发的编译器合集，包含了多种不同语言的编译器前端还有汇编器、链接器等等，能够编译C、Cpp、Objective-C，Fortran、Ada、GoOpenCL等等语言。GCC本身有多个平台的版本，并且可以编译出多个平台和操作系统的可执行文件。GCC还有交叉编译工具链可以用来编译其他平台的可执行文件。</p>
+<p>其中编译C语言的编译器叫做gcc，编译Cpp的叫做g++。</p>
+<p>一般来说GCC是默认安装在Linux系统的。如果需要安装GCC的交叉编译工具链，可以使用包管理器或者直接下载二进制文件进行编译。</p>
+<h1 id="二、gcc的基本使用"><a href="#二、gcc的基本使用" class="headerlink" title="二、gcc的基本使用"></a>二、gcc的基本使用</h1><h2 id="1、编译程序的基本过程"><a href="#1、编译程序的基本过程" class="headerlink" title="1、编译程序的基本过程"></a>1、编译程序的基本过程</h2><p>编译一个程序大致分为以下几个过程：</p>
+<ul>
+<li><strong>预编译</strong>：将头文件包含进源文件，处理宏定义、预编译和注释等等，生成**.i**文件</li>
+<li><strong>编译</strong>：进行词法分析、语法分析、语义分析，前端过程生成中间代码，然后对中间代码进行平台无关的优化，最后后端生成目标代码的汇编形式，在这个生成汇编的过程中也会进行平台相关的优化，得到**.S**汇编文件。</li>
+<li><strong>汇编</strong>：将编译阶段生成的汇编代码变成可以在实际硬件平台上运行的机器码，在这一步后得到的是目标文件**.o**。</li>
+<li><strong>链接</strong>：链接器根据编译过程生成的重定位信息，将不同的目标文件和静态链接库中的信息进行链接起来最终生成可执行文件。</li>
+</ul>
+<h2 id="2、gcc在每个阶段的行为"><a href="#2、gcc在每个阶段的行为" class="headerlink" title="2、gcc在每个阶段的行为"></a>2、gcc在每个阶段的行为</h2><ul>
+<li><code>-E</code> 只执行预处理，不进行后序的操作，得到**.i**文件。</li>
+<li><code>-S</code> 执行编译后停止，不进行汇编和链接，得到**.s**汇编文件。</li>
+<li><code>-c</code> 执行汇编后停止，不进行链接，得到**.o**目标文件。</li>
+<li><code>-o</code> 后面跟生成的可执行文件名称，直接生成可执行文件。</li>
+</ul>
+<p>以上的每个命令都可以单独对源文件进行使用。</p>
+<ul>
+<li><code>-E</code> 默认会预编译后的文件输出在命令行，需要指定<code>-o name.i</code>将信息存储到<code>name.i</code>中。</li>
+<li>每一步都可以使用<code>-o</code>对生成的文件进行命名。</li>
+<li>最后一步<code>-o</code>命令生成可执行文件时，一定会执行链接的过程，需要所有的文件一起使用并进行链接。</li>
+</ul>
+<p>并且在整个编译的过程中，任何一步得到的文件，都可以使用下一步的命令进行处理。</p>
+<p>例如<code>gcc -c test1.i test2.c</code>，该命令会将一个**.i<strong>文件和一个</strong>.c<strong>文件直接变成</strong>.s**汇编文件。</p>
+<ul>
+<li>任何一步得到的文件，只要使用<code>-o</code>的命令，就会立刻得到可执行文件。（不缺少文件的情况下）</li>
+</ul>
+<h2 id="3、编译优化选项"><a href="#3、编译优化选项" class="headerlink" title="3、编译优化选项"></a>3、编译优化选项</h2><ul>
+<li><code>-O0</code> 不使用优化</li>
+<li><code>-O1</code> 默认优化，不会增加编译的时间</li>
+<li><code>-O2</code> 更多优化，平衡执行效率和编译时间</li>
+<li><code>-O3</code> 最高优化，尽可能提高程序的执行性能</li>
+<li><code>-Os</code> 优化代码占用空间， 可能会降低性能，适合嵌入式的平台</li>
+<li><code>-Ofast</code> 启用最激进的优化，可能会改变程序运行的可移植性和正确性</li>
+<li><code>-Og</code> 调试优化，启用优化但是保留足够的信息进行调试</li>
+</ul>
+<p>在这里只介绍基本的优化等级，更多细分的优化选项，以及在链接阶段开启的链接时优化，会在另一篇文章中详细说明。</p>
+<h2 id="4、编译生成库和链接库"><a href="#4、编译生成库和链接库" class="headerlink" title="4、编译生成库和链接库"></a>4、编译生成库和链接库</h2><p>关于可执行文件和库文件，在另一篇文章中详细说明。</p>
+<ul>
+<li><code>-l&lt;lib&gt;</code> 链接指定的静态库</li>
+<li><code>-L&lt;dir&gt;</code> 指定静态链接库的位置</li>
+<li><code>-I&lt;dir&gt;</code> 指定include头文件的目录</li>
+<li><code>-static</code> 强制链接静态库</li>
+<li><code>-share</code> 尽可能使用动态链接库</li>
+<li><code>-shared</code> 使用目标文件编译出动态库</li>
+</ul>
+<p>要使用目标文件打包成静态库需要使用<code>ar</code>工具而不是gcc。</p>
+<h2 id="5、其他的一些"><a href="#5、其他的一些" class="headerlink" title="5、其他的一些"></a>5、其他的一些</h2><ul>
+<li><p><code>-g</code> 编译时生成调试信息</p>
+</li>
+<li><p><code>-w</code> 不显示任何警告信息</p>
+</li>
+<li><p><code>-Wall</code> 显示所有警告选项</p>
+</li>
+<li><p><code>-ggdb</code> 生成专为gdb优化过的调试信息</p>
+</li>
+</ul>
+<p>生成调试信息时可以使用调试等级，来生成更多更详细的优化信息，例如<code>-ggdb3</code>。</p>
+<h4 id="使用GCC标准构建流程"><a href="#使用GCC标准构建流程" class="headerlink" title="使用GCC标准构建流程"></a><em>使用GCC标准构建流程</em></h4><p>这里尝试编写一个CmakeLists.txt进行项目的构建，需要的编译器选项有</p>
+<ul>
+<li><code>-Wall</code> 显示所有的警告</li>
+<li><code>-Wextra</code> 显示<code>-Wall</code>以外的警告</li>
+<li><code>-pedantic</code> 禁止扩展语法，遵循ANSI的C标准</li>
+<li><code>-Werror</code> 将所有的警告视为错误，发生时会终止编译</li>
+</ul>
+<h1 id="三、GDB介绍"><a href="#三、GDB介绍" class="headerlink" title="三、GDB介绍"></a>三、GDB介绍</h1><p>GDB是GNU项目中的调试工具，一般和GCC配套使用，是Linux系统的标准调试工具。</p>
+<h2 id="1、调试信息格式"><a href="#1、调试信息格式" class="headerlink" title="1、调试信息格式"></a>1、调试信息格式</h2><p>目前一个程序调试信息的表示格式是<strong>DWARF</strong>，在对源代码进行编译时，不管使用哪种编译工具，不管是交叉编译还是本地编译，都可以加上生成调试信息的选项，最后<strong>DWARF</strong>信息将被嵌入到可执行文件中。</p>
+<p>对嵌入式平台来说，最终烧录的文件并不会有调试信息，而是在编译过程中生成一个有调试信息和ELF格式的文件和另一个用来烧录bin文件，IDE可以使用调试文件以及调试器和嵌入式平台进行交互调试。</p>
+<p>对主流的编译器来说，生成的调试信息格式都是DWARF，不同的编译器生成相同格式的调试信息，不同的调试器都可以使用这同一种格式的调试信息。</p>
+<h2 id="2、GDB基本使用"><a href="#2、GDB基本使用" class="headerlink" title="2、GDB基本使用"></a>2、GDB基本使用</h2><h3 id="1、调试器使用前提"><a href="#1、调试器使用前提" class="headerlink" title="1、调试器使用前提"></a>1、调试器使用前提</h3><p>要使用GDB或者其他的调试器，首先要在编译时期加上<code>-g</code>选项来生成调试信息，也可以适当的降低优化等级，减少编译器对源代码的优化。</p>
+<p>在安装了GDB的机器上，使用<code>gdb program</code>，就可以开始调试了，其中Program就是要调试的程序。</p>
+<h3 id="2、调试器的使用"><a href="#2、调试器的使用" class="headerlink" title="2、调试器的使用"></a>2、调试器的使用</h3><p>启动GDB之后，进入到和GDB交互的命令行中。</p>
+<ul>
+<li>按下<code>l</code>也就是<code>list</code>命令，从第一行开始显示源码，每一次显示出10行，刚开始显示的是<code>main</code>函数所在的文件。</li>
+<li>使用<code>b</code>或者<code>break</code>命令，后面加上行号或者函数名，就会在对应的位置打上断点，</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>GCC</tag>
+        <tag>GDB</tag>
+        <tag>调试</tag>
+      </tags>
   </entry>
   <entry>
     <title>VSCode调试C语言程序</title>
@@ -2552,15 +2869,44 @@
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title></title>
-    <url>/2024/11/22/%E7%BC%96%E8%AF%91%E5%99%A8%E5%9F%BA%E7%A1%80%E4%BA%86%E8%A7%A3/</url>
-    <content><![CDATA[<h1 id="编译器组成"><a href="#编译器组成" class="headerlink" title="编译器组成"></a>编译器组成</h1><p>编译器由前端、中间代码优化、后端三部分组成。<br><strong>前端</strong>负责识别代码语法，将代码转化成中间代码。<br><strong>中间代码优化</strong>一定程度上和语言无关，进行优化后将中间代码传给后端。<br><strong>后端</strong>负责将中间代码转化成目标平台的可执行代码。</p>
-<h1 id="LLVM"><a href="#LLVM" class="headerlink" title="LLVM"></a>LLVM</h1>]]></content>
-  </entry>
-  <entry>
     <title>Cmake学习</title>
     <url>/2024/12/20/Cmake%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<h1 id="Cmake基础"><a href="#Cmake基础" class="headerlink" title="Cmake基础"></a>Cmake基础</h1>]]></content>
+    <content><![CDATA[<h1 id="Cmake基础"><a href="#Cmake基础" class="headerlink" title="Cmake基础"></a>Cmake基础</h1><p>Cmakelists.txt是cmake构建系统的配置文件，可以自动生成构建系统，并且进行编译测试。</p>
+<p>使用Cmake命令进行构建系统的生成，<code>cmake -B build</code>指定build目录为构建目录，就能够根据目录中的Cmakelists.txt在<code>build</code>中生成<strong>makefile</strong>。</p>
+<ul>
+<li>可以通过<code>-S dir</code>指定<strong>包含Cmakelists.txt</strong>的根目录。</li>
+<li>可以通过<code>-D &lt;var&gt;=&lt;value&gt;</code>将数值传递给Cmakelists.txt中的变量，可以控制构建的debug版本等等行为。</li>
+</ul>
+<p>在<code>build</code>中生成<strong>makefile</strong>之后，执行<code>cmake --build build</code>，即指定<code>build</code>目录开始进行构建，其实就相当于在<code>build</code>目录下进行<code>make</code>。</p>
+<h2 id="CmakeLists-txt语法"><a href="#CmakeLists-txt语法" class="headerlink" title="CmakeLists.txt语法"></a>CmakeLists.txt语法</h2><h3 id="1-注释"><a href="#1-注释" class="headerlink" title="1.注释"></a>1.注释</h3><ul>
+<li>行注释使用<code>#this is comments</code></li>
+<li>多行注释使用<code>#[[this is comments]]</code></li>
+</ul>
+<h3 id="2-变量"><a href="#2-变量" class="headerlink" title="2. 变量"></a>2. 变量</h3><p>Cmake使用<code>set</code>和<code>unset</code>设置或者取消设置变量。</p>
+<ul>
+<li>一般变量：</li>
+</ul>
+<p>值可以是<strong>字符串，数字或者列表</strong></p>
+<div class="code-container" data-rel="Cmake"><figure class="iseeu highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span>(DEBUD_MODE <span class="number">1</span>)</span><br><span class="line"><span class="keyword">set</span>(WARNING_LEVEL <span class="number">2</span>)</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>Cache变量，也就是缓存条目，主要是为了<strong>提供用户选项配置</strong>，如果用户没有指定，则使用默认值。Cache变量的值会保存到CmakeLists.txt中，即使重新运行Cmake也不会丢失，并且可以在整个Cmake目录中访问到。</li>
+</ul>
+<div class="code-container" data-rel="Cmake"><figure class="iseeu highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span>(CACHE_VAR <span class="string">&quot;default_value&quot;</span> CACHE <span class="keyword">STRING</span> <span class="string">&quot;this is a description&quot;</span>)</span><br><span class="line"><span class="comment">#set(&lt;变量名&gt; &lt;值&gt; CACHE &lt;类型&gt; &lt;&quot;描述&quot;&gt;)</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>环境变量：</li>
+</ul>
+<p>就是操作系统的环境变量</p>
+<div class="code-container" data-rel="Cmake"><figure class="iseeu highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="comment"># set(ENV&#123;&lt;variable&gt;&#125; [&lt;value&gt;])</span></span><br><span class="line"><span class="keyword">set</span>(ENV&#123;ENV_VAR&#125; <span class="string">&quot;$ENV&#123;PATH&#125;&quot;</span>)</span><br><span class="line"><span class="keyword">message</span>(<span class="string">&quot;Value of ENV_VAR: $ENV&#123;ENV_VAR&#125;&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+]]></content>
+      <tags>
+        <tag>嵌入式开发</tag>
+        <tag>makefile</tag>
+        <tag>make</tag>
+        <tag>CMake</tag>
+      </tags>
   </entry>
   <entry>
     <title>6.S081课程实验</title>
@@ -2748,11 +3094,21 @@
 <div class="code-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">./configure -prefix=/usr/local</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure></div>
 
 <p>第一条命令<code>configure</code>是由项目开发者提供的命令，用来自己配置编译和安装的过程，并且会生成一个makefile文件以供接下来使用。<code>prefix</code>命令用来指定安装位置，一般来说是**&#x2F;usr&#x2F;local**，也有的默认安装位置就是这样。</p>
+<p>在使用<code>configure</code>命令时还可以根据需要自行调整编译选项，可以使用<code>configure -help</code>来获取各种编译选项。</p>
 <p>第二条命令<code>make</code>就是根据makefile编译源文件。</p>
 <p>第三条命令就是根据makefile中的install目标，进行软件的安装，会直接安装到对应位置。</p>
 <p>软件被安装的位置就是选择的安装位置的**&#x2F;bin<strong>文件夹中，已经被默认包含在环境变量中的，所以就可以直接使用软件了。软件的其他文件比如库文件，也都会在安装位置的</strong>&#x2F;lib**文件夹，同样的别的资源文件都会放在对应的文件夹中。</p>
 <p>如果开发者在makefile中预留了<strong>uninstall</strong>构建目标，还可以使用<code>make uninstall</code>命令来卸载软件。</p>
 ]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>makefile</tag>
+        <tag>make</tag>
+        <tag>Linux</tag>
+        <tag>Shell</tag>
+      </tags>
   </entry>
   <entry>
     <title>STM32教程之HAL库开发</title>
@@ -2816,5 +3172,815 @@
 <p>预编译阶段处理宏定义、注释等等。</p>
 <p>编译阶段将执行<strong>词法分析、语法分析、语法分析、语义分析和中间代码生成</strong>，可能还会进行中间代码优化。</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>ARM处理器启动流程</title>
+    <url>/2025/02/08/ARM%E5%A4%84%E7%90%86%E5%99%A8%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>ARM函数切换栈帧分析</title>
+    <url>/2025/01/20/ARM%E5%87%BD%E6%95%B0%E5%88%87%E6%8D%A2%E6%A0%88%E5%B8%A7%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">func(int, int):</span><br><span class="line">        push    &#123;r7&#125;</span><br><span class="line">        sub     sp, sp, #20</span><br><span class="line">        add     r7, sp, #0</span><br><span class="line">        str     r0, [r7, #4]</span><br><span class="line">        str     r1, [r7]</span><br><span class="line">        ldr     r3, [r7, #4]</span><br><span class="line">        ldr     r2, [r7]</span><br><span class="line">        mul     r3, r2, r3</span><br><span class="line">        ldr     r2, [r7]</span><br><span class="line">        add     r3, r3, r2</span><br><span class="line">        str     r3, [r7, #12]</span><br><span class="line">        ldr     r2, [r7, #12]</span><br><span class="line">        ldr     r3, [r7, #4]</span><br><span class="line">        add     r3, r3, r2</span><br><span class="line">        str     r3, [r7, #12]</span><br><span class="line">        ldr     r3, [r7, #12]</span><br><span class="line">        mov     r0, r3</span><br><span class="line">        adds    r7, r7, #20</span><br><span class="line">        mov     sp, r7</span><br><span class="line">        ldr     r7, [sp], #4</span><br><span class="line">        bx      lr</span><br><span class="line">main:</span><br><span class="line">        push    &#123;r7, lr&#125;</span><br><span class="line">        sub     sp, sp, #16</span><br><span class="line">        add     r7, sp, #0</span><br><span class="line">        movs    r3, #1</span><br><span class="line">        str     r3, [r7, #12]</span><br><span class="line">        movs    r3, #2</span><br><span class="line">        str     r3, [r7, #8]</span><br><span class="line">        ldr     r1, [r7, #8]</span><br><span class="line">        ldr     r0, [r7, #12]</span><br><span class="line">        bl      func(int, int)</span><br><span class="line">        str     r0, [r7, #4]</span><br></pre></td></tr></table></figure></div>
+
+<ol>
+<li>将<strong>lr</strong>寄存器和<strong>fp（r7）</strong>寄存器压栈，<strong>lr</strong>寄存器现在是<strong>main</strong>函数的返回地址，<strong>fp</strong>寄存器是上一个函数的栈帧基址。</li>
+<li>在<strong>栈</strong>中开辟一块空间用来存放<strong>局部变量</strong>和<strong>传参变量</strong>，将<strong>sp</strong>指针的值赋给<strong>fp</strong>寄存器，作为<strong>main</strong>函数的栈帧基址。此处的<strong>fp</strong>寄存器，只保存局部变量，如果是传参变量则相当于是另一个函数的栈帧。</li>
+<li>将局部变量存储到，以<strong>fp</strong>寄存器为基址的栈帧中。</li>
+<li>ARM规定默认传参放在<strong>r0，r1，r2，r3</strong>寄存器中，多于4个的参数会被压入栈中。</li>
+<li>跳转到调用的函数。</li>
+<li>完成函数调用。</li>
+<li>恢复<strong>sp</strong>指针到函数调用前的位置，恢复<strong>fp</strong>寄存器，跳转到<strong>lr</strong>寄存器保存的位置。</li>
+</ol>
+<h3 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h3><p>不同的编译器，不同的优化等级都会有不同的栈帧操作。</p>
+<p>但是很多时候在<strong>caller</strong>中都不需要保存r0-r3，因为变量都直接存放在栈中了，r4-r11寄存器在简单逻辑中很少使用，具体如何操作都依赖于编译器的优化。</p>
+<p>但是不管如何，在直接编写汇编代码时，还是需要根据AAPCS进行正确的寄存器保存。</p>
+<p>总的来说，进行函数调用时，栈帧的操作大致为：</p>
+<ul>
+<li>保存<strong>fp</strong>栈帧基址和<strong>lr</strong>链接寄存器。</li>
+<li>局部变量保存到栈中。</li>
+<li>进行函数操作。</li>
+<li>还原<strong>fp</strong>寄存器。</li>
+<li>跳转回调用函数。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>栈</tag>
+        <tag>ARM</tag>
+        <tag>嵌入式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CMake交叉编译踩坑</title>
+    <url>/2025/03/03/CMake%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E8%B8%A9%E5%9D%91/</url>
+    <content><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>使用CMake搭建stm32的交叉编译工具链，编译时总是<strong>找不到汇编指令wfi</strong>。wfi指令是在cmsis中的，是arm芯片的电源管理指令，被内联汇编封装成了C语言函数，并且在cmsis的这个文件的定义中，明确规定了ACC和GNUC语法上的不同，针对不同的编译链启用不同的代码部分。</p>
+<p>换句话说，明明是正常的交叉编译工具链，并且指定的硬件平台化的命令也是正确的，编译到这里就是会出现问题。</p>
+<h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><ol>
+<li><p><strong>CMakeLists导致的编译指令错误</strong></p>
+<p>反复检查了很多遍CMakeLists，给出的编译指令是没有问题的，使用<code>-mcpu=cortex-m4 -mthumb</code>。</p>
+</li>
+<li><p><strong>尝试在其他电脑上进行复现</strong></p>
+<p>在另一台电脑上重新编译cmake，最终没有报错。</p>
+</li>
+<li><p><strong>查看CMake给出的编译指令</strong></p>
+<p>这里其实是一个快速高效的思路，但是因为无法判断给出的编译指令是否正确，导致没有快速找到这样的错误。实际上，是对两台电脑的编译指令进行了对比，结果发现另一台能够正常运行的电脑是能够显示交叉编译工具链的具体指令的。到这里最终就找到了问题，cmake生成的makefile自始至终都没有按照<strong>交叉编译</strong>的要求进行工作。</p>
+</li>
+</ol>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>先前写好CMakeLists之后就直接跑了build，生成了makefile，但是再后来写了<code>toolchain.cmake</code>再次构建，应该是没有完全更新build，最终CMake没有使用交叉编译工具链进行编译。</p>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><p>删去build文件夹，从头进行构建和编译。</p>
+]]></content>
+      <categories>
+        <category>问题解决</category>
+      </categories>
+      <tags>
+        <tag>嵌入式开发</tag>
+        <tag>makefile</tag>
+        <tag>make</tag>
+        <tag>STM32</tag>
+        <tag>ARM</tag>
+        <tag>CMake</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CPU指令集入门</title>
+    <url>/2025/01/13/CPU%E6%8C%87%E4%BB%A4%E9%9B%86%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><p>对于一套CPU指令集来说，有着对应着这套指令集的架构。例如ARM指令集一定对应着ARM的体系结构，x86的指令集一定对应着x86的体系结构。</p>
+<p>但是指令集并非是固定的。以ARM32为例，所有的ARM32都一定支持最基础的整数指令集。在整数指令集之外还有其他的扩展指令集，而这些扩展指令集往往需要对应的硬件支持。</p>
+<p>FPU浮点运算单元是一个非常常见的扩展硬件，对应着FPU的扩展指令集。FPU单元有着自己的一套寄存器（S0-S31），这一套寄存器的行为基本上和</p>
+<h1 id="二、SIMD单指令多数据指令集"><a href="#二、SIMD单指令多数据指令集" class="headerlink" title="二、SIMD单指令多数据指令集"></a>二、SIMD单指令多数据指令集</h1><p><strong>SIMD</strong>（Single Instruction，Multiple Data）是一种cpu架构中的指令级并行（ILP）技术，允许一条指令并行处理多个数据，能够显著提高cpu的并行度。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>CPU</tag>
+        <tag>指令集</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CPU的Cache和MMU</title>
+    <url>/2025/02/19/CPU%E7%9A%84Cache%E5%92%8CMMU/</url>
+    <content><![CDATA[<h1 id="一、缓存"><a href="#一、缓存" class="headerlink" title="一、缓存"></a>一、缓存</h1><p>多数精简指令集的嵌入式MCU内核都没有配备高速缓存，例如cortexM4。在ARMv7-M中，cortexM7配备了L1的高速缓存。ARMv7-A的CPU都配备了高速缓存。</p>
+<p>随着CPU制程的提升， CPU的运行频率也不断提高，但是Flash或者SRAM的速度却没有对应的提升，在嵌入式系统中可以看到总线频率往往是CPU的分频，也就是说<strong>CPU速度和访存速度不匹配</strong>。缓存就是用来缓解二者之间的不匹配问题的。</p>
+<p><strong>缓存行：</strong>每次从主存读取到缓存中的字数被称为缓存行长度，不同的缓存设计有不同的缓存行长度。CortexM7的缓存行长度为8个word，也就是32个字节。</p>
+<h2 id="1-缓存组织方式"><a href="#1-缓存组织方式" class="headerlink" title="1.缓存组织方式"></a>1.缓存组织方式</h2><h2 id="2-缓存策略"><a href="#2-缓存策略" class="headerlink" title="2.缓存策略"></a>2.缓存策略</h2><p><strong>写策略</strong>：</p>
+<ul>
+<li>写通（write through）：CPU向内存中写数据，先检查Cache中是否有数据备份，<strong>如果有</strong>则写入到Cache中，之后立即从Cache写回到内存中。</li>
+<li>写回（write back）：CPU向内存中写数据，先检查Cache中是否有数据备份，<strong>如果有</strong>则写入到Cache中，并将数据标记为“脏”，在数据需要被下一次使用时则写回到内存。</li>
+<li>写分配（write alloc）：CPU向内存中写数据，Cache中<strong>没有</strong>数据备份，将数据从内存中读取到Cache中，然后执行写操作。</li>
+<li>非写分配（no write alloc）：CPU向内存中写数据，Cache中<strong>没有</strong>数据备份，不从内存中读取到Cache中，直接写入到内存中。</li>
+</ul>
+<p><em>其中<strong>写回</strong>和<strong>写分配</strong>搭配使用，<strong>写通</strong>和<strong>非写分配</strong>搭配使用</em></p>
+<p><strong>读策略</strong>：</p>
+<ul>
+<li><p>读分配（read alloc）：从内存中读取数据，先从缓存中读取，如果没有则从内存中读取到Cache中，然后执行读操作。</p>
+</li>
+<li><p>非读分配（no read alloc）：不从内存中读取到Cache中，直接从内存中进行读取</p>
+</li>
+</ul>
+<h2 id="3-缓存和DMA一致性"><a href="#3-缓存和DMA一致性" class="headerlink" title="3.缓存和DMA一致性"></a>3.缓存和DMA一致性</h2><p>DMA全称DirectMemoryAccess，用来实现<strong>内存</strong>和<strong>IO设备</strong>之间的直接访问，不需要CPU的参与。</p>
+<p>而当CPU和DMA访问同一块内存区域时，这块内存区域又已经被缓存，就会出现<strong>数据一致性问题</strong>。</p>
+<ul>
+<li>采用<strong>写回</strong>策略时，脏数据不能够及时更新到内存中，而DMA可能读取这一块内存，就只能读取到旧的数据。</li>
+<li>采用<strong>非读分配</strong>策略时，如果DMA已经修改了内存的数据，而缓存中的数据没有被更新，CPU就只能读取到旧的数据。</li>
+</ul>
+<p><em><strong>解决：</strong></em></p>
+<ol>
+<li>在DMA写入内存之前，将Cache中的对应内存<strong>缓存失效</strong>，这样下次CPU读取内存就只能从内存中读取。</li>
+<li>缓存清除，也就是在<strong>写回</strong>策略中，DMA读取数据之前，将对应的缓存清除掉，那么“脏“数据就会更新到内存中。</li>
+</ol>
+<p>缓存的行为受到硬件的管理，在DMA时需要手动调用管理Cache的<strong>MPU或者MMU</strong>。很多操作系统中已经集成了对缓存的管理。</p>
+<h2 id="4-CPU和缓存一致性"><a href="#4-CPU和缓存一致性" class="headerlink" title="4.CPU和缓存一致性"></a>4.CPU和缓存一致性</h2><p>对简单的嵌入式MCU来说，可能没有高速缓存或者只有一级高速缓存。但是对于高性能的CPU来说，可能会有三级缓存。</p>
+<p>三级缓存的组织形式一般是：</p>
+<ul>
+<li><strong>L1缓存</strong>每个核心独占，不管是嵌入式MCU还是高性能CPU，都具有指令和数据分离的缓存设计。</li>
+<li><strong>L2缓存</strong>可以每个核心独占，也可以每个cluster（簇）共享。</li>
+<li><strong>L3缓存</strong>基本上都是多个核心共享。</li>
+</ul>
+<p><strong>在多核CPU中由多个L1缓存，为了保证数据一致性，使用一致性协议MESI</strong></p>
+<ul>
+<li>Modified修改：该CacheLine有效，但是被修改了和内存中的不一致，数据只存在于本Cache中。在这种状态下必须时刻监听其他要<strong>读取</strong>或者<strong>修改</strong>主存内该CacheLine对应的数据，在行为发生前将本Cache中的数据写回到主存中。</li>
+<li>Exclusive独享：该CacheLine有效，数据和内存中的数据一致，数据只存在于本Cache中。</li>
+<li></li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>CPU硬件和指令的关系——FPU以及SIMD</title>
+    <url>/2025/02/10/CPU%E7%A1%AC%E4%BB%B6%E5%92%8C%E6%8C%87%E4%BB%A4%E7%9A%84%E5%85%B3%E7%B3%BB%E2%80%94%E2%80%94FPU%E4%BB%A5%E5%8F%8ASIMD/</url>
+    <content><![CDATA[<h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><p>对于一套CPU指令集来说，有着对应着这套指令集的架构。例如ARM指令集一定对应着ARM的体系结构，x86的指令集一定对应着x86的体系结构。</p>
+<p>但是指令集并非是固定的。以ARM32为例，所有的ARM32都一定支持最基础的整数指令集。在整数指令集之外还有其他的扩展指令集，而这些扩展指令集往往需要对应的硬件支持。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Gcc交叉编译汇编文件报错</title>
+    <url>/2025/03/06/Gcc%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E6%B1%87%E7%BC%96%E6%96%87%E4%BB%B6%E6%8A%A5%E9%94%99/</url>
+    <content><![CDATA[<h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>使用Cmake搭建交叉编译工具链来编译stm32项目，编译器为<code>arm-none-eabi-gcc</code>。使用编译器编译uCOS中cpu架构相关的文件<strong>os_cpu_a.s</strong>编译不成功。</p>
+<p>项目是从keil项目直接移植过来的。</p>
+<p>反复检查Cmake对汇编文件的编译选项并没有发现错误。</p>
+<h4 id="报错原因"><a href="#报错原因" class="headerlink" title="报错原因"></a>报错原因</h4><p>移植uCOS运行在单片机上时，官方提供的代码接口是<strong>编译器相关</strong>的，原来的文件是适配<strong>ARMCC</strong>工具链的，现在在<strong>GNU</strong>的工具链上是跑不通的。</p>
+<p><strong>GNU</strong>的ARM汇编语法和<strong>ARMCC</strong>的有所不同，主要是伪指令方面，其他的指令基本相同。</p>
+<h4 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h4><p>移植官方的<strong>GNU</strong>工具链的接口文件。</p>
+]]></content>
+      <categories>
+        <category>问题解决</category>
+      </categories>
+      <tags>
+        <tag>嵌入式开发</tag>
+        <tag>RTOS</tag>
+        <tag>Linux</tag>
+        <tag>GCC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git提交规范</title>
+    <url>/2025/03/06/Git%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83/</url>
+    <content><![CDATA[<h1 id="Why？"><a href="#Why？" class="headerlink" title="Why？"></a>Why？</h1><p>好的提交规范能够方便别人协同，也方便自己将来查看改动，同时使用同一种规范，也能够方便自动化处理。</p>
+<p>git提交规范就像是代码的style一样，并没有什么强制要求，但是作为一名优雅的程序员，还是需要做出最规范的提交。</p>
+<h1 id="提交规范"><a href="#提交规范" class="headerlink" title="提交规范"></a>提交规范</h1><p>commit message &#x3D; <strong>subject + ： + [space] + message</strong></p>
+<p><em>subject即代码更新的类型</em></p>
+<p>subject种类：</p>
+<ul>
+<li>feat：新功能（feature）</li>
+<li>fix：修复bug</li>
+<li>docs：文档变更</li>
+<li>style：代码风格改变</li>
+<li>refactor：代码重构</li>
+<li>perf：性能优化</li>
+<li>test：添加或者修改测试</li>
+<li>chore：杂项<ul>
+<li>构建过程或者辅助工具的变动</li>
+</ul>
+</li>
+<li>build：构建系统或者外部依赖项的变更</li>
+<li>ci：持续集成配置的变更</li>
+<li>revert：回滚</li>
+</ul>
+<p><strong>EXAMPLE</strong>：<code>feat: 增加了xx功能</code></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+        <tag>Github</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux下程序运行性能测试之RAM占用和运行时间</title>
+    <url>/2024/12/27/Linux%E4%B8%8B%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E4%B9%8BRAM%E5%8D%A0%E7%94%A8%E5%92%8C%E8%BF%90%E8%A1%8C%E6%97%B6%E9%97%B4/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Linux启动流程</title>
+    <url>/2025/02/08/Linux%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B-1/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>MyRTOS</title>
+    <url>/2025/03/06/MyRTOS/</url>
+    <content><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>目前个人的发展方向应该是RTOS。</p>
+<p>想基于uCOS开始写一个属于自己的嵌入式操作系统，同时增加自己对嵌入式操作系统的理解和认识。</p>
+<h1 id="零、内存管理"><a href="#零、内存管理" class="headerlink" title="零、内存管理"></a>零、内存管理</h1><p>为什么要把内存管理放在任务调度之前呢？明明说嵌入式操作系统的核心是任务调度，内存管理可以手动进行管理。</p>
+<p>正是因为在设计任务调度的TCB时考虑到了这个事情。用户层面的动态内存管理是不必要的，但是系统资源的内存管理是需要考虑的。整个嵌入式系统运行期间，基本上就是任务栈和系统在占用内存，用户程序需要动态内存的情况很少，甚至说给用户一个很大的静态任务栈，也可以满足大内存的需求。</p>
+<ul>
+<li>不管使用多少个任务，uCOS默认都静态的申请20个TCB的内存，这对<strong>内存来说是浪费</strong>的，对<strong>用户</strong>来说是<strong>不需要关心</strong>的。</li>
+<li>任务栈需要用户手动创建，使用多少就分配多少，使用几个任务就分配几个内存栈，对<strong>内存来说是不浪费</strong>的，对<strong>用户</strong>来说是<strong>更加麻烦</strong>的。</li>
+<li>有没有一种能够同时利好<strong>用户</strong>和<strong>内存浪费</strong>的方法？那就是动态内存管理。之前说的内存管理不重要，是指对用户的动态内存管理不重要。想象一下，对PC进行编程时，对一个简单程序来说，需要使用超越栈大小的内存，就应该是<strong>动态内存申请</strong>或者<strong>全局变量</strong>。一个简单的程序，在使用内存的地方进行一个简单的全局变量申请即可，完全不需要动态内存申请。对嵌入式系统来说也是一样的。同时考虑到<strong>动态内存申请</strong>的缺点，对嵌入式系统来说，时间和内存碎片都是不可接受的。</li>
+</ul>
+<p>这里将去掉讨论<strong>用户级动态内存申请</strong>，即不会给用户实现<strong>malloc</strong>函数的功能，但是允许用户的<strong>Task_Stk</strong>足够大。</p>
+<p>同时将用户的<strong>Task_Stk</strong>纳入系统级资源的讨论范围，用户在使用API创建任务时，自动调用API创建任务栈。虽然用户依然能够看到所有任务的栈，但是这样的设计依然符合操作系统的设计准则。MPU内存保护单元可以控制能够访问的内存区域，打算使用MPU来实现内存保护的功能，使得用户程序只能访问自己的栈内存。</p>
+<p><strong>挖坑</strong></p>
+<ul>
+<li>操作系统内核态和用户态区分，触发svc中断进入特权模式。<em>目前打算全部运行在内核态</em></li>
+<li>MPU内存保护，使得任务只能够访问自己的任务栈。<em>目前不打算实现MPU，MPU要结合特权模式来编程</em></li>
+</ul>
+<h2 id="1-系统资源内存申请"><a href="#1-系统资源内存申请" class="headerlink" title="1.系统资源内存申请"></a>1.系统资源内存申请</h2><p>在操作系统初始化之前，所有任务开始运行起来之前，申请所有需要使用的内存，包括<strong>Task_Stk、Mutex、Mbox、TCB</strong>。</p>
+<p>内存申请包括两层</p>
+<ul>
+<li><p>第一层是大致的静态申请，通过链接脚本大致分配整体的内存空间，将这部分的内存空间加入到TLSF的内存管理器中，并且划分成指定大小的快。</p>
+</li>
+<li><p>第二层就是针对需要申请内存的类型，比如Mbox，最佳匹配合适大小的内存块。</p>
+</li>
+</ul>
+<h2 id="2-TLSF算法"><a href="#2-TLSF算法" class="headerlink" title="2.TLSF算法"></a>2.TLSF算法</h2><h1 id="一、任务调度"><a href="#一、任务调度" class="headerlink" title="一、任务调度"></a>一、任务调度</h1><p>任务调度是嵌入式操作系统的核心部分。</p>
+<p>一般来说，嵌入式系统中会有多个操作硬件的行为，封装在不同的函数中。在何时调用某一个函数实现一个任务，在没有操作系统的时候，是非常难以确定的，也使得实现任务的用户APP函数需要考虑更多。嵌入式操作系统可以不支持内存管理（手动进行管理），但是一定需要支持任务调度。</p>
+<h2 id="任务优先级"><a href="#任务优先级" class="headerlink" title="任务优先级"></a>任务优先级</h2><p>在嵌入式系统中，为了保证硬实时性，可以将每个任务分配一个固定的priority（优先级），每一个优先级就对应着一个任务，防止出现两个同样优先级的任务同时处在就绪状态。<em>当然有一些嵌入式操作系统允许支持同样的优先级，为了保持简单性和简洁性，这里就暂时是只允许一个优先级对应一个任务</em></p>
+<p>这里我的设计希望是一个优先级对应一个任务，暂时支持64个优先级，正好用一个字节表示任务就绪表的第一层索引，用8个字节表示任务就绪表的第二层索引。可扩展成16*16的256位优先级。</p>
+<p>优先级从0到63，数字越大优先级越小，</p>
+<h1 id="二、临界区设计"><a href="#二、临界区设计" class="headerlink" title="二、临界区设计"></a>二、临界区设计</h1><p>按理说临界区设计也该在任务调度设计之前，因为任何改变系统资源配置的时候，都需要保证不被中断，防止出现在中断内改变系统资源的问题。</p>
+<p>这里使用</p>
+]]></content>
+      <categories>
+        <category>项目开发</category>
+      </categories>
+      <tags>
+        <tag>嵌入式开发</tag>
+        <tag>RTOS</tag>
+        <tag>STM32</tag>
+        <tag>uCOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RISCV体系结构</title>
+    <url>/2025/02/13/RISCV%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<h1 id="一、指令集概述"><a href="#一、指令集概述" class="headerlink" title="一、指令集概述"></a>一、指令集概述</h1><p>RISCV是一套开源的精简指令集。</p>
+<p>RISCV是一种模块化的指令集。RISCV由一个基本的ISA和多个可选的扩展指令集构成。基础的指令集是固定的永远不会改变。这意味着使用RISCV基础指令集，为编译器编写者，操作系统开发人员和汇编语言程序员提供了稳定的目标。并且使用基础指令集使得RISCV在低能耗和小型化方面很有优势。并且要实现更高性能的，或者更多的CPU支持特性，RISCV指令集也可以使用扩展指令集来来模块化的达到自己的目标。</p>
+<ul>
+<li><strong>基本指令集</strong><ul>
+<li><strong>RV32I</strong>：32位的整数指令集</li>
+<li><strong>RV32E</strong>：RV32I的子集，用于小型的嵌入式场景</li>
+<li><strong>RV64I</strong>：64位的整数指令集，兼容RV32I</li>
+<li><strong>RV128I</strong>：128位的整数指令集，兼容RV64I和RV32I</li>
+</ul>
+</li>
+<li><strong>扩展指令集</strong><ul>
+<li><strong>M</strong>：整数乘法（multiplication）与除法指令集</li>
+<li><strong>A</strong>：存储器原子（Atomic）指令</li>
+<li><strong>F</strong>：单精度（32bit）浮点（Float）指令集</li>
+<li><strong>D</strong>：双精度（64bit）浮点（Float）指令集</li>
+<li><strong>C</strong>：压缩（Compressed）指令集</li>
+<li>……其他标准指令集和非标准的扩展指令集</li>
+</ul>
+</li>
+</ul>
+<p>用基础指令集加上扩展指令集的后缀来表示一个完整的RISCV指令集，用<strong>G（general）</strong>表示支持所有的标准扩展指令集。</p>
+<p>例如</p>
+<ul>
+<li><code>RV32IMA</code>：32位的整数指令集＋Multiplication+Atomic</li>
+<li><code>RV64G</code>：64位实现IMAFD</li>
+</ul>
+<p><em><strong>嵌入式指令集RV32E</strong></em></p>
+<ul>
+<li>嵌入式指令集常和<strong>C</strong>压缩指令集一起使用，用于提高代码密度</li>
+<li>嵌入式指令集不支持浮点指令子集。要使用浮点指令集必须使用RV32I</li>
+<li>嵌入式架构仅支持<strong>机器模式</strong>和<strong>用户模式</strong>不支持其他的特权模式</li>
+<li>嵌入式架构仅支持直接的物理地址管理，而不支持虚拟地址</li>
+</ul>
+<h1 id="二、架构特性"><a href="#二、架构特性" class="headerlink" title="二、架构特性"></a>二、架构特性</h1><h2 id="1-寄存器"><a href="#1-寄存器" class="headerlink" title="1.寄存器"></a>1.寄存器</h2><ul>
+<li>RISC-V 的 Unprivileged Specification 定义了<strong>32个通用寄存器</strong>，以及一个<strong>PC</strong><ul>
+<li>对 RV32I&#x2F;RV64I&#x2F;RV128I 都一样。</li>
+<li>如果实现支持 F&#x2F;D 扩展则需要额外支持32个 浮点（Float Point）寄存器。</li>
+<li>RV32E 将32个通用寄存器缩减为16个。</li>
+</ul>
+</li>
+<li>寄存器的宽度由 <strong>ISA</strong> 指定<ul>
+<li>RV32的寄存器宽度为 32 位，RV64的寄存器宽度为64位，依次类推。</li>
+</ul>
+</li>
+<li>每个寄存器具体编程时有特定的用途以及各自的别名。由<strong>RISC-V Application Binary Interface（ABI）</strong>定义。</li>
+</ul>
+<p><strong>寄存器说明</strong>：</p>
+<ul>
+<li><strong>X0（zero）</strong>：0寄存器，始终为0</li>
+<li><strong>X1（ra）</strong>：用于返回地址（return address）</li>
+<li><strong>X2（sp）</strong>：用于栈指针（stack pointer）</li>
+<li><strong>X3（gp）</strong>：用于通用指针</li>
+<li><strong>X4（tp）</strong>：用于线程指针（thread pointer）</li>
+<li><strong>X5（t0）</strong>：用于存放临时数据，或者作为备用链接寄存器</li>
+<li></li>
+</ul>
+<h2 id="2-工作模式"><a href="#2-工作模式" class="headerlink" title="2. 工作模式"></a>2. 工作模式</h2>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>嵌入式开发</tag>
+        <tag>RISCV</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>QEMU模拟VexpressA9建立工程以及串口打印</title>
+    <url>/2025/02/18/QEMU%E6%A8%A1%E6%8B%9FVexpressA9%E5%BB%BA%E7%AB%8B%E5%B7%A5%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%B2%E5%8F%A3%E6%89%93%E5%8D%B0/</url>
+    <content><![CDATA[<h1 id="一、QEMU"><a href="#一、QEMU" class="headerlink" title="一、QEMU"></a>一、QEMU</h1><p>qemu是一个模拟器，可以用来模拟一些开发板和cpu，也可以直接模拟一个目标架构的linux操作系统。</p>
+<p>首先确定自己要模拟的qemu的目标架构，这里我需要模拟的是arm32，就编译arm版本的qemu就可以了。</p>
+<p>使用<code>qemu-system-arm -M help</code>就可以看到能够模拟的板子以及对应的cpu，这里我们的目标板子是<strong>VexpressA9</strong>。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>STM32RCC时钟树详解</title>
+    <url>/2025/03/18/STM32RCC%E6%97%B6%E9%92%9F%E6%A0%91%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://harderheng-blog.oss-cn-chengdu.aliyuncs.com/blogimage/image-20231113201719527.png"
+                      alt="image-20231113201719527"
+                ></p>
+<h2 id="一、stm32时钟体系"><a href="#一、stm32时钟体系" class="headerlink" title="一、stm32时钟体系"></a>一、stm32时钟体系</h2><p>stm32一共有四个可能的时钟源</p>
+<ul>
+<li>内部高速时钟HSI，一般是8Mhz，上电复位之后的默认时钟</li>
+<li>内部低速时钟LSI，一般是40khz，在低功耗模式下可以使用，也可以给RTC或者看门狗提供时钟源。<em>RTC是实时时钟，可以依赖备用电源在很长时间内记录时间</em></li>
+<li>外部高速时钟HSE，可以由外部晶振产生也可以是外部用户输入，相比于默认的HSI，精度更高，一般上电之后初始化时钟时会把时钟来源切换到外部高速时钟</li>
+<li>外部低速时钟LSE，一般是32.768kHz，为RTC提供一个低功耗且精确的时钟来源。</li>
+</ul>
+<p>有了这四个时钟源，就可以提供整个MCU中所有需要的时钟信号。</p>
+<h2 id="二、分频和倍频"><a href="#二、分频和倍频" class="headerlink" title="二、分频和倍频"></a>二、分频和倍频</h2><p>在整个时钟树内有很多用于分频和倍频的分频器和锁相环。</p>
+<p>四个时钟源提供的时钟频率是固定的，但是不一定是我们所需要的，所以需要进行分频和倍频。在上述时钟树中可以看到各种<strong>x2</strong>或者**&#x2F;2**。</p>
+<h2 id="三、重要的时钟信号"><a href="#三、重要的时钟信号" class="headerlink" title="三、重要的时钟信号"></a>三、重要的时钟信号</h2><p>在整个时钟树中，可以看到一个非常重要的节点<strong>SYSCLK</strong>。这个信号就是整个硬件系统的时钟，来源就是<strong>HSI，PLLCLK，HSE</strong>。</p>
+<p><strong>SYSCLK</strong>这个时钟信号决定了基本所有的总线的频率，以及总线上所挂载的各种外设的频率。这个信号本身就是CPU的频率。</p>
+<p>除了<strong>SYSCLK</strong>以外，还有一个由它所驱动的重要信号<strong>SYSTICK</strong>，也就是图中的<strong>Cortex系统时钟</strong>。这个时钟一般用作操作系统的时钟来源。</p>
+<p><strong>HCLK</strong>一般是指AHB高性能总线的频率。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>嵌入式开发</tag>
+        <tag>STM32</tag>
+        <tag>RCC时钟</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Tmux教程</title>
+    <url>/2025/03/14/Tmux%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="一、安装"><a href="#一、安装" class="headerlink" title="一、安装"></a>一、安装</h2><p>使用<code>sudo apt-get install tmux</code>即可安装开始使用。</p>
+<h2 id="二、基本使用"><a href="#二、基本使用" class="headerlink" title="二、基本使用"></a>二、基本使用</h2><ul>
+<li><code>tmux</code> 就可以自动新建一个会话，并且进入这个会话</li>
+<li><code>exit</code> 就可以退出并关闭当前的会话</li>
+<li><code>tmux new -s [session_name]</code> 创建一个新的会话并命名，并且进入这个会话</li>
+</ul>
+<p><em>如果没有进行命名的话，名字默认就是从0向后排列</em></p>
+<p><em>不允许在一个tmux会话内新建另一个tmux会话</em></p>
+<ul>
+<li><p><code>tmux ls</code> 列出当前所有的session</p>
+</li>
+<li><p><code>tmux detach</code> 分离当前的会话和窗口，将当前会话放到后台并且回到终端</p>
+</li>
+<li><p><code>tmux attach -t [session_name]</code> 重新回到刚才的会话</p>
+</li>
+<li><p><code>tmux keill-session -t [session_name]</code> 删除一个已经存在的会话</p>
+</li>
+<li><p><code>tmux switch -t [session_name]</code> 切换到另一个tmux会话</p>
+</li>
+<li><p><code>tmux rename -t [sessin_name] [new_name]</code> 给会话重命名</p>
+</li>
+</ul>
+<p>有了以上这些基本命令，就可以高效率的使用tmux终端了。</p>
+<p>基本使用的流程如下</p>
+<ol>
+<li>创建新的tmux会话</li>
+<li>选择进入，或者切换到另一个tmux会话</li>
+<li>使用过后删除tmux会话</li>
+</ol>
+<h2 id="三、窗口和窗格"><a href="#三、窗口和窗格" class="headerlink" title="三、窗口和窗格"></a>三、窗口和窗格</h2><p>对一个<strong>会话（session）</strong>来说，其中有正在执行的进程和指令上下文。在同一个会话里，可以有多个<strong>窗口（window）</strong>和<strong>窗格（pane）</strong>，这些窗口和窗格共享同一个会话。一个tmux会话可以理解为是新开了一个终端。</p>
+<p>窗格是在当前页面中同时显示的多个窗口，可以快速的同时看到他们的内容。窗口则是可以切换到后台，并且只能有一个窗口在前台。一个窗口可以有多个窗格。</p>
+<p>对于窗口和窗格的操作，这里只介绍一些快捷键，毕竟使用窗口和窗格时，就是为了提高效率，如果每次都手敲切换窗口和窗格的命令，反而会降低效率。</p>
+<p>tmux中所有的快捷键都以<code>ctrl + b</code>开头，按下<code>ctrl + b</code>后再按下一个键就是触发快捷键，所有的快捷键可以通过<code>ctrl + b</code>然后按下<code>?</code>看到。</p>
+<ul>
+<li><p><code>ctrl + b %</code> 上下划分窗格</p>
+</li>
+<li><p><code>ctrl + b &quot;</code> 左右划分窗格</p>
+</li>
+<li><p><code>ctrl + b &#123;</code> 将当前窗格和上一个窗格交换位置</p>
+</li>
+<li><p><code>ctrl + b &#125;</code> 将当前窗格和下一个窗格交换位置</p>
+</li>
+<li><p><code>ctrl + b x</code> 关闭当前的窗格</p>
+</li>
+<li><p><code>ctrl + b !</code> 将当前窗格拆分成一个独立窗口</p>
+</li>
+<li><p><code>ctrl + b z</code> 将当前的窗格暂时变为窗口全屏显示，再按一次就会回来。左下角会有显示标志Z，意味着暂时全屏</p>
+</li>
+<li><p><code>ctrl + b ;</code> 切换光标到上一个窗格</p>
+</li>
+<li><p><code>ctrl + b o</code> 切换光标到下一个窗格</p>
+</li>
+</ul>
+<p>以上都是窗格操作。</p>
+<ul>
+<li><code>ctrl + b c</code> 创建一个新窗口</li>
+<li><code>ctrl + b p</code> 切换到上一个窗口</li>
+<li><code>ctrl + b n</code> 切换到下一个窗口</li>
+<li><code>ctrl + b &lt;number&gt;</code> 切换到指定编号的窗口</li>
+<li><code>ctrl + b w</code> 查看所有的窗口</li>
+<li><code>ctrl + b ,</code> 窗口重命名</li>
+<li><code>ctrl + b l</code> 切换到上一个窗口</li>
+</ul>
+<p>以上都是窗口的操作。</p>
+<ul>
+<li><code>ctrl + d</code> 这个操作是用来关闭当前的窗格的，但是如果当前只有一个窗格，即当前的是一个窗口，那就会关闭窗口，如果当前只有一个窗口，那就会关闭会话。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Shell</tag>
+        <tag>Tmux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>(publickey)</title>
+    <url>/2025/02/13/publickey/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>ucOSii任务调度</title>
+    <url>/2025/03/05/ucOSii%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/</url>
+    <content><![CDATA[<h2 id="uCOS任务调度算法思路"><a href="#uCOS任务调度算法思路" class="headerlink" title="uCOS任务调度算法思路"></a>uCOS任务调度算法思路</h2><p>这里介绍uCOS最重要的任务调度算法：<strong>优先级位图法</strong>。</p>
+<p>首先明确，uCOS中每一个任务都有唯一的优先级，也就是说一个优先级就能直接确定一个任务。</p>
+<ul>
+<li><p>当创建一个新任务时，要给它一个确定的优先级，然后将这个优先级的任务设为就绪。</p>
+</li>
+<li><p>当任务放弃处理器，调度器介入时，需要在所有的就绪的任务中找到优先级最高的任务。</p>
+</li>
+</ul>
+<p>对于第一个要求，只要有一个数据结构来存储就绪的状态即可，例如数组。</p>
+<p>对于第二个要求，对一个实时性比较高的操作系统来说，是不容易实现的。如果使用数组的数据结构，那么寻找最高优先级的就绪任务就需要遍历数组，显然速度很慢。如果任务比较少，可以允许遍历。但是一旦任务数量多起来，甚至说支持256个任务时，显然就不可能遍历了。</p>
+<p>这里引入uCOS的优先级位图法，以64个优先级为例。</p>
+<h2 id="位图法详解"><a href="#位图法详解" class="headerlink" title="位图法详解"></a>位图法详解</h2><h3 id="1-创建新任务"><a href="#1-创建新任务" class="headerlink" title="1. 创建新任务"></a>1. 创建新任务</h3><p>64个优先级分为两层查找，做一个8*8的数组。</p>
+<p>第一层用一个字节表示，也就是<strong>OSRdyGrp</strong>，这个字节哪个位置上是1，就代表哪一行有就绪任务。</p>
+<p>第二层是找到的某一行，也是用一个字节表示，**OSRdyTbl[]**，这个字节哪个位置上是1，就代表这一行的那一个是就绪任务。</p>
+<p>现在创建一个优先级为15的任务。因为分了两层，并且第一层的索引是8个，所以15这个数字的最低三位表示这个任务在那一行的位置，次三位表示这个任务所在的行。</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> prio = <span class="number">15</span>;</span><br><span class="line">x = prio &amp; <span class="number">0x07</span>; <span class="comment">//获得在一行的哪一个位置</span></span><br><span class="line">y = prio &gt;&gt; <span class="number">3</span>; <span class="comment">//获得在哪一行</span></span><br></pre></td></tr></table></figure></div>
+
+<p>但是此时只是得到了两个数字，而不是两层索引。现在要把<code>y = 1</code>变成<code>00000010</code>的表示，并且将这个二进制数和<strong>OSRdyGrp</strong>结合起来，就达到了我们的目的。</p>
+<p>uCOS引入了一个查找表，**OSMapTbl[]**。下标为1时，元素为<code>00000010</code>，同样的下标为7时，元素为<code>10000000</code>。</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> prio = <span class="number">15</span>;</span><br><span class="line"><span class="type">int</span> x = OSMapTbl[prio &amp; <span class="number">0x07</span>];</span><br><span class="line"><span class="type">int</span> y = OSMapTbl[prio &gt;&gt; <span class="number">3</span>];</span><br><span class="line">OSRdyGrp |= y;</span><br><span class="line">OSRdyTbl[y] = x;</span><br><span class="line"><span class="comment">//在实际的代码中，就不需要x和y了，直接进行或运算即可</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="2-在就绪任务中寻找最高优先级"><a href="#2-在就绪任务中寻找最高优先级" class="headerlink" title="2. 在就绪任务中寻找最高优先级"></a>2. 在就绪任务中寻找最高优先级</h3><p>因为有两层的位图索引，所以只要找到<strong>OSRdyGrp</strong>中的最低有效位，就能知道是哪一行，然后在对应的行**OSRdyTbl[]**中寻找最低有效位，就能找到是哪一列，结合起来就是最高优先级了。但是这样去直接在这两个字节中寻找，依然需要非常数级别的时间。有没有什么办法减少这个时间呢？</p>
+<p>uCOS又引入了一个查找表<strong>OSUnMapTbl[]<strong>。对于</strong>OSRdyGrp</strong>或者**OSRdyTbl[]**的每一个可能的数字，其最低有效位都是固定可知的，将这些有限的数据记录成一张查找表，就可以直接找到最低有效位。</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line">y = OSUnMapTbl[OSRdyGrp];</span><br><span class="line">x = OSUnMapTbl[OSRdyTbl[y]];</span><br><span class="line">prio = y * <span class="number">8</span> + x;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="优先级位图法扩展"><a href="#优先级位图法扩展" class="headerlink" title="优先级位图法扩展"></a>优先级位图法扩展</h2><p>可以看到在寻找最低有效位时不能保证实时性，所以引入了优先级位图法的额外查找表。</p>
+<p>虽然在两层索引中，寻找最低有效位的时间是有限的，查找两个字节，也就是顶多16次查找，但是对实时操作系统来时可能还是难以容忍。</p>
+<p>在TLSF内存管理算法中得到了一点启示，使用<strong>CLZ</strong>硬件指令得到最高有效位，这个操作是一个硬件电路实现的指令，其复杂度可以认为是常数级别。</p>
+<p><strong>硬件实现某种操作，降低复杂度，耦合软件与硬件带来更好的性能，和更低的编程门槛。</strong></p>
+<p><strong>虽然说优先级位图法的查找表带来了额外空间，但是对一个任务数量本身就有限的嵌入式操作系统来说，这个查找表的大小也并没有很大，最终认为，软件上的巧妙实现是更加优秀的。</strong></p>
+<h2 id="TCB（TaskControlBlock）设计"><a href="#TCB（TaskControlBlock）设计" class="headerlink" title="TCB（TaskControlBlock）设计"></a>TCB（TaskControlBlock）设计</h2><ul>
+<li>栈顶指针 OSTCBStkPtr</li>
+<li>指向下一个TCB的指针OSTCBNext</li>
+<li>指向上一个TCB的指针OSTCBPrev</li>
+<li>任务时延 OSTCBDly</li>
+<li><strong>任务状态 OSTCBStat</strong> <ul>
+<li>OS_STAT_RDY 就绪可运行</li>
+<li>OS_STAT_SEM 等待信号量</li>
+<li>OS_STAT_MBOX 等待邮箱信息</li>
+<li>OS_STAT_Q 等待消息队列</li>
+<li>OS_STAT_SUSPEND 被挂起</li>
+<li>OS_STAT_PEND_ANY 等待其他的对象</li>
+</ul>
+</li>
+<li>任务等待状态 OSTCBStatPend<ul>
+<li>从等待状态退出时是否成功，等待超时，等待被中止等等</li>
+</ul>
+</li>
+<li>任务优先级 OSTCBPrio<ul>
+<li>OSTCBX</li>
+<li>OSTCBY</li>
+<li>OSTCBBitX</li>
+<li>OSTCBBitY</li>
+</ul>
+</li>
+<li></li>
+<li>EXTENSIONS<ul>
+<li>扩展数据</li>
+<li>TLS线程本地存储支持</li>
+<li>系统事件指针OS_Eventptr</li>
+<li>多事件指针 OSTCBEventMultiPtr</li>
+<li>多事件就绪指针OSTCBEventMultiRdy</li>
+<li>消息 OSTCBMsg</li>
+<li>标志模式OSTCBFlagMode</li>
+<li>就绪标志OSTCBFlagsRdy</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<h2 id="OSTackCreate"><a href="#OSTackCreate" class="headerlink" title="OSTackCreate"></a>OSTackCreate</h2><ul>
+<li>检查prio是否合法</li>
+<li>初始化任务栈<ul>
+<li>向下移动栈指针初始化栈内存，初始化栈内存时使用各种寄存器进行占位，有用的寄存器例如PC和SP</li>
+</ul>
+</li>
+<li>初始化TCB，分配TCB</li>
+<li></li>
+</ul>
+<h1 id="任务切换"><a href="#任务切换" class="headerlink" title="任务切换"></a>任务切换</h1><p>任务在何时进行切换？</p>
+<p>首先考虑什么情况下任务不会位于就绪状态：</p>
+<ul>
+<li>如果被<strong>delay</strong>，自然就不能够进入就绪状态，会处在suspend状态</li>
+<li>如果正在等待某一个事件，比如<strong>mbox</strong>，也不会进入就绪状态，处在等在mbox的suspend状态</li>
+</ul>
+<p>那么何时对就绪状态进行更新呢？</p>
+<ul>
+<li><p>每次进行<strong>Tick</strong>时，进入<strong>SysTickHandler</strong>，将delay的任务的Timedly计时减少。如果Timedly时间到了，就进入了就绪的状态。</p>
+</li>
+<li></li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>RTOS</tag>
+        <tag>uCOS</tag>
+        <tag>任务调度</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>uCOSii内存管理</title>
+    <url>/2025/03/05/uCOSii%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</url>
+    <content><![CDATA[<h2 id="uCOS内存管理思路"><a href="#uCOS内存管理思路" class="headerlink" title="uCOS内存管理思路"></a>uCOS内存管理思路</h2><p>uCOS的内存管理非常简单，有5个连接在一起的partition，这5个partition又分别连接着一系列的size固定，个数确定的block。</p>
+<p>也就是说每一个partition只能有一个size，能够使用的内存大小就只有这五种。</p>
+<p><strong>好处</strong>是内存分配是常数时间，而且是很快的常数时间。在5个partition中遍历一下找到适合的size，直接取对应的freelist即可。</p>
+<p><strong>坏处</strong>就是内存分配非常的不灵活，只有固定大小的内存块。</p>
+<h2 id="OS-MemInit"><a href="#OS-MemInit" class="headerlink" title="OS_MemInit"></a>OS_MemInit</h2><p>初始化OSMemTbl，存储5个partition的基本信息，将五个partition串联起来。</p>
+<h2 id="OSMemCreate"><a href="#OSMemCreate" class="headerlink" title="OSMemCreate"></a>OSMemCreate</h2><p>将给定的内存地址addr，内存块大小size，内存块数量n，配置给一个空的partition，讲这些信息写入到partition的头信息中，并且将partition设为已经配置完成。</p>
+<h2 id="OSMemGet"><a href="#OSMemGet" class="headerlink" title="OSMemGet"></a>OSMemGet</h2><p>给定一个指向partition的指针，在这里面直接取freelist的第一个。</p>
+<h2 id="OSMemPut"><a href="#OSMemPut" class="headerlink" title="OSMemPut"></a>OSMemPut</h2><p>给定指向内存块的地址，和它的partition，将这个内存区域放到freelist中。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>RTOS</tag>
+        <tag>uCOS</tag>
+        <tag>内存管理</tag>
+        <tag>内存池</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ucOSii临界区</title>
+    <url>/2025/03/07/ucOSii%E4%B8%B4%E7%95%8C%E5%8C%BA/</url>
+    <content><![CDATA[<h2 id="临界区定义"><a href="#临界区定义" class="headerlink" title="临界区定义"></a>临界区定义</h2><p>操作系统在处理关键代码时，也就是进入临界区时，需要关闭中断，防止中断打断当前执行的关键代码，造成系统资源的破坏。 </p>
+<p>关键就在于关闭中断，控制中断寄存器进行中断关闭。但是，如果单纯的在进入临界区之前关中断，在退出临界区之后开中断，岂不是破坏了原本的中断状态？例如在某些地方可能已经被关闭了中断，那么退出临界区之后我们要恢复的就是关中断的状态。</p>
+<p>我们要做的就是在进入临界区前记录一下此刻的中断状态，然后关中断。在退出临界区之后，恢复之前记录的状态即可。</p>
+<h2 id="临界区代码"><a href="#临界区代码" class="headerlink" title="临界区代码"></a>临界区代码</h2><p>临界区关中断时，需要操作做的是CPSR寄存器，也就是硬件相关的寄存器，临界区代码也就是port代码。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">OS_CPU_SR_Save:</span><br><span class="line">	CPSID I  ;禁用中断</span><br><span class="line">	PUSH &#123;R1&#125; ;这里虽然已经保存过R1，但是为了安全冗余还是再次保存R1</span><br><span class="line">	MRS R1, BASEPRI ;保存中断屏蔽寄存器，将来用来恢复</span><br><span class="line">	MSR BASEPRI, R0 ;将R0传入中断屏蔽寄存器，传入一个优先级，屏蔽这个优先级以下的中断</span><br><span class="line">	DSB ;确保数据操作到此为止全部执行完毕，控制流水线</span><br><span class="line">	ISB ;确保指令操作到此为止全部执行完毕，控制流水线</span><br><span class="line">	;在修改系统寄存器的场景中，一定要先DSB后ISB</span><br><span class="line">	MOV R0, R1 ;将R1放到R0作为返回值</span><br><span class="line">	POP R1 ;将先前R1的值从栈中弹出</span><br><span class="line">	CPSIE I	;启用中断</span><br><span class="line">	BX LR ;返回</span><br><span class="line">OS_CPU_SR_Restore:</span><br><span class="line">	CPSID I		;禁用中断</span><br><span class="line">	MSR BASEPRI, R0	;恢复原来的中断屏蔽</span><br><span class="line">	DSB</span><br><span class="line">	ISB</span><br><span class="line">	;指令和数据屏障</span><br><span class="line">	CPSIE I</span><br><span class="line">	BX LR	;返回</span><br></pre></td></tr></table></figure></div>
+
+<p>总体的流程大致是：</p>
+<ol>
+<li>完全关闭中断</li>
+<li>保存中断屏蔽寄存器BASEPRI</li>
+<li>传递新的值给BASEPRI</li>
+<li>将之前保存的BASEPRI的值拿来做返回值并返回</li>
+</ol>
+<p>其中<strong>传递新的值给BASEPRI</strong>，新的值是一个有关硬件和操作系统的值，在这里没有给出。让我们来看一下这个宏定义。</p>
+<p><code>cpu_sr = OS_CPU_SR_Save(CPU_CFG_KA_IPL_BOUNDARY &lt;&lt; (8u - CPU_CFG_NVIC_PRIO_BITS))</code></p>
+<ul>
+<li><strong>CPU_CFG_NVIC_PRIO_BITS</strong> CPU中有多少位用来描述中断优先级，对CortexM来说是4位，两位响应优先级，两位抢占优先级。</li>
+<li><strong>CPU_CFG_KA_IPL_BOUNDARY ** 嵌入式操作系统中用到的中断即</strong>PendSV<strong>和</strong>SysTick**等各种中断的最高的中断优先级，也就是说要屏蔽掉所有嵌入式操作系统中的中断，但是允许其他的硬件中断和异常。</li>
+</ul>
+<p><em><strong>在CortexM架构中，优先级又分为主优先级和子优先级，NVIC负责处理二者之间的关系。抢占优先级更高的允许中断其他的中断，响应优先级更高的在同样的抢占优先级下优先顺序执行。但是二者优先级组合在一起一共4位，是整个中断的优先级。而BASEPRI进行屏蔽时，就是使用的这个优先级进行屏蔽。</strong></em></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>嵌入式开发</tag>
+        <tag>RTOS</tag>
+        <tag>uCOS</tag>
+        <tag>中断</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从零开始编写RTOS</title>
+    <url>/2025/02/10/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%BC%96%E5%86%99RTOS/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>undefined reference to `__errno‘ 解决办法</title>
+    <url>/2025/03/06/undefined-reference-to-errno%E2%80%98-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+    <content><![CDATA[<h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>编译stm32项目时，因为引入了math库，导致报错 <strong>undefined reference to &#96;__errno‘</strong></p>
+<h4 id="报错原因"><a href="#报错原因" class="headerlink" title="报错原因"></a>报错原因</h4><p>多个库文件的链接顺序问题。这里没有手动指定链接的顺序，所以会报错</p>
+<h4 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h4><p>链接时加上指令<code> -specs=rdimon.specs and -specs=nosys.specs</code></p>
+]]></content>
+      <categories>
+        <category>问题解决</category>
+      </categories>
+      <tags>
+        <tag>嵌入式开发</tag>
+        <tag>STM32</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>力扣刷题</title>
+    <url>/2025/02/26/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="买卖股票的最佳时机II"><a href="#买卖股票的最佳时机II" class="headerlink" title="买卖股票的最佳时机II"></a><a class="link"   href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/description/?envType=study-plan-v2&envId=top-interview-150" >买卖股票的最佳时机II<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></h2><p>给你一个整数数组 <code>prices</code> ，其中 <code>prices[i]</code> 表示某支股票第 <code>i</code> 天的价格。</p>
+<p>在每一天，你可以决定是否购买和&#x2F;或出售股票。你在任何时候 <strong>最多</strong> 只能持有 <strong>一股</strong> 股票。你也可以先购买，然后在 <strong>同一天</strong> 出售。</p>
+<p>返回 <em>你能获得的 <strong>最大</strong> 利润</em> 。</p>
+<p><strong>示例 1：</strong></p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：prices = [7,1,5,3,6,4]</span><br><span class="line">输出：7</span><br><span class="line">解释：在第 2 天（股票价格 = 1）的时候买入，在第 3 天（股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5 - 1 = 4。</span><br><span class="line">随后，在第 4 天（股票价格 = 3）的时候买入，在第 5 天（股票价格 = 6）的时候卖出, 这笔交易所能获得利润 = 6 - 3 = 3。</span><br><span class="line">最大总利润为 4 + 3 = 7 。</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>示例 2：</strong></p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：prices = [1,2,3,4,5]</span><br><span class="line">输出：4</span><br><span class="line">解释：在第 1 天（股票价格 = 1）的时候买入，在第 5 天 （股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5 - 1 = 4。</span><br><span class="line">最大总利润为 4 。</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>示例 3：</strong></p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入：prices = [7,6,4,3,1]</span><br><span class="line">输出：0</span><br><span class="line">解释：在这种情况下, 交易无法获得正利润，所以不参与交易可以获得最大利润，最大利润为 0。</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><h4 id="1-贪心"><a href="#1-贪心" class="headerlink" title="1. 贪心"></a>1. 贪心</h4><p>想象股票价格总体走势，就是一个折线图，只要在价格上涨的区间买卖就行了，将价格上涨的区间累计起来，就是最终的最大利润。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>大型项目常用宏定义</title>
+    <url>/2025/03/04/%E5%A4%A7%E5%9E%8B%E9%A1%B9%E7%9B%AE%E5%B8%B8%E7%94%A8%E5%AE%8F%E5%AE%9A%E4%B9%89/</url>
+    <content><![CDATA[<h1 id="DEBUG-LOG"><a href="#DEBUG-LOG" class="headerlink" title="DEBUG_LOG"></a>DEBUG_LOG</h1>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C语言</tag>
+        <tag>宏定义</tag>
+        <tag>Debug</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>探究内存对齐</title>
+    <url>/2025/03/03/%E6%8E%A2%E7%A9%B6%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>熵编码</title>
+    <url>/2025/03/04/%E7%86%B5%E7%BC%96%E7%A0%81/</url>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>熵编码是一种独立于介质具体特征的无损数据压缩的方案。通过将输入的每一个字符分配一个唯一的前缀码，将输入的符号替换成对应的<strong>可变长度前缀无关</strong>的输出码来替代。</p>
+<p><strong>霍夫曼编码</strong>和<strong>算术编码</strong>是两种最常见的熵编码技术。</p>
+<h2 id="霍夫曼编码"><a href="#霍夫曼编码" class="headerlink" title="霍夫曼编码"></a>霍夫曼编码</h2><p>依据字符在整个文件中的出现概率进行编码。</p>
+<ul>
+<li>统计所有字符的出现次数，作为节点的权。</li>
+<li>树的路径长度：叶节点到根节点的距离</li>
+<li>节点的带权路径长度：节点的权*路径长度</li>
+<li>将所有叶节点的带权路径长度相加，就能得到整个二叉树的带权路径长度。</li>
+<li><strong>huffman-tree</strong>要求<ul>
+<li><strong>所有节点都是叶节点</strong>。如果存在父节点，那么父节点编码是叶节点的前缀，就没法区别父节点和叶节点了。</li>
+<li>能够出现的所有树中，<strong>带权路径长度最小</strong>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="EXAMPLE"><a href="#EXAMPLE" class="headerlink" title="EXAMPLE"></a>EXAMPLE</h3><p>现在有四个叶节点：</p>
+<ul>
+<li>A：8</li>
+<li>B：6</li>
+<li>C：4</li>
+<li>D：1</li>
+</ul>
+<p>如果要构建最优二叉树，希望权比较大的节点出现在二叉树的靠近根节点的位置。</p>
+<p>则二叉树从上到下依次是A，B，C，D。<em>另外包括使得二叉树完整的空节点</em></p>
+<p>整棵树的权为**8 * 1 + 6 * 2 + 4 *3 +1 * 3 &#x3D; 35**。</p>
+<p>整棵树的编码为：</p>
+<ul>
+<li>A：0</li>
+<li>B：10</li>
+<li>C：110</li>
+<li>D：111</li>
+</ul>
+<h3 id="构建最优二叉树的原理"><a href="#构建最优二叉树的原理" class="headerlink" title="构建最优二叉树的原理"></a>构建最优二叉树的原理</h3><p>每次选取权最小的两个节点构成一个新的节点，认为这个节点是这两个节点的父节点，实际上是并不存在的空节点，但是这个节点代表着这两个节点的权。</p>
+<p>然后再次重复这个过程，如果构成的新节点依然是最小的两个节点之一，那么构成的就是一个类似<code>0,10,11</code>这样的编码。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="算数编码"><a href="#算数编码" class="headerlink" title="算数编码"></a>算数编码</h2><p>假设我们这里出现了三个字符ABC，ABC的概率分别是0.5，0.4，0.1。</p>
+<p>我们规定A代表的区间是（0,0.5），B代表的区间是（0.5,0.9），C代表的区间是（0.9,1）。</p>
+<p>现在输入的串为A A B A B C A B A B。</p>
+<p>看到第一个输入字符为A，将此时A的区间作为目标区间，此时我们将原ABC的区间映射到输入字符A的区间中，也就是变成了</p>
+<ul>
+<li>A（0,0.25），B（0.25,0.45），C（0.45,0.5）</li>
+</ul>
+<p>然后输入第二个字符为A，此时已经更新了A的区间，再次将原来的区间映射到目标区间(0,0.25)中。</p>
+<ul>
+<li>A（0,0.125），B（0.125,0.225），C（0.225,0.25）</li>
+</ul>
+<p>继续进行操作，最终编码完成B之后，得到的目标区间是（0.1686, 0.16868）</p>
+<p>在这个区间内随意选取一个数字，就是这一串的编码。</p>
+<h3 id="解码原理"><a href="#解码原理" class="headerlink" title="解码原理"></a>解码原理</h3><p>这个数字处在哪个区间内，就能解码出来哪个符号。</p>
+<ul>
+<li>第一次解码，数字处在A的区间内，得到A，同时以A为目标区间进行划分得到<ul>
+<li>A（0,0.25），B（0.25,0.45），C（0.45,0.5）</li>
+</ul>
+</li>
+<li>第二次解码，数字处在A的区间内，得到A，同时以A为目标区间进行划分得到<ul>
+<li>A（0,0.125），B（0.125,0.225），C（0.225,0.25）</li>
+</ul>
+</li>
+<li>第三次解码，数字处在B的区间内，得到B，同时以B为目标区间进行划分</li>
+<li>继续进行重复操作</li>
+</ul>
+<h2 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h2><p>霍夫曼编码在编码时相对消耗资源，解码时需要显式的字典，用来对应每一个字符的二进制编码，需要额外空间但是解码需要的运行资源很少。</p>
+<p>算术编码在编解码时都很消耗计算资源，并且需要大量的浮点运算，虽然不需要额外的存储空间，但是解码时对浮点运算能力的要求很高。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>压缩</tag>
+        <tag>熵编码</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>链接脚本LinkerScript</title>
+    <url>/2025/03/07/%E9%93%BE%E6%8E%A5%E8%84%9A%E6%9C%ACLinkerScript/</url>
+    <content><![CDATA[<h2 id="链接脚本的作用"><a href="#链接脚本的作用" class="headerlink" title="链接脚本的作用"></a>链接脚本的作用</h2><p>在嵌入式开发中，需要指定不同的段烧录到单片机的地址，这个过程由链接脚本指定。</p>
+<p>一般来说链接脚本根据芯片的不同，设定不同的RAM和FLASH起始地址和长度。</p>
+<p>除了指示链接的过程，还可以将地址变成变量，传递给启动文件，例如bss段和data段的起始位置和结束位置，能够让启动文件从flash中搬运data段到RAM中，以及初始化bss段的数据为0。</p>
+<h2 id="链接脚本和段"><a href="#链接脚本和段" class="headerlink" title="链接脚本和段"></a>链接脚本和段</h2><p>现在想象有一个RAM，知道其起始地址和长度，有一个FLASH，也知道其起始地址和长度。</p>
+<p>那么链接脚本会将</p>
+<ul>
+<li><strong>所有的text段，包括中断向量表</strong></li>
+<li><strong>只读数据段rodata</strong></li>
+</ul>
+<p>定位到FLASH的位置，尤其是<strong>中断向量表</strong>一定会被放在FLASH的起始位置，而且中断向量表的第一个位置一定是<strong>主栈指针</strong>，其实也就是RAM的结束位置。</p>
+<p>并且将</p>
+<ul>
+<li><strong>data</strong>数据段，写到Flash中，并且规定data段将写入到RAM的起始位置</li>
+<li><strong>bss</strong>段，规定将bss段写到data段后面。</li>
+</ul>
+<p>这样就得到了RAM的内存布局。那堆和栈呢？编译器并不知道程序需要使用多少堆，只能通过编译知道栈的深度。</p>
+<p>链接脚本中设置了<strong>Min_Heap_Size</strong>和<strong>Min_Stack_Size</strong>两个变量，并且在<strong>bss</strong>段后面创建了这样的一个用户堆栈段，其作用就是剩下的内存是否能满足最小栈和最小堆的使用。</p>
+<p>也就是说RAM中可以动态使用的内存就是在bss后面。</p>
+<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">MEMORY</span><br><span class="line">&#123;</span><br><span class="line">	RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 96K</span><br><span class="line">	FLASH (rx)      : ORIGIN = 0x80000000, LENGTH = 512K</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>使用<strong>MEMORY</strong>定义RAM和FLASH。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">SECTIONS</span><br><span class="line">&#123;</span><br><span class="line">	.text:</span><br><span class="line">	&#123;</span><br><span class="line">		. = ALIGN(4)</span><br><span class="line">		*(.text)</span><br><span class="line">		. = ALIGN(4)</span><br><span class="line">		PROVIDE(etext = .)</span><br><span class="line">	&#125;&gt;FLASH</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>使用<strong>SECTIONS</strong>定义一个段，其中 <code>.</code>相当于一个指针，指向我们当前分配内存的位置。指针默认位置是0。</p>
+</li>
+<li><p>使用<strong>ALIGN</strong>来使<code>.</code>指针4字节对齐。</p>
+</li>
+<li><p>使用<code>*(section_name)</code>将这个段放在整个text的这个位置。<code>*</code>是通配符，表示将所有的文件的<code>.text</code>段都放在这里。如果需要指定某一个文件的某一个段，就将其名称制定出来<code>file.o(.text)</code>。</p>
+<p>很多时候写一个段可能会给一个段起名，比如<code>.text.resethandler</code>，此时也可以用通配符<code>(.text.*)</code>，也就是把所有<code>.text</code>开头的段都囊括进去。</p>
+</li>
+<li><p>最后使用一次ALIGN保证4字节对齐，不对齐则填充0。</p>
+</li>
+<li><p><strong>PROVIDE</strong>命令用来定义一个变量，有点像汇编中的<code>.weak</code>，也就是如果在别的地方定义了这个变量，就会覆盖掉这里的定义，如果没有定义则使用这里的定义。</p>
+</li>
+<li><p><strong>&gt;FLASH</strong>强制移动指针到FLASH中的空闲位置起点，也就说虽然指针默认为0，只需要写上<code>&gt;FLASH</code>，在一开始就会把指针设为FLASH的起始位置。如果是在RAM中也是一样的道理。</p>
+</li>
+</ul>
+<h2 id="源文件和链接文件"><a href="#源文件和链接文件" class="headerlink" title="源文件和链接文件"></a>源文件和链接文件</h2><p>链接文件很多时候可以向源文件提供一些变量。</p>
+<p>比如在stm32的链接脚本中提供了data段的起始地址结束地址，还有bss段的起始地址还有结束地址。</p>
+<p>在这里就可以实现将所有剩余的RAM纳入动态内存的管理，以实现操作系统的动态内存管理。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>嵌入式开发</tag>
+        <tag>STM32</tag>
+        <tag>GCC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>设备树DeviceTree</title>
+    <url>/2025/02/17/%E8%AE%BE%E5%A4%87%E6%A0%91DeviceTree/</url>
+    <content><![CDATA[<h1 id="一、设备树是什么"><a href="#一、设备树是什么" class="headerlink" title="一、设备树是什么"></a>一、设备树是什么</h1>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>嵌入式</tag>
+        <tag>Uboot</tag>
+      </tags>
   </entry>
 </search>

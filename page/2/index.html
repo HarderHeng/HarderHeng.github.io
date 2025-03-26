@@ -643,7 +643,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">56</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">76</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -651,7 +651,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">77</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">103</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -682,7 +682,7 @@
 </div>
                 <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">56</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">76</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -690,7 +690,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">77</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">103</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -757,28 +757,24 @@
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/12/17/STM32Cubemx%E6%95%99%E7%A8%8B/">
-                            STM32Cubemx教程
+                        <a href="/2025/03/04/%E5%A4%A7%E5%9E%8B%E9%A1%B9%E7%9B%AE%E5%B8%B8%E7%94%A8%E5%AE%8F%E5%AE%9A%E4%B9%89/">
+                            大型项目常用宏定义
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
-                            
-                            一、创建项目三种创建项目的方法，一般可以使用前两种分别是选择MCU和选择ST官方开发板。
-这里以MCU为例，选择MCU的core和系列然后找到具体型号。
-然后点击右上角Start Project，开始配置项目。
-二、项目配置接下来进入到具体的项目基础配置。
-Pinout&amp;Configuration在这里可以初始化自己需要使用的外设，就不需要在项目中自己调用函数或者配置寄存器进行外设的...
+                            <p>很多大型项目中，都通过宏定义对代码的行为进行控制，例如ERROR，DEBUG_LOG等等，现在将一些常用的宏定义总结使用。</p>
+
                         
                     </div>
 
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Tue Dec 17 2024 13:52:17 GMT+0800">
+            <span class="home-article-date" data-date="Tue Mar 04 2025 11:02:11 GMT+0800">
                 
-                    2024-12-17
+                    2025-03-04
                 
             </span>
         </span>
@@ -796,12 +792,200 @@ Pinout&amp;Configuration在这里可以初始化自己需要使用的外设，�
                     
                     
                 
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/C%E8%AF%AD%E8%A8%80/">C语言</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E5%AE%8F%E5%AE%9A%E4%B9%89/">宏定义</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/Debug/">Debug</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2025/03/04/%E5%A4%A7%E5%9E%8B%E9%A1%B9%E7%9B%AE%E5%B8%B8%E7%94%A8%E5%AE%8F%E5%AE%9A%E4%B9%89/">Read more<span class="seo-reader-text">大型项目常用宏定义</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2025/03/04/%E7%86%B5%E7%BC%96%E7%A0%81/">
+                            熵编码
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            概述熵编码是一种独立于介质具体特征的无损数据压缩的方案。通过将输入的每一个字符分配一个唯一的前缀码，将输入的符号替换成对应的可变长度前缀无关的输出码来替代。
+霍夫曼编码和算术编码是两种最常见的熵编码技术。
+霍夫曼编码依据字符在整个文件中的出现概率进行编码。
+
+统计所有字符的出现次数，作为节点的权。
+树的路径长度：叶节点到根节点的距离
+节点的带权路径长度：节点的权*路径长度
+将所有叶节点的带权...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Tue Mar 04 2025 09:26:23 GMT+0800">
+                
+                    2025-03-04
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
                     
                         
-                            <li>></li>
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E5%8E%8B%E7%BC%A9/">压缩</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E7%86%B5%E7%BC%96%E7%A0%81/">熵编码</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2025/03/04/%E7%86%B5%E7%BC%96%E7%A0%81/">Read more<span class="seo-reader-text">熵编码</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2025/03/03/%E6%8E%A2%E7%A9%B6%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/">
+                            探究内存对齐
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Mon Mar 03 2025 14:15:40 GMT+0800">
+                
+                    2025-03-03
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2025/03/03/%E6%8E%A2%E7%A9%B6%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/">Read more<span class="seo-reader-text">探究内存对齐</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2025/03/03/CMake%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E8%B8%A9%E5%9D%91/">
+                            CMake交叉编译踩坑
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            <p>使用cmake搭建交叉编译工具链时出现问题，编译一个arm汇编指令不能通过。</p>
+
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Mon Mar 03 2025 09:12:35 GMT+0800">
+                
+                    2025-03-03
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
                         
                         <li>
-                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B/">实用教程</a>&nbsp;
+                            <a href="/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">问题解决</a>&nbsp;
                         </li>
                     
                     
@@ -821,12 +1005,12 @@ Pinout&amp;Configuration在这里可以初始化自己需要使用的外设，�
                     
                         <li>
                             | 
-                            <a href="/tags/STM32/">STM32</a>&nbsp;
+                            <a href="/tags/makefile/">makefile</a>&nbsp;
                         </li>
                     
                         <li>
                             | 
-                            <a href="/tags/Keil/">Keil</a>&nbsp;
+                            <a href="/tags/make/">make</a>&nbsp;
                         </li>
                     
                 </ul>
@@ -834,7 +1018,7 @@ Pinout&amp;Configuration在这里可以初始化自己需要使用的外设，�
         
     </div>
 
-    <a href="/2024/12/17/STM32Cubemx%E6%95%99%E7%A8%8B/">Read more<span class="seo-reader-text">STM32Cubemx教程</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2025/03/03/CMake%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E8%B8%A9%E5%9D%91/">Read more<span class="seo-reader-text">CMake交叉编译踩坑</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -849,35 +1033,313 @@ Pinout&amp;Configuration在这里可以初始化自己需要使用的外设，�
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/12/17/Linux%E4%B8%8B%E5%BC%80%E5%8F%91STM32%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
-                            Linux下开发STM32环境搭建
+                        <a href="/2025/02/26/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/">
+                            力扣刷题
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
-                            
-                            一、大致思路本次搭建环境的大致思路是
+                            <p>准备2025年暑期实习以及2025秋招，在力扣刷题。一边刷题一边记录不能够一次做出来的试题，同时归纳知识点。</p>
 
-Windows + wsl
-Cubemx进行基础配置和makefile的生成
-vscode进行项目开发
-gcc-arm-none-eabi交叉编译工具链进行项目编译
-OpenOCD进行代码的烧录
-配合GDBserver进行调试
-
-本质上进行一个嵌入式项目的开发，写代码，编译成可执行文件，将可执行文件烧录到嵌入式平台上，就是我们要做的所有的事情。对使用集...
                         
                     </div>
 
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Tue Dec 17 2024 11:08:17 GMT+0800">
+            <span class="home-article-date" data-date="Wed Feb 26 2025 11:19:51 GMT+0800">
                 
-                    2024-12-17
+                    2025-02-26
                 
             </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2025/02/26/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/">Read more<span class="seo-reader-text">力扣刷题</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2025/02/19/CPU%E7%9A%84Cache%E5%92%8CMMU/">
+                            CPU的Cache和MMU
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            一、缓存多数精简指令集的嵌入式MCU内核都没有配备高速缓存，例如cortexM4。在ARMv7-M中，cortexM7配备了L1的高速缓存。ARMv7-A的CPU都配备了高速缓存。
+随着CPU制程的提升， CPU的运行频率也不断提高，但是Flash或者SRAM的速度却没有对应的提升，在嵌入式系统中可以看到总线频率往往是CPU的分频，也就是说CPU速度和访存速度不匹配。缓存就是用来缓解二者之间...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Wed Feb 19 2025 15:40:27 GMT+0800">
+                
+                    2025-02-19
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2025/02/19/CPU%E7%9A%84Cache%E5%92%8CMMU/">Read more<span class="seo-reader-text">CPU的Cache和MMU</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2025/02/18/QEMU%E6%A8%A1%E6%8B%9FVexpressA9%E5%BB%BA%E7%AB%8B%E5%B7%A5%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%B2%E5%8F%A3%E6%89%93%E5%8D%B0/">
+                            QEMU模拟VexpressA9建立工程以及串口打印
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            一、QEMUqemu是一个模拟器，可以用来模拟一些开发板和cpu，也可以直接模拟一个目标架构的linux操作系统。
+首先确定自己要模拟的qemu的目标架构，这里我需要模拟的是arm32，就编译arm版本的qemu就可以了。
+使用qemu-system-arm -M help就可以看到能够模拟的板子以及对应的cpu，这里我们的目标板子是VexpressA9。
+
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Tue Feb 18 2025 15:31:27 GMT+0800">
+                
+                    2025-02-18
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2025/02/18/QEMU%E6%A8%A1%E6%8B%9FVexpressA9%E5%BB%BA%E7%AB%8B%E5%B7%A5%E7%A8%8B%E4%BB%A5%E5%8F%8A%E4%B8%B2%E5%8F%A3%E6%89%93%E5%8D%B0/">Read more<span class="seo-reader-text">QEMU模拟VexpressA9建立工程以及串口打印</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2025/02/17/%E8%AE%BE%E5%A4%87%E6%A0%91DeviceTree/">
+                            设备树DeviceTree
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            一、设备树是什么
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Mon Feb 17 2025 16:34:26 GMT+0800">
+                
+                    2025-02-17
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/Linux/">Linux</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/Uboot/">Uboot</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2025/02/17/%E8%AE%BE%E5%A4%87%E6%A0%91DeviceTree/">Read more<span class="seo-reader-text">设备树DeviceTree</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2025/02/13/publickey/">
+                            (publickey)
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Thu Feb 13 2025 17:12:40 GMT+0800">
+                
+                    2025-02-13
+                
+            </span>
+        </span>
+        
+        
+    </div>
+
+    <a href="/2025/02/13/publickey/">Read more<span class="seo-reader-text">(publickey)</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2025/02/13/RISCV%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/">
+                            RISCV体系结构
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            一、指令集概述RISCV是一套开源的精简指令集。
+RISCV是一种模块化的指令集。RISCV由一个基本的ISA和多个可选的扩展指令集构成。基础的指令集是固定的永远不会改变。这意味着使用RISCV基础指令集，为编译器编写者，操作系统开发人员和汇编语言程序员提供了稳定的目标。并且使用基础指令集使得RISCV在低能耗和小型化方面很有优势。并且要实现更高性能的，或者更多的CPU支持特性，RISCV指...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Thu Feb 13 2025 15:11:11 GMT+0800">
+                
+                    2025-02-13
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
         </span>
         
         
@@ -892,12 +1354,7 @@ OpenOCD进行代码的烧录
                     
                         <li>
                             | 
-                            <a href="/tags/STM32/">STM32</a>&nbsp;
-                        </li>
-                    
-                        <li>
-                            | 
-                            <a href="/tags/STM32Cubemx/">STM32Cubemx</a>&nbsp;
+                            <a href="/tags/RISCV/">RISCV</a>&nbsp;
                         </li>
                     
                 </ul>
@@ -905,348 +1362,7 @@ OpenOCD进行代码的烧录
         
     </div>
 
-    <a href="/2024/12/17/Linux%E4%B8%8B%E5%BC%80%E5%8F%91STM32%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">Read more<span class="seo-reader-text">Linux下开发STM32环境搭建</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/12/10/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95BenchMark%E4%BD%BF%E7%94%A8/">
-                            压缩算法BenchMark使用
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            LZbench是一个通用的
-
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Tue Dec 10 2024 10:48:59 GMT+0800">
-                
-                    2024-12-10
-                
-            </span>
-        </span>
-        
-        
-    </div>
-
-    <a href="/2024/12/10/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95BenchMark%E4%BD%BF%E7%94%A8/">Read more<span class="seo-reader-text">压缩算法BenchMark使用</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/12/05/Git%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E6%97%B6%E6%8A%A5%E9%94%99repositoryNotFound/">
-                            Git拉取代码时报错repositoryNotFound
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Thu Dec 05 2024 16:39:59 GMT+0800">
-                
-                    2024-12-05
-                
-            </span>
-        </span>
-        
-        
-    </div>
-
-    <a href="/2024/12/05/Git%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81%E6%97%B6%E6%8A%A5%E9%94%99repositoryNotFound/">Read more<span class="seo-reader-text">Git拉取代码时报错repositoryNotFound</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/12/05/Pip%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8/">
-                            Pip包管理器
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Thu Dec 05 2024 16:23:20 GMT+0800">
-                
-                    2024-12-05
-                
-            </span>
-        </span>
-        
-        
-    </div>
-
-    <a href="/2024/12/05/Pip%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8/">Read more<span class="seo-reader-text">Pip包管理器</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/12/05/Linux%E5%8F%AF%E8%BF%90%E8%A1%8C%E8%BD%AF%E4%BB%B6%E4%BD%8D%E7%BD%AE%E5%92%8C%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">
-                            Linux可运行软件位置和环境变量
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            在Linux中运行软件就是一行命令的事，但是这些运行的软件具体在哪呢？
-环境变量任何一个软件都可以将其文件夹放到环境变量中，就可以使用命令唤起这个软件。
-使用包管理器安装的软件会被默认安装到**&#x2F;usr&#x2F;bin**的位置中。
-而自己编译的软件要看软件的编译脚本安装到什么位置，一般是**&#x2F;usr&#x2F;local&#x2F;bin**中。
-上面两个文件夹都在环...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Thu Dec 05 2024 15:38:15 GMT+0800">
-                
-                    2024-12-05
-                
-            </span>
-        </span>
-        
-        
-    </div>
-
-    <a href="/2024/12/05/Linux%E5%8F%AF%E8%BF%90%E8%A1%8C%E8%BD%AF%E4%BB%B6%E4%BD%8D%E7%BD%AE%E5%92%8C%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">Read more<span class="seo-reader-text">Linux可运行软件位置和环境变量</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/12/05/6-S081%E8%AF%BE%E7%A8%8B%E5%AE%9E%E9%AA%8C/">
-                            6.S081课程实验
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            Lab1:环境搭建这里根据官方教程并不能够有预想的效果，所以就尝试理解原理并逐步安装所需要的工具。撰写本文的时间是2024&#x2F;12&#x2F;5，所有的软件版本和github仓库都以目前的时间为准。
-目前使用的环境是
-
-Windows11 24H2
-WSL2
-Ubuntu 22.04LTS
-
-在WSL中进行环境的搭建。
-安装riscv-gnu-toolchain实验使用的xv6操作系...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Thu Dec 05 2024 10:39:15 GMT+0800">
-                
-                    2024-12-05
-                
-            </span>
-        </span>
-        
-        
-    </div>
-
-    <a href="/2024/12/05/6-S081%E8%AF%BE%E7%A8%8B%E5%AE%9E%E9%AA%8C/">Read more<span class="seo-reader-text">6.S081课程实验</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/12/04/6-S081%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/">
-                            6.S081操作系统笔记
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            一、操作系统简介1.1 操作系统的目标
-Abstract 将硬件和低层次的应用抽象出来便于管理和使用
-Multplex 多任务
-Isolation 多任务的隔离，每个任务之间互不干扰
-Sharing 任务之间进行数据的共享
-Security 保护不应该被应用或者其他用户共享的数据
-Performance 充分利用硬件的性能
-
-1.2 操作系统的结构操作系统是一个覆盖在所有的硬件资源上的软件。...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Dec 04 2024 09:46:16 GMT+0800">
-                
-                    2024-12-04
-                
-            </span>
-        </span>
-        
-        
-    </div>
-
-    <a href="/2024/12/04/6-S081%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/">Read more<span class="seo-reader-text">6.S081操作系统笔记</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/12/03/ELF%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E7%9A%84%E7%BB%93%E6%9E%84%E8%AF%A6%E8%A7%A3/">
-                            ELF可执行文件的结构详解
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            <p>ELF（Executable Linkable Format）是一种Linux下使用的可执行文件，在嵌入式平台上也可能会使用类似结构的文件比如arm-gcc会生成AXF文件。了解ELF文件的结构，有助于深入理解加载，编译和链接等等过程，特别是在嵌入式平台上的这样的过程。</p>
-
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Tue Dec 03 2024 09:38:07 GMT+0800">
-                
-                    2024-12-03
-                
-            </span>
-        </span>
-        
-        
-    </div>
-
-    <a href="/2024/12/03/ELF%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E7%9A%84%E7%BB%93%E6%9E%84%E8%AF%A6%E8%A7%A3/">Read more<span class="seo-reader-text">ELF可执行文件的结构详解</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/11/29/GCC%E5%92%8CGDB%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/">
-                            GCC和GDB命令使用详解
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Fri Nov 29 2024 11:34:49 GMT+0800">
-                
-                    2024-11-29
-                
-            </span>
-        </span>
-        
-        
-    </div>
-
-    <a href="/2024/11/29/GCC%E5%92%8CGDB%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/">Read more<span class="seo-reader-text">GCC和GDB命令使用详解</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2025/02/13/RISCV%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/">Read more<span class="seo-reader-text">RISCV体系结构</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -1256,7 +1372,7 @@ Performance 充分利用硬件的性能
 
     <div class="home-paginator px-7 py-5">
         <div class="paginator">
-	<a class="extend prev" rel="prev" href="/"><i class="fa-regular fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/"><i class="fa-regular fa-angle-right"></i></a>
+	<a class="extend prev" rel="prev" href="/"><i class="fa-regular fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/3/"><i class="fa-regular fa-angle-right"></i></a>
 </div>
   
     </div>
@@ -1277,12 +1393,12 @@ Performance 充分利用硬件的性能
               <span>2022</span>
               -
             
-            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
             
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        77 posts in total
+                        103 posts in total
                     </span>
                     
                 </p>

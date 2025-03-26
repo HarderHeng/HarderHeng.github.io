@@ -608,7 +608,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">56</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">76</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -616,7 +616,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">77</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">103</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -667,8 +667,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-12-04 17:36:11</span>
-            <span class="mobile">2024-12-04 17:36:11</span>
+            <span class="desktop">2025-02-26 14:50:46</span>
+            <span class="mobile">2025-02-26 14:50:46</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -708,7 +708,37 @@
 <p>Kernel中同时运行着大量的服务，例如文件系统、进程管理和内存管理。</p>
 <p>用户空间程序要使用这些服务，需要使用Kernel提供给用户的接口，这些接口被称为系统调用（SystemCall）。要使用系统调用，硬件就会运行在内核态。用户并没有直接操作硬件的权限，只有内核可以对硬件进行操作。</p>
 <p>操作系统控制硬件，并向上层提供使用接口，就是操作系统的结构。</p>
-
+<h2 id="1-3-Process-and-Memory"><a href="#1-3-Process-and-Memory" class="headerlink" title="1.3 Process and Memory"></a>1.3 Process and Memory</h2><p>Process是指进程，拥有独立的用户空间内存和软件硬件资源，kernel用<strong>PID</strong>标识每一个进程。</p>
+<p><strong>常用的syscall</strong></p>
+<ul>
+<li><p><code>fork</code>：<code>int fork()</code></p>
+<p>让现在这个进程生成另外一个和当前进程内存完全相同的子进程。在父进程中<code>fork</code>的返回值是子进程的PID，在子进程中返回值是0。实际上在fork的具体实现中，主要流程为：</p>
+<ul>
+<li>分配子进程的空间和PCB</li>
+<li>复制内存空间和寄存器</li>
+<li>设置父子关系</li>
+<li>将子进程的返回值寄存器修改为0</li>
+<li>增加文件描述符表的引用计数，共享相同的文件资源</li>
+<li>设置子进程为可执行状态，子程序开始根据之前设置好的寄存器状态还有内存空间<strong>执行</strong></li>
+<li>父进程返回子进程的PID</li>
+</ul>
+<p>在以上的流程中就实现了子进程的返回值为0。</p>
+<p>由于<strong>写时复制（CopyOnWrite）</strong>机制，<code>fork</code>之后会创建新的虚拟内存而不分配物理内存，而只有在子进程或者父进程要<strong>写</strong>内存页时，才会给子进程分配<strong>物理内存页</strong>并且进行拷贝。两个进程的虚拟内存页将<strong>共享</strong>同一个物理内存页，直到某一个内存页要被修改。</p>
+</li>
+<li><p><code>exit</code>：<code>int exit(int status)</code></p>
+<p>让调用这个函数的进程停止执行，并且将内存等占用的资源全部释放。需要一个整数的参数，0表示以正常状态退出，1表示以非正常状态退出。</p>
+</li>
+<li><p><code>wait</code>：<code>int wait(int *status)</code></p>
+<p>等待子进程退出，并且返回子进程的PID，子进程的退出状态存储到<code>status</code>中。如果调用者没有子进程，将返回-1。</p>
+</li>
+<li><p><code>exec</code>：<code>int exec(char *file, char *argv[])</code></p>
+<p>加载一个可执行文件，并且传入参数。如果执行错误则返回-1，如果执行成功则不会返回。</p>
+<p><code>exec</code>是一系列的系统调用，一旦成功执行exec，就会用新的可执行文件的内存空间完全替换掉其调用者的内存空间，所以如果成功执行就没有返回值了。因为是内存的替换，所以PID是不会改变的。</p>
+</li>
+</ul>
+<p>xv6shell使用上述的四个系统调用为用户执行程序，执行一个程序时先调用<code>fork</code>创建一个子shell，并且<code>wait</code>子shell的结束，在子shell中通过<code>exec</code>执行程序。</p>
+<p><em>在shell的实现中，可以看到写时复制的好处。创建子shell之后，其内存空间不会分配实际的物理空间，在之后exec时会将之前的内存空间全部替换，之前的数据全都是没有用的。</em></p>
+<h2 id="1-4-I-O-and-File-description"><a href="#1-4-I-O-and-File-description" class="headerlink" title="1.4 I&#x2F;O and File description"></a>1.4 I&#x2F;O and File description</h2>
 		</div>
 
 		
@@ -722,7 +752,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-12-04 17:36:11
+                    :</strong> 2025-02-26 14:50:46
             </li>
         
         <li>
@@ -831,7 +861,7 @@
 	<div class="post-toc">
 		<div class="toc-title">On this page</div>
 		<div class="page-title">6.S081操作系统笔记</div>
-		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">一、操作系统简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 操作系统的目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 操作系统的结构</span></a></li></ol></li></ol>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">一、操作系统简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 操作系统的目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 操作系统的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-Process-and-Memory"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Process and Memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-I-O-and-File-description"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 I&#x2F;O and File description</span></a></li></ol></li></ol>
 
 	</div>
 </div>
@@ -853,12 +883,12 @@
               <span>2022</span>
               -
             
-            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
             
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        77 posts in total
+                        103 posts in total
                     </span>
                     
                 </p>

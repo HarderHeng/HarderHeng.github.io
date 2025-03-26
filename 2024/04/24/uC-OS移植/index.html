@@ -608,7 +608,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">56</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">76</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -616,7 +616,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">77</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">103</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -667,8 +667,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-04-24 16:58:31</span>
-            <span class="mobile">2024-04-24 16:58:31</span>
+            <span class="desktop">2025-02-17 09:05:21</span>
+            <span class="mobile">2025-02-17 09:05:21</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -695,7 +695,21 @@
 
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			
+			<h1 id="一、任务切换"><a href="#一、任务切换" class="headerlink" title="一、任务切换"></a>一、任务切换</h1><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">PendSV_Handler</span><br><span class="line">    CPSID   I                                                   ; Cortex-M7 errata notice. See Note #5</span><br><span class="line">    MOV32   R2, OS_KA_BASEPRI_Boundary                          ; Set BASEPRI priority level required for exception preemption</span><br><span class="line">    LDR     R1, [R2]</span><br><span class="line">    MSR     BASEPRI, R1</span><br><span class="line">    DSB</span><br><span class="line">    ISB</span><br><span class="line">    CPSIE   I</span><br><span class="line"></span><br><span class="line">    MRS     R0, PSP                                             ; PSP is process stack pointer</span><br><span class="line">    STMFD   R0!, &#123;R4-R11, R14&#125;                                  ; Save remaining regs r4-11, R14 on process stack</span><br><span class="line"></span><br><span class="line">    LDR     R5, =OSTCBCur                                       ; OSTCBCur-&gt;OSTCBStkPtr = SP;</span><br><span class="line">    LDR     R1, [R5]</span><br><span class="line">    STR     R0, [R1]                                            ; R0 is SP of process being switched out</span><br><span class="line"></span><br><span class="line">                                                                ; At this point, entire context of process has been saved</span><br><span class="line">    MOV     R4, LR                                              ; Save LR exc_return value</span><br><span class="line">    BL      OSTaskSwHook                                        ; Call OSTaskSwHook() for FPU Push &amp; Pop</span><br><span class="line"></span><br><span class="line">    LDR     R0, =OSPrioCur                                      ; OSPrioCur = OSPrioHighRdy;</span><br><span class="line">    LDR     R1, =OSPrioHighRdy</span><br><span class="line">    LDRB    R2, [R1]</span><br><span class="line">    STRB    R2, [R0]</span><br><span class="line"></span><br><span class="line">    LDR     R1, =OSTCBHighRdy                                   ; OSTCBCur  = OSTCBHighRdy;</span><br><span class="line">    LDR     R2, [R1]</span><br><span class="line">    STR     R2, [R5]</span><br><span class="line"></span><br><span class="line">    ORR     LR,  R4, #0x04                                      ; Ensure exception return uses process stack</span><br><span class="line">    LDR     R0,  [R2]                                           ; R0 is new process SP; SP = OSTCBHighRdy-&gt;OSTCBStkPtr;</span><br><span class="line">    LDMFD   R0!, &#123;R4-R11, R14&#125;                                  ; Restore r4-11, R14 from new process stack</span><br><span class="line">    MSR     PSP, R0                                             ; Load PSP with new process SP</span><br><span class="line"></span><br><span class="line">    MOV32   R2, #0                                              ; Restore BASEPRI priority level to 0</span><br><span class="line">    CPSID   I</span><br><span class="line">    MSR     BASEPRI, R2</span><br><span class="line">    DSB</span><br><span class="line">    ISB</span><br><span class="line">    CPSIE   I</span><br><span class="line">    BX      LR                                                  ; Exception return will restore remaining context</span><br><span class="line"></span><br><span class="line">    ALIGN                                                       ; Removes warning[A1581W]: added &lt;no_padbytes&gt; of padding at &lt;address&gt;</span><br><span class="line"></span><br><span class="line">    END</span><br></pre></td></tr></table></figure></div>
+
+
+
+<ol>
+<li><p>触发PendSV的中断，进入中断服务程序。</p>
+</li>
+<li><p>屏蔽低优先级的中断，或者直接关闭中断。关中断防止额外的中断嵌套。</p>
+</li>
+<li><p>使用<strong>MRS</strong>指令读取PSP指针的值。因为CPU进入了中断模式，SP指针已经变成了<strong>MSP</strong>，所以不能直接压栈，只能通过<strong>MRS</strong>指令读取PSP的值，再将<strong>R4到R11和R14寄存器的值</strong>直接压栈进入PSP。</p>
+<p><em><strong>为什么不保存其他寄存器的值？</strong></em></p>
+</li>
+<li></li>
+</ol>
+
 		</div>
 
 		
@@ -709,7 +723,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-04-24 16:58:31
+                    :</strong> 2025-02-17 09:05:21
             </li>
         
         <li>
@@ -818,7 +832,7 @@
 	<div class="post-toc">
 		<div class="toc-title">On this page</div>
 		<div class="page-title">uC/OS移植</div>
-		
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2"><span class="nav-number">1.</span> <span class="nav-text">一、任务切换</span></a></li></ol>
 
 	</div>
 </div>
@@ -840,12 +854,12 @@
               <span>2022</span>
               -
             
-            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
             
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        77 posts in total
+                        103 posts in total
                     </span>
                     
                 </p>

@@ -665,7 +665,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">56</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">76</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -673,7 +673,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">77</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">103</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -704,7 +704,7 @@
 </div>
                 <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">56</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">76</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -712,7 +712,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">77</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">103</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -779,8 +779,8 @@
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/12/24/Keil6%E5%92%8Cvscode/">
-                            Keil6和vscode
+                        <a href="/2025/03/18/STM32RCC%E6%97%B6%E9%92%9F%E6%A0%91%E8%AF%A6%E8%A7%A3/">
+                            STM32RCC时钟树详解
                         </a>
                     </h3>
 
@@ -788,23 +788,66 @@
                         
                             
                             
+一、stm32时钟体系stm32一共有四个可能的时钟源
+
+内部高速时钟HSI，一般是8Mhz，上电复位之后的默认时钟
+内部低速时钟LSI，一般是40khz，在低功耗模式下可以使用，也可以给RTC或者看门狗提供时钟源。RTC是实时时钟，可以依赖备用电源在很长时间内记录时间
+外部高速时钟HSE，可以由外部晶振产生也可以是外部用户输入，相比于默认的HSI，精度更高，一般上电之后初始化时钟时会把时...
                         
                     </div>
 
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Tue Dec 24 2024 11:30:54 GMT+0800">
+            <span class="home-article-date" data-date="Tue Mar 18 2025 13:46:38 GMT+0800">
                 
-                    2024-12-24
+                    2025-03-18
                 
             </span>
         </span>
         
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/STM32/">STM32</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/RCC%E6%97%B6%E9%92%9F/">RCC时钟</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
         
     </div>
 
-    <a href="/2024/12/24/Keil6%E5%92%8Cvscode/">Read more<span class="seo-reader-text">Keil6和vscode</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2025/03/18/STM32RCC%E6%97%B6%E9%92%9F%E6%A0%91%E8%AF%A6%E8%A7%A3/">Read more<span class="seo-reader-text">STM32RCC时钟树详解</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -819,20 +862,14 @@
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/12/23/Linux%E4%B8%8B%E5%B0%8F%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">
-                            Linux下小工具使用
+                        <a href="/2025/03/14/Tmux%E6%95%99%E7%A8%8B/">
+                            Tmux教程
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
-                            
-                            DD截取一个二进制文件的数据。
-使用：
-1dd if=inputfilename of=outputfilename bs=1 count=20000
-
-bs是输入输出的块大小，count是块的数量。可以使用skip=N跳过输入文件的前N个块位置，seek=N跳过输出文件的前N个块位置。
-Hexdump查看一个二进制文件里面的数据。
+                            <p>Tmux可以允许关闭窗口但是保留会话，多用于ssh连接服务器的场景，防止关闭网络连接后服务器上的会话自动关闭而停止任务的执行。</p>
 
                         
                     </div>
@@ -840,17 +877,55 @@ Hexdump查看一个二进制文件里面的数据。
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Mon Dec 23 2024 10:52:32 GMT+0800">
+            <span class="home-article-date" data-date="Fri Mar 14 2025 09:19:30 GMT+0800">
                 
-                    2024-12-23
+                    2025-03-14
                 
             </span>
         </span>
         
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/Linux/">Linux</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/Shell/">Shell</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/Tmux/">Tmux</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
         
     </div>
 
-    <a href="/2024/12/23/Linux%E4%B8%8B%E5%B0%8F%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/">Read more<span class="seo-reader-text">Linux下小工具使用</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2025/03/14/Tmux%E6%95%99%E7%A8%8B/">Read more<span class="seo-reader-text">Tmux教程</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -865,32 +940,72 @@ Hexdump查看一个二进制文件里面的数据。
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/12/20/Cmake%E5%AD%A6%E4%B9%A0/">
-                            Cmake学习
+                        <a href="/2025/03/07/ucOSii%E4%B8%B4%E7%95%8C%E5%8C%BA/">
+                            ucOSii临界区
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
                             
-                            Cmake基础
+                            临界区定义操作系统在处理关键代码时，也就是进入临界区时，需要关闭中断，防止中断打断当前执行的关键代码，造成系统资源的破坏。 
+关键就在于关闭中断，控制中断寄存器进行中断关闭。但是，如果单纯的在进入临界区之前关中断，在退出临界区之后开中断，岂不是破坏了原本的中断状态？例如在某些地方可能已经被关闭了中断，那么退出临界区之后我们要恢复的就是关中断的状态。
+我们要做的就是在进入临界区前记录一下此刻的...
                         
                     </div>
 
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Fri Dec 20 2024 13:44:28 GMT+0800">
+            <span class="home-article-date" data-date="Fri Mar 07 2025 16:00:25 GMT+0800">
                 
-                    2024-12-20
+                    2025-03-07
                 
             </span>
         </span>
         
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/RTOS/">RTOS</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/uCOS/">uCOS</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
         
     </div>
 
-    <a href="/2024/12/20/Cmake%E5%AD%A6%E4%B9%A0/">Read more<span class="seo-reader-text">Cmake学习</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2025/03/07/ucOSii%E4%B8%B4%E7%95%8C%E5%8C%BA/">Read more<span class="seo-reader-text">ucOSii临界区</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -905,35 +1020,73 @@ Hexdump查看一个二进制文件里面的数据。
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/12/20/%E6%8A%98%E8%85%BE%E7%BC%96%E8%AF%91%E5%99%A8Clang-LLVM/">
-                            折腾编译器Clang+LLVM
+                        <a href="/2025/03/07/%E9%93%BE%E6%8E%A5%E8%84%9A%E6%9C%ACLinkerScript/">
+                            链接脚本LinkerScript
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
                             
-                            一、编译安装LLVM在github上找到LLVMProject并下载。
-这里整个项目过大，在我的机器上git clone会出现一定的问题，所以直接选择下载zip文件并解压缩。
-在LLVM的官方文档中有构建的教程，这里对整体的过程做一个记录。
-进入到LLVM的目录中，执行cmake -S llvm -B build -G &quot;Unix Makefiles -DCMAKE_BUILD_T...
+                            链接脚本的作用在嵌入式开发中，需要指定不同的段烧录到单片机的地址，这个过程由链接脚本指定。
+一般来说链接脚本根据芯片的不同，设定不同的RAM和FLASH起始地址和长度。
+除了指示链接的过程，还可以将地址变成变量，传递给启动文件，例如bss段和data段的起始位置和结束位置，能够让启动文件从flash中搬运data段到RAM中，以及初始化bss段的数据为0。
+链接脚本和段现在想象有一个RAM，...
                         
                     </div>
 
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Fri Dec 20 2024 11:18:08 GMT+0800">
+            <span class="home-article-date" data-date="Fri Mar 07 2025 12:10:00 GMT+0800">
                 
-                    2024-12-20
+                    2025-03-07
                 
             </span>
         </span>
         
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/STM32/">STM32</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/GCC/">GCC</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
         
     </div>
 
-    <a href="/2024/12/20/%E6%8A%98%E8%85%BE%E7%BC%96%E8%AF%91%E5%99%A8Clang-LLVM/">Read more<span class="seo-reader-text">折腾编译器Clang+LLVM</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2025/03/07/%E9%93%BE%E6%8E%A5%E8%84%9A%E6%9C%ACLinkerScript/">Read more<span class="seo-reader-text">链接脚本LinkerScript</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -948,32 +1101,73 @@ Hexdump查看一个二进制文件里面的数据。
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/12/19/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7gprof/">
-                            性能分析工具gprof
+                        <a href="/2025/03/06/MyRTOS/">
+                            MyRTOS
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
                             
-                            
+                            写在前面目前个人的发展方向应该是RTOS。
+想基于uCOS开始写一个属于自己的嵌入式操作系统，同时增加自己对嵌入式操作系统的理解和认识。
+零、内存管理为什么要把内存管理放在任务调度之前呢？明明说嵌入式操作系统的核心是任务调度，内存管理可以手动进行管理。
+正是因为在设计任务调度的TCB时考虑到了这个事情。用户层面的动态内存管理是不必要的，但是系统资源的内存管理是需要考虑的。整个嵌入式系统运行期...
                         
                     </div>
 
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Thu Dec 19 2024 16:29:29 GMT+0800">
+            <span class="home-article-date" data-date="Thu Mar 06 2025 22:44:52 GMT+0800">
                 
-                    2024-12-19
+                    2025-03-06
                 
             </span>
         </span>
         
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/">项目开发</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/RTOS/">RTOS</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/STM32/">STM32</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
         
     </div>
 
-    <a href="/2024/12/19/%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7gprof/">Read more<span class="seo-reader-text">性能分析工具gprof</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2025/03/06/MyRTOS/">Read more<span class="seo-reader-text">MyRTOS</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -988,35 +1182,73 @@ Hexdump查看一个二进制文件里面的数据。
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/12/19/%E7%BC%96%E8%AF%91%E5%99%A8%E6%AD%BB%E4%BB%A3%E7%A0%81%E6%B6%88%E9%99%A4/">
-                            编译器死代码消除
+                        <a href="/2025/03/06/Gcc%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E6%B1%87%E7%BC%96%E6%96%87%E4%BB%B6%E6%8A%A5%E9%94%99/">
+                            Gcc交叉编译汇编文件报错
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
                             
-                            一、编译过程源文件经过预编译，编译，汇编，链接这些过程，最终得到可执行文件。
-预编译阶段处理宏定义、注释等等。
-编译阶段将执行词法分析、语法分析、语法分析、语义分析和中间代码生成，可能还会进行中间代码优化。
-
+                            问题描述使用Cmake搭建交叉编译工具链来编译stm32项目，编译器为arm-none-eabi-gcc。使用编译器编译uCOS中cpu架构相关的文件os_cpu_a.s编译不成功。
+项目是从keil项目直接移植过来的。
+反复检查Cmake对汇编文件的编译选项并没有发现错误。
+报错原因移植uCOS运行在单片机上时，官方提供的代码接口是编译器相关的，原来的文件是适配ARMCC工具链的，现在在G...
                         
                     </div>
 
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Thu Dec 19 2024 11:23:07 GMT+0800">
+            <span class="home-article-date" data-date="Thu Mar 06 2025 15:19:36 GMT+0800">
                 
-                    2024-12-19
+                    2025-03-06
                 
             </span>
         </span>
         
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">问题解决</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/RTOS/">RTOS</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/Linux/">Linux</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
         
     </div>
 
-    <a href="/2024/12/19/%E7%BC%96%E8%AF%91%E5%99%A8%E6%AD%BB%E4%BB%A3%E7%A0%81%E6%B6%88%E9%99%A4/">Read more<span class="seo-reader-text">编译器死代码消除</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2025/03/06/Gcc%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E6%B1%87%E7%BC%96%E6%96%87%E4%BB%B6%E6%8A%A5%E9%94%99/">Read more<span class="seo-reader-text">Gcc交叉编译汇编文件报错</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -1031,65 +1263,27 @@ Hexdump查看一个二进制文件里面的数据。
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/12/18/LZ4%E7%BC%96%E8%AF%91Windows%E5%BA%93%E6%96%87%E4%BB%B6/">
-                            LZ4编译Windows库文件
+                        <a href="/2025/03/06/undefined-reference-to-errno%E2%80%98-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">
+                            undefined reference to `__errno‘ 解决办法
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
                             
-                            
+                            问题描述编译stm32项目时，因为引入了math库，导致报错 undefined reference to &#96;__errno‘
+报错原因多个库文件的链接顺序问题。这里没有手动指定链接的顺序，所以会报错
+问题解决链接时加上指令 -specs=rdimon.specs and -specs=nosys.specs
+
                         
                     </div>
 
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Dec 18 2024 16:08:53 GMT+0800">
+            <span class="home-article-date" data-date="Thu Mar 06 2025 15:14:29 GMT+0800">
                 
-                    2024-12-18
-                
-            </span>
-        </span>
-        
-        
-    </div>
-
-    <a href="/2024/12/18/LZ4%E7%BC%96%E8%AF%91Windows%E5%BA%93%E6%96%87%E4%BB%B6/">Read more<span class="seo-reader-text">LZ4编译Windows库文件</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-
-                
-                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
-                    <h3 class="home-article-title">
-                        <a href="/2024/12/18/Keil%E6%8A%A5%E9%94%99Cannot-Load-Flash-Device-Description/">
-                            Keil报错Cannot Load Flash Device Description!
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content markdown-body">
-                        
-                            
-                            问题使用Keil打开Cubemx创建的工程文件，编写好代码进行烧录时报错”Cannot Load Flash Device Description”，点击确定后提示Error:Flash Download failed - “Cortex-M4”。
-原因结合别人的博客和官方教程得知是因为从cubemx生成的项目和使用的MDK版本不匹配，导致项目的Flash下载算法不正确。所以只要选择一个正确...
-                        
-                    </div>
-
-                    <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Dec 18 2024 10:12:59 GMT+0800">
-                
-                    2024-12-18
+                    2025-03-06
                 
             </span>
         </span>
@@ -1125,9 +1319,77 @@ Hexdump查看一个二进制文件里面的数据。
                             <a href="/tags/STM32/">STM32</a>&nbsp;
                         </li>
                     
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2025/03/06/undefined-reference-to-errno%E2%80%98-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">Read more<span class="seo-reader-text">undefined reference to `__errno‘ 解决办法</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2025/03/06/Git%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83/">
+                            Git提交规范
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            <p>将自己的四轴项目推送到github，但是写出来的commit非常抽象，遂学习git提交规范</p>
+
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Thu Mar 06 2025 14:51:21 GMT+0800">
+                
+                    2025-03-06
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/Git/">Git</a>&nbsp;
+                        </li>
+                    
                         <li>
                             | 
-                            <a href="/tags/Keil/">Keil</a>&nbsp;
+                            <a href="/tags/Github/">Github</a>&nbsp;
                         </li>
                     
                 </ul>
@@ -1135,7 +1397,7 @@ Hexdump查看一个二进制文件里面的数据。
         
     </div>
 
-    <a href="/2024/12/18/Keil%E6%8A%A5%E9%94%99Cannot-Load-Flash-Device-Description/">Read more<span class="seo-reader-text">Keil报错Cannot Load Flash Device Description!</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2025/03/06/Git%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83/">Read more<span class="seo-reader-text">Git提交规范</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -1150,36 +1412,78 @@ Hexdump查看一个二进制文件里面的数据。
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/12/17/Keil%E8%B0%83%E8%AF%95STM32%E4%BB%A5%E5%8F%8A%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/">
-                            Keil调试STM32以及性能监控
+                        <a href="/2025/03/05/ucOSii%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/">
+                            ucOSii任务调度
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
                             
-                            一、Keil调试Keil调试分为硬件调试和软件仿真两部分。
-尽管软件模拟已经很接近真实环境了，但是归根结底不如直接硬件调试。
-调试过程中，可以查看各种寄存器的值，各种变量的值，以及直接查看RAM和ROM中某个地址的值。
-在Keil中
+                            uCOS任务调度算法思路这里介绍uCOS最重要的任务调度算法：优先级位图法。
+首先明确，uCOS中每一个任务都有唯一的优先级，也就是说一个优先级就能直接确定一个任务。
 
+当创建一个新任务时，要给它一个确定的优先级，然后将这个优先级的任务设为就绪。
+
+当任务放弃处理器，调度器介入时，需要在所有的就绪的任务中找到优先级最高的任务。
+
+
+对于第一个要求，只要有一个数据结构来存储就绪的状态即可，例如...
                         
                     </div>
 
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Tue Dec 17 2024 16:27:08 GMT+0800">
+            <span class="home-article-date" data-date="Wed Mar 05 2025 16:13:30 GMT+0800">
                 
-                    2024-12-17
+                    2025-03-05
                 
             </span>
         </span>
         
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/RTOS/">RTOS</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/uCOS/">uCOS</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/">任务调度</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
         
     </div>
 
-    <a href="/2024/12/17/Keil%E8%B0%83%E8%AF%95STM32%E4%BB%A5%E5%8F%8A%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/">Read more<span class="seo-reader-text">Keil调试STM32以及性能监控</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2025/03/05/ucOSii%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/">Read more<span class="seo-reader-text">ucOSii任务调度</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -1194,32 +1498,73 @@ Hexdump查看一个二进制文件里面的数据。
                 
                 <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
                     <h3 class="home-article-title">
-                        <a href="/2024/12/17/STM32%E6%95%99%E7%A8%8B%E4%B9%8BHAL%E5%BA%93%E5%BC%80%E5%8F%91/">
-                            STM32教程之HAL库开发
+                        <a href="/2025/03/05/uCOSii%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+                            uCOSii内存管理
                         </a>
                     </h3>
 
                     <div class="home-article-content markdown-body">
                         
                             
-                            
+                            uCOS内存管理思路uCOS的内存管理非常简单，有5个连接在一起的partition，这5个partition又分别连接着一系列的size固定，个数确定的block。
+也就是说每一个partition只能有一个size，能够使用的内存大小就只有这五种。
+好处是内存分配是常数时间，而且是很快的常数时间。在5个partition中遍历一下找到适合的size，直接取对应的freelist即可。
+坏...
                         
                     </div>
 
                     <div class="home-article-meta-info-container">
     <div class="home-article-meta-info">
         <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Tue Dec 17 2024 14:46:04 GMT+0800">
+            <span class="home-article-date" data-date="Wed Mar 05 2025 15:47:43 GMT+0800">
                 
-                    2024-12-17
+                    2025-03-05
                 
             </span>
         </span>
         
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/RTOS/">RTOS</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/uCOS/">uCOS</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">内存管理</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
         
     </div>
 
-    <a href="/2024/12/17/STM32%E6%95%99%E7%A8%8B%E4%B9%8BHAL%E5%BA%93%E5%BC%80%E5%8F%91/">Read more<span class="seo-reader-text">STM32教程之HAL库开发</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2025/03/05/uCOSii%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">Read more<span class="seo-reader-text">uCOSii内存管理</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
                 </div>
@@ -1229,7 +1574,7 @@ Hexdump查看一个二进制文件里面的数据。
 
     <div class="home-paginator px-7 py-5">
         <div class="paginator">
-	<span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa-regular fa-angle-right"></i></a>
+	<span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/"><i class="fa-regular fa-angle-right"></i></a>
 </div>
   
     </div>
@@ -1250,12 +1595,12 @@ Hexdump查看一个二进制文件里面的数据。
               <span>2022</span>
               -
             
-            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
             
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        77 posts in total
+                        103 posts in total
                     </span>
                     
                 </p>

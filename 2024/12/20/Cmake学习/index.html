@@ -608,7 +608,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">56</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">76</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -616,7 +616,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">77</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">103</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -667,13 +667,36 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-12-20 14:07:19</span>
-            <span class="mobile">2024-12-20 14:07:19</span>
+            <span class="desktop">2025-03-06 20:53:34</span>
+            <span class="mobile">2025-03-06 20:53:34</span>
             <span class="hover-info">Updated</span>
         </span>
     
 
     
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/makefile/">makefile</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/make/">make</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/CMake/">CMake</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
     
 
     
@@ -695,7 +718,36 @@
 
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			<h1 id="Cmake基础"><a href="#Cmake基础" class="headerlink" title="Cmake基础"></a>Cmake基础</h1>
+			<h1 id="Cmake基础"><a href="#Cmake基础" class="headerlink" title="Cmake基础"></a>Cmake基础</h1><p>Cmakelists.txt是cmake构建系统的配置文件，可以自动生成构建系统，并且进行编译测试。</p>
+<p>使用Cmake命令进行构建系统的生成，<code>cmake -B build</code>指定build目录为构建目录，就能够根据目录中的Cmakelists.txt在<code>build</code>中生成<strong>makefile</strong>。</p>
+<ul>
+<li>可以通过<code>-S dir</code>指定<strong>包含Cmakelists.txt</strong>的根目录。</li>
+<li>可以通过<code>-D &lt;var&gt;=&lt;value&gt;</code>将数值传递给Cmakelists.txt中的变量，可以控制构建的debug版本等等行为。</li>
+</ul>
+<p>在<code>build</code>中生成<strong>makefile</strong>之后，执行<code>cmake --build build</code>，即指定<code>build</code>目录开始进行构建，其实就相当于在<code>build</code>目录下进行<code>make</code>。</p>
+<h2 id="CmakeLists-txt语法"><a href="#CmakeLists-txt语法" class="headerlink" title="CmakeLists.txt语法"></a>CmakeLists.txt语法</h2><h3 id="1-注释"><a href="#1-注释" class="headerlink" title="1.注释"></a>1.注释</h3><ul>
+<li>行注释使用<code>#this is comments</code></li>
+<li>多行注释使用<code>#[[this is comments]]</code></li>
+</ul>
+<h3 id="2-变量"><a href="#2-变量" class="headerlink" title="2. 变量"></a>2. 变量</h3><p>Cmake使用<code>set</code>和<code>unset</code>设置或者取消设置变量。</p>
+<ul>
+<li>一般变量：</li>
+</ul>
+<p>值可以是<strong>字符串，数字或者列表</strong></p>
+<div class="code-container" data-rel="Cmake"><figure class="iseeu highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(DEBUD_MODE <span class="number">1</span>)</span><br><span class="line"><span class="keyword">set</span>(WARNING_LEVEL <span class="number">2</span>)</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>Cache变量，也就是缓存条目，主要是为了<strong>提供用户选项配置</strong>，如果用户没有指定，则使用默认值。Cache变量的值会保存到CmakeLists.txt中，即使重新运行Cmake也不会丢失，并且可以在整个Cmake目录中访问到。</li>
+</ul>
+<div class="code-container" data-rel="Cmake"><figure class="iseeu highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(CACHE_VAR <span class="string">&quot;default_value&quot;</span> CACHE <span class="keyword">STRING</span> <span class="string">&quot;this is a description&quot;</span>)</span><br><span class="line"><span class="comment">#set(&lt;变量名&gt; &lt;值&gt; CACHE &lt;类型&gt; &lt;&quot;描述&quot;&gt;)</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>环境变量：</li>
+</ul>
+<p>就是操作系统的环境变量</p>
+<div class="code-container" data-rel="Cmake"><figure class="iseeu highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># set(ENV&#123;&lt;variable&gt;&#125; [&lt;value&gt;])</span></span><br><span class="line"><span class="keyword">set</span>(ENV&#123;ENV_VAR&#125; <span class="string">&quot;$ENV&#123;PATH&#125;&quot;</span>)</span><br><span class="line"><span class="keyword">message</span>(<span class="string">&quot;Value of ENV_VAR: $ENV&#123;ENV_VAR&#125;&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+
 		</div>
 
 		
@@ -709,7 +761,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-12-20 14:07:19
+                    :</strong> 2025-03-06 20:53:34
             </li>
         
         <li>
@@ -731,6 +783,26 @@
 		</div>
 		
 
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">#嵌入式开发</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/makefile/">#makefile</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/make/">#make</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/CMake/">#CMake</a>&nbsp;
+			</li>
+			
+		</ul>
 		
 
 		
@@ -818,7 +890,7 @@
 	<div class="post-toc">
 		<div class="toc-title">On this page</div>
 		<div class="page-title">Cmake学习</div>
-		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Cmake%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">Cmake基础</span></a></li></ol>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Cmake%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">Cmake基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CmakeLists-txt%E8%AF%AD%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">CmakeLists.txt语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%B3%A8%E9%87%8A"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. 变量</span></a></li></ol></li></ol></li></ol>
 
 	</div>
 </div>
@@ -840,12 +912,12 @@
               <span>2022</span>
               -
             
-            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
             
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        77 posts in total
+                        103 posts in total
                     </span>
                     
                 </p>

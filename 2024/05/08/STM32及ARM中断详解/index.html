@@ -608,7 +608,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">56</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">76</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -616,7 +616,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">77</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">103</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -667,8 +667,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-11-05 21:04:43</span>
-            <span class="mobile">2024-11-05 21:04:43</span>
+            <span class="desktop">2025-03-21 16:56:19</span>
+            <span class="mobile">2025-03-21 16:56:19</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -699,6 +699,7 @@
 <p>在中断服务程序中进行<strong>关中断、保存现场、开中断、处理中断和异常、关中断、恢复现场、开中断</strong></p>
 <p>在ARM体系中和异常统一由中断向量表管理。</p>
 <h5 id="中断向量表"><a href="#中断向量表" class="headerlink" title="中断向量表"></a>中断向量表</h5><p>中断向量表有低端和高端向量表两种，低端向量表就是从0x00000000开始，高端向量表处在0xFFFF0000位置。</p>
+<p><em>下图中的中断向量表基本对应着ArmV7-A架构，而CortexM架构都可以使用自定义的中断向量表，不用遵循下表。如果是更新的Arm指令集版本，和下表也有较大区别</em></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -706,16 +707,35 @@
                       alt="image-20240508162736933"
                 ></p>
 <h1 id="中断向量表和ResetHandler"><a href="#中断向量表和ResetHandler" class="headerlink" title="中断向量表和ResetHandler"></a>中断向量表和ResetHandler</h1><p>ARM中断向量表的位置默认为0x00000000，中断向量表如下。</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">_start:</span><br><span class="line">    ldr pc, =Reset_Handler          /* 复位中断 */ </span><br><span class="line">    ldr pc, =Undefined_Handler      /* 未定义指令中断 */</span><br><span class="line">    ldr pc, =SVC_Handler            /* SVC(Supervisor)中断*/</span><br><span class="line">    ldr pc, =PrefAbort_Handler      /* 预取终止中断 */</span><br><span class="line">    ldr pc, =DataAbort_Handler      /* 数据终止中断 */</span><br><span class="line">    ldr pc, =NotUsed_Handler        /* 保留中断 */</span><br><span class="line">    ldr pc, =IRQ_Handler            /* IRQ 中断 */</span><br><span class="line">    ldr pc, =FIQ_Handler            /* FIQ(快速中断) */</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">_start:</span><br><span class="line">    ldr pc, =Reset_Handler          /* 复位中断 */ </span><br><span class="line">    ldr pc, =Undefined_Handler      /* 未定义指令中断 */</span><br><span class="line">    ldr pc, =SVC_Handler            /* SVC(Supervisor)中断*/</span><br><span class="line">    ldr pc, =PrefAbort_Handler      /* 预取终止中断 */</span><br><span class="line">    ldr pc, =DataAbort_Handler      /* 数据终止中断 */</span><br><span class="line">    ldr pc, =NotUsed_Handler        /* 保留中断 */</span><br><span class="line">    ldr pc, =IRQ_Handler            /* IRQ 中断 */</span><br><span class="line">    ldr pc, =FIQ_Handler            /* FIQ(快速中断) */</span><br></pre></td></tr></table></figure></div>
 
 <p>当机器上电启动时会从这个代码开始，先进入ResetHandler进行系统的初始化。当进入中断时，会从中断向量表的起始地址（也就是上面_start）开始，根据中断的类型进行偏移，例如如果偏移量为0x08则会执行SVC中断的语句，pc寄存器直接被装入中断向量的地址，跳转到对应的中断处理。</p>
 <p><em>如果要防止中断嵌套，需要在中断服务程序中加入屏蔽中断的代码。</em></p>
 <p>ResetHandler中是机器上电启动后或者复位后进行初始化的代码，初始化后会进入**_main**函数最后才进入main函数。</p>
 <p>可以手动设置中断向量表的地址，一般的做法是在ResetHandler中设置。</p>
 <h1 id="STM32（Cortex-M）的中断服务程序"><a href="#STM32（Cortex-M）的中断服务程序" class="headerlink" title="STM32（Cortex-M）的中断服务程序"></a>STM32（Cortex-M）的中断服务程序</h1><p>对Cortex-M系列来说，并不遵循arm所规定的普通的中断向量表。</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">__Vectors       DCD     __initial_sp              ; Top of Stack</span><br><span class="line">                DCD     Reset_Handler             ; Reset Handler</span><br><span class="line">                DCD     NMI_Handler               ; NMI Handler</span><br><span class="line">                DCD     HardFault_Handler         ; Hard Fault Handler</span><br><span class="line">                DCD     MemManage_Handler         ; MPU Fault Handler</span><br><span class="line">                DCD     BusFault_Handler          ; Bus Fault Handler</span><br><span class="line">                DCD     UsageFault_Handler        ; Usage Fault Handler</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">__Vectors       DCD     __initial_sp              ; Top of Stack</span><br><span class="line">                DCD     Reset_Handler             ; Reset Handler</span><br><span class="line">                DCD     NMI_Handler               ; NMI Handler</span><br><span class="line">                DCD     HardFault_Handler         ; Hard Fault Handler</span><br><span class="line">                DCD     MemManage_Handler         ; MPU Fault Handler</span><br><span class="line">                DCD     BusFault_Handler          ; Bus Fault Handler</span><br><span class="line">                DCD     UsageFault_Handler        ; Usage Fault Handler</span><br></pre></td></tr></table></figure></div>
 
-<p>可以看到，中断向量表的第一行规定着<strong>栈初始化</strong>程序的地址，也就是说开机后会先初始化栈，然后才进行ResetHandler。</p>
+<p>可以看到，中断向量表的第一行规定着<strong>栈初始化</strong>的地址，也就是说开机后会先初始化栈，然后才进行ResetHandler。</p>
+<h1 id="中断和异常触发流程-Cortex-M"><a href="#中断和异常触发流程-Cortex-M" class="headerlink" title="中断和异常触发流程(Cortex-M)"></a>中断和异常触发流程(Cortex-M)</h1><ul>
+<li>保存现场（硬件）：将一些寄存器的值自动的保存到SP指向的栈中。</li>
+<li>分辨异常&#x2F;中断（硬件）：根据异常&#x2F;中断号在中断向量表中找到中断服务程序的地址并进行跳转。</li>
+<li>中断服务程序结束后，从栈中恢复现场（软件）</li>
+</ul>
+<h2 id="1-保存现场"><a href="#1-保存现场" class="headerlink" title="1. 保存现场"></a>1. 保存现场</h2><p>不管是触发中断还是异常，硬件都会自动保存<strong>R0到R3、R12、LR、xPSR</strong>寄存器。</p>
+<p>剩下的寄存器将在中断服务程序中进行保存。</p>
+<p>根据ATPCS标准，被调用的函数如果要是用<strong>R4到R11</strong>寄存器，则需要在被调用函数的内部进行压栈。</p>
+<ul>
+<li><strong>调用C语言的中断服务程序</strong>：编译器会自动生成保存现场的汇编代码，不需要程序员手动的保存。</li>
+<li><strong>调用汇编编写的中断服务程序</strong>：需要在中断服务程序中手动编写保存现场的程序。</li>
+</ul>
+<h2 id="2-根据中断号进入中断"><a href="#2-根据中断号进入中断" class="headerlink" title="2. 根据中断号进入中断"></a>2. 根据中断号进入中断</h2><p>寻找中断向量表，再根据中断号，在中断向量表中进行偏移。</p>
+<h2 id="3-恢复现场。。。。"><a href="#3-恢复现场。。。。" class="headerlink" title="3. 恢复现场。。。。"></a>3. 恢复现场。。。。</h2><h1 id="NVIC中断优先级"><a href="#NVIC中断优先级" class="headerlink" title="NVIC中断优先级"></a>NVIC中断优先级</h1><p>不同系列的芯片有不同位数的中断优先级，这个中断优先级一般是在BASEPRI寄存器的最高几位。比如CortexM系列的CPU，中断优先级位数有4位，就是BASEPRI寄存器的高四位。</p>
+<p>优先级数字越小，中断越优先。</p>
+<p>中断优先级又被<strong>NVIC</strong>分成抢占优先级和响应优先级，可以配置对应的优先级分组。比如4位优先级里面，有两位是抢占优先级，有两位是响应优先级。我们发现如果中断优先级的设置只有4位的话，也就是只有16个不同的优先级，注定了一些中断必须要在同一个优先级中。对抢占优先级和响应优先级的处理是NVIC负责的，抢占优先级更高的可以中断嵌套其他更低的中断，而相同的抢占优先级的任务里，顺序执行响应优先级更高的。而对于整个优先级都完全一样的中断，则会通过自然优先级，也就是在中断向量表中的位置来判断。越靠前的自然优先级就越高。</p>
+<p>本身抢占优先级和响应优先级这两个东西配合在一起，才是BASEPRI看到的真正的任务优先级，但是NVIC把他们拆成了两部分来使用。对BASEPRI寄存器来说，对优先级进行屏蔽，不在乎抢占还是响应，会直接屏蔽掉比寄存器的数值更大的那些中断。</p>
+<p>NVIC可以管理的是中断，一般来源于外设或者内核异常。而有一些异常，比如<strong>HardFault</strong>或者<strong>NMI</strong>，他们在中断向量表的最前面，但是不通过NVIC进行中断的管理，并且其优先级也不能够被配置。他们的优先级默认被配置为最高，任何情况下发生这几个异常都是最先进行处理。而在这之后的<strong>MemManage和BusFault</strong>等等异常，包括操作系统常用到的<strong>SysTick</strong>和<strong>PenSV</strong>都是NVIC管理的内核异常。再往后，就是NVIC管理的外设的中断。</p>
+<p>在操作系统中，一般使用到的中断就是<strong>SysTick</strong>和<strong>PendSV</strong>。SysTick用于提供操作系统时钟，并且在合适的时候进行唤起任务的切换。PendSV则用于进行任务的切换。PendSV的可配置优先级一般为最低，然后SysTick为其次。</p>
 
 		</div>
 
@@ -730,7 +750,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2024-11-05 21:04:43
+                    :</strong> 2025-03-21 16:56:19
             </li>
         
         <li>
@@ -839,7 +859,7 @@
 	<div class="post-toc">
 		<div class="toc-title">On this page</div>
 		<div class="page-title">STM32及ARM中断详解</div>
-		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ARM%E4%BD%93%E7%B3%BB%E7%9A%84%E4%B8%AD%E6%96%AD%E5%92%8C%E5%BC%82%E5%B8%B8"><span class="nav-number">1.</span> <span class="nav-text">ARM体系的中断和异常</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E5%90%91%E9%87%8F%E8%A1%A8"><span class="nav-number">1.0.0.0.1.</span> <span class="nav-text">中断向量表</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E5%90%91%E9%87%8F%E8%A1%A8%E5%92%8CResetHandler"><span class="nav-number">2.</span> <span class="nav-text">中断向量表和ResetHandler</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STM32%EF%BC%88Cortex-M%EF%BC%89%E7%9A%84%E4%B8%AD%E6%96%AD%E6%9C%8D%E5%8A%A1%E7%A8%8B%E5%BA%8F"><span class="nav-number">3.</span> <span class="nav-text">STM32（Cortex-M）的中断服务程序</span></a></li></ol>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ARM%E4%BD%93%E7%B3%BB%E7%9A%84%E4%B8%AD%E6%96%AD%E5%92%8C%E5%BC%82%E5%B8%B8"><span class="nav-number">1.</span> <span class="nav-text">ARM体系的中断和异常</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E5%90%91%E9%87%8F%E8%A1%A8"><span class="nav-number">1.0.0.0.1.</span> <span class="nav-text">中断向量表</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E5%90%91%E9%87%8F%E8%A1%A8%E5%92%8CResetHandler"><span class="nav-number">2.</span> <span class="nav-text">中断向量表和ResetHandler</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STM32%EF%BC%88Cortex-M%EF%BC%89%E7%9A%84%E4%B8%AD%E6%96%AD%E6%9C%8D%E5%8A%A1%E7%A8%8B%E5%BA%8F"><span class="nav-number">3.</span> <span class="nav-text">STM32（Cortex-M）的中断服务程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E5%92%8C%E5%BC%82%E5%B8%B8%E8%A7%A6%E5%8F%91%E6%B5%81%E7%A8%8B-Cortex-M"><span class="nav-number">4.</span> <span class="nav-text">中断和异常触发流程(Cortex-M)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BF%9D%E5%AD%98%E7%8E%B0%E5%9C%BA"><span class="nav-number">4.1.</span> <span class="nav-text">1. 保存现场</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%A0%B9%E6%8D%AE%E4%B8%AD%E6%96%AD%E5%8F%B7%E8%BF%9B%E5%85%A5%E4%B8%AD%E6%96%AD"><span class="nav-number">4.2.</span> <span class="nav-text">2. 根据中断号进入中断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%81%A2%E5%A4%8D%E7%8E%B0%E5%9C%BA%E3%80%82%E3%80%82%E3%80%82%E3%80%82"><span class="nav-number">4.3.</span> <span class="nav-text">3. 恢复现场。。。。</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NVIC%E4%B8%AD%E6%96%AD%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">5.</span> <span class="nav-text">NVIC中断优先级</span></a></li></ol>
 
 	</div>
 </div>
@@ -861,12 +881,12 @@
               <span>2022</span>
               -
             
-            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">HarderHeng</a>
             
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        77 posts in total
+                        103 posts in total
                     </span>
                     
                 </p>
